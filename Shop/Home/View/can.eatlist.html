@@ -1,0 +1,63 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+		
+
+	<div class="container">
+			<div class="chilist">
+            <volist name="_list" id="list">
+            	<a href="{:U('eat_detail',array('can_id'=>$list['can_id']))}" style="width:100%;" class='box item display-box col'>
+                <span class='img'><img src='/Uploads/{$list.photo_small}'></span>
+                <span class='box-flex-1'>
+                	<span class='tit block fz16rem color-3'>{$list.title}</span>
+                    <span class='block fz12rem ellipsis color-6'>{$list.cutline|htmlspecialchars_decode}</span>
+                    <span  class='fz12rem'>
+                    <?php if($list['yq']== '0'){?>
+                        <span class='icon-gou color-success'></span>孕妈&nbsp;&nbsp;
+                    <?php }elseif($list['yq']== '1'){?>    
+                        <span class='icon-tanhao color-warning'></span>孕妈&nbsp;&nbsp;
+                    <?php }else{?>
+                    	<span class='icon-cha color-danger'></span>孕妈&nbsp;&nbsp;
+                    <?php }?>
+                    
+                    <?php if($list['yzq']== '0'){?>
+                        <span class='icon-gou color-success'></span>坐月子&nbsp;&nbsp;
+                    <?php }elseif($list['yzq']== '1'){?>    
+                        <span class='icon-tanhao color-warning'></span>坐月子&nbsp;&nbsp;
+                    <?php }else{?>
+                    	<span class='icon-cha color-danger'></span>坐月子&nbsp;&nbsp;
+                    <?php }?>
+                    
+                    <?php if($list['brq']== '0'){?>
+                        <span class='icon-gou color-success'></span>哺乳&nbsp;&nbsp;
+                    <?php }elseif($list['brq']== '1'){?>    
+                        <span class='icon-tanhao color-warning'></span>哺乳&nbsp;&nbsp;
+                    <?php }else{?>
+                    	<span class='icon-cha color-danger'></span>哺乳&nbsp;&nbsp;
+                    <?php }?>                         
+                    
+                    <?php if($list['yeq']== '0'){?>
+                        <span class='icon-gou color-success'></span>婴儿&nbsp;&nbsp;
+                    <?php }elseif($list['yeq']== '1'){?>    
+                        <span class='icon-tanhao color-warning'></span>婴儿&nbsp;&nbsp;
+                    <?php }else{?>
+                    	<span class='icon-cha color-danger'></span>婴儿&nbsp;&nbsp;
+                    <?php }?>    
+                    </span>
+                </span>
+                <span class='color-c icon-right'></span>
+                </a>
+           </volist> 
+            
+            <!--icon-gou color-success
+            	icon-tanhao color-warning  
+            	icon-cha color-danger
+            -->
+			</div>
+            <!--
+            <div class="pagenav">
+            <span class='item num'><select name='qq' onChange='javascript:location.href=this.value;'><option value='canslist.aspx?id=22&p=1' selected>1/5</option><option value='canslist.aspx?id=22&p=2'>2/5</option><option value='canslist.aspx?id=22&p=3'>3/5</option><option value='canslist.aspx?id=22&p=4'>4/5</option><option value='canslist.aspx?id=22&p=5'>5/5</option></select><span class='arr'></span></span><a href='canslist.aspx?id=22&p=2' class='item'>下一页</a>
+            </div>
+            -->
+		</div>
+        
+<include file="./Shop/Home/View/footer.html" /> 

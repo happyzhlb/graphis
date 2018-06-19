@@ -1,0 +1,40 @@
+<include file='./Shop/Home/View/blog.header.html' />  
+
+<!--博客开始-->
+<div class="blog clearfix">
+	<div class="BlogList">
+    	<div class="article">
+        	<h2 class="hfont">{$blog.title}</h2> 
+            <p class="tips"><em>{$blog.cate_name}</em>{$blog.ctime|date='F d,Y',###} by {$blog.author}</p>
+            <div class="articleDetailBox">
+            	<div class="articleInfo">
+                 	{$blog.content|htmlspecialchars_decode}
+              </div>
+            </div>
+            <div class="shareBox">
+                <span class='st_facebook_large' displayText='Facebook'></span>
+                <span class='st_twitter_large' displayText='Tweet'></span>
+                <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                <span class='st_pinterest_large' displayText='Pinterest'></span>
+                <span class='st_googleplus_large' displayText='Google +'></span>
+                <span class='st_tumblr_large' displayText='Tumblr'></span>
+            </div>
+        </div>
+        <div class="articleTurn">
+        	<if condition="$prev_list['bid']">
+        	<a href="{:U('/Blog/detail','id='.$prev_list['bid'])}" class="prev">{$prev_list.title}</a>
+            </if>
+            <if condition="$next_list['bid']">
+            <a href="{:U('/Blog/detail','id='.$next_list['bid'])}" class="next">{$next_list.title}</a>
+            </if>
+        </div>
+	</div>
+    <include file='./Shop/Home/View/blog.right.html' />
+</div>
+<!--博客结束-->
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "bd66dea7-9894-4301-8986-ed6e077283c8", doNotHash: true, doNotCopy: true, hashAddressBar: true});</script>
+<include file='./Shop/Home/View/footer.html' />  
+</body>
+</html>
+

@@ -1,0 +1,151 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Refund Application</span>
+            <a href="{:U('Refund/view',array('id'=>I('id')))}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--退款退货开始-->
+    <div class="refund">
+    <form id="refund_form_1" action="" method="post">
+   	  <div class="refundType">
+        	<dl>
+           	  <dt>Refund Type *</dt>
+              <dd class="RefundChoose">
+                	<a href="javascript:void(0)" <eq name='order.refund_type' value='1'>class="current"</eq>><em></em>Return</a>
+                    <a href="javascript:void(0)" <eq name='order.refund_type' value='0'>class="current"</eq>><em></em>Refund</a>
+              </dd>
+            </dl>
+            <dl>
+           	  <dt>Refund Reason *</dt>
+              <dd>
+						  <select name="refund_reason" id="refund_reason">
+                                <volist name="refund_reason" id="reason">
+                                <option value="{$reason}" <if condition="$order.refund_reason eq $reason">selected="selected"</if>>{$reason}</option>
+                                </volist>
+                          </select>
+              </dd>
+            </dl>
+            <dl>
+            	<dt>Refund Amount * <em>( Max : ${$order.refund_totle}, including shipping fee : $0 )</em></dt>
+                <dd>
+                	<input name="refund_price" type="text" value="{$order.refund_price}" class="typeIn" />
+                </dd>
+            </dl>
+        	<dl>
+            	<dt>Refund Number * <em>( Max : {$order.quantity} )</em></dt>
+                <dd>
+                	<input name="refund_num" type="text" value="{$order.refund_num}" class="typeIn" />
+                </dd>
+          </dl>
+          <dl>
+           	  <dt>Description (optional)</dt>
+              <dd>
+              		<textarea name="refund_note" id="refund_note">{$order.refund_note}</textarea>
+              </dd>
+          </dl>
+          <a href="{:U('Refund/note')}" class="Learn">Learn about the Refund Note</a>
+          <a href="javascript:void(0);" class="submitBtn">Submit the Application</a>
+          <!--<a href="Refund_fault.html" class="submitBtn">链接到提交失败页面，测试使用实际开发无此按钮</a>-->
+          <input type="hidden" id="id" name="id" value="{$order.rec_id}" />
+          <input type="hidden" id="refund_type" name="refund_type" value="{$order.refund_type}" />
+        </div>
+        </form>
+    </div>
+	<!--退款退货结束--> 
+    <script>
+var max_price = '{$order.refund_totle}';
+var max_num = '{$order.quantity}';
+    $(function(){ 
+	//退款/退货表单验证
+	$('#refund_form_1').validate({
+		rules : {
+			refund_price : {
+				required : true,
+				max : max_price
+			},
+			refund_num : {
+				required : true,
+				max : max_num
+			}
+		},
+		messages : {
+			refund_price : {
+				required : 'Be quired.',
+				max : 'Please enter a value less than or equal to {0}.'
+			},
+			refund_num : {
+				required : 'Be quired.',
+				max : 'Please enter a value less than or equal to {0}.'
+			}
+			
+		},
+		errorPlacement: function(error, element) {  
+			error.appendTo(element.parent());  
+		},
+		success: 'InfoTrue',
+		errorElement : 'span',
+		errorClass : 'InfoError',
+		validClass : 'InfoTrue'
+	});	
+	
+	//仅退款表单验证
+	$('#refund_form_2').validate({
+		rules : {
+			refund_price : {
+				required : true,
+				max : max_price
+			}
+		},
+		messages : {
+			refund_price : {
+				required : 'Be quired.',
+				max : 'Please enter a value less than or equal to {0}.'
+			}
+			
+		},
+		errorPlacement: function(error, element) {  
+			error.appendTo(element.parent());  
+		},
+		success: 'InfoTrue',
+		errorElement : 'span',
+		errorClass : 'InfoError',
+		validClass : 'InfoTrue'
+	});	
+	
+	//步骤
+	var stepShow = ["stepShow1","stepShow2","stepShow3"];
+	var stepCur = $("#refundStep .step").index($("#refundStep .current"));
+	var curLength = $("#refundStep .current").length;
+	if(curLength == 0){
+		$("#refundStep .stepShow").addClass("stepShow3");
+	}else{
+		$("#refundStep .stepShow").addClass(stepShow[stepCur]);	
+	}
+	
+	//点击提交表单
+    $('.submitBtn').click(function(){
+		$('#refund_form_1').submit();	
+	});	
+	
+	//选择退款/退货	 
+	$('.RefundChoose a').click(function(){
+		var index=$('.RefundChoose a').index(this);
+		$('.RefundChoose a').removeClass('current');
+		$(this).addClass('current');
+		index=='1'?$('#refund_type').val(0):$('#refund_type').val(1);
+	});	 
+	
+});	 
+
+    </script>
+</div>
+<include file="./Shop/Webapp/View/footer.html" /> 

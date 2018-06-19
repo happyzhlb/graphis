@@ -1,0 +1,119 @@
+<include file="./Shop/Home/View/header.html" /> 
+<div class="webC1000" style=" margin-top:10px;">
+	<div id="account">
+    	
+      <div class="ProRequest">
+      		<h2>Product Request Form</h2>
+            <h4>Can’t find the product you want on our website? </h4>
+        	<p>Can’t find the product you want on our website? Don’t worry, we are dedicated to improving customer satisfaction from every aspect. Although there aresome chemical products we do not list on our website, we can source them from our best suppliers and help you 
+get what you want. All you need to do is filling in the Product Request form below and submit it to us!We will try our best to supply the 
+product you requested either from our website or only for you depending on how many people need it. You will be reached immediately
+when the requested product is available.</p>
+			<h4>Currently there is a promotion for the Product Request! </h4>
+            <p>Currently there is a promotion for the Product Request! You will get 100 reward points that can be used in future purchase once the request is validated.</p>
+        <form id="login_form" action="{:U('/Index/login')}" method="post">   
+        <?php if(!session('?user_id')){?>    
+            <div class="member">
+           	  	<input name="member" type="radio" id="AlreadyMem" value="1" checked />
+            <label for="AlreadyMem">Already a member?</label>
+            	<input type="radio" name="member" id="NotMem" value="0" />
+                <label for="NotMem">Not a member?</label>
+          	</div>  
+            <div id="login_div">  
+        	<h3>Please login to your account</h3>
+            <dl class="clearfix">
+            	<dt>* Email: </dt>
+                <dd><input name="email" type="text" class="textIn" id="email" value="" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Password: </dt>
+                <dd><input name="password" type="password" class="textIn" id="password" value="" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>&nbsp;</dt> &nbsp; 
+                <dd><input type="hidden" id="referer" name="referer" value="<?php echo U('./ProductRequest');?>" />
+					<input type="submit" value="Login" title="Login" class="subBtn" />
+                	<a href="/Forgotpassword" title="Forgot your password?" class="Forgot">Forgot your password?</a>    
+                </dd>
+            </dl> 
+            </div>
+       <?php }?>
+        </form>
+        <div  class="clearfix"></div>
+         <form id="product_request_form" action="{:U('./ProductRequest/Add')}" method="post">      
+           <h3>Contact Information</h3>
+            <dl class="clearfix">
+            	<dt>* Company Name: </dt>
+                <dd><input name="company" type="text" class="textIn" id="company" value="{$user.company_name}" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Contact Name:</dt>
+                <dd><input name="contactor" type="text" class="textIn" id="contactor" value="{$user.contacts}" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Phone:</dt>
+                <dd><input name="phone" type="text" class="textIn" id="phone" value="{$user.phone}" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Email:</dt>
+                <dd><input name="email" type="text" class="textIn" id="email" value="{$user.email}" /></dd>
+            </dl>
+            <h3>Please fill in the product request form below</h3>
+            <dl class="clearfix">
+            	<dt>* Product Name: </dt>
+                <dd><input name="pro_name" type="text" class="textIn" id="pro_name" value="" autocomplete="off" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Cas Number: </dt>
+                <dd><input name="cas_number" type="text" class="textIn" id="cas_number" value="" autocomplete="off" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Standard: </dt>
+                <dd><input name="standard" type="text" class="textIn" id="standard" value="" autocomplete="off" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Package: </dt>
+                <dd class="Package"><input name="package" type="text" class="textIn textIn2" id="package" value="" autocomplete="off" /><em>Enter multiple values separated by comma.</em></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Quantity: </dt>
+                <dd>
+                	<input name="quantity" type="text" class="textIn textIn3" id="quantity" value="" autocomplete="off" />
+                    <select name="quantity_unit" id="quantity_unit">
+               	    <option value="g">g</option>
+                        <option value="kg" selected>kg</option>
+                        <option value="t">t</option>
+                    </select>
+                    --
+                  <input name="cycle" type="text" class="textIn textIn3" id="cycle" value="" autocomplete="off" />
+                    <select name="cycle_unit" id="cycle_unit">
+               	    <option value="week">week</option>
+                        <option value="month" selected>month</option>
+                        <option value="day">day</option>
+                    </select>
+                </dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>Expected Price: </dt>
+                <dd><input name="expected_price" type="text" class="textIn textIn2" id="expected_price" value="" autocomplete="off" /><em>Enter multiple values separated by comma.</em></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>Other Details: </dt>
+                <dd>
+                	<textarea name="description" id="OtherDetails" cols="45" rows="5"></textarea>
+                </dd>
+            </dl>
+            <dl class="clearfix" id="show_msg"> 
+            </dl>            
+            <dl class="clearfix"> 
+                  <dd>
+                	<input type="submit" value="Submit" title="Submit" class="Preserve" />
+                </dd>
+            </dl>
+        </form> 
+      </div>
+        
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/home/js/product_request.js"></script> 
+<include file='./Shop/Home/View/footer.html' /> 

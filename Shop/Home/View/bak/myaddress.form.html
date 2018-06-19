@@ -1,0 +1,164 @@
+<load href="__PUBLIC__/js/jquery.min.js" />
+<load href="__PUBLIC__/js/jquery.validate.js" />
+<load href="__PUBLIC__/home/js/jquery.webeffect.js" />
+<script>
+$(function(){
+	//新增地址表单验证
+	$('#address_form').validate({
+		submitHandler:function(form){
+			$.ajax({
+				url : $(form).attr('action'),
+				type : 'post',
+				dataType : 'json',
+				data : $(form).serialize(),
+				success : function(data){
+					if(data.status){
+						location.reload();
+					}else{
+						alert(data.info);
+					}
+				}
+			});
+		},
+		rules : {
+			first_name : {
+				required : true,
+				minlength : 3
+			},
+			last_name : {
+				required : true,
+				minlength : 3
+			},
+			address : {
+				required : true,
+				minlength : 3
+			},
+			city : {
+				required : true,
+				minlength : 3
+			},
+			state : {
+				required : true
+			},
+			telephone : {
+				required : true,
+				rangelength : [10,10]
+			},
+			mobile : {
+				rangelength : [10,10]
+			},
+			company_name : {
+				required : true,
+			},
+			zipcode : {
+				required : true,
+				rangelength : [5,5],
+				number : true
+			}
+		},
+		messages : {
+			telephone : {
+				rangelength : 'Please enter a value {0} characters long.'
+			},
+			mobile : {
+				rangelength : 'Please enter a value {0} characters long.'
+			},
+			zipcode : {
+				rangelength : 'Please enter a value {0} characters long.'
+			}
+		},
+		errorPlacement: function(error, element) {  
+			error.appendTo(element.parent());  
+		},
+		errorElement : 'span',
+		errorClass : 'InfoError'
+	});
+});
+</script>
+<form id="address_form" action="{:U('/UserAddress/add')}" method="post"> 
+    <dl class="clearfix">
+        <dt>*First Name:</dt>
+        <dd>
+            <div class="fatherShow">
+            	<input type="text" id="first_name" name="first_name" value="" class="mTextin" autocomplete="off" />
+            </div>
+            <i>* Last Name:</i>
+            <div class="fatherShow">
+            <input type="text" id="last_name" name="last_name" value="" class="mTextin" autocomplete="off" />
+            </div>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Address:</dt>
+        <dd>
+            <textarea name="address" id="address" cols="45" rows="5"></textarea>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* City:</dt>
+        <dd>
+        	<div class="fatherShow">
+            	<input type="text" id="city" name="city" value="" class="mTextin" autocomplete="off" />
+            </div>
+            <i>* State:</i>
+            <div class="fatherShow">
+                <select id="state" name="state">
+                    <option value="">Please Select</option>
+                    <volist name="region" id="vo">
+                    <option value="{$vo.region_id}">{$vo.region_name}</option>
+                    </volist>
+                </select>
+            </div>
+            <div class="fatherShow">
+            	<i>Country:</i>
+            	<input type="text" value="United States" class="mTextin" autocomplete="off" />
+            </div>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Phone:</dt>
+        <dd>
+        	<div class="fatherShow">
+            	<input type="text" id="telephone" name="telephone" value="" class="mTextin" autocomplete="off" />
+            </div>
+            <i>Fax:</i>
+            <div class="fatherShow">
+          		<input type="text" id="mobile" name="mobile" value="" class="mTextin" autocomplete="off" />
+            </div>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Zip:</dt>
+        <dd>
+            <input type="text" id="zipcode" name="zipcode" value="" class="mTextin" autocomplete="off" />
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Company:</dt>
+        <dd> 
+            <input name="company_name" type="text" class="company" id="company_name" value="" minlength="3"/>
+        </dd>
+    </dl> 
+    <dl class="clearfix">
+        <dt>* Preferred:</dt>
+        <dd>
+            <select id="type" name="type">
+                <option value="shipping">Shipping Address</option>
+                <option value="billing">Billing Address</option>
+                <option value="both">Billing Address & Shipping Address</option>
+            </select>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>&nbsp;</dt>
+        <dd>
+            <p>Your billing address must match the address on your credit card statement to avoid any delays in the 
+authorization process.</p>
+            <input type="checkbox" value="on" id="is_default" name="is_default" />
+            <label for="is_default">Set As Default</label>
+        </dd>
+    </dl>
+    <div class="addressBtnBox">
+      <a href="javascript:void(0)" class="addressSubmit submit" title="Submit">Submit</a>
+    </div>
+    </form>

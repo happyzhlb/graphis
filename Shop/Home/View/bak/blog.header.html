@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$seo.keywords}" />
+<meta name="description" content="{$seo.content}" />
+<link href="favicon.ico" type="image/ico" rel="shortcut icon" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/global.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/blog.css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/home/js/jquery.webeffect.js"></script>
+<script> 
+	$(function(){
+		//goods search
+		do_search=function(){
+			list_url="/List/index/"+"keyword/"+$('#searchInput').val(); 
+			self.location.href=list_url;			
+		}
+		$('#searchInput').keyup(function(event){
+  			if(event.keyCode ==13){ 
+				do_search(); 
+ 			}
+		});
+		//blog search
+		blog_search=function(){ 
+			if($('.SearchTitle .current').html()=='Title'){
+				list_url="/blog/index/title/"+$('#keywords').val(); 
+			}else{
+				list_url="/blog/index/content/"+$('#keywords').val(); 
+			}
+			self.location.href=list_url;		
+		}
+		$('.searchCon .searchBtn').click(function(){blog_search();});
+		$('.blogSearch #keywords').keyup(function(event){
+			 if(event.keyCode==13){
+				blog_search(); 
+			 }	
+		});
+		
+		$('.SearchTitle a').click(function(){
+			$('.SearchTitle a').removeClass('current');
+			$(this).addClass('current');			
+		});
+	});
+</script>
+<title>{$seo.name}</title>
+</head>
+<body>
+
+<div id="header" class="Width1000">
+	<!--顶部开始-->
+	<div class="headertop clearfix">
+    	<div class="leftHome">
+        	<a href="/" title="">home</a>|
+            <a href="{:U('/blog/index')}" title="">blog</a>|
+            <a href="{:U('./Article/index')}" title="">help</a>
+        </div>
+        <div class="loginInfo clearfix">
+        	<ul>
+            	<li><a href="{:U('Collect/index')}">Wish List <notempty name='wishs_count'>[<span style="color:#F81; font-family:Arial; font-weight:bold; padding:2px;">{$wishs_count}</span>]</notempty></a></li>
+                <li class="showBoxFa">
+                	<a href="{:U('/Cart')}" class="Cart" target="_blank"><span>Cart [<i>{$carts_count}</i>]</span></a>  
+                    <gt name="carts_count" value="0">
+                    <div class="CartBoxBg show">
+                    	<div class="CartBox">
+                        	<p>Your Cart a total of <strong>{$carts_count}</strong> items</p>
+                            <p>Total：<strong>{$carts_total|format_price}</strong></p>
+                            <a href="{:U('/Cart')}" class="enterPayment" target="_blank">Enter payment</a>
+                            <span class="sanj"></span>
+                        </div>
+                    </div>
+                    <else />
+                    <div class="CartBoxBg show">
+                    	<div class="CartBox">
+                        	<p>Your  Cart is empty.</p>
+                            <p class="tosearch">To search for target products</p>
+                            <a href="{:U('/Cart')}" class="viewCart" target="_blank">view Cart ( <i>{$carts_count}</i> Items )</a>
+                            <span class="sanj"></span>
+                        </div>
+                    </div>
+                    </gt> 
+                </li>
+                <if condition="session('?user_id')"><li><a href="{:U('/Index/loginout')}" title="Exit">Logout</a></li></if>
+                <li class="showBoxFa"> 
+                	<if condition="session('?user_id')">Hi! {$first_name}, <a href="{:U('Member/index')}" class="inline">My Account</a>
+           	      <else/><a href="{:U('/Index/login_register')}" target="_self">Sign in / Register</a></if>
+                    <div class="customerCenterBg show">
+                    	<div class="homeCtenter">
+                         <if condition="!session('?user_id')">
+                        	<h5>New customer? <a href="{:U('/Index/login_register')}" target="_self">Click here</a></h5>
+                            <a href="{:U('/Index/login_register')}" class="login" target="_self">Sign in</a>
+                         </if>
+                            <ul>
+                                <li><a href="{:U('/Member/index')}">My Account</a></li>
+                                <li><a href="{:U('/Myorders')}">My Orders</a></li>
+                                <li><a href="{:U('/Collect/index')}">My Wish List</a></li>
+                                <li><a href="{:U('/Myorders/index')}">My Reviews</a></li>
+                                <li><a href="{:U('/UserAddress/add')}">My Shipping Address</a></li>
+                            </ul>
+                            <span class="sanj"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--顶部开始-->
+    <!--logo，搜索，客服开始-->
+    <div class="headerCon clearfix">
+    	<div class="liveChart livechat_button" data-id="5112ff6b22"><a href="http://www.livechatinc.com/">Live chat</a></div>
+    	<div class="logo"><a href="/"><img src="__PUBLIC__/home/images/blog/okchem_logo.png" width="158" height="38" alt="OKChem" title="OKChem" /></a></div>
+        <div class="searchbox">
+        	<div class="search">
+            	<input type="text" name="keyword" value="<present name='Think.get.keyword'>{$Think.get.keyword|urldecode}</present>" placeholder='Wood protection coating' id="searchInput" class="searchInput boxSizing" autocomplete="off" />
+                <a href="javascript:do_search()" id="goBtn" class="searchBtn">GO</a>
+            </div>
+            <p>{$hot_keywords_list}
+            </p>
+        </div>
+        
+    </div>
+    <!--logo，搜索，客服结束-->
+</div>
+
+<!--导航开始-->
+<div class="navBg blogNavBg">
+	<div id="nav" class="Width1000">
+    	<ul>
+        	<li><a href="{:U('blog/index')}" class="<?php if(empty($_GET['cate_id'])){ echo 'current';}?>">All Articles</a></li>
+            <volist name="blogcate" id="vo">
+            	<li><a href="{:U('blog/index','cate_id='.$vo['cate_id'])}" class="<?php if($vo['cate_id']==(int)$_GET['cate_id']){ echo 'current';}?>">{$vo.cate_name}</a></li>
+            </volist>
+        </ul>
+    </div>
+</div>
+<!--导航结束-->
+<!--[if lte IE 8]>
+<script type="text/javascript">
+	$(document).ready(function(){
+		searchWidth();
+        $(window).resize(function(){
+        	searchWidth();
+        });
+	});
+	function searchWidth(){
+		var searchboxWidth = $("#header .headerCon .searchbox").width();
+		var searchInputWidth = searchboxWidth - 50;
+		$("#header .headerCon .searchbox .search .searchInput").css({padding:"0 10px",width:searchInputWidth,height:"33px","line-height":"33px"});
+        $("#header .headerCon .searchbox .search .searchInput").removeClass("boxSizing");
+	}
+</script>
+<![endif]-->

@@ -1,0 +1,78 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Customer Reviews</span>
+            <a href="{:U('index','id='.I('goods_id'))}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--用户评价列表开始-->
+    <div class="reviews">
+    	<div class="reviewList">
+        <volist name='comments' id='vo'>
+        	<div class="each">
+            	<p class="reviewCon">{$vo.content}</p>
+                <p class="star">
+                	<span>{$vo.user_name}, {$vo.comment_time|toDate}</span>
+                	<if condition="$vo['comment_stars']==1" ><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" />
+                    </if>
+                    <if condition="$vo['comment_stars']==2" ><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" />
+                    </if>
+                    <if condition="$vo['comment_stars']==3" ><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" />
+                    </if>
+                    <if condition="$vo['comment_stars']==4" ><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" /><img src="__PUBLIC__/Webapp/images/star_off.jpg" />
+                    </if>
+                    <if condition="$vo['comment_stars']==5 || empty($vo['comment_stars'])" ><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" /><img src="__PUBLIC__/Webapp/images/star_current.jpg" />
+                    </if>
+                </p>
+            </div>
+        </volist> 
+            <a href="{:U('add_comment','goods_id='.I('goods_id'))}" class="WriteReview" style="display:none;">Write a Review</a>
+        <if condition="$totalpages gt 1">   
+            <div id="page">
+                <a href="javascript:void(0)" class="prev"><em></em></a>
+              <div class="pageChoose">
+                    <select name="select" id="select_page">
+                    <for start="1" end="$totalpages" comparison='elt'>
+                        <option value="{$i}" <if condition="$i==$_GET['p']">selected</if>>Page {$i}/{$totalpages}</option>
+                    </for> 
+                    </select>
+                </div>
+                <a href="javascript:void(0)" class="next"><em></em></a>
+            </div>
+         </if>  
+        </div>
+    </div>
+	<!--用户评价列表结束--> 
+ <script>
+    	$(function(){
+			fn_change_page=function(){
+				 self.location="{:U('Goods/reviews','goods_id='.I('goods_id'),'')}/p/"+$(this).val();				
+			}
+			$('#select_page').bind('change',fn_change_page);
+			
+			max_page='{$totalpages}';
+			now_page='{$Think.get.p|default=1}';
+			next_page=parseInt(now_page)+1;
+			prev_page=parseInt(now_page)-1;
+			
+			if(next_page<=max_page){  
+				$('#page .next').click(function(){ self.location="{:U('Goods/reviews','goods_id='.I('goods_id'),'')}/p/"+ next_page; }); 
+			}			
+			if(prev_page>=1){
+				$('#page .prev').click(function(){ self.location="{:U('Goods/reviews','goods_id='.I('goods_id'),'')}/p/"+ prev_page; }); 
+			}
+			
+			
+		});
+		
+    </script>
+</div>
+<include file="./Shop/Webapp/View/footer.html" /> 

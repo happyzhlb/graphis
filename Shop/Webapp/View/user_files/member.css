@@ -1,0 +1,934 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+#login-section,
+#mypage-section {
+	padding: 0 16px;
+	}
+
+#message-section {
+	padding: 0 16px 64px; 
+	}
+
+
+.login-box,
+.join-box {
+	padding: 24px 16px;
+	margin-bottom: 12px;
+	}
+
+.login-box >.bg-red,
+.join-box >.bg-red {
+	max-width: 960px;
+	margin: auto;
+	box-sizing: border-box;
+	}
+
+.join-box >.bg-red >.text-box {
+	text-align: left;
+	padding: 8px;
+	}
+
+.join-box >.bg-red >.text-box li {
+	margin-bottom: 10px;
+	}
+ 
+.main-box {
+	border: solid 1px #ccc;
+	max-width: 960px;
+	margin: 16px auto;
+	box-sizing: border-box;
+	}
+
+.login-box p,
+.join-box p ,
+.mypage-box p {
+	margin-top: 16px;
+	font-weight: bold;
+	}
+
+.main-box .itemiztion {
+	display: inline-block;
+	text-align: left;
+	}
+
+.main-box .itemiztion li {
+	list-style-type: disc;
+	margin-bottom: 10px;
+	line-height: 1.2;
+	margin-left: 2em;
+	}
+
+
+.login-box >ul,
+.join-box >ul {
+	margin: 16px 0;
+	}
+
+.login-box >div,
+.join-box >div {
+	padding: 16px;
+	margin-bottom: 12px;
+	}
+
+.form-box ul {
+	margin-bottom: 16px;
+	}
+
+.join-box .form-box ul {
+	margin-bottom: 24px;
+	}
+
+.form-box ul li {
+	display: inline-block;
+	margin-right: 8px;
+	}
+	
+.join-box .pre-note {
+	text-align: left;
+	padding: 8px;
+	margin: 0 16px;
+	}
+
+.join-box .pre-note ul li {
+	margin-bottom: 8px;
+	}
+
+.join-box .form-box ul li {
+	display: block;
+	margin-right: 8px;
+	}
+
+
+.form-box ul li:first-child {
+	width: 160px;
+	}
+
+.join-box .form-box ul li:first-child {
+	width: auto;
+	}
+
+
+.form-box ul li input {
+	background-color: #eee;
+	border: solid 1px #222;
+	padding: 2px;
+	width: 160px;
+	}
+	
+.form-box ul li select {
+	background-color: #eee;
+	border: solid 1px #222;
+	padding: 2px;
+	width: 160px;
+	}
+	
+.form-box div {
+	padding: 4px;
+	}
+
+.form-box .login-submit {
+	color: #fff;
+	background-color: #222;
+	display: inline-block;
+	padding: 8px 48px;
+	margin: 0 auto;
+	border: none;
+	font-family: "gra-font01";
+	}
+
+.form-box .login-submit:hover {
+	background-color: #333;
+	cursor: pointer;
+	}
+
+.login-box .btn-join >a {
+	color: #fff;
+	background-color: #ff0000;
+	display: inline-block;
+	padding: 8px 40px;
+	margin: 0 auto;
+	width: auto;
+	line-height: 1.2;
+	}
+	
+.login-box .btn-join >a:hover {
+	text-decoration: none;
+	background-color: #ff3333;
+	}
+
+.login-box .btn-join >a .text-en {
+	font-family: "gra-font01";
+	}
+
+.login-box .btn-join >a .text-jp {
+	font-size: 12px;
+	}
+
+
+.confirm-box .form-box ul li:last-child {
+	font-weight: bold;
+	padding-top: 4px;
+	}
+
+.confirm-box .agree-submit {
+	margin-top: 32px;
+	}
+
+.confirm-box .message-box {
+	padding: 36px 0;
+	}
+
+.confirm-box .message-box p {
+	font-weight: normal;
+	}
+
+.confirm-box .message-box ul {
+	padding: 8px;
+	}
+
+.confirm-box .message-box ul li {
+	margin-bottom: 16px;
+	}
+
+
+/*マイページ
+--------------------------------------------------------------------------*/
+
+#mypage-section {
+	
+	}
+
+
+#mypage-section .mypage-box {
+	max-width: 960px;
+	margin: 48px auto;
+	padding: 12px 2%;
+	box-sizing: border-box;
+	}
+
+#mypage-section .member-info-box {
+	border: solid 1px #ccc;
+	}
+
+#mypage-section .mypage-box div {
+	margin: 12px 0;
+	}
+
+#mypage-section .mypage-box >p {
+	margin: 24px 0;
+	}
+
+#mypage-section .mypage-box div ul {
+	display: flex;
+	text-align: left;
+	}
+
+#mypage-section .member-info-box div ul li {
+	padding: 8px;
+	box-sizing: border-box;
+	margin: 4px 4px;
+	}
+
+#mypage-section .member-info-box div ul li:first-child {
+	background-color: #000;
+	color: #eee;
+	flex: 1;
+	}
+
+#mypage-section .member-info-box div ul li:last-child {
+	flex: 2;
+	}
+
+
+#mypage-section .mypage-menu div >ul {
+	border-bottom: dotted 1px #ccc;
+	}
+
+#mypage-section .mypage-menu div ul li {
+	padding: 8px;
+	box-sizing: border-box;
+	margin: 4px 4px;
+	}
+
+#mypage-section .mypage-menu div ul li a {
+	color: #333;
+	text-decoration: underline;
+	}
+	
+#mypage-section .mypage-menu div ul li a.red {
+	color: #F00;
+	text-decoration: underline;
+	}
+	
+#mypage-section .mypage-menu div ul li a:hover {
+	color: #c00;
+	}
+
+#mypage-section .mypage-menu div ul li:first-child {
+	color: #eee;
+	flex: 1;
+	font-size: 16px;
+	}
+
+#mypage-section .mypage-menu div >ul >li:first-child span >a:before {
+	content: "";
+	background-image: url(../images/parts/svg/tri-right-b.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin-right: 8px;
+	}
+
+#mypage-section .mypage-menu div ul li:last-child {
+	flex: 2;
+	}
+
+
+.mypage-link a {
+	display: inline-block;
+	padding: 8px 26px;
+	background-color: #222;
+	color: #eee;
+	border: 0;
+	}
+
+.mypage-link a:hover {
+	background-color: #555;
+	}
+
+.user-rank {
+	font-size: 16px;
+	font-weight: bold;
+	}
+
+
+.free-info {
+	max-width: 960px;
+	margin: 16px auto;
+	}
+
+.about-point-rank {
+	font-size: 22px;
+	font-weight: bold;
+	margin: 28px 0;
+	}
+
+.about-point-rank a {
+	color: #f00;
+	}
+
+
+.caution-info {
+	max-width: 960px;
+	margin: 16px auto;
+	background-color: #fee;
+	text-align: left;
+	}
+
+.caution-info p {
+	color: #f00;
+	font-size: 18px;
+	text-align: center;
+	margin-bottom: 16px;
+	}
+
+.caution-info p span:before {
+	content: "";
+	background-image: url(../images/parts/svg/atten-tri.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	margin-right: 4px;
+	vertical-align: middle;
+	}
+
+.caution-info {
+	padding: 16px;
+	box-sizing: border-box;
+	}
+
+.caution-info a {
+	color: #f00;
+	}
+
+
+
+
+
+/*定額申込み
+--------------------------------------------------------------------------*/
+
+.apply-box p {
+	font-size: 18px;
+	margin: 8px 0;
+	}
+
+.apply-box table {
+	width: 90%;
+	margin: auto;
+	}
+
+.apply-box table th {
+	color: #eee;
+	background-color: #000;
+	padding: 4px;
+	}
+
+.apply-box table td {
+	padding: 6px 4px;
+	}
+
+.apply-box table th,
+.apply-box table td {
+	border: solid 1px #ccc;
+	}
+
+.apply-box table td input:hover {
+	cursor: pointer;
+	}
+
+.apply-box .head {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 16px;
+	}
+	
+.apply-box hr {
+	margin-bottom: 24px;
+	}
+
+.credit-info {
+	margin-bottom: 24px;
+	}
+
+.apply-box >.bank-exp {
+	display: inline-block;
+	text-align: left;
+	padding-top: 0;
+	}
+
+
+.course-list {
+	display: flex;
+	}
+
+.course-list div {
+	flex: 1;
+	}
+
+.course-list div ul {
+	border: solid 1px #333;
+	margin: 0 16px;
+	}
+
+.course-list div ul li {
+	line-height: 1.1;
+	padding: 8px 4px;
+	}
+
+.course-list div ul li.price,
+.course-list div ul li.application {
+	margin-top: 12px;
+	}
+ 
+ .course-list div ul li.application {
+	padding: 4px;
+	}
+
+.course-list div ul li.course {
+	color: #eee;
+	background-color: #000;
+	padding: 8px 4px;
+	font-family: "gra-font01";
+	}
+
+.course-list div ul li.course span {
+	font-size: 24px;
+	}
+
+.course-list div ul li.price span {
+	font-size: 28px;
+	}
+
+.course-list div ul li.days span {
+	font-size: 24px;
+	}
+
+.course-list div ul li.point span {
+	font-size: 24px;
+	}
+
+.course-list div ul li.application input {
+	display: block;
+	width:100%;
+	padding: 6px 8px;
+	background-color: #c00;
+	color: #fff;
+	border: 0;
+	font-size: 16px;
+	font-weight: bold;
+	}
+
+.course-list div ul li.application input:hover {
+	background-color: #c33;
+	cursor: pointer;
+	}
+
+
+
+
+.bank-guide img {
+	width: 80%;
+	}
+
+.bank-guide p {
+	margin-bottom: 16px;
+	}
+
+.bank-info {
+	margin: 16px 0;
+	padding: 8px 0;
+	}
+
+.bank-info .bank-accounts {
+	text-align: left;
+	display: inline-block;
+	border: solid 1px #ccc;
+	padding: 16px;
+	}
+
+.bank-info .bank-accounts p {
+	margin-top: 0;
+	margin-bottom: 8px;
+	}
+
+.bank-info .bank-accounts li {
+	margin: 8px 0;
+	margin-left: 16px;
+	font-size: 16px;
+	}
+
+
+.bank-mail-box {
+	margin: 16px 0;
+	padding: 8px 0;
+	}
+
+.bank-mail-box .transfer-report {
+	margin: 16px 0;
+	}
+
+.bank-mail-box .transfer-report a,
+.login-box .contact-registered a {
+	display: block;
+	color: #eee;
+	background-color: #222;
+	width: 200px;
+	padding: 8px 0;
+	margin: auto;
+	}
+
+.bank-mail-box .transfer-report a:hover {
+	background-color: #444;
+	}
+
+div.go-en,
+div.go-jp {
+	border: solid 1px #ccc;
+	display: inline-block;
+	padding: 24px 32px;
+	}
+
+.go-en .en,
+.go-jp .jp {
+	color: #ff0000;
+	}
+
+.go-en a,
+.go-jp a {
+	display: inline-block;
+	background-color: #333;
+	color: #eee;
+	padding: 8px 16px;
+	margin: 8px 0;
+	}
+
+.go-en a:hover,
+.go-jp a:hover {
+	background-color: #666;
+	}
+
+ .credit-icons {
+	display: flex;
+	margin: 8px 16px;
+	justify-content: center;
+	}
+
+ .credit-icons li {
+	list-style-type: none;
+	margin: 0;
+	margin-right: 8px;
+	line-height: 1.0;
+	}
+
+ .credit-icons li img {
+	width: 64px;
+	}
+
+.credit-info .credit-exp {
+	margin: 32px 0;
+	}
+	
+.credit-info .credit-exp .text  {
+	display: inline-block;
+	text-align: left;
+	max-width: 720px;
+	margin: 16px 0;
+	}
+
+.credit-info .credit-exp .read {
+	display: inline-block;
+	text-align: left;
+	margin-bottom: 32px;
+	}
+
+.credit-info .credit-exp .read a {
+	color: #f00;
+	font-size: 16px;
+	}
+
+.credit-info .credit-exp .small {
+	font-size: 10px;
+	display: inline-block;
+	text-align: left;
+	max-width: 720px;
+	}
+
+
+
+
+
+/*設定変更
+--------------------------------------------------------------------------*/
+
+
+
+
+/*ポイント履歴
+--------------------------------------------------------------------------*/
+
+.point-hist {
+	margin: 0 4px;
+	}
+
+.point-hist table {
+	border-collapse: separate;
+	border-spacing: 4px;
+	margin: 0 auto;
+	width: 100%;
+	min-width: 600px;
+	}
+
+.point-hist table th {
+	background-color: #000;
+	color: #eee;
+	padding: 4px 8px;
+	}
+
+.point-hist table td {
+	padding: 4px 8px;
+	}
+
+.point-hist table .date {
+	width: 20%;
+	}
+
+.point-hist table .detail {
+	width: 50%;
+	}
+
+.point-hist table .point,
+.point-hist table .remaind {
+	width: 15%;
+	}
+
+.point-hist table td.date,
+.point-hist table td.detail {
+	text-align: left;
+	}
+
+.point-hist table td.point,
+.point-hist table td.remaind {
+	text-align: right;
+	}
+
+
+/*購入ポイントで定額継続回数の追加
+--------------------------------------------------------------------------*/
+
+.monthly-count-box table {
+	margin: auto;
+	text-align: left;
+	border-collapse: separate;
+	border-spacing: 16px;
+	line-height: 1.0;
+	}
+
+
+.monthly-count-box table td.point {
+	text-align: right;
+	}
+
+.monthly-count-box table td.submit {
+	text-align: center;
+	padding: 16px 0;
+	}
+
+.monthly-count-box table td span {
+	font-size: 12px;
+	}
+
+
+/*サービスポイントで期間延長
+--------------------------------------------------------------------------*/
+
+.monthly-extend-box table {
+	margin: auto;
+	text-align: left;
+	border-collapse: separate;
+	border-spacing: 16px;
+	line-height: 1.0;
+	}
+
+.monthly-extend-box table td {
+	}
+
+.monthly-extend-box table td.point {
+	text-align: right;
+	}
+
+.monthly-extend-box table td.submit {
+	text-align: center;
+	padding: 16px 0;
+	}
+
+.monthly-extend-box table td span {
+	font-size: 12px;
+	}
+
+.monthly-extend-box table .center {
+	text-align: center;
+	}
+
+
+/*メール受信設定
+--------------------------------------------------------------------------*/
+
+.mail-rece-box {
+	margin: auto;
+	}
+
+.mail-rece-box p .en {
+	font-size: 12px;
+	}
+
+.mail-rece-box div,
+.mail-rece-box ul{
+	margin: 16px 0;
+	}
+	
+.mail-rece-box ul li {
+	text-align: left;
+	padding: 4px;
+	margin-right: 8px;
+	display: inline-block;
+	}
+
+.mail-rece-box input {
+	padding: 4px 8px;
+	line-height: 1.0
+	}
+
+
+
+/*単品購入履歴
+--------------------------------------------------------------------------*/
+
+.ppv-hist {
+	margin: 0 4px;
+	}
+
+.ppv-hist table {
+	border-collapse: separate;
+	border-spacing: 4px;
+	margin: 0 auto;
+	width: 100%;
+	min-width: 720px;
+	}
+
+.ppv-hist table th {
+	background-color: #000;
+	color: #eee;
+	padding: 4px 8px;
+	}
+
+.ppv-hist table td {
+	padding: 4px 8px;
+	vertical-align: middle;
+	}
+
+.ppv-hist table .img {
+	width: 24%;
+	}
+
+.ppv-hist table .detail {
+	width: 44%;
+	}
+
+.ppv-hist table td.detail {
+	}
+
+.ppv-hist table .period,
+.ppv-hist table .download {
+	width: 16%;
+	}
+
+.ppv-hist table td.date,
+.ppv-hist table td.detail {
+	text-align: left;
+	}
+
+.ppv-hist table td.point,
+.ppv-hist table td.remaind {
+	text-align: right;
+	}
+
+
+
+
+
+
+
+/*===============================================
+●画面の横幅が960pxまで
+===============================================*/
+
+
+@media screen and (max-width: 960px){
+
+.ppv-hist {
+	overflow: scroll;
+	}
+
+.course-list {
+	display: flex;
+	flex-wrap: wrap;
+	}
+
+.course-list div {
+	width: 400px;
+	flex:
+	}
+
+
+}
+
+
+
+
+/*===============================================
+●画面の横幅が720pxまで
+===============================================*/
+@media screen and (max-width: 720px){
+
+#mypage-section .mypage-box div ul {
+	display: block;
+	text-align: left;
+	}
+
+
+.point-hist,
+.ppv-hist {
+	overflow: scroll;
+	font-size: 12px;
+	}
+	
+.point-hist table th,
+.ppv-hist table th {
+	padding: 2px 4px;
+	}
+
+.point-hist table td,
+.ppv-hist table td {
+	padding: 2px 4px;
+	}
+
+.course-list {
+	display: block;
+	overflow: hidden;
+	}
+
+.course-list div {
+	margin-bottom: 32px;
+	float: left;
+	width: 50%;
+	}
+
+.course-list div ul {
+	}
+
+}
+
+
+
+
+/*===============================================
+●画面の横幅が600pxまで
+===============================================*/
+@media screen and (max-width: 600px){
+
+
+/*購入ポイントで定額継続回数の追加
+--------------------------------------------------------------------------*/
+
+.login-box {
+	padding-left: 4px;
+	padding-right: 4px;
+	}
+
+.form-box {
+	padding-left: 4px;
+	padding-right: 4px;
+	}
+
+.monthly-count-box {
+	padding-left: 8px;
+	padding-right: 8px;
+	}
+
+.monthly-count-box table td {
+	display: block;
+	padding: 8px;
+	width: 100%;
+	}
+
+.course-list {
+	display: block;
+	overflow: visible;
+	}
+	
+.course-list div {
+	width: 100%;
+	}
+
+.course-list div ul {
+	width: 100%;
+	margin: 0;
+	}
+}

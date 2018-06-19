@@ -1,0 +1,90 @@
+<include file="./Shop/Webapp/View/header.html" />
+<div class="appIndex">
+	<!--轮播开始-->
+    {:Ad(4)}
+	<!--轮播结束-->
+    
+    <!--首页主体开始-->
+    <div class="indexCont">
+    	<div class="logoBox">
+        	<div class="headerInfo">
+            	<a href="{:U('Cart/index')}" class="cart"><i>{$carts_count}</i></a>
+                <a href="{:U('Member/index')}" class="homeCenter"></a>
+                <a href="javascript:void(0)" class="pc"></a>
+            </div>
+            <a href="{:U('Index/index')}"><img src="__PUBLIC__/webapp/images/logo.png" width="126" height="30" border="0" /></a>
+        </div>
+        <div class="indexSearch">
+        	<input type="text" placeholder="Titanium Dioxide" name="keyword" id="searchInput" class="search" />
+            <a href="javascript:do_search();" class="searchBtn">search</a>
+        </div>
+        <div class="indexNav clearfix">
+        	<a href="{:U('Gcategory/index')}"><span class="Product"></span>Product</a>
+            <a href="{:U('Blog/index')}"><span class="Blog"></span>Blog</a>
+            <a href="{:U('DownloadCenter/index')}"><span class="Tech"></span>Tech</a>
+            <a href="{:U('ProductRequest/index')}"><span class="Request"></span>Request</a>
+        </div>
+     <volist name="catelist" id="list" key="ct">
+        <div class="productList">
+        	<h2><a href="{:U('List/index','cate_id='.$list['cate_id'])}">More</a>{$list.cate_name}</h2>
+            <div class="list clearfix">
+              <volist name="list.goods" id="goods">
+            	<a href="{:U('Goods/index','id='.$goods['goods_id'])}">
+                	<img src="/{$goods.goods_img}" width="148" height="148" />
+                    <span>{$goods.goods_name}</span>
+                </a>
+              </volist>
+              <!--
+                <a href="javascript:void(0)">
+                	<img src="__PUBLIC__/webapp/images/show/pic_1.jpg" width="148" height="148" />
+                    <span>Titanium Dioxide Rutile RC-708</span>
+                </a>
+                <a href="javascript:void(0)">
+                	<img src="__PUBLIC__/webapp/images/show/pic_1.jpg" width="148" height="148" />
+                    <span>Titanium Dioxide Rutile RC-708</span>
+                </a>
+                <a href="javascript:void(0)">
+                	<img src="__PUBLIC__/webapp/images/show/pic_1.jpg" width="148" height="148" />
+                    <span>Titanium Dioxide Rutile RC-708</span>
+                </a>-->
+            </div>	
+        </div>
+     </volist> 
+    </div>
+    <!--首页主体结束-->
+</div> 
+<script type="text/javascript" src="__PUBLIC__/webapp/js/swipe.min.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		//搜索 
+		do_search=function(){
+			list_url="{:U('List/index','','')}/"+"keyword/"+$('#searchInput').val(); 
+			self.location.href=list_url;			
+		}
+		$('#searchInput').keyup(function(event){
+  			if(event.keyCode ==13){ 
+				do_search(); 
+ 			}
+		}); 
+		
+		//导航
+		$(".indexNav a").addClass("show"); 
+	
+		//轮播
+		var bullets = document.getElementById('position').getElementsByTagName('li');
+		var banner = Swipe(document.getElementById('mySwipe'), {
+			auto: 4000,
+			continuous: true,
+			disableScroll:false,
+			callback: function(pos) {
+				var i = bullets.length;
+				while (i--) {
+				  bullets[i].className = ' ';
+				}
+				bullets[pos].className = 'cur';
+			}
+		});
+	});
+</script>
+<include file="./Shop/Webapp/View/footer.html" />

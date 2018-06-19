@@ -1,0 +1,325 @@
+<include file="./Shop/Home/View/header.html" />
+<load href="__PUBLIC__/home/js/order.js" />
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+
+<div class="webC1000">
+	<div id="pay">
+    	
+        <!--取货方式选择开始-->
+        <div id="DeliveryMethod">
+        	<h4>Delivery Method</h4>
+            <div class="each">
+            	<h5><input type="radio" name="inlogin_method_type" id="Shipping" value="shipping" <eq name="shipping_method" value="shipping">checked="checked"</eq> autocomplete="off" /><label for="Shipping">Shipping</label></h5>
+                <p>Shipping Address: Champlain, NY 12919</p>
+            </div>
+            <div class="each">
+            	<h5><input type="radio" name="inlogin_method_type" id="PickUp" value="pickup" <eq name="shipping_method" value="pickup">checked="checked"</eq> autocomplete="off" /><label for="PickUp">Pick Up</label></h5>
+                <p>Warehouse Address: Champlain, NY 12919</p>
+            </div>
+        </div>
+        <!--取货方式选择结束-->
+        
+        <eq name="shipping_method" value="pickup">
+    	<!--新增步骤4步骤类型开始-->
+    	<div id="newStepBox1">
+          <div class="stepBj">
+              <div class="stepShow stepShow2"></div>
+              <div class="step first past">
+                  <span class="time"></span>
+                  <span class="each">1</span>
+                  <span class="content">Add to Cart</span>
+              </div>
+              <div class="step second current">
+                  <span class="time"></span>
+                  <span class="each">2</span>
+                  <span class="content">Submit Order Information</span>
+              </div>
+              <div class="step third">
+                  <span class="time"></span>
+                  <span class="each">3</span>
+                  <span class="content">Payment</span>
+              </div>
+              <div class="step fourth ">
+                  <span class="time"></span>
+                  <span class="each">4</span>
+                  <span class="content">Pick Up</span>
+              </div>
+              <div class="step fifth">
+                  <span class="time"></span>
+                  <span class="each">5</span>
+                  <span class="content">Write a Review</span>
+              </div>
+          </div>
+        </div>
+    	<!--新增步骤4步骤类型结束-->
+        <else />
+        <!--步骤开始-->
+        <div id="stepBox">
+          <div class="stepBj">
+              <div class="stepShow stepShow2"></div>
+              <div class="step first past">
+                  <span class="time"></span>
+                  <span class="each">1</span>
+                  <span class="content">Add to Cart</span>
+              </div>
+              <div class="step second current">
+                  <span class="time"></span>
+                  <span class="each">2</span>
+                  <span class="content">Submit Order Information</span>
+              </div>
+              <div class="step third ">
+                  <span class="time"></span>
+                  <span class="each">3</span>
+                  <span class="content">Payment</span>
+              </div>
+              <div class="step fourth ">
+                  <span class="time"></span>
+                  <span class="each">4</span>
+                  <span class="content">Delivery</span>
+              </div>
+              <div class="step fifth">
+                  <span class="time"></span>
+                  <span class="each">5</span>
+                  <span class="content">Confirm Delivery</span>
+              </div>
+              <div class="step sixth">
+                  <span class="time"></span>
+                  <span class="each">6</span>
+                  <span class="content">Write a Review</span>
+              </div>
+          </div>
+        </div>
+        <!--步骤结束-->
+        </eq>
+        <form id="order_form" action="{:U('/Order/inlogin')}" method="post">
+        <!--地址信息开始-->
+        <div class="addressInfo clearfix">
+          <h2 class="h_1"><a href="{:U('UserAddress/index')}" target="_blank">Manage Address Book</a>Choose Your Address</h2>
+          <eq name="shipping_method" value="shipping">
+          <div class="adsList">
+                <h3>Shipping Address<a href="javascript:void(0)" class="addNew">Add a New Address</a></h3>
+                <volist name="shipping_address" id="vo" key="k">
+                <div class="each <if condition="$default_shipping_address_id eq $vo['address_id']">current</if>" data-address-id="{$vo.address_id}">
+                    <a href="javascript:void(0)" title="Edit This Address" class="EditAds">Edit</a>
+                    <input type="radio" value="{$vo.address_id}" name="shipping_address" id="ShippingAds_{$k}" data-items="{$Think.get.items}" <if condition="$default_shipping_address_id eq $vo['address_id']">checked="checked"</if> />
+                    <label for="ShippingAds_{$k}"><i>{$vo.address}</i>,<i>{$vo.city}</i>,<i>{$vo.state_name}</i><!--,<i>{$vo.country_name}</i>--><i> {$vo.zipcode}</i>,<br />(<em>{$vo.first_name} {$vo.last_name}</em>),<i>{$vo.telephone}</i></label>
+                    <if condition="$default_shipping_address_id eq $vo['address_id']">
+                    <span>Default</span>
+                    <else />
+                    <a href="javascript:void(0)" class="DefaultAbout">Set As Default</a>
+                    </if>
+                </div>
+                </volist>
+                <p><a href="javascript:void(0)">Show all addresses</a></p>
+                <input type="hidden" id="post_shipping_address" name="post_shipping_address" value="{$default_shipping_address_id}" />
+          </div> 
+          </eq> 
+          <div class="adsList">
+                <h3>Billing Address<a href="javascript:void(0)" class="addNew">Add a New Address</a></h3>
+                <volist name="billing_address" id="vo" key="k">
+                <div class="each <if condition="$default_billing_address_id eq $vo['address_id']">current</if>" data-address-id="{$vo.address_id}">
+                    <a href="javascript:void(0)" title="Edit This Address" class="EditAds">Edit</a>
+                    <input type="radio" value="{$vo.address_id}" name="billing_address" id="BillingAds_{$k}" <if condition="$default_billing_address_id eq $vo['address_id']">checked="checked"</if> />
+                    <label for="BillingAds_{$k}">{$vo.address},{$vo.city},{$vo.state_name} <!--{$vo.country_name},-->{$vo.zipcode},<br />(<em>{$vo.first_name} {$vo.last_name}</em>),{$vo.telephone}</label>
+                    <if condition="$default_billing_address_id eq $vo['address_id']">
+                    <span>Default</span>
+                    <else />
+                    <a href="javascript:void(0)" class="DefaultAbout">Set As Default</a>
+                    </if>
+                </div>
+                </volist>
+                <p><a href="javascript:void(0)">Show all addresses</a></p>
+                <input type="hidden" id="post_billing_address" name="post_billing_address" value="{$default_billing_address_id}" />
+          </div>
+        </div>
+        <!--地址信息结束-->
+        
+        <!--订单支付详情开始-->
+        <div class="orderPay clearfix">
+        	<div class="order">
+              <eq name="shipping_method" value="shipping">
+           	  <div class="shipInfo">
+                <h2 class="h_2">Shipping Information</h2>
+                <p>Note:Orders no more than 150lbs (68.04kg) will be shipped by Fedex Ground, otherwise by Fedex Freight Economy.</p>
+                <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td>Shipping Method</td>
+                        <td width="50%" class="delivery_name"><i class="loading"></i></td>
+                      </tr>
+                      <tr>
+                        <td>Shipping Fee</td>
+                        <td width="50%" class="shipping_fee"><i class="loading"></i></td>
+                      </tr>
+                      <neq name="inside_fee" value="0">
+                      <tr>
+                        <td><input type="checkbox" value="1" id="insideDelivery" name="want_inside_delivery"  autocomplete="off"  /><label for="insideDelivery">Inside Delivery</label></td>
+                        <td width="50%" class="inside_fee" data-price="0"><i class="loading"></i></td>
+                      </tr>
+                      </neq>
+                </table>
+              </div>
+              </eq>
+              <div class="orderInfo">
+           		<h2 <eq name="shipping_method" value="pickup">class="h_2"<else />class="h_3"</eq>>Order Information</h2>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <thead>
+                          <tr>
+                            <td>Item Description </td>
+                            <td width="150">Unit Price </td>
+                            <td width="150">Quantity </td>
+                            <td width="150">Total </td>
+                          </tr>
+                      </thead>
+                      <volist name="carts.carts" id="vo">
+                      <tr>
+                        <td>
+                        	<dl class="clearfix">
+                            	<dt><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" target="_blank"><img src="/{$vo.default_image}" width="50" height="50" /></a></dt>
+                              <dd>
+                                <p class="pName"><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" target="_blank">{$vo.goods_name}</a></p>
+                                <p>{$vo.spec_attr}</p>
+                              </dd>
+                            </dl>
+                        </td>
+                        <td width="150">{$vo.price|format_price}</td>
+                        <td width="150">{$vo.quantity}</td>
+                        <td width="150">{$vo.totle|format_price}</td>
+                      </tr>
+                      </volist>
+                </table>
+                <p class="total">Sub Total: <em class="sub_total">{$carts.subtotle|format_price}</em>Shipping:<em class="shipping_fee"><i class="loading"></i></em>Grand Total: <em class="grand_totle"><i class="loading"></i></em></p>
+                <div class="totalPrice">
+                	<p class="Discount">Discount 
+                    	<notempty name="promotions.discount">
+                        （{$promotions.discount.sale_off}%off）
+                        <input type="hidden" id="promotion_discount_id" name="promotion_discount_id" value="{$promotions.discount.pro_id}" /> 
+                        <else />
+                        no promotion
+                        </notempty> : 
+                       - <em class="discount_fee">{$promotions.discount.discount_fee|format_price}</em></p>
+                    <notempty name="promotions.integral">
+                    <p>{$promotions.integral.title}</p>
+                    <input type="hidden" id="promotion_integral_id" name="promotion_integral_id" value="{$promotions.integral.pro_id}" /> 
+                    </notempty>
+                    <div class="Points">
+                    	<input type="checkbox" name="usepoints" id="usepoints" value="1" autocomplete="off" /><label for="usepoints">Redeem Points</label>
+                        <div class="father">
+                        	<input type="text" value="" name="score" class="usePointTotal" enpty="onlynumber" readonly="readonly" autocomplete="off" data-max="{$Think.session.score}" />
+                            <span class="InfoError" style="display:none;">You can redeem up to {$Think.session.score} points in this order.</span>
+                        </div>
+						<em>- $0.00</em>
+                        <span class="allPoint">({$Think.session.score} available)</span>
+                    </div>
+                    <p class="all">Final:<em><i class="loading"></i></em></p>
+                </div>
+              </div>
+            	
+            </div>
+            <!--支付信息开始-->
+            <!--<div class="payInfo">
+            	<h2 <eq name="shipping_method" value="pickup">class="h_3"<else />class="h_4"</eq>>Payment Information</h2>
+                <div class="card">
+                	<h3>* Payment Method</h3>
+                    <div class="genre clearfix">
+                    	<a href="javascript:void(0)" class="PayPal current" title="PayPal"><span>PayPal</span></a>
+                        <input type="hidden" id="pay_code" name="pay_code" value="PayPal" />
+                    </div>
+                    <div class="genreDetail clearfix">
+                    	<ul>
+                        	<li class="Visa">
+                            	<input type="radio" name="card_type" id="Visa" value="Visa" checked="checked" />
+                                <label for="Visa">Visa</label>
+                            </li>
+                            <li class="Maste">
+                            	<input type="radio" name="card_type" id="Maste" value="Maste" />
+                                <label for="Maste">Master Card</label>
+                            </li>
+                            <li class="Discover">
+                            	<input type="radio" name="card_type" id="Discover" value="Discover" />
+                                <label for="Discover">Discover</label>
+                            </li>
+                            <li class="Express">
+                            	<input type="radio" name="card_type" id="Express" value="Express" />
+                                <label for="Express">American Express</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="writeInfo">
+                	<dl>
+                    	<dt>* Name on Card</dt>
+                        <dd><input type="text" id="card_name" name="card_name" value="" class="textIn textIn_1" /></dd>
+                    </dl>
+                    <dl>
+                    	<dt>* Credit Card No.</dt>
+                        <dd><input type="text" id="card_no" name="card_no" value="" class="textIn textIn_1" /></dd>
+                    </dl>
+                    <dl>
+                    	<dt>* Exp. Date</dt>
+                        <dd>
+                        	<div class="father">
+                                <input type="text" id="exp_month" name="exp_month" value="" maxlength="2" class="textIn textIn_2" />
+                                <i>Month</i>
+                            </div>
+                            <div class="father">
+                                <input type="text" id="exp_year" name="exp_year" value="" maxlength="4" class="textIn textIn_2" />
+                                <i>Year</i>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                    	<dt>* CCID</dt>
+                        <dd class="clearfix">
+                        	<div class="father">
+                        		<input type="text" id="ccid" name="ccid" value="" maxlength="3" class="textIn textIn_3" />
+                            </div>
+                            <div class="show">
+                            	<p>Please enter the last 3 digits on the back of your credit card.</p>
+                                <img src="__PUBLIC__/home/images/creditCard.jpg" width="153" height="98" />
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>-->
+            <!--支付信息结束-->
+        </div>
+        
+        <!--确认支付开始-->
+        <div class="surePay">
+            <eq name="shipping_method" value="shipping">
+            <div class="sureInfo">
+            	<dl class="clearfix">
+                	<dt>Deliver to: </dt>
+                    <dd class="Sureads"></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Receiver: </dt>
+                    <dd class="Surename"></dd>
+                </dl>
+            </div>
+            <input type="button" class="sureBtnGay submit" value="Submit Your Order Now" disabled="disabled" />
+            <else />
+            <input type="button" class="sureBtn submit" value="Submit Your Order Now" />
+            </eq>
+        </div>
+        <input type="hidden" name="shipping_method" value="{$shipping_method}" />
+        <input type="hidden" id="items" name="items" value="{$Think.get.items}" />
+        <!--确认支付结束-->
+        </form>
+        <!--订单支付详情结束-->
+    </div>
+</div>
+
+<div id="grayBg"></div>
+<div id="newAds">
+	<h2><a href="javascript:void(0)" class="closed" title="Closed">closed</a>Add a New Adderss</h2>
+    <div id="newAdsShowBox"></div>
+</div>
+<!--/UserAddress/ajax_add.html-->
+<script type="text/javascript">
+</script> 
+<include file="./Shop/Home/View/footer.html" />

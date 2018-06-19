@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新增管理员</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#admin_form').validate({
+		rules : {
+			user_name : {
+				required : true
+			},
+			password : {
+				required : true,
+				minlength : 6
+			},
+			repassword : {
+				required : true,
+				equalTo : "#password"
+			}
+		},
+		messages : {
+			user_name : {
+				required : '<i></i>管理员用户名不能为空'
+			},
+			password : {
+				required : '<i></i>密码不能为空',
+				minlength : '<i></i>密码长度不能小于6位'
+			},
+			repassword : {
+				required : '<i></i>重复密码不能为空',
+				equalTo : '<i></i>两次输入的密码不一致'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+</script>
+<style> td{font-size:12px; line-height:40px;}</style>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Admin')}" class="text">管理员管理</a> > <a href="{:U('/Admin/Admin/add')}" class="text">编辑管理员</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">编辑管理员</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post"> 
+                        <input type="hidden" name="id" value="{$user.user_id}"/>
+                       <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="26%">&nbsp;</td>
+    <td width="74%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">用户名：</td>
+    <td align="left"><input name="user_name" type="text" class="span300" id="user_name" value="{$user.user_name}" readonly="readonly" placeholder="用户名"></td>
+  </tr>
+  <!--
+  <tr>
+    <td align="right">输入密码：</td>
+    <td align="left"> <input type="password" id="password" name="password" value="" class="span300" placeholder="密码"></td>
+  </tr>
+  <tr>
+    <td align="right">再次输入密码：</td>
+    <td align="left"> <input type="password" id="repassword" name="repassword" value="" class="span300" placeholder="重复密码"></td>
+  </tr>-->
+  <tr>
+    <td align="right">用户角色：</td>
+    <td align="left"> <volist name="group" id='g'><input type="checkbox" value="{$g.id}" <if condition="in_array($g['id'],$user['groups'])">checked</if> id="role_{$g.id}" name="role[]" /><label for="role_{$g.id}">{$g.title}</label> </volist>  </td>
+  </tr>  
+  <tr>
+    <td>&nbsp;</td>
+    <td align="left"><button type="submit" class="btn btn_dm">确认提交</button></td>
+  </tr>
+                        </table>
+ </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

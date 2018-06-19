@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SEO管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet"> 
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__'; 
+$(function(){
+var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+var interval = setInterval(function(){
+	var time = --wait.innerHTML;
+	if(time <= 0) {
+		location.href = href;
+		clearInterval(interval);
+	};
+	$(window.parent.document).find(("iframe[id='workspace']")).removeAttr("style");
+}, 1000);
+});
+</script>   
+</head>
+<style type="text/css">
+	#id{color:#f00;}
+	.boxJudge{ width:600px; margin:30px auto;}
+	.boxJudge h2{ height:autopx; line-height:80px; padding-left:90px;}
+	.boxJudge h2.success{ background:url(/Public/admin/images/success.png) no-repeat left center;}
+	.boxJudge h2.error{ background:url(/Public/admin/images/error.png) no-repeat left center;}
+	.boxJudge .infoLy{ padding-left:100px; font-size:14px;}
+	.boxJudge .infoLy p{ padding-bottom:10px; margin-right:20px;}
+	.boxJudge .infoLy button{ border:none;}
+</style> 
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end--><!--表格start-->
+      <div class="tbox"> 
+    <present name="message">
+        <!--成功开始-->
+        <div class="boxJudge">
+            <h2 class="success"><?php echo($message); ?></h2>
+            <div class="infoLy">
+                <p>page will be redirected in <span  id="wait">{$waitSecond}</span> seconds.</p>
+                <a id="href" href="<?php echo($jumpUrl); ?>"></a>
+                <button type="button" onClick="<?php echo($jumpUrl);?>" class="btn btn_dm">Back</button>
+                <a href="{:U('/Admin/')}">Back to homepage</a>
+            </div>
+        </div>	
+        <!--成功结束-->
+        <else/> 
+        <!--失败开始-->
+        <div class="boxJudge">
+            <h2 class="error"><?php echo($error); ?></h2>
+            <div class="infoLy">
+                <p>page will be redirected in <span  id="wait">{$waitSecond}</span> seconds.</p>
+                <a id="href" href="<?php echo($jumpUrl); ?>"></a>
+                <button type="button" onClick="<?php echo($jumpUrl);?>" class="btn btn_dm">Back</button>
+                <a href="{:U('/Admin/')}">Back to homepage</a>
+            </div>
+        </div>
+        <!--失败结束-->
+    </present>
+</div>
+<br><br> 
+</div>
+</section>
+</body>
+</html>

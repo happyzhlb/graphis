@@ -1,0 +1,32 @@
+
+        <footer id="tiezi_bot" style=" background-color: #8ee6ff;">
+		 <?php if(strtolower(CONTROLLER_NAME) =='index' and strtolower(ACTION_NAME) !='user_login' and strtolower(ACTION_NAME) !='register'){ ?>  
+            <a href="{:U('Index/index')}" class="box-flex-1 active"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_home_on.png" height="46" /></div></a>
+         <?php }else{ ?>
+			<a href="{:U('Index/index')}" class="box-flex-1"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_home_off.png" height="46" /></div></a>
+		 <?php }?> 
+		 
+		<?php if(strtolower(CONTROLLER_NAME) =='bbs' and (strtolower(ACTION_NAME) !='select' and strtolower(ACTION_NAME) !='add')){ ?>  
+            <a href="{:U('Bbs/index')}" class="box-flex-1 active"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_sq_on.png" height="46" /></div></a>
+		<?php }else{ ?>	
+			<a href="{:U('Bbs/index')}" class="box-flex-1"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_sq_off.png" height="46" /></div></a>
+		<?php }?>	
+		
+		<?php if(strtolower(CONTROLLER_NAME) =='bbs' and (strtolower(ACTION_NAME) =='select' or strtolower(ACTION_NAME) =='add')){ ?>  			
+            <a href="{:U('Bbs/select')}" class="box-flex-1 active"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_ft_on.png" height="46" /></div></a>
+        <?php }else{ ?>	
+			<a href="{:U('Bbs/select')}" class="box-flex-1"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_ft_off.png" height="46" /></div></a>
+		<?php }?>
+		
+		<?php if(strtolower(CONTROLLER_NAME) =='record'){ ?>  			
+		   <a href="{:U('Record/index')}" class="box-flex-1 active"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_jl_on.png" height="46" /></div></a>
+        <?php }else{ ?>
+			<a href="{:U('Record/index')}" class="box-flex-1"><div style="border-right:1px solid #e8faff;"><img src="/Public/images/bot_enter_jl_off.png" height="46" /></div></a>
+		<?php }?>
+		
+		<?php if(strtolower(CONTROLLER_NAME) =='member' and strtolower(ACTION_NAME) !='record' and strtolower(ACTION_NAME) !='register'){ ?>  			
+			<a href="{:U('Member/index')}" class="box-flex-1 active"><img src="/Public/images/bot_enter_user_on.png" height="46" /></a>
+	    <?php }else{ ?>	
+			<a href="{:U('Member/index')}" class="box-flex-1"><img src="/Public/images/bot_enter_user_off.png" height="46" /></a>
+		<?php }?>
+		</footer> 

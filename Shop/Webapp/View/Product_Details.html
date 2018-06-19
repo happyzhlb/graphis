@@ -1,0 +1,327 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Product Details</span>
+            <a href="{:U('List/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--产品详情开始-->
+    <div class="productDetail">
+        <!--产品轮播开始-->
+        <div class="proImages">
+            <div class="addWrap"><?php #dump($gallery);?>
+                <div class="swipe" id="mySwipe">
+                    <div class="swipe-wrap">
+                    <volist name="gallery" id="imgs">
+                        <div><a href="/{$imgs.img_original}"><img src="/{$imgs.img_url}" width="300" /></a></div>
+                    </volist> 
+                    </div>
+      			</div>
+                <ul id="position">
+                <for start="1" end="count($gallery)" comparison="elt"> 
+                  <li class="<eq name="i" value="1">cur</eq>"></li>  
+                 </for> 
+                </ul>
+            </div>
+        </div>
+        <!--产品轮播结束-->
+        <div class="proName clearfix">
+        	<a href="javascript:void(0)" class="collect <if condition="$is_collect=='1'">collectCurrent</if>"></a>
+            <h2>{$goods.goods_name|deal_title=' '}</h2>
+        </div>
+        <div class="moreInfo">
+        	<a href="{:U('information','id='.$goods['goods_id'])}"><i></i>Product Information</a>
+  </div>
+        <div class="moreInfo">
+        	<a href="{:U('Goods/reviews','goods_id='.$goods['goods_id'])}"><i></i>Customer Reviews<span>({$comments_count})</span></a>
+    </div>
+        <div class="buyPro">
+        	<p>Item Code: {$goods.goods_code}</p>
+          <p>Ship From: {:C('city')} {:M('region')->getFieldByRegion_id(C('state'),'region_name')}</p>
+            <dl class="clearfix" id="batch_list"></dl> 
+      <dl class="clearfix" style="display:none;">
+            	<dt>Batch:</dt>
+                <dd class="clearfix">               	
+              <volist name ="specs" id="spec">
+                	<a href="javascript:void(0)" class="current">{$spec.spec_batch}</a>
+                </volist>
+                </dd>
+            </dl>
+        </div>
+        <!--产品列表start-->
+  <div class="clearfix" id="goods_list">
+            <div class="eachBuy clearfix">
+                <div class="buyTotal">
+                    <a href="javascript:void(0)" class="minus"><span>-</span></a>
+                    <input type="text" value="" class="typeNum" />
+                    <a href="javascript:void(0)" class="add"><span>+</span></a>
+                </div>
+                <p><em>Package:</em>25KG/bag</p>
+                <p><em>Price:</em>$2.00/bag</p>
+                <p><em>Stock:</em>35bag</p>
+            </div>
+        </div>
+        <!--产品列表end--> 
+  <div class="buyBtn">
+        	<a href="javascript:void(0)" class="flr" id="buyNow">Buy Now</a>
+            <a href="javascript:void(0)" id="AddtoCart">Add to Cart</a>
+        </div>
+    </div>
+	<!--产品详情结束--> 
+    
+</div>  
+<script type="text/javascript" src="__PUBLIC__/webapp/js/swipe.min.js"></script>
+<script type="text/javascript">
+	//轮播
+	var bullets = document.getElementById('position').getElementsByTagName('li');
+	var banner = Swipe(document.getElementById('mySwipe'), {
+		auto: 15000,
+		continuous: true,
+		disableScroll:false,
+		callback: function(pos) {
+			var i = bullets.length;
+			while (i--) {
+			  bullets[i].className = ' ';
+			}
+			bullets[pos].className = 'cur';
+		}
+	});
+	
+//产品详情页JS
+$(function(){
+	//添加收藏
+	var URL = '__CONTROLLER__/add_collect';
+	goods_id='{$goods.goods_id}';
+	$('.proName .collect').click(function(){
+		$.post(URL,{'id':goods_id},function(data){ 
+			if(data.status=='1'){
+				if(data.info.substring(0,6)=='Remove'){
+					$('.collect').removeClass('collectCurrent');
+				}else{
+					$('.collect').addClass('collectCurrent');
+				}
+			}	
+			alert(data.info);
+		}); 
+	});	
+	
+	var specs = new Array();
+	<volist name ="specs" id="spec">
+	specs.push(new Array('{$spec.spec_id}','{$spec.spec_page}','{$spec.spec_batch}','{$spec.sku}','{$spec.unit}','{$spec.is_sample}','{$spec.price}','{$spec.limit_buy}'));
+	</volist>
+	var Pspacs=new Array();
+	var Bspacs=new Array();
+	for(var x in specs){
+		Bspacs[specs[x][2]]=specs[x][2];  
+	}
+
+
+	//批次选择
+	$('#batch_list dd a').live('click',function(){  
+		$('#batch_list dd a').removeClass('current');
+		$(this).addClass('current');
+		showhtml($(this).attr('data-batch'));
+		//$('.itemBuy h4 strong').html('$0.00');	
+	});
+	//初始化批次规格
+	showhtml(''); 
+	//初始化批次规格
+	function showhtml(batch){
+		var bhtml = '<dt>Batch:</dt><dd class="clearfix">';
+		var sc = batch;
+		var batchItem = 0;
+		if(sc == ''){
+			for(var x in Bspacs){
+				batchItem++;
+				if(batchItem == 1){
+					sc = x;
+					bhtml += '<a href="javascript:void(0)" class="current" data-batch="'+Bspacs[x]+'">00'+batchItem+'<span>'+ Bspacs[x] +'</span></a></a>';
+				}else{
+					bhtml += '<a href="javascript:void(0)" data-batch="'+Bspacs[x]+'">00'+batchItem+'<span>'+ Bspacs[x] +'</span></a></a>';
+				}
+			}
+			bhtml += '</dd>';
+			$('#batch_list').html(bhtml);
+		}
+		
+		//normal
+		var nhtml = '<h3>Normal Goods</h3>';
+		var shtml = '<h3>Samples</h3>';
+		var _html= '';
+		for(var k in specs){
+			if(specs[k][2] == sc){ 
+				_html +='<div class="eachBuy clearfix">';
+                _html +='<div class="buyTotal">';
+                _html +='<a href="javascript:void(0)" class="minus"><span>-</span></a>';
+                _html +='<input type="text" value="" class="typeNum" enpty="onlynumber" data-spec-id="'+ specs[k][0] +'" data-max="'+ specs[k][7] +'" data-price="'+ specs[k][6] +'" />';
+                _html +='<a href="javascript:void(0)" class="add"><span>+</span></a></div>';
+				_html +='<span class="cannotBuy" style="display:none;">You can buy ' + specs[k][7] + ' in maximum.</span></dd></dl>';
+                _html +='<p><em>Package:</em>'+specs[k][1]+'/'+specs[k][4]+'</p><p><em>Price:</em>$'+specs[k][6]+'/'+specs[k][4]+'</p><p><em>Stock:</em>'+specs[k][3]+' '+specs[k][4]+'</p>';
+            	_html +='</div>' ;
+			}
+		}
+		//shtml += '<p class="total">Sub Total: <strong>$0.00</strong></p>';
+		//nhtml += '<p class="total">Sub Total: <strong>$0.00</strong></p>';
+		$('#goods_list').html(_html); 
+	}
+	
+	
+//数量加1
+	$('.add').live('click',function(){ 
+		var obj_input = $(this).parents('.buyTotal').find('.typeNum');
+		var num = 0;
+		var numMax = parseInt(obj_input.attr('data-max'));
+		if(obj_input.val() == ''){
+			num = 1;
+		}else{
+			num = parseInt(obj_input.val());
+			num++;
+		}
+		if(num > numMax){
+			num--;
+			$(this).parents('.eachBuy').find('.cannotBuy').show();
+		}
+		if(num == 0) num = '';
+		obj_input.attr('value',num);
+		//计算价格
+		var totle = 0;
+		$(this).parents('.goods').find('.typeNum').each(function(){
+			totle += parseInt($(this).attr('data-price')) * $(this).val();
+		});
+		//$(this).parents('.goods').find('.total strong').html('$' + formatCurrency(totle)); 
+		//subtotle();
+	});
+	//数量减1
+	$('.minus').live('click',function(){ 
+		var obj_input = $(this).parents('.buyTotal').find('.typeNum');
+		var num = obj_input.val();
+		if(num > 0){
+			num --;
+		}
+		$(this).parents('.eachBuy').find('.cannotBuy').hide();
+		obj_input.attr('value',num);
+		var totle = 0;
+		$(this).parents('.goods').find('.typeNum').each(function(){
+			totle += parseInt($(this).attr('data-price')) * $(this).val();
+		});
+		//$(this).parents('.goods').find('.total strong').html('$' + formatCurrency(totle));
+		//subtotle();
+	});
+	
+	//手动输入
+	$('.typeNum').live('input',function(){
+		//$(this).blur();
+		var data_max = parseInt($(this).attr('data-max'));
+		var num = 0;
+		if($(this).val() != ''){
+			num = parseInt($(this).val());
+		}
+		if(num > data_max){
+			num = data_max;
+			$(this).attr('value',data_max);
+			$(this).parents('.eachBuy').find('.cannotBuy').show();
+		}else{
+			$(this).parents('.eachBuy').find('.cannotBuy').hide();
+		}
+		var totle = 0;
+		$(this).parents('.goods').find('.typeNum').each(function(){
+			totle += parseInt($(this).attr('data-price')) * $(this).val();
+		});
+		//$(this).parents('.goods').find('.total strong').html('$' + formatCurrency(totle));
+		//subtotle();
+	});
+	
+	//加入购物车
+	$('#AddtoCart').click(function(){
+		var obj = $(this);
+		var spec_ids = '';
+		var spec_quantity = '';
+		$('.typeNum').each(function(){
+			if($(this).val() != '' && parseInt($(this).val()) > 0){
+				spec_ids += $(this).attr('data-spec-id') + ',';
+				spec_quantity += parseInt($(this).val()) + ',';
+			}
+		});
+		if(spec_ids == ''){
+			alert('Please enter the right quantity you want to purchase.');
+			return false;
+		}else{
+			spec_ids = spec_ids.substring(0,spec_ids.length-1);
+			spec_quantity = spec_quantity.substring(0,spec_quantity.length-1);
+			$.ajax({
+				url : '{:U("Cart/add")}',
+				type : 'post',
+				dataType : 'json',
+				data : {'id':spec_ids,'quantity':spec_quantity},
+				success : function(data){
+					if(data.status){
+						alert('Add to cart successfully.'); 
+						return; 
+						//if(data.info.additem > 0){ //更新购物车数量
+						//	var cnum = parseInt($('.Cart i').html());
+						//	$('.Cart i').html(cnum + data.info.additem);
+						//	$('.viewCart i').html(cnum + data.info.additem);	
+						//}
+						//obj.siblings('.alertConBox').find('h5').html('<span class="success"></span>Add to cart successfully.');
+					}else{
+						alert(data.info+' Add to cart failed.'); 
+						//obj.siblings('.alertConBox').find('h5').html('<span class="success"></span>'+data.info);
+					}
+					obj.siblings('.alertConBox').show();
+				}
+			});
+		}
+	});
+	
+	//立即购买
+	$('#buyNow').click(function(){
+		var spec_ids = '';
+		var spec_quantity = '';
+		$('.typeNum').each(function(){
+			if($(this).val() != '' && parseInt($(this).val()) > 0){
+				spec_ids += $(this).attr('data-spec-id') + ',';
+				spec_quantity += parseInt($(this).val()) + ',';
+			}
+		});
+		if(spec_ids == ''){
+			alert('Please enter the right quantity you want to purchase.');
+			return false;
+		}else{
+			spec_ids = spec_ids.substring(0,spec_ids.length-1);
+			spec_quantity = spec_quantity.substring(0,spec_quantity.length-1);
+			PostSubmit('{:U("Buy/index")}', spec_ids, spec_quantity);
+		}	
+	});
+
+	//Post方式提交表单  
+	function PostSubmit(url, data, msg) {  
+		var postUrl = url;//提交地址  
+		var postData = data;//第一个数据  
+		var msgData = msg;//第二个数据  
+		var ExportForm = document.createElement("FORM");  
+		document.body.appendChild(ExportForm);  
+		ExportForm.method = "POST";  
+		var newElement = document.createElement("input");  
+		newElement.setAttribute("name", "spec_ids");  
+		newElement.setAttribute("type", "hidden");  
+		var newElement2 = document.createElement("input");  
+		newElement2.setAttribute("name", "spec_quantity");  
+		newElement2.setAttribute("type", "hidden");  
+		ExportForm.appendChild(newElement);  
+		ExportForm.appendChild(newElement2);  
+		newElement.value = postData;  
+		newElement2.value = msgData;  
+		ExportForm.action = postUrl;  
+		ExportForm.submit();  
+	};  
+
+});
+</script>
+<include file='./Shop/Webapp/View/footer.html' />

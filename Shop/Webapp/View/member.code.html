@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<title>会员口令码 - GRAPHIS NO.1 GRAVURE WEB SITE</title>
+
+<!--キャッシュクリア-->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!--css-->
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/reset_html5.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/default.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/default-tb.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/default-sp.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/modelpage.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/item-himekuri.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/loader.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/jquery.mCustomScrollbar.css">
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" type="text/css" href="/files/css/lte_ie9.css">
+<![endif]-->
+
+<!--js-->
+<script src="/Public/webapp/user_files/jquery.min.js"></script>
+<script src="/Public/webapp/user_files/fullSlideShow.js"></script>
+<script src="/Public/webapp/user_files/gra-common.js"></script>
+<script src="/Public/webapp/user_files/loader.js"></script>
+<style type="text/css">
+#wrapper {
+	display: none;
+}
+#fade, #loader {
+	display: block;
+}
+</style>
+<script src="/Public/webapp/user_files/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/Public/webapp/user_files/slide_menu.js"></script>
+<!--<script src="/Public/webapp/user_files/slide_show.js"></script>-->
+<script src="/Public/webapp/user_files/flexibility.js"></script>
+
+<!--[if lte IE 9]>
+<script src="/files/js/flexibility.js"></script>
+<script>
+    $(function(){
+        flexibility(document.documentElement);
+    });
+</script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- java script-- >
+<script>
+		(function($){
+			$(window).load(function(){
+				
+				$(".scroll-box").mCustomScrollbar({
+					theme:"light",
+					scrollInertia:400
+				});
+			});
+		})(jQuery);
+		
+</script>
+<!-- java script-->
+
+<!-- java script-->
+<script src="__PUBLIC__/js/layer/layer.js"></script> 
+<script src="__PUBLIC__/js/jquery.validate.js"></script> 
+<script> 
+$(function() { 
+	 
+	//注册表单验证
+	$('#main_form').validate({
+		rules : {
+			code : {
+				required : true
+			},   
+		},
+		messages : {
+			code : {
+				required : '请输入口令码.', //function(){ layer.alert('请输入用户名.');},
+			},  
+		},
+		/* Ajax提交注册*/
+		submitHandler: function(form){ //回调函数参数：form 
+			$("#main_form #show_msg").html('<img src="/Public/home/images/loading.gif" style="vertical-align:middle;" /> Creating...').show();
+			$.post('/member/code.html',{
+						code: function(){
+								return $('#main_form input[name="code"]').val();
+							}, 	   
+				},function(data){  
+					if(data.status=='0'){
+						alert(data.info); 
+						$('#user_name').focus();
+						$("#login_form #show_msg").html(data.info);
+						return;
+					}else{
+						$("#login_form #show_msg").html('OK.');
+						layer.alert(data.info,{btn:['返回我的专辑','继续添加口令码']},function(){
+							self.location= '/myalbum/index.html';
+						},function(){ 
+							self.location=data.url;		
+						}); 
+					}  
+				},'json');
+			//form.submit(); //提交表单
+		},
+		/*
+		errorPlacement: function(error, element) {  
+			if(element.attr('name') == 'is_agree'){
+				element.next().next().after(error);
+			}else{
+				error.appendTo(element.parent()); 
+			}
+		},*/
+		focusInvalid: true, //当为false时，验证无效时，没有焦点响应  
+		onkeyup: false,   
+		//success: 'InfoTrue',
+		//errorElement : 'span',
+		//errorClass : 'InfoError',
+		//validClass : 'InfoTrue'
+		
+	});	 
+}); 
+</script> 
+
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/member.css">
+</head>
+<body>
+
+<!-- ヘッダーナビ -->
+<header>
+  <div id="head-navi3">
+    <div class="head-navi3-box">
+      <div class="head-navi-logo"><a href="/"><img src="/Public/webapp/user_files/gralogo.svg" class="gralogo-head"></a></div>
+      <div class="head-navi-list"> 
+        
+        <!--登录の判断-->
+        
+        <nav>
+          <ul>
+            <li class="acd-models"> <a href="/models.html"><span class="text-en">Models</span><br>
+              <span class="text-jp">模特</span></a>
+              <ul class="acd-models-box" style="display: none; height: 469px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                <li><a href="/monthly/">NEW MODELS/最新模特一览</a></li>
+                <li><a href="/monthly/?RM=1">MEMBER/会员专属福利</a></li>
+                <li><a href="/monthly/?RM=2">GRAPHIS推荐模特</a></li>
+                <!-- <li><a href="/monthly/?RM=3">STAGE.2/ステージ2公開一覧</a></li>
+                <li><a href="/monthly/?MC=1">GRAPHIS GALS/グラフィスギャルズ</a></li>
+                <li><a href="/monthly/?MC=2">FIRST GRAVURE/初脱ぎ娘！</a></li>
+                <li><a href="/monthly/?MC=3">LIMITED EDITTION/期間限定</a></li>
+                <li><a href="/monthly/?MC=4">SPECIAL/スペシャル企画 </a></li>
+                <li><a href="/monthly/?MC=5">FETI STYLE/フェチスタイル </a></li>
+                <li><a href="/monthly/?MC=6">CALENDAR/日めくり</a></li>
+                               
+                <li class="close-gallery"><a href="/monthly/?MIC03=7">SHIFT to STAGE1/ステージ1へ移行</a></li>
+                <li class="close-gallery"><a href="/monthly/?MIC03=8">SHIFT to STAGE2/ステージ2へ移行</a></li>
+                <li class="close-gallery"><a href="/monthly/?MIC03=6">CLOSE GALLERY/公開終了</a></li>
+-->
+              </ul>
+            </li>
+            <li><a href="/page/?ID=award"><span class="text-en">Albums</span><br>
+              <span class="text-jp">专辑</span></a></li>
+            <li><a href="/ppv/"><span class="text-en">JOIN VIP</span><br>
+              <span class="text-jp">加入VIP</span></a></li>
+            <li><a href="/page/?ID=guide"><span class="text-en">Code</span><br>
+              <span class="text-jp">口令码</span></a></li>
+            <li><a href="/page/?ID=contact"><span class="text-en">Contact</span><br>
+              <span class="text-jp">联系我们</span></a></li>
+          </ul>
+        </nav>
+        <div class="head-join-box">
+          <ul>
+            <li class="btn-mypage"><a href="/member/index.html"><span class="text-en">MY PAGE</span><br>
+              <span class="text-jp">会员中心</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.head-navi-list --> 
+      
+    </div>
+    
+    <!--登录の判断-->
+    
+    <div class="login-info-box">
+      <div class="user-nfo-box">
+        <ul>
+          <li>{$user.user_name}</li>
+          <li class="on-w960">[{$user.grade_name}]</li>
+          <li class="on-w960">金币余额:{$user.balance}个</li>
+          <li class="on-w00">VIP剩余天数:50天 </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!--ヘッダーナビ縮小-->
+  <div id="head-navi2">
+    <div class="head-navi2-box">
+      <ul>
+        <li id="btn-menu">
+          <div>MENU</div>
+        </li>
+        <li class="head-logo">
+          <div><a href="/"><img src="/Public/webapp/user_files/gralogo.svg"></a></div>
+        </li>
+        
+        <!--登录の判断-->
+        
+        <li class="btn-mypage"><a href="/member/index.html">会员</a></li>
+      </ul>
+    </div>
+    
+    <!--登录の判断-->
+    
+    <div class="login-info-box">
+      <div class="user-nfo-box">
+        <ul>
+          <li>{$user.user_name}</li>
+          <li class="on-w960">[普通会员]</li>
+          <li class="on-w960">金币余额:{$user.balance}个</li>
+          <li class="on-w00">VIP剩余天数:50天 </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--ヘッダーナビ縮小--> 
+  
+  <!--スライドナビ-->
+  <div id="slide-menu">
+    <navi class="slide-navi">
+      <ul>
+        
+        <!--登录の判断-->
+        
+        <div class="login-space"></div>
+        <li class="model accordion"> <span class="toggle">MODELS/モデル一覧</span>
+          <ul>
+            <li><a href="/monthly/">NEW MODELS/新モデル</a></li>
+            <li><a href="/monthly/?RM=1">MEMBER/メンバー公開一覧</a></li>
+            <li><a href="/monthly/?RM=2">STAGE.1/ステージ1公開一覧</a></li>
+            <li><a href="/monthly/?RM=3">STAGE.2/ステージ2公開一覧</a></li>
+            <li><a href="/monthly/?MC=1">GRAPHIS GALS/グラフィスギャルズ</a></li>
+            <li><a href="/monthly/?MC=2">FIRST GRAVURE/初脱ぎ娘！</a></li>
+            <li><a href="/monthly/?MC=3">LIMITED EDITTION/期間限定</a></li>
+            <li><a href="/monthly/?MC=4">SPECIAL/スペシャル企画</a></li>
+            <li><a href="/monthly/?MC=5">FETI STYLE/フェチスタイル </a></li>
+            <li><a href="/monthly/?MC=6">CALENDAR/日めくり</a></li>
+            <!--        
+                <li class="close-gallery"><a href="/monthly/?MIC03=7">SHIFT to STAGE1/ステージ1へ移行</a></li>
+                <li class="close-gallery"><a href="/monthly/?MIC03=8">SHIFT to STAGE2/ステージ2へ移行</a></li>
+                <li class="close-gallery"><a href="/monthly/?MIC03=6">CLOSE GALLERY/公開終了</a></li>
+-->
+          </ul>
+        </li>
+        <li class="photo"><a href="/page/?ID=award">Award/アワード</a></li>
+        <li class="photo"><a href="/ppv/">PPV/単品ダウンロード</a></li>
+        <li class="photo"><a href="/page/?ID=guide">ABOUT SITE/サイト紹介</a></li>
+        <li class="photo"><a href="/page/?ID=contact">CONTACT/お問い合わせ</a></li>
+      </ul>
+    </navi>
+  </div>
+  <!--スライドナビ--> 
+  
+</header>
+<!-- /ヘッダーナビ --> 
+
+<!--登录の判断--> 
+
+<!--登录時スペース-->
+<div class="login-head-space"></div>
+<div id="wrapper" class="slide" style="display: block;"> 
+  
+  <!-- コンテンツ -->
+  <div id="content-gp">
+
+	<p class="pan-link"><a href="/">TOP</a> &gt; <a href="/member/index.html">会员中心/My page</a> &gt; 口令码/Code</p>
+
+<section id="login-section">
+	<h3><span class="text-en">CODE</span> <span class="text-jp">/口令码</span></h3>
+    
+    <div class="join-box main-box">
+
+		<p>■设置用户基本信息</p>
+        
+		<div class="form-box">
+		<form id="main_form" action="#" method="post">
+			<ul>
+            	<li>16位口令码</li>
+                <li><input type="text" name="code" value="" maxlength="16" style="font-size:3rem; width:98%; text-align:center;"></li>
+                <li>(输入口令码找回你打赏过的专辑，永久免费观看。)</li>
+            </ul> 
+           <div>
+           		<input type="submit" name="FS" value="确认提交/Confirm submit" class="login-submit">
+            </div>
+        </form>
+		</div><!--/.form-box-->
+        
+        <div class="pre-note none">
+        	<ul>
+            	<li></li>
+                <li>Confirmation e-mail will be sent to the e-mail address you entered for confirmation of registration regarding e-mail address. Domain designation refusal etc. It will not arrive correctly.</li>
+            </ul>
+        </div>
+   
+        
+    </div><!--/.join-box-->
+
+
+
+</section>
+
+
+</div>
+  <!--/#content-gp--> 
+  <!-- /コンテンツ --> 
+  
+  <!-- フッター -->
+  
+  <div id="navi-bottom-gp">
+    <div class="navi-bottom-logo"> <img src="/Public/webapp/user_files/gralogo.svg" alt="GRAPHIS"> </div>
+    <div class="navi-bottom-section"> 
+      
+      <!--登录の判断-->
+      
+      <ul>
+        <li><a href="/">TOP /トップページ</a></li>
+        <li><a href="/member/logout.php">Logout /ログアウト</a></li>
+        <li><a href="/monthly/">Models /公開モデル</a></li>
+      </ul>
+      <ul>
+        <!--<li><a href="#">スタッフ（モデル等）募集</a></li>-->
+        <li><a href="/files/htmlpage/legal.html" target="_blank">特定商取引法に基づく表示</a></li>
+        <li><a href="/files/htmlpage/legal02.html" target="_blank">改正風営法に基づく表記</a></li>
+        <li><a href="/files/htmlpage/kiyaku.html" target="_blank">ご利用規約</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--/#navi-bottom-->
+  
+  <footer class="tpl">
+    <p><span class="text-jp">当サイトに掲載されている画像・動画ファイル及び文章等の無断転載及び使用を固く禁じます。</span><br>
+      <span class="text-en">All contents on this website are the copyright of GRAPHIS.Unauthorized copy or any form of reproduction is strictly prohibited.</span></p>
+    <p>Copyright (C) 2018 graphis.ne.jp All rights reserved.</p>
+  </footer>
+  <!-- /フッター --> 
+  
+  <!--	google analytics等	--> 
+  
+</div>
+<!--/#wrapper--> 
+
+<!--	google analytics等	-->
+
+</body>
+</html>

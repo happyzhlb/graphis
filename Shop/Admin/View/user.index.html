@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理员管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+<style>
+	.green{color:#33cc00; font-weight:bold; font-family:Verdana, Geneva, sans-serif;}
+</style>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+    <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/User')}" class="text" target="workspace">会员管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">会员列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增会员" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox">
+                   	   <form id="search_form" method="get" style="font-size:12px;">
+                       <table width="100%" border="0">
+  <tr>
+    <td align="right">
+    <!--
+    地区:
+      <select id="state" name="state">
+        <option value="">-不限-</option>
+        <volist name='regions' id='state'>
+          <option value="{$state.region_id}" 
+            <if condition="$Think.get.state eq $state['region_id']">selected</if>
+            > {$state.region_name}</option>
+        </volist>
+      </select>会员类型:
+<select name="user_type">
+	<option value="">全部会员</option>
+    <option value="0" <eq name="Think.get.user_type" value="0">selected</eq>>个人会员</option>
+    <option value="1" <eq name="Think.get.user_type" value="1">selected</eq>>企业会员</option>
+</select>-->
+&nbsp;  
+用户名:
+                          <input type="search" style="width:100px;" name="user_name" id="user_name" value="{$Think.get.user_name}" placeholder="用户名">
+&nbsp;&nbsp;昵称:
+<input type="search" style="width:100px;" name="nick_name" id="nick_name" value="{$Think.get.nick_name}" placeholder="昵称">
+<!--
+Email:
+<input type="search" style="width:100px;" name="email" id="email" value="{$Think.get.email}" placeholder="邮箱">
+-->
+<input type="submit" value="搜索" class="btn btn_ds"></td>
+  </tr>
+</table>
+                   	   </form>
+                   </div>
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th></th>
+                                 <th>用户名</th>
+                                 <th>昵称</th>
+                                 <th>VIP会员</th>
+                                 <th>上次登录IP</th>
+                                 <th>上次登录时间</th>
+                                 <th>积分</th>
+                                 <th>登录次数</th>
+                                 <th>状态</th>
+                                 <th>注册时间</th>
+                                 <th colspan="2">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="user" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$list.user_id}"></td>
+                                 <td title="{$list.nick_name} &#13;{$list.email}">{$list.user_name} </td>
+                                 <td>{$list.nick_name}</td>
+                                 <td align="center"><span class="<if condition="$list['is_vip'] eq '1'">green</if>" >{$list['is_vip']?$list['vip_end_date']:'否'}</span></td>
+                             <td>{$list.last_login_ip|default='--'}</td>
+                                 <td>{$list.last_login_time|todate}</td>
+                                 <td>{$list.score}</td>
+                                 <td>{$list.logins}</td>
+                                 <td align="center"><if condition="$list.status eq 1"><span enpty="edit_status_ajax" url="{:U('/Admin/User/editstatus', array('id'=>$list['user_id']))}" title="正常" class="icon_right"></span><else /><span enpty="edit_status_ajax" url="{:U('/Admin/User/editstatus', array('id'=>$list['user_id']))}" title="已锁定" class="icon_error"></span></if></td>
+                                 <td>{$list.ctime|todate}</td>
+                                 <td class="center"><a href="{:U('/Admin/User/edit',array('id'=>$list['user_id']))}" title="">编辑</a></td>
+                                 <td class="center"><a href="{:U('/Admin/User/drop',array('id'=>$list['user_id']))}" title="">删除</a></td>
+                             </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="11">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page} </div><span>&nbsp;&nbsp; Total:{$total}</span>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

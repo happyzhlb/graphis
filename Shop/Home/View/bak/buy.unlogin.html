@@ -1,0 +1,291 @@
+<include file="./Shop/Home/View/header.html" />
+<load href="__PUBLIC__/home/js/buy.js" />
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+
+<div class="webC1000">
+	<div id="pay">
+    	
+        <!--取货方式选择开始-->
+        <div id="DeliveryMethod">
+        	<h4>Delivery Method</h4>
+            <div class="each">
+            	<h5><input type="radio" name="unlogin_method_type" id="Shipping" value="shipping" checked="checked"  autocomplete="off"/><label for="Shipping">Shipping</label></h5>
+                <p>Shipping Address: Champlain, NY 12919</p>
+            </div>
+            <div class="each">
+            	<h5><input type="radio" name="unlogin_method_type" id="PickUp" value="pickup" autocomplete="off"/><label for="PickUp">Pick Up</label></h5>
+                <p>Warehouse Address: Champlain, NY 12919</p>
+            </div>
+        </div>
+        <!--取货方式选择结束-->
+        
+    	<!--新增步骤4步骤类型开始-->
+    	<div id="newStepBox" style="display:none;">
+          <div class="stepBj">
+              <div class="stepShow stepShow"></div>
+              <div class="step first current">
+                  <span class="time"></span>
+                  <span class="each">1</span>
+                  <span class="content">Submit Order Information</span>
+              </div>
+              <div class="step second">
+                  <span class="time"></span>
+                  <span class="each">2</span>
+                  <span class="content">Payment Success</span>
+              </div>
+              <div class="step third ">
+                  <span class="time"></span>
+                  <span class="each">3</span>
+                  <span class="content">Order Completed</span>
+              </div>
+              <div class="step fourth ">
+                  <span class="time"></span>
+                  <span class="each">4</span>
+                  <span class="content">Write a Review</span>
+              </div>
+          </div>
+        </div>
+    	<!--新增步骤4步骤类型结束-->
+    
+    	<!--步骤开始-->
+        <div id="newStepBox1">
+          <div class="stepBj">
+              <div class="stepShow stepShow"></div>
+              <div class="step first current">
+                  <span class="time">2014-01-12 18:23</span>
+                  <span class="each">1</span>
+                  <span class="content">Submit Order Information</span>
+              </div>
+              <div class="step second">
+                  <span class="time"></span>
+                  <span class="each">2</span>
+                  <span class="content">Ship Product</span>
+              </div>
+              <div class="step third">
+                  <span class="time"></span>
+                  <span class="each">3</span>
+                  <span class="content">Confirm Delivery</span>
+              </div>
+              <div class="step fourth">
+                  <span class="time"></span>
+                  <span class="each">4</span>
+                  <span class="content">Order Completed</span>
+              </div>
+              <div class="step fifth">
+                  <span class="time"></span>
+                  <span class="each">5</span>
+                  <span class="content">Write a Review</span>
+              </div>
+          </div>
+        </div>
+        <!--步骤结束-->
+        
+        <div class="payLogin clearfix">
+        	<h4 class="payH">Retuning Customer</h4>
+            <p class="hTips">Please login to your account</p>
+            <form id="login_form" action="{:U('/Index/login')}" method="post">
+            <dl class="clearfix">
+            	<dt>* Email: </dt>
+                <dd>
+                	<input type="text" id="email" name="email" class="textIn" />
+                </dd>
+            </dl>
+            <dl class="clearfix wdOther">
+            	<dt>* Password:</dt>
+                <dd>
+                	<input type="password" id="password" name="password" class="textIn" />
+                   	<a href="javascript:;void(0)">Forgot your password? </a>
+                    <input type="hidden" id="referer" name="referer" value="{$referer}">
+                    <input type="submit" value="" class="loginBtn" />
+                </dd>
+            </dl>
+            </form>
+        </div>
+        
+        <!--地址信息开始-->
+        <form id="unlogin_order_form" action="{:U('/Buy/unlogin')}" method="post">
+        <div class="addressInfo clearfix">
+        	<h4 class="payH">New Customer</h4>
+            <p class="hTips">Please add your shipping and billing addresses.</p>
+            <h2 class="h_5">Add Your Address</h2>
+            <div class="Member">
+              <input type="radio" name="user_type" value="1" id="CompanyMember" />
+              <label for="CompanyMember">Company Member</label>
+              <input type="radio" name="user_type" value="0" id="IndividualMember" />
+              <label for="IndividualMember">Individual Member</label>
+            </div>
+            <div id="shipping_address_info" class="Billing">
+            	<h3>Billing Information</h3>
+                <p class="Required">* Required Information</p>
+                <p class="tips">Your billing address must match the address on your credit card statement to avoid any delays in the authorization process.</p>
+				<dl class="clearfix">
+                	<dt>* First Name:</dt>
+                    <dd><input type="text" id="billing_first_name" name="billing_first_name" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Last Name:</dt>
+                    <dd><input type="text" id="billing_last_name" name="billing_last_name" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="CompanyName clearfix">
+                	<dt>* Company Name:</dt>
+                    <dd><input type="text" id="billing_Company_name" name="billing_company_name" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Address:</dt>
+                    <dd>
+                    	<input type="text" id="billing_address" name="billing_address" value="" class="adsInput adsInput_1" />
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* City:</dt>
+                    <dd>
+                    	<input type="text" id="billing_city" name="billing_city" value="" class="adsInput adsInput_2" />
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Country:</dt>
+                    <dd>
+                        <input type="text" value="United States" class="adsInput adsInput_2" />
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* State:</dt>
+                    <dd>
+                    	<select id="billing_state" name="billing_state">
+                        	<option value="">Please select</option>
+                            <volist name="region" id="vo">
+                            <option value="{$vo.region_id}">{$vo.region_name}</option>
+                            </volist>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Zip:</dt>
+                    <dd><input type="text" id="billing_zipcode" name="billing_zipcode" value="" class="adsInput adsInput_2" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Phone:</dt>
+                    <dd><input type="text" id="billing_telephone" name="billing_telephone" value="" class="adsInput adsInput_3" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Fax:</dt>
+                    <dd><input type="text" id="billing_mobile" name="billing_mobile" value="" class="adsInput adsInput_3" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Email Address:</dt>
+                    <dd>
+                    	<input type="text" id="billing_email" name="billing_email" value="" class="adsInput adsInput_1" autocomplete="off" />
+                        <div class="emailExplain">
+                        	<p>Your email is secure with us. We will never rent, sell or share your email address. View our privacy policy for more information.</p>
+                            <p>We will set your email address as your login account. If the password is left blank, a default assword will automatically  be sent to your email address. Please ensure your emailaddress is correct.</p>
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Password:</dt>
+                    <dd><input type="password" id="newpassword" name="newpassword" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Confirm Password:</dt>
+                    <dd><input type="password" id="repassword" name="repassword" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+            </div>
+            
+            <div id="billing_address_info" class="Billing">
+            	<h3>Shipping Information</h3>
+                <p class="Required">* Required Information</p>
+                <div class="chooseAddress">
+                	<input type="radio" name="shipping_type" id="billingAds" value="0" /><label for="billingAds">Ship to Billing Address</label><br />
+                    <input type="radio" name="shipping_type" id="ChoosenewAds" value="1" checked="checked" /><label for="ChoosenewAds">Ship to a New Address</label>
+                </div>
+				<dl class="clearfix">
+                	<dt>* First Name:</dt>
+                    <dd><input type="text" id="shipping_first_name" name="shipping_first_name" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Last Name:</dt>
+                    <dd><input type="text" id="shipping_last_name" name="shipping_last_name" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="CompanyName clearfix">
+                	<dt>* Company Name:</dt>
+                    <dd><input type="text" id="shipping_company_name" name="shipping_company_name" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Address:</dt>
+                    <dd><input type="text" id="shipping_address_1" name="shipping_address_1" value="" class="adsInput adsInput_1" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* City:</dt>
+                    <dd><input type="text" id="shipping_city" name="shipping_city" value="" class="adsInput adsInput_2" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Country:</dt>
+                    <dd>
+                        <input type="text" value="United States" class="adsInput adsInput_2" />
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* State:</dt>
+                    <dd>
+                    	<select name="shipping_state">
+                        	<option value="">Please select</option>
+                            <volist name="region" id="vo">
+                            <option value="{$vo.region_id}">{$vo.region_name}</option>
+                            </volist>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>* Zip:</dt>
+                    <dd><input type="text" id="shipping_zipcode" name="shipping_zipcode" value="" class="adsInput adsInput_2" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>*Phone:</dt>
+                    <dd><input type="text" id="shipping_telephone" name="shipping_telephone" value="" class="adsInput adsInput_3" /></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Fax:</dt>
+                    <dd><input type="text" id="shipping_fax" name="shipping_fax" value="" class="adsInput adsInput_3" /></dd>
+                </dl>
+            </div>
+            
+        </div>
+        <!--地址信息结束-->
+        
+        <!--确认地址信息-->
+        <div class="surePay" style="border:none; padding:0px;">
+            <a href="javascript:void(0)" class="sureBtn submit" title="Submit Your Order Now">Submit Your Address</a>
+        </div>
+        <!--确认支付结束-->
+        <input type="hidden" name="shipping_method" value="shipping" />
+        <input type="hidden" name="spec_ids" value="{$spec_ids}" />
+        <input type="hidden" name="spec_quantity" value="{$spec_quantity}" />
+        </form>
+        <!--订单支付详情结束-->
+        
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$("#CompanyMember").click();
+		
+		//个人和公司注册
+		if($("#CompanyMember").attr('checked') == 'checked'){
+			$("dl.CompanyName").show();
+		}else{
+			$("dl.CompanyName").hide();	
+		}
+		$("#CompanyMember").click(function(){
+			$("dl.CompanyName").show();		
+		});
+		$("#IndividualMember").click(function(){
+			$("dl.CompanyName").hide();		
+		});
+	});
+</script>
+<include file="./Shop/Home/View/footer.html" />

@@ -1,0 +1,396 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>系统设置</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/formlist.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/common.js"></script>
+<script type="text/javascript">
+var region_state = '{$Think.config.state}';
+  $(function(){	
+	fn_test_mail=function(){
+	  $('#t_label').html('正在发送邮件...');
+	  $('#t_label').attr('disabled','disabled');
+	  $.ajax({
+		type: "POST",
+   		url: "{:U('Admin/System/mail_test')}",
+   		data: "test_address="+$("#test_address").val(),
+   		success: function(msg){ 
+				alert(msg); 
+			$('#t_label').html('测试邮件发送'); 
+			$("#t_label").attr("disabled",false);
+   		}
+	  });
+	}
+	$('#test_mail').bind('click',fn_test_mail);
+	
+	$('#admin_form').validate({
+		rules:{
+			test_address:{
+				required:false,
+				email:false
+			}
+		},
+		messages:{
+			test_address:{
+				required:'<i></i>邮件内容不能为空！',
+				email: '<i></i>邮箱格式错误！',
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+		
+	});
+	$('#country').change();
+  });
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".movebar li a").hover(function(){
+			var thisLi = $(".movebar li a").index(this);
+			$(".movebar li").removeClass("current");
+			$(this).parent("li").addClass("current");
+			$("div.movelist").hide();
+			$("div.movelist").eq(thisLi).show();
+			ResetFrameHeight();	
+		});
+	});
+</script>
+<style>
+	td{line-height:2; height:32px;}
+	.normal{border:1px solid #CCC; width:130px !important;}
+	.movelist{ display:none;}
+</style>
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="_self">Home</a> > <a href="{:U('/Admin/System')}" class="text" target="_self">系统设置</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <!--列表区域start-->
+         <div class="movezone">
+         	<form id="admin_form" method="post" enctype="multipart/form-data">
+              <div class="movebar">
+                   <ul>
+                       <li class="current"><a href="javascript:void(0)">网店设置</a></li> 
+                       <li><a href="javascript:void(0)">基本设置</a></li>
+                       <li><a href="javascript:void(0)">邮件设置</a></li>
+                       <li><a href="javascript:void(0)">发（退）货设置</a></li>
+                       <!--<li><a href="javascript:void(0)">手机端设置</a></li>-->
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+              <div id="signupForm"><div class="error"></div></div>
+              <div class="selectbox">
+                   <!--网店设置start-->
+                   <div class="movelist" id="movelist_0" style="display:block"> 
+                        <div class="formbox">
+                             <div class="listname">
+                                <label>网店域名:</label>
+                                <div class="inbox">
+                                     <input type="text" id="site_url" name="site_url" value="{$Think.config.site_url}" class="span240">
+                                </div>
+                             </div>
+                            
+                             <div class="listname">
+                                <label>网店名称:</label>
+                                <div class="inbox">
+                                     <input type="text" id="site_name" name="site_name" value="{$Think.config.site_name}" class="span240">
+                                </div>
+                             </div>
+                             <div class="listname">
+                                <label>网店关键字:</label>
+                                <div class="inbox">
+                                     <input type="text" id="site_keywords" name="site_keywords" value="{$Think.config.site_keywords}" class="span240">
+                                </div>
+                             </div>
+                              <div class="listname">
+                                <label>静态文件服务器:</label>
+                                <div class="inbox"> 
+                                     <input type="text" id="static_url" name="static_url" value="{$Think.config.static_url}" class="span240">
+                                </div>
+                             </div>
+                             <div class="listname">
+                                <label>网店描述:</label>
+                                <div class="inbox">
+                                     <input type="text" id="site_description" name="site_description" value="{$Think.config.site_description}" class="span240">
+                                </div>
+                             </div>
+                              <div class="listname">
+                                <label>网店状态:</label>
+                                <div class="inbox">
+                                     <p class="radio">
+                                     <input type="radio" id="is_close_shop" name="is_close_shop" value="1" <if condition="$Think.config.is_close_shop eq 1">checked</if>>开启
+                                     </p>
+                                     <p class="radio">
+                                     <input type="radio" id="is_close_shop" name="is_close_shop" value="0" <if condition="$Think.config.is_close_shop eq 0">checked</if>>关闭
+                                     </p>
+                                </div>
+                             </div>
+                             <div class="listname">
+                                <label>网店关闭原因:</label>
+                                <div class="inbox">
+                                     <textarea id="shop_close_reason" name="shop_close_reason">{$Think.config.shop_close_reason}</textarea>
+                                </div>
+                             </div> 
+                             <!--
+                             <div class="listname">
+                                <label>拒绝中国IP访问:</label>
+                                <div class="inbox">
+                                     <p class="radio">
+                                     <input type="radio" id="close_china_intview" name="close_china_intview" value="1" <if condition="$Think.config.close_china_intview eq 1">checked</if>>开启
+                                     </p>
+                                     <p class="radio">
+                                     <input type="radio" id="close_china_intview" name="close_china_intview" value="0" <if condition="$Think.config.close_china_intview eq 0">checked</if>>关闭
+                                     </p>
+                                </div>
+                             </div>
+                             <div class="listname">
+                                <label>例外访问IP:</label>
+                                <div class="inbox">
+                                     <textarea id="exception_intview_ip" name="exception_intview_ip">{$Think.config.exception_intview_ip}</textarea>
+                                </div>
+                             </div> -->
+                        </div>
+                   </div>
+                   <!--网店设置end--> 
+                   
+                   <!--基本设置start-->
+                   <div class="movelist" id="movelist_1"> 
+                        <table class="form_table">
+				<col width="150px" />
+				<col />
+				<tr>
+					<th>默认的排序依据：</th>
+					<td>
+						<select name='order_by' class='normal'>
+							<option value='new' <if condition='$Think.config.order_by eq "new"'>selected</if>>上架时间</option>
+							<option value='price' <if condition='$Think.config.order_by eq "price"'>selected</if>>价格</option>
+							<option value='sale' <if condition='$Think.config.order_by eq "sale"'>selected</if>>销量</option>
+							<option value='cpoint' <if condition='$Think.config.order_by eq "cpoint"'>selected</if>>评分</option>
+						</select>
+						<label>* 在商品列表页中商品的排序依据条件</label>
+					</td>
+				</tr>
+				<tr>
+					<th>默认的排序方式：</th>
+					<td>
+						<select name='order_type' class='normal'>
+							<option value='desc' <if condition='$Think.config.order_type eq "desc"'>selected</if>>降序</option>
+							<option value='asc' <if condition='$Think.config.order_type eq "asc"'>selected</if>>升序</option>
+						</select>
+						<label>* 在商品列表页中商品的排序方式</label>
+					</td>
+				</tr>
+				<tr>
+					<th>列表默认展示方式：</th>
+					<td>
+						<select name='list_type' class='normal'>
+							<option value='list' <if condition='$Think.config.list_type eq "list"'>selected</if>>普通列表</option>
+							<option value='text' <if condition='$Think.config.list_type eq "text"'>selected</if>>文本列表</option>
+						</select>
+						<label>* 在商品列表页中商品的展示样式</label>
+					</td>
+				</tr>
+				<tr>
+					<th>列表页展示商品数量：</th>
+					<td><input type='text' value="{$Think.config.list_num}" class='small' name='list_num' pattern='int' /><label>* 在商品列表页中商品的展示数量</label></td>
+				</tr>
+                <tr>
+					<th>允许退款时间：</th>
+					<td><input type='text' value="{$Think.config.allow_refund_days}" class='small' id='allow_refund_days' name='allow_refund_days' pattern='int' /><label>* 允许退款时间从付款时间算起，单位（天）</label></td>
+				</tr>
+                <tr>
+					<th>自动确认收货时间：</th>
+					<td><input type='text' value="{$Think.config.auto_confirm_delivery}" class='small' id='auto_confirm_delivery' name='auto_confirm_delivery' pattern='int' /><label>* 自动确认收货发货时间算起，单位（天）</label></td>
+				</tr>
+                <tr>
+					<th>允许付款时间：</th>
+					<td><input type='text' value="{$Think.config.auto_cancel_order}" class='small' id='auto_cancel_order' name='auto_cancel_order' pattern='int' /><label>* 从下单时间算起，超过允许时间，订单会自动取消，单位（秒）</label></td>
+				</tr>
+                <tr>
+					<th>网站底部文章调用：</th>
+					<td><input type='text' value="{$Think.config.article_cate_id}" class='small' id='article_cate_id' name='article_cate_id' pattern='int' /><label>* 文章大类ID,多个用逗号','隔开</label></td>
+				</tr>
+                <tr>
+					<th>搜索热词：</th>
+					<td> <textarea id="hot_keywords" rows="2" name="hot_keywords">{$Think.config.hot_keywords}</textarea>
+                         <label>* 多个用逗号','隔开</label></td>
+				</tr>
+                <tr>
+					<th>仓库订单通知IP限定：</th>
+					<td> <textarea id="notice_limit_ip" rows="2" name="notice_limit_ip">{$Think.config.notice_limit_ip}</textarea>
+                         <label>* 多个IP之间用逗号','隔开</label></td>
+				</tr>
+			</table>
+                </div>
+                   <!--基本设置end-->
+                   
+                   <!--邮件设置start-->
+                   <div class="movelist" id="movelist_2">   
+			<table class="form_table">
+				<col width="150px" />
+				<col />
+				<tr>
+					<th>发送Email方式：</th>
+					<td>
+						<label class='attr'><input type='radio' name='email_type' value='1' checked='checked' onClick="//show_mail(1);" />第三方SMTP方式</label>
+						<label class='attr'><input type='radio' disabled name='email_type' value='2' onClick="//show_mail(2)" />本地mail邮箱</label>
+						<label> </label></td>
+				</tr>
+				<tr>
+					<th>发件人名称：</th>
+					<td>
+						<input type='text' name='mail_nickname'  value="{$Think.config.mail_nickname}" class='normal' />
+						<label>* 发送邮件所使用的昵称或别名，邮件内容中的发件人信息就是显示此信息</label>
+					</td>
+				</tr>
+				<tr name='smtp'>
+					<th>SMTP地址：</th>
+					<td>
+						<input type='text' name='mail_smtp' value="{$Think.config.mail_smtp}" class='normal' pattern='required' alt='填写正确的smtp地址' />
+						<label> 第三方的SMTP的URL地址</label>
+					</td>
+				</tr>
+				<tr name='smtp'>
+					<th>用户名：</th>
+					<td>
+						<input type='text' name='smtp_user' value="{$Think.config.smtp_user}" class='normal' pattern='required' alt='发送邮件用户名' />
+						<label>SMTP用户名</label>
+					</td>
+				</tr>
+				<tr name='smtp'>
+					<th>密码：</th>
+					<td><input type='password' name='smtp_pwd' value="{$Think.config.smtp_pwd}" class='normal' />
+					<label> SMTP密码</label></td>
+				</tr>
+				<tr name='smtp'>
+					<th>端口号：</th>
+					<td><input type='text' name='smtp_port' value="{$Think.config.smtp_port}" class='normal' />
+					<label> SMTP端口号(默认：25)</label></td>
+				</tr>
+				<tr>
+					<th>测试邮件地址：</th>
+					<td><input type='text' id="test_address" name='test_address' value="{$Think.config.test_address}" pattern='email' class='normal' alt='填写正确的email地址' /> 
+					<label> 用于测试邮件发送的功能【可选】</label></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><button type="button" id="test_mail"><label id="t_label">测试邮件发送</label></button>
+					</td>
+				</tr>
+			</table> 
+                   </div>
+                   <!--邮件设置end--> 
+                   <!--发（退）货设置start-->
+                   <div class="movelist" id="movelist_3"> 
+                        <table class="form_table">
+				<col width="150px" />
+				<col />
+                	<tr>
+					<th>国家：</th>
+					<td>
+                    <select id="country" name="country" class="normal">
+                    	<option value="">===请选择===</option>
+                    	<volist name="region" id="vo">
+                        	<option value="{$vo.region_id}" <if condition="$Think.config.country eq $vo['region_id']">selected</if>>{$vo.region_name}</option>
+                        </volist>
+                    </select>
+                    <label>* 发货（退货）国家</label></td>
+				</tr>
+                <tr>
+					<th>州：</th>
+					<td>
+                    <select id="state" name="state" class="normal">
+                    	<option value="">===请选择===</option>
+                    </select>
+                    <label>* 发货（退货）州</label></td>
+				</tr>
+                <tr>
+					<th>城市：</th>
+					<td><input type='text' value="{$Think.config.city}" class='small' id="city" name='city' /><label>* 发货（退货）城市</label></td>
+				</tr>
+                <tr>
+					<th>详细地址：</th>
+					<td><input type='text' value="{$Think.config.address}" class='small' id="address" name='address' /><label>* 发货（退货）详细地址</label></td>
+				</tr>
+                <tr>
+					<th>邮编：</th>
+					<td><input type='text' value="{$Think.config.zipcode}" class='small' id="zipcode" name='zipcode' /><label>* 退货邮编</label></td>
+				</tr>
+                <tr>
+					<th>联系人：</th>
+					<td><input type='text' value="{$Think.config.linkman}" class='small' id="linkman" name='linkman' /><label>* 退货联系人</label></td>
+				</tr>
+                <tr>
+					<th>联系电话：</th>
+					<td><input type='text' value="{$Think.config.telephone}" class='small' id="telephone" name='telephone' /><label>* 退货联系电话</label></td>
+				</tr> 
+			</table>
+                </div>
+                   <!--发（退）货设置end-->
+                   
+                   <!--手机端设置start-->
+                   <div class="movelist" id="movelist_4"> 
+                             <div class="listname">
+                                <label>手机站网址:</label>
+                                <div class="inbox">
+                                     <input type="text" id="webapp_url" name="webapp_url" value="{$Think.config.webapp_url}" title="http://开头" placeholder="http://" class="span240">  <span style="color:#ccc"> 格式：http://开头  以斜杠'/'结尾</span> 
+                                </div>
+                             </div>
+                             <div class="listname">
+                                <label>手机站名称:</label>
+                                <div class="inbox">
+                                     <input type="text" id="site_name" name="webapp_name" value="{$Think.config.webapp_name}" class="span240">
+                                </div>
+                             </div>
+                             <div class="listname">
+                                <label>网店状态:</label>
+                                <div class="inbox">
+                                     <p class="radio">
+                                     <input type="radio" id="is_close_shop" name="is_close_webapp" value="1" <if condition="$Think.config.is_close_webapp eq 1">checked</if>>开启
+                                     </p>
+                                     <p class="radio">
+                                     <input type="radio" id="is_close_shop" name="is_close_webapp" value="0" <if condition="$Think.config.is_close_webapp eq 0">checked</if>>关闭
+                                     </p>
+                                </div>
+                             </div>
+                             <div class="listname">
+                                <label>网店关闭原因:</label>
+                                <div class="inbox">
+                                     <textarea id="webapp_close_reason" name="webapp_close_reason">{$Think.config.webapp_close_reason}</textarea>
+                                </div>
+                             </div> 
+                   </div>
+                   <!--手机端设置end-->
+              </div>
+              <br/><br/>
+              <input type="button" value="提交" class="submit btn btn_ds p_deline"/>
+            </form>
+         </div>
+         <!--列表区域end-->
+         
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

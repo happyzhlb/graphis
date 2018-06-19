@@ -1,0 +1,48 @@
+<include file="./Shop/Home/View/header.html" />
+<div id="crumbs">
+	<a href="/">Home</a>&gt;
+    <a href="{:U('/Gcategory/index')}">Titanium Dioxide</a>&gt;
+    <span>Index</span>
+</div> 
+
+<div id="brand" class="clearfix">
+    <!--左侧列表开始-->
+    <include file="./Shop/Home/View/list.left.html" />
+    <!--左侧列表结束-->
+    <!--右侧产品开始-->
+    <div id="Pclass">
+        <dl class="clearfix num1Show">
+			<dt><img src="/{$cates.0.cate_image}" width="200" height="200" alt="{$cates.0.cate_name}" /></dt>
+            <dd>
+            	<h1>{$cates.0.cate_name}</h1>
+                <p>{$cates.0.cate_desc}</p>
+            </dd>        
+        </dl>
+        <div class="ShopTitanium">
+        	<h2>Shop Titanium Dioxide by Applications</h2>
+        	<volist name="cates.0.children" id="c_cate">
+            <dl class="clearfix supShow">
+            	<dt class="supDt"><a href="{:U('/List/index',array('cate_id'=>$c_cate['cate_id']))}"><img src="/{$c_cate.cate_image}" width="200" height="200" alt="{$c_cate.cate_name}" /></a></dt>
+                <dd class="supDd">
+                	<h3><a href="{:U('/List/index',array('cate_id'=>$c_cate['cate_id']))}">{$c_cate.cate_name}</a></h3>
+                    <dl class="clearfix subShow">
+                    	<!--<dt><h4>Description</h4></dt>-->
+                        <dd class="textAlign">{$c_cate.cate_desc}</dd>
+                    </dl>
+                    <dl class="clearfix subShow">
+                    	<!--<dt><h4>Categories</h4></dt>-->
+                        <dd>
+                        	<volist name="c_cate.children" id="c_c_cate">
+                        	<a href="{:U('/List/index',array('cate_id'=>$c_c_cate['cate_id']))}">{$c_c_cate.cate_name}</a>
+                            </volist>
+                        </dd>
+                    </dl>
+                </dd>
+            </dl>
+            </volist>
+        </div>
+    </div>
+    <!--右侧产品结束-->
+</div>
+<include file="./Shop/Home/View/viewed.items.html" />
+<include file="./Shop/Home/View/footer.html" />

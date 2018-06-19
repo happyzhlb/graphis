@@ -1,0 +1,90 @@
+<!doctype html>
+<html><head>
+<meta charset="utf-8">
+<title>管理员管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U(ACTION_NAME)}" class="text" target="workspace">邮件模板管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">邮件模板</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增邮件模板" class="btn btn_bs buttonadd">
+                </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox" style="font-size:12px;"><form id="search_form" method="get">  邮件模板标题: 
+                              <input type="search" name="tm_subject" id="tm_subject" value="{$Think.get.tm_subject}" style="width:100px;" placeholder="邮件模板标题关键字">  
+                            
+                          <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox"> 
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th width="22"></th>
+                                 <th width="111">类型</th>
+                                 <th width="356">邮件模板标题</th>
+                                 <th width="334">备注说明</th>
+                                 <th width="128">键名</th>  
+                                 <th width="195">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="list" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$list.tm_id}"></td>
+                                 <td align="center">{$list.tm_type} </td>
+                                 <td align="center">{$list.tm_subject}</td>   
+                                 <td align="center">{$list.tm_no|get_tm_text}</td>
+                                 <td align="center">{$list.tm_no}</td>  
+                                 <td class="center"><a href="{:U('edit',array('id'=>$list['tm_id']))}" title="">编辑</a> <a onClick="return confirm('确定要删除该记录？');" href="{:U('drop',array('id'=>$list['tm_id']))}" title="">删除</a></td>
+                               </tr> 
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="13">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <span class="selectALL"><label for="selectAll">全选</label></span>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

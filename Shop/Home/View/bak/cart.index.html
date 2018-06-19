@@ -1,0 +1,118 @@
+<include file="./Shop/Home/View/header.html" />
+<load href="__PUBLIC__/js/jquery.validate.js"/>
+<load href="__PUBLIC__/home/js/cart.js"/>
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<!--cart开始-->
+      <div class="shoppingCart">
+       	<h3>Shopping Cart</h3>
+        <form id="cart_form" action="{:U('/Order')}" method="get">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr class="tfoot">
+                    <td width="30" align="center"><input type="checkbox" class="checkAll" id="selectAll1" /></td>
+                    <td colspan="5">
+                        <div class="total">
+                            <a href="javascript:void(0)" title="Check Out" class="CheckOut">Check Out</a>
+                            Sub Total (<em class="subitems">0</em>items) : <strong class="subtotle">$0.00</strong>
+                        </div>
+                        <label for="selectAll1">Select All</label>
+                        <div class="alertFaBox">
+                            <a href="javascript:void(0)" class="DeleteAll" title="Delete All">Delete</a>
+                            <div class="alertConBox" style="display:none;">
+                                <div class="alert">
+                                    <a href="javascript:void(0)" class="closedAlert" title="Closed">closed</a>
+                                    <h5>Delete Item</h5>
+                                    <p class="alertTips">Confirm to delete the item ?</p>
+                                    <div class="btnBox">
+                                        <a href="javascript:void(0)" class="yes">Yes</a>
+                                        <a href="javascript:void(0)" class="no">No</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+              </tr>
+              <tr class="thead">
+                <td width="30" align="center">&nbsp;</td>
+                <td align="center">Item Name </td>
+                <td width="110" align="center">Unit Price </td>
+                <td width="160" align="center">Quantity </td>
+                <td width="110" align="center"> Total </td>
+                <td width="80" align="center">Delete</td>
+              </tr>
+              <volist name="carts" id="list">
+              <tr>
+                <td width="30" align="center"><input type="checkbox" id="chekbox_{$list.cart_id}" name="items[]" value="{$list.cart_id}" /></td>
+                <td align="center">
+                    <dl class="clearfix">
+                        <dt><a href="{:U('/Goods/index',array('id'=>$list['goods_id']))}" target="_blank"><img src="/{$list.default_image}" width="50" height="50" alt="{$list.goods_name}" /></a></dt>
+                        <dd>
+                            <a href="{:U('/Goods/index',array('id'=>$list['goods_id']))}" target="_blank">{$list.goods_name}</a>
+                            <p>{$list.spec_attr}</p>
+                        </dd>
+                    </dl>
+                </td>
+                <td width="110" align="center">{$list.price|format_price}</td>
+                <td width="160" align="center">
+                    <div class="Quantity">
+                        <a href="javascript:void(0)" class="reduce" title="reduce" <if condition="$list.quantity eq 1">style="display:none"</if>>reduce</a>
+                        <input type="text" id="quantity" name="" value="{$list.quantity}" data-max="{$list.limit_buy}" data-now="{$list.quantity}" class="numText" enpty="onlynumber" autocomplete="off" />
+                        <a href="javascript:void(0)" class="add" title="add" <if condition="$list.quantity eq $list['sku']">style="display:none"</if>>add</a>
+                        <span class="cannotBuy" style="display:none;">You can buy {$list.limit_buy} in maximum.</span>
+                    </div>
+                </td>
+                <td width="110" align="center"><span class="totalNum">{$list.totle|format_price}</span></td>
+                <td width="80" align="center">
+                	<div class="alertFaBox">
+                		<a href="javascript:void(0)" class="Delete" title="Delete">Delete</a>
+                        <div class="alertConBox" style="display:none;">
+                            <div class="alert">
+                                <a href="javascript:void(0)" class="closedAlert" title="Closed">closed</a>
+                                <h5>Delete Item</h5>
+                                <p class="alertTips">Confirm to delete the item ?</p>
+                                <div class="btnBox">
+                                    <a href="javascript:void(0)" class="yes">Yes</a>
+                                    <a href="javascript:void(0)" class="no">No</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               	</td>
+              </tr>
+              </volist>
+              <tr class="tfoot">
+                    <td width="30" align="center"><input type="checkbox" class="checkAll" id="selectAll" /></td>
+                    <td colspan="5">
+                        <div class="total">
+                            <a href="javascript:void(0)" title="Check Out" class="CheckOut">Check Out</a>
+                            Sub Total (<em class="subitems">0</em>items) : <strong class="subtotle">$0.00</strong>
+                        </div>
+                        <label for="selectAll">Select All</label>
+                        <div class="alertFaBox">
+                            <a href="javascript:void(0)" class="DeleteAll" title="Delete All">Delete</a>
+                            <div class="alertConBox" style="display:none;">
+                                <div class="alert">
+                                    <a href="javascript:void(0)" class="closedAlert" title="Closed">closed</a>
+                                    <h5>Delete Item</h5>
+                                    <p class="alertTips">Confirm to delete the item ?</p>
+                                    <div class="btnBox">
+                                        <a href="javascript:void(0)" class="yes">Yes</a>
+                                        <a href="javascript:void(0)" class="no">No</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+              </tr>
+        </table>
+        </form>
+        </div>	
+        <!--cart结束-->
+    </div>
+</div>
+<include file="./Shop/Home/View/footer.html" />

@@ -1,0 +1,53 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Product Category</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--产品分类开始-->
+    <div class="proListBox">
+    	<div class="proSearch">
+        	<input type="text" value="{:I('keyword')}" placeholder="Titanium Dioxide" name="keyword" id="searchInput" class="search" />
+            <a href="javascript:do_search();" class="searchBtn">search</a>
+        </div>
+     <volist name="cates" id="cate">
+        <div class="Category">
+        	<h1>{$cate.cate_name}</h1>
+            <volist name="cate.children" id="c_cate">
+            <div class="each">
+            	<a href="javascript:void(0)" class="reclassify" val="0"><span></span>{$c_cate.cate_name}<em></em></a>
+                <div class="listDetail">
+                	<volist name="c_cate.children" id="vo">
+                		<a href="{:U('List/index',array('cate_id'=>$vo['cate_id']))}"><span></span>{$vo.cate_name}<em></em></a>
+                    </volist> 
+                </div>
+            </div>
+            </volist>
+        </div>
+      </volist>
+    </div>
+	<!--产品分类结束--> 
+    <script>
+    $(function(){
+		//搜索 
+		do_search=function(){
+			list_url="{:U('List/index','','')}/"+"keyword/"+$('#searchInput').val(); 
+			self.location.href=list_url;			
+		}
+		$('#searchInput').keyup(function(event){
+  			if(event.keyCode ==13){ 
+				do_search(); 
+ 			}
+		});
+	});
+	</script>  
+</div>
+<include file="./Shop/Webapp/View/footer.html" /> 

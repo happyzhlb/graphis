@@ -1,0 +1,531 @@
+<include file="./Shop/Home/View/header.html" />
+<load href="__PUBLIC__/home/js/cloud-zoom.1.0.2.min.js"/>
+<load href="__PUBLIC__/home/js/jquery.raty.js"/>
+<load href="__PUBLIC__/js/jquery.validate.js"/>
+
+<script type="text/javascript">
+var specs = new Array();
+<volist name ="specs" id="spec">
+specs.push(new Array('{$spec.spec_id}','{$spec.spec_page}','{$spec.spec_batch}','{$spec.sku}','{$spec.unit}','{$spec.is_sample}','{$spec.price}','{$spec.limit_buy}'));
+</volist>
+var Pspacs=new Array();
+var Bspacs=new Array();
+for(var x in specs){
+	Bspacs[specs[x][2]]=specs[x][2];
+}
+
+//初始化批次规格
+function showhtml(batch){
+	var bhtml = '<dt>Batch:</dt><dd class="clearfix">';
+	var sc = batch;
+	var batchItem = 0;
+	if(sc == ''){
+		for(var x in Bspacs){
+			batchItem++;
+			if(batchItem == 1){
+				sc = x;
+				bhtml += '<a href="javascript:void(0)" class="current" data-batch="'+Bspacs[x]+'">00'+batchItem+'<span>'+ Bspacs[x] +'</span></a></a>';
+			}else{
+				bhtml += '<a href="javascript:void(0)" data-batch="'+Bspacs[x]+'">00'+batchItem+'<span>'+ Bspacs[x] +'</span></a></a>';
+			}
+		}
+		bhtml += '</dd>';
+		$('.batch').html(bhtml);
+	}
+	
+	//normal
+	var nhtml = '<h3>Normal Goods</h3>';
+	var shtml = '<h3>Samples</h3>';
+	for(var k in specs){
+		if(specs[k][2] == sc){
+			if(specs[k][5]  == 1){
+				shtml += '<dl class="clearfix"><dt>Price: $'+ specs[k][6] +'/'+ specs[k][4] +'<br />Package: '+ specs[k][1] +'/'+ specs[k][4] +'</dt>';
+				shtml += '<dd>Quantity:<div class="Quantity">';
+				shtml += '<a href="javascript:void(0)" class="reduce" title="reduce">reduce</a>';
+				shtml += '<input type="text" value="" class="numText" enpty="onlynumber" data-spec-id="'+ specs[k][0] +'" data-max="'+ specs[k][7] +'" data-price="'+ specs[k][6] +'" />';
+				shtml += '<a href="javascript:void(0)" class="add" title="add">add</a>';
+				shtml += '</div>Bag(Stock:'+ specs[k][3] +')';
+				shtml += '<span class="cannotBuy" style="display:none;">You can buy ' + specs[k][7] + ' in maximum.</span></dd></dl>';
+			}else{
+				nhtml += '<dl class="clearfix"><dt>Price: $'+ specs[k][6] +'/'+ specs[k][4] +'<br />Package: '+ specs[k][1] +'/'+ specs[k][4] +'</dt>';
+				nhtml += '<dd>Quantity:<div class="Quantity">';
+				nhtml += '<a href="javascript:void(0)" class="reduce" title="reduce">reduce</a>';
+				nhtml += '<input type="text" value="" class="numText" enpty="onlynumber" data-spec-id="'+ specs[k][0] +'" data-max="'+ specs[k][7] +'" data-price="'+ specs[k][6] +'" />';
+				nhtml += '<a href="javascript:void(0)" class="add" title="add">add</a>';
+				nhtml += '</div>'+ specs[k][4] +'(Stock:'+ specs[k][3] +')';
+				
+				nhtml += '<span class="cannotBuy" style="display:none;">You can buy ' + specs[k][7] + ' in maximum.</span></dd></dl>';
+				
+			}
+		}
+	}
+	shtml += '<p class="total">Sub Total: <strong>$0.00</strong></p>';
+	nhtml += '<p class="total">Sub Total: <strong>$0.00</strong></p>';
+	$('.normal').html(nhtml);
+	$('.samples').html(shtml);
+}
+
+//购买产品价格小计
+function subtotle(){
+	var subtotle = 0;
+	$('.total strong').each(function(){
+		var totle = $(this).html();	
+		totle = parseFloat(totle.replace('$','').replace(',',''));
+		subtotle += totle;
+	});
+	$('.itemBuy h4 strong').html('$' + formatCurrency(subtotle));
+}
+
+$(document).ready(function(){
+	$('#starShow').raty({});
+	//批次选择
+	$('dl.batch dd a').live('click',function(){
+		$('dl.batch dd a').removeClass('current');
+		$(this).addClass('current');
+		showhtml($(this).attr('data-batch'));
+		$('.itemBuy h4 strong').html('$0.00');	
+	});
+	
+	//数量加1
+	$('.add').live('click',function(){
+		var obj_input = $(this).parent().find('.numText');
+		var num = 0;
+		var numMax = parseInt(obj_input.attr('data-max'));
+		if(obj_input.val() == ''){
+			num = 1;
+		}else{
+			num = parseInt(obj_input.val());
+			num++;
+		}
+		if(num > numMax){
+			num--;
+			$(this).parents('dd').find('.cannotBuy').show();
+		}
+		if(num == 0) num = '';
+		obj_input.attr('value',num);
+		//计算价格
+		var totle = 0;
+		$(this).parents('.goods').find('.numText').each(function(){
+			totle += parseFloat($(this).attr('data-price')) * $(this).val();
+		});
+		$(this).parents('.goods').find('.total strong').html('$' + formatCurrency(totle));
+		
+		subtotle();
+	});
+	//数量减1
+	$('.reduce').live('click',function(){
+		var obj_input = $(this).parent().find('.numText');
+		var num = obj_input.val();
+		if(num > 0){
+			num --;
+		}
+		$(this).parents('dd').find('.cannotBuy').hide();
+		obj_input.attr('value',num);
+		var totle = 0;
+		$(this).parents('.goods').find('.numText').each(function(){
+			totle += parseFloat($(this).attr('data-price')) * $(this).val();
+		});
+		$(this).parents('.goods').find('.total strong').html('$' + formatCurrency(totle));
+		subtotle();
+	});
+	
+	//手动输入
+	$('.numText').live('input',function(){
+		//$(this).blur();
+		var data_max = parseInt($(this).attr('data-max'));
+		var num = 0;
+		if($(this).val() != ''){
+			num = parseInt($(this).val());
+		}
+		if(num > data_max){
+			num = data_max;
+			$(this).attr('value',data_max);
+			$(this).parents('dd').find('.cannotBuy').show();
+		}else{
+			$(this).parents('dd').find('.cannotBuy').hide();
+		}
+		var totle = 0;
+		$(this).parents('.goods').find('.numText').each(function(){
+			totle += parseFloat($(this).attr('data-price')) * $(this).val();
+		});
+		$(this).parents('.goods').find('.total strong').html('$' + formatCurrency(totle));
+		subtotle();
+	});
+	
+	//加入购物车
+	$('.AddtoCart').click(function(){
+		var obj = $(this);
+		var spec_ids = '';
+		var spec_quantity = '';
+		$('.numText').each(function(){
+			if($(this).val() != '' && parseInt($(this).val()) > 0){
+				spec_ids += $(this).attr('data-spec-id') + ',';
+				spec_quantity += parseInt($(this).val()) + ',';
+			}
+		});
+		if(spec_ids == ''){
+			obj.siblings('.alertConBox').show().find('h5').html('<span class="fault"></span>Please enter the right quantity you want to purchase.');
+			return false;
+		}else{
+			spec_ids = spec_ids.substring(0,spec_ids.length-1);
+			spec_quantity = spec_quantity.substring(0,spec_quantity.length-1);
+			$.ajax({
+				url : '/Cart/add.html',
+				type : 'post',
+				dataType : 'json',
+				data : {'id':spec_ids,'quantity':spec_quantity},
+				success : function(data){
+					if(data.status){
+						if(data.info.additem > 0){ //更新购物车数量
+							var cnum = parseInt($('.Cart i').html());
+							$('.Cart i').html(cnum + data.info.additem);
+							$('.viewCart i').html(cnum + data.info.additem);	
+						}
+						obj.siblings('.alertConBox').find('h5').html('<span class="success"></span>Add to cart successfully.');
+					}else{
+						obj.siblings('.alertConBox').find('h5').html('<span class="success"></span>'+data.info);
+					}
+					obj.siblings('.alertConBox').show();
+				}
+			});
+		}
+	});
+	
+	//立即购买
+	$('.buyNow').click(function(){
+		var spec_ids = '';
+		var spec_quantity = '';
+		$('.numText').each(function(){
+			if($(this).val() != '' && parseInt($(this).val()) > 0){
+				spec_ids += $(this).attr('data-spec-id') + ',';
+				spec_quantity += parseInt($(this).val()) + ',';
+			}
+		});
+		if(spec_ids == ''){
+			alert('Please enter the right quantity you want to purchase.');
+			return false;
+		}else{
+			spec_ids = spec_ids.substring(0,spec_ids.length-1);
+			spec_quantity = spec_quantity.substring(0,spec_quantity.length-1);
+			PostSubmit('/Buy/index.html', spec_ids, spec_quantity);
+		}	
+	});
+	
+	//初始化批次规格
+	showhtml('');
+	
+	//评价表单验证
+	$('#form_review').validate({
+		submitHandler:function(form){
+            $.ajax({
+				url : '/Goods/add_comment.html',
+				tyep : 'post',
+				dataType : 'json',
+				data : $('#form_review').serialize(),
+				success : function(data){
+					if(data.status){
+						$('.writeBox').hide();
+						alert(data.info);
+					}else{
+						alert(data.info);
+					}
+				}
+			});
+        },
+		rules : {
+			content : {
+				required : true,
+				minlength : 6
+			},
+			email : {
+				required : true,
+				email : true
+			},
+			user_name : {
+				required : true
+			}
+		},
+		messages : {
+			content : {
+				required : 'Be quired.',
+				minlength : 'Please enter no less than {0} characters.'
+			},
+			email : {
+				required : 'Be quired.',
+				email : 'Please enter the correct E-mail address.'
+			},
+			user_name : {
+				required : 'Be quired.'
+			}
+		},
+		errorPlacement: function(error, element) {  
+			error.appendTo(element.parent());  
+		},
+		success: 'InfoTrue',
+		errorElement : 'span',
+		errorClass : 'InfoError',
+		validClass : 'InfoTrue',
+		debug : true
+	});	
+	
+	//评论分页异步读取
+	$('.detailPage div a').live('click',function(){
+		$.ajax({
+			url : $(this).attr('href'),
+			type : 'get',
+			dataType : 'json',
+			success : function(data){
+				if(data.status){
+					$('.detailComments').html(data.info);
+				}else{
+					alert(data.info);
+				}
+			}
+		});	
+		return false;
+	});
+	
+	//产品图选中
+	$("div.zoom-desc a").click(function(){
+		$("div.zoom-desc img").removeClass("zoomImgCurrent");
+		$(this).find("img").addClass("zoomImgCurrent");		
+	});
+	$("div.zoom-desc a:first").click();
+	
+});
+</script>
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <a href="{:U('/Gcategory')}">Titanium Dioxide</a>&gt;
+    <span>{$goods.goods_name}</span>
+</div>
+
+
+
+<div class="webC1000">
+	<div id="ItemDetail">
+        <div class="ItemDetailInfo clearfix">
+        	<!--左侧开始-->
+            <div class="left">
+            	<!--图片展示开始-->
+                <div class="zoom-section clearfix">  
+                    <div class="zoom-small-image">
+                        <a href="/{$gallery.0.img_original}" class="cloud-zoom" id="zoom1" rel="adjustX:10, adjustY:-4"><img src="/{$gallery.0.img_url}" alt="{$gallery.0.img_desc}" /></a>
+                    </div>
+                    <div class="zoom-desc">
+                      <volist name="gallery" id="imgs">
+                      <a href="/{$imgs.img_original}" class="cloud-zoom-gallery" title="{$goods.goods_name|deal_title=' '}" rel="useZoom:'zoom1',smallImage: '/{$imgs.img_url}' "><img class="zoom-tiny-image" src="/{$imgs.img_thumb}" alt="{$imgs.img_desc}" /></a>
+                      </volist>
+                    </div>
+                </div>
+                <!--图片展示开始-->
+                
+                <!--分享开始-->
+                <div class="share">
+                    <span class='st_facebook_large' displayText='Facebook'></span>
+                    <span class='st_twitter_large' displayText='Tweet'></span>
+                    <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                    <span class='st_pinterest_large' displayText='Pinterest'></span>
+                    <span class='st_googleplus_large' displayText='Google +'></span>
+                    <span class='st_tumblr_large' displayText='Tumblr'></span>
+                </div>
+                <!--分享结束-->
+                <div class="addToWishList">
+                	<div class="alertFaBox">
+                         <if condition="$is_collect">
+                         <a href="javascript:void(0)" class="addToWishListLink currentLink" title="Cancel Wish List" data-goods-id="{$goods.goods_id}">Cancel Wish List</a>
+                         <else />
+                         <a href="javascript:void(0)" class="addToWishListLink" title="Add To Wish List" data-goods-id="{$goods.goods_id}">Add To Wish List</a>
+                         </if>
+                         <div class="alertConBox" style="display:none;">
+                            <div class="alert">
+                                <a href="javascript:void(0)" class="closedAlert" title="Closed">closed</a>
+                                <h5><span class="success"></span><!--<span class="fault"></span>-->Added to Wish List successfully !</h5>
+                                <div class="btnBox">
+                                    <a href="javascript:void(0)" class="otherB">Close current page</a>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            <!--左侧结束-->
+            <!--右侧开始-->
+            <div class="right">
+            	<h1>{$goods.goods_name|deal_title=' '}</h1>
+                <div class="itemInf">
+                	Item Code:<span>{$goods.goods_code}</span>
+                    <!--Ship From:<span>{$shipping_address}</span>-->
+                </div>
+                <dl class="batch clearfix">
+                    <dt>Batch:</dt>
+                    <dd class="clearfix">
+                    	
+                    </dd>
+                </dl>
+                <div class="goods normal">
+                	<h3>Normal Goods</h3>
+                    <dl class="clearfix">
+                    	<dt>Price: $3.00/bag<br />Package: 25kg/bag</dt>
+                        <dd>
+                        	Quantity:
+                        	<div class="Quantity">
+                                <a href="javascript:void(0)" class="reduce" title="reduce">reduce</a>
+                                <input type="text" value="1" class="numText" />
+                                <a href="javascript:void(0)" class="add" title="add">add</a>
+                            </div>
+                            Bag(Stock:200)
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Price: $3.00/bag<br />Package: 25kg/bag</dt>
+                        <dd>
+                        	Quantity:
+                        	<div class="Quantity">
+                                <a href="javascript:void(0)" class="reduce" title="reduce">reduce</a>
+                                <input type="text" value="1" class="numText" />
+                                <a href="javascript:void(0)" class="add" title="add">add</a>
+                            </div>
+                            Pallet(Stock:3)
+                        </dd>
+                    </dl>
+                    <p class="total">Sub Total: <strong>$7,456.00</strong></p>
+                </div>
+                <div class="goods samples">
+                	<h3>Samples</h3>
+                    <dl class="clearfix">
+                    	<dt>Price: $3.00/bag<br />Package: 25kg/bag</dt>
+                        <dd>
+                        	Quantity:
+                        	<div class="Quantity">
+                                <a href="javascript:void(0)" class="reduce" title="reduce">reduce</a>
+                                <input type="text" value="1" class="numText" />
+                                <a href="javascript:void(0)" class="add" title="add">add</a>
+                            </div>
+                            Bag(Stock:200)
+                        </dd>
+                    </dl>
+                    <p class="total">Sub Total: <strong>$7,456.00</strong></p>
+                </div>
+                <div class="itemBuy">
+                	<h4>Grand Total: <strong>$0.00</strong></h4>
+                    <div class="alertFaBox">
+                    	<a href="javascript:void(0)" title="Add to Cart" class="AddtoCart">Add to Cart</a>
+                        <div class="alertConBox" style="display:none;">
+                            <div class="alert">
+                                <a href="javascript:void(0)" class="closedAlert" title="Closed">closed</a>
+                                <h5><span class="success"></span><!--<span class="fault"></span>-->Added to cart successfully !</h5>
+                                <div class="btnBox">
+                                    <a href="{:U('/Cart')}" class="yes">Go to cart</a>
+                                    <a href="javascript:void(0)" class="otherB">Close current page</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" title="Buy Now" class="buyNow">Buy Now</a>
+                    <notempty name="promotion.rate">
+                    <p>Tip: <empty name="promotion.remark">{$promotion.title}<else />{$promotion.remark}</empty></p>
+					</notempty> 
+                </div>
+            </div>
+            <!--右侧结束-->        
+        </div>
+        <!--商品详情相关评价等开始-->
+        <div class="productDetail clearfix">
+        	<div class="Related">
+            	<div class="RelatedList">
+                    <h3>Related Products</h3>
+                    <volist name="related_products" id="vo">
+                    <dl class="clearfix">
+                        <dt><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}"><img src="/{$vo.goods_thumb}" width="50" height="50" alt="{$vo.goods_name}" /></a></dt>
+                        <dd>
+                            <a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a>
+                            <span class="price">{$vo.goods_id|get_range_price=###,'$'}</span>
+                        </dd>
+                    </dl>
+                    </volist>
+                </div>
+                <a href="{:U('/DownloadCenter/index')}" title="Download Center(MSDS,COA)" class="Download">Download Center(MSDS,COA)</a>
+            </div>
+            
+            <!--详情开始-->
+            <div class="detail">
+            	<div class="detailChoose">
+                	<a href="javascript:void(0)" title="Product Details" class="current">Product Details</a>
+                    <a href="javascript:void(0)" title="Customer Review" data-goods-id="{$goods.goods_id}">Customer Review(<em>{$comments_count}</em>)</a>
+                    <a href="javascript:void(0)" title="Seller Guarantees">Seller Guarantees</a>
+                </div>
+                <div class="detailShow">
+               	  <div class="show showD">
+                   	{$goods.goods_desc|htmlspecialchars_decode}
+                    <div class="downloadCenter clearfix">
+                    	<a href="/{$goods.msds}" target="_blank"><i class="doctypes"></i>{$goods.goods_name} ( MSDS )<i class="download"></i></a>
+                        <volist name="goods_coas" id="coa">
+                        <a href="/{$coa.file}" target="_blank"><i class="doctypes"></i>{$goods.goods_name} ( COA ) Batch {$coa.batch}<i class="download"></i></a>
+                        </volist>
+                    </div>
+                    </div>
+                  <div class="show showP">
+                  		<div class="detailComments">
+                            <div>loading reviews...</div>
+                        </div>
+                        <!--书写评价开始-->
+                        <!--<div class="detailWrite">
+                        	<a href="javascript:void(0)" class="write" title="Write a review">Write a review</a>
+                            <div class="writeBox">
+                                    <form id="form_review" method="post">
+                                    <dl class="clearfix">
+                                      <dt>* Ratings:</dt>
+                                      <dd>
+                                            <div id="starShow"></div>
+                                      </dd>
+                                    </dl>
+                                  <h4>Wirte Your Review</h4>
+                                  <dl class="clearfix">
+                                    <dt>* Content:</dt>
+                                    <dd>
+                                        <textarea name="content" id="content" cols="45" rows="5"></textarea>
+                                    </dd>
+                                  </dl>
+                                    <dl class="clearfix">
+                                      <dt>*Email:</dt>
+                                        <dd>
+                                            <input type="text" value="{$Think.session.email}" id="email" name="email" class="nameIn" />
+                                        </dd>
+                                  </dl>
+                                    <dl class="clearfix">
+                                      <dt>*Name:</dt>
+                                        <dd>
+                                            <input type="text" id="user_name" value="{$Think.session.first_name} {$Think.session.last_name}" name="user_name" class="nameIn" />
+                                        </dd>
+                                  </dl>
+                                    <dl class="clearfix">
+                                      <dt>&nbsp;</dt>
+                                        <dd><input type="hidden" id="id" name="id" value="{$goods.goods_id}" /><input type="submit" value="" class="subBtn" /></dd>
+                                    </dl>
+                                    </form>
+                            </div>
+                        </div>-->
+                        <!--书写评价结束-->
+                  </div> 
+                  <div class="show showS">
+                  	<h3>Quality Guarantee</h3>
+                    <p>OKChem prides itself on the high level of quality and reliability of its products and services, and enjoys a great amount of positive feedbacks from our customers that we offer the best titanium dioxide and perfect customer service quality.</p>
+                    <p style="padding-left:2em;">1：We are continually improving the quality of our products and services to make customers satisfied and help our business expand.</p>
+                    <p style="padding-left:2em;">2：We totally understand and anticipate market needs and delight our customers with passion and hard work, therefore optimize our quality control process and obtain better results that customers care most.</p>
+                    <h3 style="margin-top:30px;">Customer Satisfaction Guarantee</h3>
+                    <p>OKChem stands behind our products with 100% customer satisfaction guarantee. if you are not satisfied with our products for any reason, you may return them within 20 days of purchase for an exchange or refund. For more details, please see our Return Policy.</p>
+                  </div> 
+                </div>
+            </div>
+            <!--详情结束-->
+            
+        </div>
+        <!--商品详情相关评价等结束-->
+    </div>
+</div>
+<!--分享插件-->
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "bd66dea7-9894-4301-8986-ed6e077283c8", doNotHash: true, doNotCopy: true, hashAddressBar: true});</script>
+<include file="./Shop/Home/View/viewed.items.html" />
+<include file="./Shop/Home/View/footer.html" />

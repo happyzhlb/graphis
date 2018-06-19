@@ -1,0 +1,112 @@
+<include file='./Shop/Home/View/header.html' /> 
+
+<div id="crumbs">
+	<a href="{:U('./Index')}">Home</a>&gt;
+    <a href="{:U('/DownloadCenter/index')}">Download Center(MSDS,COA)</a>&gt;
+    <span>COA</span>
+</div>
+
+
+<div class="webC1000">
+	<div id="download">
+        <h2>Download Center(COA)</h2>
+    	<div class="downloadChoose">
+        	<a href="{:U('./DownloadCenter/index')}">MSDS</a>
+            <a href="{:U('/DownloadCenter/COA')}" class="current">COA</a>
+        </div>
+        <div class="downloadShow">        	
+            <!--下载列表二开始-->
+            <div class="show list2" style="display:block">
+       	  	  <div class="downloadSearch">
+              	<form action="{:U('DownloadCenter/COA')}" method="post">
+                	Product Name:
+                    <input type="text" name="goods_name" value="{:I('goods_name')}" class="textIn" placeholder="RC-708" />
+                    Batch:
+                    <input type="text" name="batch" value="{:I('batch')}" class="textIn" placeholder="Batch 001 " />
+                    <input type="submit" value="Search" class="searchBtn" />
+                </form>
+                </div>
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr class="headTitle">
+                    <td colspan="5">
+                    	<div id="orderPage">
+                            {$page}
+                        </div>    
+                        <span class="fontS"><strong>{$totalRows}</strong> Items in Total</span>
+                    </td>
+                  </tr>
+                  <tr class="tblHead">
+                    <td width="371" align="center">Item Name </td>
+                    <td width="258" align="center">Batch </td>
+                    <td width="194" align="center">Preview </td>
+                    <td width="213" align="center">Download </td>
+                    <td width="120" align="center">Buy</td>
+                  </tr>
+                  <volist name='list' id='vo'>
+                  <tr class="tblCont">
+                    <td width="371" align="center">{$vo.goods_name}(COA)</td>
+                    <td align="center"><em>{$vo.batch}</em></td>
+                    <td align="center"><a href="javascript:Preview({$vo.cid})" class="Preview" title="Preview">Preview</a></td>
+                    <td align="center"><a href="/{$vo.file}" target="_blank" class="downloadLink" title="download">download</a></td>
+                    <td width="120" align="center"><a href="{:U('Goods/index',array('id'=>$vo['goods_id']))}" target="_blank" class="buy" title="Buy">buy</a></td>
+                  </tr>
+                  </volist>
+                  
+                  <tr class="headTitle">
+                    <td colspan="5">
+                        <div id="orderPage">{$page} 
+                        </div>  
+                        <span class="fontS"><strong>{$totalRows}</strong> Items in Total</span>
+                    </td>
+                  </tr>
+              </table>
+            </div>
+            <!--下载列表二结束-->
+        </div>	
+    </div>
+</div>
+
+
+<!--弹窗开始-->
+<div id="grayBg"></div>
+<div id="alertBox">
+	<div class="show">
+    	<iframe src="" id="preview_frm" width="750px" height="500px" frameborder="0"></iframe>
+    	<a href="javascript:void(0)" class="close">close</a> 
+    </div>
+</div>
+<!--弹窗结束-->
+<!--页尾结束--> 
+
+<script type="text/javascript"> 
+	$(document).ready(function(){
+		$("a.Preview").click(function(){
+			var winHeight = $(window).height();
+			var winWidth = $(window).width();
+			var boxTop = (winHeight - 506)/2;
+			var boxLeft = (winWidth - 756)/2;
+			var iconTop = (winHeight - 506)/2;
+			var iconLeft = (winWidth - 756)/2 - 25;
+			$("#grayBg").show().css("height",winHeight);
+			$("#alertBox").show().css({left:boxLeft,top:boxTop});
+			$("#alertBox a.close").css({right:iconLeft,top:iconTop});
+		}); 
+		$("#alertBox a.close").click(function(){
+			var userAgent = navigator.userAgent;
+			var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") < 1 ;
+			if(isSafari == true){
+				window.top.location.reload();//刷新页面解决iframe在Safari中无法关闭的问题。
+			}else{
+				$("#grayBg").hide();
+				$("#alertBox").hide();	
+			}
+		});
+		Preview=function(cid){
+			var frm_url="{:U('DownloadCenter/coa_pdf')}?cid="+cid;
+			$('#preview_frm').attr('src',frm_url); 
+		}
+	});
+</script>
+
+<include file='./Shop/Home/View/footer.html' />  
+

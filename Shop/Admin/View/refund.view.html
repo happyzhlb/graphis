@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>退款/退货</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/returned.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#refund_form_2').validate({
+		rules : {
+			refund_img : {
+				accept : 'gif,jpg,jpeg,png,bmp'
+			}
+		},
+		messages : {
+			refund_img : {
+				accept : '<i></i>图片只能上传gif、jpg、jpeg、png、bmp格式文件'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+</script>
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Order')}" class="text" target="workspace">订单管理</a> > <a href="{:U('/Admin/Order/view',array('id'=>$order['order_id']))}" class="text" target="workspace">订单明细</a> > <a href="{:U('/Admin/Refund/apply',array('id'=>$order['rec_id']))}" class="text" target="workspace">退款/退货</a> 
+         </div>
+    </div>
+         
+         <!--订单信息start-->
+         <div class="obox">
+              <div class="title">
+                   订单信息
+              </div>
+              <div class="show">
+                   <ul>
+                       <li>订单编号：{$order.order_sn}</li>
+                       <li>运费：{$order.shipping_fee|format_price}</li>
+                       <li>积分抵扣：{$order.integral_fee|format_price}</li>
+                       <li>退款金额：{$order.refund_fee|format_price}</li>
+                       <li>总优惠：{$order.discount_fee|format_price}</li>
+                       <li>总计：{$order.totle_fee|format_price}</li>
+                       <li>成交时间：{$order.add_time|todate}</li>
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+         </div>
+         <!--订单信息end-->
+         
+         <!--商品信息start-->
+         <div class="obox">
+              <div class="title">
+                   商品信息
+              </div>
+              <div class="show">
+                   <div class="table"> 
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th>产品图片</th>
+                            <th>产品名称</th>   
+                            <th>规格</th>
+                            <th>数量</th>
+                            <th>退货数量</th>
+                          </tr>
+                          <tr>
+                            <td class="center"><img src="{$order.default_image}" title="" width="50" height="50" class="pimg"></td>
+                            <td class="center"><div class="proifo"><a href="#" title="">{$order.goods_name}</a></div></td>
+                            <td class="center">{$order.goods_attr}</td>
+                            <td class="center">{$order.quantity}</td>
+                            <td class="center">{$order.refund_num}</td>
+                          </tr>
+                    </table>  
+                   </div>  
+              </div>
+         </div>
+         <!--商品信息end-->
+         
+         <!--退款信息start-->
+         <div class="obox">
+              <div class="title">
+                   退款信息
+              </div>
+              <div class="show">
+                   <ul>
+                       <li>退款编号：{$order.refund_sn}</li>
+                       <li>退款金额：{$order.refund_price|format_price}</li>
+                       <li>退款状态：{$order.refund_status|refund_status}</li>
+                       <li>退款类型：<if condition="$order.refund_type eq 1">退货<else />退款</if></li>
+                       <li>退款原因：{$order.refund_reason}</li>
+                       <li>退款时间：{$order.refund_time|todate}</li>
+                       <li>退款说明：{$order.refund_note}</li>
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+         </div>
+         <!--退款信息end-->
+         
+         <!--协商记录start-->
+         <div class="obox">
+              <div class="title">
+                   协商记录
+              </div>
+              <div class="report">
+                   <ul>
+                       <volist name="refunds" id="vo" key="key">
+                       <li>
+                           <if condition="$vo.role eq 'admin'">
+                           <div class="pname">商家 {$vo.refund_time|todate}</div>
+                           <else />
+                           <div class="pname">买家 {$vo.refund_time|todate}</div>
+                           </if>
+                           <switch name="vo.refund_status">
+                               <case value="11">
+                                    <if condition="$key eq 1">
+                           				<p>买家（{$vo.user}）于{$vo.refund_time|todate}创建了退款申请</p>
+                                    <else />
+                                        <p>买家（{$vo.user}）于{$vo.refund_time|todate}修改了退款申请</p>
+                           			</if>
+                                    <p>退款类型：<if condition="$vo['refund_data']['refund_type'] eq 1">退货<else />退款</if></p> 
+                                    <p>退款金额：{$vo.refund_data.refund_price|format_price}</p>
+                                    <p>退款数量：{$vo.refund_data.refund_num}</p>
+                                    <p>退款原因：{$vo.refund_data.refund_reason}</p>
+                                    <p>退款说明：{$vo.refund_data.refund_note}</p>
+                                    <if condition="$vo['refund_data']['refund_img']">
+                                    	<p>退款凭证：<a href="{$vo.refund_data.refund_img}" target="_self" ><img src="{$vo.refund_data.refund_img}" width="50"></a></p>
+                                    </if>    
+                               </case>
+                               <case value="20">
+                                     <p>商家于{$vo.refund_time|todate}同意您的退款申请</p>
+                                     <p>退款说明：{$vo.refund_data.refund_note}</p>
+                               </case>
+                               <case value="21">
+                                     <p>商家于{$vo.refund_time|todate}同意您的退款申请</p>
+                                     <p>退货地址：{$vo.refund_data.refund_address}</p>
+                                     <p>退款说明：{$vo.refund_data.refund_note}</p>
+                               </case>
+                               <case value="22">
+                                     <p>买家（{$vo.user}）于{$vo.refund_time|todate}已经退货</p>
+                                     <p>物流公司：{$vo.refund_data.refund_shipping_name}</p>
+                                     <p>物流单号：{$vo.refund_data.refund_invoice_no}</p>
+                               </case>
+                               <case value="30">
+                                     <p>商家于{$vo.refund_time|todate}确认收到退货</p>
+                                     <p>退款说明：{$vo.refund_data.refund_note}</p>
+                               </case>
+                               <case value="33">
+                                     <p>于{$vo.refund_time|todate}退款成功</p>
+                                     <p>退款说明：{$vo.refund_data.refund_note}</p>
+                               </case>
+                               <case value="40">
+                                     <p>买家（{$vo.user}）于{$vo.refund_time|todate}取消退款</p>
+                                     <p>退款说明：{$vo.refund_data.note}</p>
+                               </case>
+                               <case value="50">
+                                     <p>商家于{$vo.refund_time|todate}拒绝了您的退款申请</p>
+                                     <p>退款说明：{$vo.refund_data.refund_note}</p>
+                                     <if condition="$vo['refund_data']['refund_img']">
+                                    	<p>退款凭证：<a href="{$vo.refund_data.refund_img}" target="_self" ><img src="{$vo.refund_data.refund_img}" width="50" /></a></p>
+                                    </if>
+                               </case>
+                           </switch>
+                       </li>
+                       </volist>
+                       <!--<li>
+                           <div class="pname">买家：</div>
+                           <p>【标题】卖家已达成退款协议</p>
+                           <p>【内容】完成退款</p>
+                           <p>物流公司：EMS</p>
+                           <p>退货单号：1231253465</p>
+                           <p>退货地址：社恩呢</p>
+                       </li>-->
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+         </div>
+         <!--协商记录end-->
+         <if condition="$order.refund_status eq 11">
+          <!--退货信息start-->
+         <div class="remove">
+              <div class="tagbar">
+                   <ul>
+                       <li class="current">同意退款</li>
+                       <li>拒绝退款</li>
+                       <div class="clear"></div>
+                   </ul>
+                   
+              </div>
+              <div class="selectbox">
+                   <div class="selectcontent" id="selectcontent_0">
+                        <form id="refund_form_1" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <if condition="($order.refund_type eq 1) && ($order.order_status eq 30)">
+                            <li>
+                                <label><span class="cf00"></span>退款地址：</label>
+                                <textarea id="refund_address" name="refund_address">退货地址
+：{$address.country} {$address.state} {$address.city} {$address.adddress} 邮编：{$address.zipcode} 联系人：{$address.linkman} 电话：{$address.telephone}</textarea>
+                            </li>
+                            </if>
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        	<input type="hidden" id="id" name="id" value="{$order.rec_id}">
+                            <input type="hidden" id="refund_status" name="refund_status" value="<if condition='($order.refund_type eq 1) && ($order.order_status eq 30)'>21<else />20</if>">
+                            <input type="button" name="" value="处理退款" class="btn btn_bb submit" onClick="">
+                             <div class="clear"></div>
+                        </div>
+                        </form>
+                   </div>
+                   <div class="selectcontent" id="selectcontent_1" style="display:none;">
+                        <form id="refund_form_2" method="post" enctype="multipart/form-data">
+                        <ul>
+                            
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                            <li>
+                                <label><span class="cf00"></span>上传凭证：</label>
+                                <input type="file" id="refund_img" name="refund_img">
+                                <span class="tip">图片大小不得超过5M，支持GIF、JPG、PNG、BMP格式</span>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        <input type="hidden" id="id" name="id" value="{$order.rec_id}">
+                        <input type="hidden" id="refund_status" name="refund_status" value="50">
+                        <input type="button" name="" value="处理退款" class="btn btn_bb submit">
+                        </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--退货信息end-->
+         <elseif condition="$order.refund_status eq 22" />
+         <!--退货信息start-->
+         <div class="obox">
+              <div class="title">
+                   确认收到退货
+              </div>
+              <div class="selectbox">
+                   <div class="selectcontent">
+                        <form id="refund_form_1" action="{:U('/Admin/Refund/confirm')}" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        	<input type="hidden" id="id" name="id" value="{$order.rec_id}">
+                            <input type="button" name="" value="确认收货" class="btn btn_bb submit" onClick="">
+                             <div class="clear"></div>
+                        </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--退货信息end-->
+         </if>
+         
+         
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

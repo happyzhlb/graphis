@@ -1,0 +1,44 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Write a Review</span>
+            <a href="{:U('Goods/reviews','goods_id='.I('goods_id'))}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--用户评价列表开始-->
+    <div class="reviews">
+    	<div class="WriteReviewBox">
+       	  	<div id="star">
+            	<a href="javascript:void(0)"><span>1 star</span></a>
+                <a href="javascript:void(0)"><span>2 star</span></a>
+                <a href="javascript:void(0)"><span>3 star</span></a>
+                <a href="javascript:void(0)"><span>4 star</span></a>
+                <a href="javascript:void(0)"><span>5 star</span></a>
+            </div>
+            <dl class="clearfix">
+            	<dt>Review Content:</dt>
+                <dd><textarea name="content" id="content"></textarea></dd>
+            </dl>
+            <dl class="clearfix">
+           	  <dt>Email:</dt>
+                <dd><input name="email" type="text" id="email" /></dd>
+          	</dl>
+            <dl class="clearfix">
+           	  <dt>Name:</dt>
+                <dd><input name="user_name" type="text" id="user_name" /></dd>
+            </dl>
+            <a href="javascript:void(0)" class="Submit">Submit</a>
+        </div>
+    </div>
+	<!--用户评价列表结束--> 
+    
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

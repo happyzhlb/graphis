@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>E-Invoice</title>
+</head>
+
+<body>
+
+<div style="width:800px; margin:0 auto; font-family:Arial, Helvetica, sans-serif;">
+	<div><a href="javascript:void(0)"><img src="http://www.okchem.com/Public/home/images/okchem_logo.png" /></a></div>
+  <div style="margin:5px 0;">
+    	<div style="width:210px; float:right;">
+        	<h3 style=" font-size:36px; color:#f89c13; padding-left:15px; margin:0;">INVOICE</h3>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top:1px solid #181818; border-left:1px solid #181818;">
+              <tr>
+                <td style="font-size:13px; font-weight:bold; color:#181818; padding:5px; background:#f5ebea; border-right:1px solid #181818; border-bottom:1px solid #181818;">DATE</td>
+                <td style="font-size:13px; font-weight:bold; color:#181818; padding:5px; background:#f5ebea; border-right:1px solid #181818; border-bottom:1px solid #181818;">{$order.pay_time|todate=###,'Y/m/d'}</td>
+              </tr>
+              <tr>
+                <td style="font-size:13px; font-weight:bold; color:#181818; padding:5px; background:#f5ebea; border-right:1px solid #181818; border-bottom:1px solid #181818;">INVOICE #</td>
+                <td style="font-size:13px; font-weight:bold; color:#181818; padding:5px; background:#f5ebea; border-right:1px solid #181818; border-bottom:1px solid #181818;">{$order.order_sn}</td>
+              </tr>
+              <tr>
+                <td style="font-size:13px; font-weight:bold; color:#181818; padding:5px; background:#f5ebea; border-right:1px solid #181818; border-bottom:1px solid #181818;">Customer ID</td>
+                <td style="font-size:13px; font-weight:bold; color:#181818; padding:5px; background:#f5ebea; border-right:1px solid #181818; border-bottom:1px solid #181818;">{$order.user_name}</td>
+              </tr>
+          </table>
+        </div>
+    	<div style="width:430px; float:left; padding-top:5px;">
+        	<h3 style="font-size:18px; color:#181818; margin:0;">OKchem Inc.</h3>
+        	<p style="font-size:13px; color:#181818; margin:10px 0;">www.okchem.com</p>
+            <p style="font-size:13px; color:#181818; margin:10px 0;">47 Third Street, Suite 201 Room R-1</p>
+            <p style="font-size:13px; color:#181818; margin:10px 0;">Cambridge, MA 02141</p>
+            <p style="font-size:13px; color:#181818; margin:10px 0;">Phone: 15857173753</p>
+            <p style="font-size:13px; color:#181818; margin:10px 0;">Fax: 0571-88888888</p>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <!--地址开始-->
+  <div style="margin-top:40px;">
+   	<div style=" width:360px; float:right;">
+   	  <h3 style="height:28px; line-height:28px; background:#663a1b; font-size:13px; color:#fff; font-weight:bold; margin:0 0 20px 0; padding-left:15px;">SHIP TO:</h3>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Name: {$order.consignee}</p>
+      <!--<p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Company Name：ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang ruijiang </p>-->
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Address: {$order.address}</p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">City: {$order.city}</p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">State: <neq name="order.state" value="0">{$order.state}</neq></p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">ZIP: {$order.zipcode}</p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Phone: {$order.telephone}</p>
+    </div>
+    <div style=" width:360px; float:left;">
+      <h3 style="height:28px; line-height:28px; background:#663a1b; font-size:13px; color:#fff; font-weight:bold; margin:0 0 20px 0; padding-left:15px;">BILL TO:</h3>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Name: {$order.bconsignee}</p>
+      <!--<p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Company Name：ruijiang</p>-->
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Address: {$order.baddress}</p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">City: {$order.bcity}</p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">State: {$order.bstate}</p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">ZIP: {$order.bzipcode}</p>
+      <p style="font-size:13px; line-height:18px; word-wrap:break-word; color:#181818; margin:10px 0; padding-left:15px;">Phone: {$order.btelephone}</p>
+    </div>
+    <div style=" clear:both;"></div>
+  </div>
+    <!--地址结束-->
+    
+    <!--订单信息开始-->
+    <div style="margin-top:40px;">
+   	  <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" font-size:13px; color:#181818;">
+    	  <tr>
+    	    <td style="height:28px; line-height:28px; text-align:center; font-weight:bold; color:#fff; background:#663a1b;">ITEM#</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; font-weight:bold; color:#fff; background:#663a1b;">DESCRIPTION</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; font-weight:bold; color:#fff; background:#663a1b;">QTY</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; font-weight:bold; color:#fff; background:#663a1b;">UNIT PRICE</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; font-weight:bold; color:#fff; background:#663a1b;">TOTAL</td>
+  	    </tr>
+    	  <volist name="order.goods" id="goods">
+          <tr>
+    	    <td style="height:28px; line-height:28px; text-align:center; background:#eee; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:0 10px;">{$goods.spec_item}</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; background:#eee; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:0 10px;">{$goods.goods_name} [{$goods.goods_attr}]</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; background:#eee; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:0 10px;">{$goods.quantity}</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; background:#eee; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:0 10px;">{$goods.present_price|format_price}</td>
+    	    <td style="height:28px; line-height:28px; text-align:center; background:#eee; border-right:1px solid #fff; border-bottom:1px solid #fff; padding:0 10px;">{$goods.subtotal|format_price}</td>
+  	    </tr>
+        </volist>
+  	  </table>
+      <div style="margin-top:20px; text-align:right;">
+      	<p style="font-size:13px; color:#181818; margin:10px 0; padding-right:15px;">Subtotal: {$order.goods_amount|format_price}</p>
+        <p style="font-size:13px; color:#181818; margin:10px 0; padding-right:15px;">Shipping: {$order.shipping_fee|format_price}</p>
+        <!--<p style="font-size:13px; color:#181818; margin:10px 0; padding-right:15px;">Inside Delivery: $12.00</p>-->
+        <p style="font-size:13px; color:#181818; margin:10px 0; padding-right:15px;">Discount: -{$order.discount_fee|format_price}</p>
+        <p style="font-size:13px; color:#181818; margin:10px 0; padding-right:15px;">Reward Points: -{$order.integral_fee|format_price}</p>
+        <span style="display:inline-block; width:300px; height:1px; border-top:1px solid #181818; border-bottom:1px solid #181818;"></span>
+        <p style="font-size:13px; color:#181818; margin:10px 0; padding-right:15px;">Total: {$order.totle_fee|format_price}</p>
+      </div>
+    </div>
+    <!--订单信息结束-->
+    
+    <div style="padding:15px; background:#eee; margin:40px 0; font-size:13px; color:#181818;">
+    	<p style="margin:5px 0;">A confirmation email will be sent to you at <i style=" font-style:normal; color:#0689ee; text-decoration:underline;">56235685@qq.com</i> with your order number. </p>
+        <p style="margin:5px 0;">For pick up orders, please call our warehouse after one working day since we need to send over the order first.</p>
+        <p style="margin:20px 0 5px 0;">You'll also find complete details of this order in the My Order section of My Account.</p>
+    </div>
+    
+    <!---->
+    <div style="text-align:center; font-size:13px; color:#181818; margin:0 0 40px 0;">
+    	<p style=" margin:10px 0;">If you have any questions about  this invoice, please contact</p>
+        <p style=" margin:10px 0;">[support@okchem.com]</p>
+        <p style=" margin:10px 0; font-weight:bold;">Thank You For Your Business!</p>
+    </div>
+    <!---->
+</div>
+
+</body>
+</html>

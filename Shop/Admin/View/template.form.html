@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新增会员</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+$(function(){
+	UE.getEditor('tm_content'); 
+	$('#admin_form').validate({
+		rules : { 
+			tm_no : {
+				required : true,  
+			},
+			tm_subject : {
+				required : true,  
+			},
+			tm_content : {
+				required : true
+			}
+		},
+		messages : {
+			tm_no : {
+				required : '<i></i>键名必填！', 
+			},
+			tm_subject : {
+				required : '<i></i>邮件标题必填！', 
+			},
+			tm_content : {
+				required : '<i></i>邮件内容不能为空！'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+	$('#all_user').click(function(){
+		if($('#all_user').attr("checked")=='checked'){
+			$('#admin_form #email').val('all').attr('readonly','readonly');	
+		}else{
+			$('#admin_form #email').val('').removeAttr('readonly');	
+		}
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+      <div class="tag"> <i class="home"></i> <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Emailsendlist/index')}" class="text">邮件模板管理</a> > <a href="{:U('/Admin/list/add')}" class="text">新增邮件模板</a> </div>
+    </div>
+    <div class="clear"></div>
+    <!--表格start-->
+    <div class="tbox">
+      <div class="widsbox">
+        <div class="bar">
+          <div class="bar_l"></div>
+          <div class="text">新增邮件模板</div>
+          <div class="bar_r"></div>
+        </div>
+        <div class="cbox">
+          <form id="admin_form" method="post"> 
+            <div class="control-group">
+              <label class="control-label">类型：</label>
+              <div class="controls"><select name="tm_type" id="tm_type"><option <if condition="$list['tm_type']=='email'">selected</if> name="email">email</option><option <if condition="$list['tm_type']=='news'">selected</if> name="news">news</option></select>  
+              *&nbsp;email-邮件模板；news-系统消息模板</div>
+              <div class="clear"></div>
+            </div>
+          <div class="control-group">
+              <label class="control-label">键名：</label>
+              <div class="controls">
+              	<select name="tm_no" id="tm_no">
+                	<volist name='template' id='vo'>
+                		<option <if condition="$vo['tm_no']==$list['tm_no']">selected</if> value="{$vo.tm_no}" title="{$vo.text} | {$vo.tm_no}">{$vo.text} | {$vo.tm_no}</option>
+                    </volist>
+                </select> </div>
+              <div class="clear"></div>
+            </div> 
+            <div class="control-group">
+              <label class="control-label">邮件模板标题：</label>
+              <div class="controls">
+                <input type="text" id="tm_subject" name="tm_subject" value="{$list.tm_subject}" class="span300" placeholder="邮件模板标题">
+              </div>
+              <div class="clear"></div>
+            </div> 
+            <div class="control-group">
+              <label class="control-label">发送内容：</label>
+              <div class="controls">
+                <textarea name="tm_content" cols="50" rows="10" id="tm_content" style="width:500px; height:220px;">{$list.tm_content}</textarea>
+              </div>
+              <div class="clear"></div>
+            </div> 
+            <div class="control-group">
+              <label class="control-label">新消息：</label>
+              <div class="controls">
+                <label><input type="radio" id="is_new" name="is_new" value="1" checked >是</label>
+                <label><input type="radio" id="is_new" name="is_new" value="0" >否</label>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-actions">
+              <input type="hidden" id="id" name="id" value="{$list.send_id}">
+              <button type="submit" class="btn btn_dm">确认提交</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--表格end--> 
+  </div>
+    <!--content end-->
+</section>
+</body>
+</html>

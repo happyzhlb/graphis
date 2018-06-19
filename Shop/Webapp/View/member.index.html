@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<title>会员入口 - GRAPHIS NO.1 GRAVURE WEB SITE</title>
+
+<!--キャッシュクリア-->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!--css-->
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/reset_html5.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/default.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/default-tb.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/default-sp.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/modelpage.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/item-himekuri.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/loader.css">
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/jquery.mCustomScrollbar.css">
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" type="text/css" href="/files/css/lte_ie9.css">
+<![endif]-->
+
+<!--js-->
+<script src="/Public/webapp/user_files/jquery.min.js"></script>
+<script src="/Public/webapp/user_files/fullSlideShow.js"></script>
+<script src="/Public/webapp/user_files/gra-common.js"></script>
+<script src="/Public/webapp/user_files/loader.js"></script>
+<style type="text/css">
+#wrapper {
+	display: none;
+}
+#fade, #loader {
+	display: block;
+}
+</style>
+<script src="/Public/webapp/user_files/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/Public/webapp/user_files/slide_menu.js"></script>
+<!--<script src="/Public/webapp/user_files/slide_show.js"></script>-->
+<script src="/Public/webapp/user_files/flexibility.js"></script>
+
+<!--[if lte IE 9]>
+<script src="/files/js/flexibility.js"></script>
+<script>
+    $(function(){
+        flexibility(document.documentElement);
+    });
+</script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- java script-- >
+<script>
+		(function($){
+			$(window).load(function(){
+				
+				$(".scroll-box").mCustomScrollbar({
+					theme:"light",
+					scrollInertia:400
+				});
+			});
+		})(jQuery);
+		
+</script>
+<!-- java script-->
+
+<!-- java script-->
+<script>
+/*日本語英語切り替え*/
+$(function() {
+    $('#switch-en').click(function(){
+        $('.jp-on').css('display','none');
+        $('.jp-txt').css('display','none');
+		$('.en-on').css('display','block');
+		$('.en-txt').css('display','inline');
+		$(this).css({'display':'none'});
+		$('#switch-jp').css('display','inline-block');
+    });
+
+    $('#switch-jp').click(function(){
+		$('.en-on').css('display','none');
+		$('.en-txt').css('display','none');
+        $('.jp-on').css('display','block');
+        $('.jp-txt').css('display','block');
+		$(this).css({'display':'none'});
+		$('#switch-en').css('display','inline-block');
+    });
+});
+/*日本語英語切り替え*/
+</script>
+<!-- java script-->
+
+<link rel="stylesheet" type="text/css" href="/Public/webapp/user_files/member.css">
+</head>
+<body>
+
+<!-- ヘッダーナビ -->
+<header>
+  <div id="head-navi3">
+    <div class="head-navi3-box">
+      <div class="head-navi-logo"><a href="/"><img src="/Public/webapp/user_files/gralogo.svg" class="gralogo-head"></a></div>
+      <div class="head-navi-list"> 
+        
+        <!--登录の判断-->
+        
+        <nav>
+          <ul>
+            <li class="acd-models"> <a href="/models.html"><span class="text-en">Models</span><br>
+              <span class="text-jp">模特</span></a>
+              <ul class="acd-models-box" style="display: none; height: 469px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                <li><a href="/monthly/">NEW MODELS/最新模特一览</a></li>
+                <li><a href="/monthly/?RM=1">MEMBER/会员专属福利</a></li>
+                <li><a href="/monthly/?RM=2">GRAPHIS推荐模特</a></li>
+                <!-- <li><a href="/monthly/?RM=3">STAGE.2/ステージ2公開一覧</a></li>
+                <li><a href="/monthly/?MC=1">GRAPHIS GALS/グラフィスギャルズ</a></li>
+                <li><a href="/monthly/?MC=2">FIRST GRAVURE/初脱ぎ娘！</a></li>
+                <li><a href="/monthly/?MC=3">LIMITED EDITTION/期間限定</a></li>
+                <li><a href="/monthly/?MC=4">SPECIAL/スペシャル企画 </a></li>
+                <li><a href="/monthly/?MC=5">FETI STYLE/フェチスタイル </a></li>
+                <li><a href="/monthly/?MC=6">CALENDAR/日めくり</a></li>
+                               
+                <li class="close-gallery"><a href="/monthly/?MIC03=7">SHIFT to STAGE1/ステージ1へ移行</a></li>
+                <li class="close-gallery"><a href="/monthly/?MIC03=8">SHIFT to STAGE2/ステージ2へ移行</a></li>
+                <li class="close-gallery"><a href="/monthly/?MIC03=6">CLOSE GALLERY/公開終了</a></li>
+-->
+              </ul>
+            </li>
+            <li><a href="/page/?ID=award"><span class="text-en">Albums</span><br>
+              <span class="text-jp">专辑</span></a></li>
+            <li><a href="/ppv/"><span class="text-en">JOIN VIP</span><br>
+              <span class="text-jp">加入VIP</span></a></li>
+            <li><a href="/page/?ID=guide"><span class="text-en">Code</span><br>
+              <span class="text-jp">口令码</span></a></li>
+            <li><a href="/page/?ID=contact"><span class="text-en">Contact</span><br>
+              <span class="text-jp">我的专辑</span></a></li>
+            <li><a href="/page/?ID=contact"><span class="text-en">Contact</span><br>
+              <span class="text-jp">我的收藏</span></a></li> 
+          </ul>
+        </nav>
+        <div class="head-join-box">
+          <ul>
+            <li class="btn-mypage"><a href="/member/index.html"><span class="text-en">MY PAGE</span><br>
+              <span class="text-jp">会员中心</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.head-navi-list --> 
+      
+    </div>
+    
+    <!--登录の判断-->
+    
+    <div class="login-info-box">
+      <div class="user-nfo-box">
+        <ul>
+          <li>{$user.user_name}</li>
+          <li class="on-w960">[{$user.grade_name}]</li>
+          <li class="on-w960">金币余额:{$user.balance}个</li>
+          <li class="on-w00">VIP剩余天数:50天 </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!--ヘッダーナビ縮小-->
+  <div id="head-navi2">
+    <div class="head-navi2-box">
+      <ul>
+        <li id="btn-menu">
+          <div>MENU</div>
+        </li>
+        <li class="head-logo">
+          <div><a href="/"><img src="/Public/webapp/user_files/gralogo.svg"></a></div>
+        </li>
+        
+        <!--登录の判断-->
+        
+        <li class="btn-mypage"><a href="/member/index.html">会员</a></li>
+      </ul>
+    </div>
+    
+    <!--登录の判断-->
+    
+    <div class="login-info-box">
+      <div class="user-nfo-box">
+        <ul>
+          <li>{$user.user_name}</li>
+          <li class="on-w960">[普通会员]</li>
+          <li class="on-w960">金币余额:{$user.balance}个</li>
+          <li class="on-w00">VIP剩余天数:50天 </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--ヘッダーナビ縮小--> 
+  
+  <!--スライドナビ-->
+  <div id="slide-menu">
+    <navi class="slide-navi">
+      <ul>
+        
+        <!--登录の判断-->
+        
+        <div class="login-space"></div>
+        <li class="model accordion"> <span class="toggle">MODELS/モデル一覧</span>
+          <ul>
+            <li><a href="/monthly/">NEW MODELS/新モデル</a></li>
+            <li><a href="/monthly/?RM=1">MEMBER/メンバー公開一覧</a></li>
+            <li><a href="/monthly/?RM=2">STAGE.1/ステージ1公開一覧</a></li>
+            <li><a href="/monthly/?RM=3">STAGE.2/ステージ2公開一覧</a></li>
+            <li><a href="/monthly/?MC=1">GRAPHIS GALS/グラフィスギャルズ</a></li>
+            <li><a href="/monthly/?MC=2">FIRST GRAVURE/初脱ぎ娘！</a></li>
+            <li><a href="/monthly/?MC=3">LIMITED EDITTION/期間限定</a></li>
+            <li><a href="/monthly/?MC=4">SPECIAL/スペシャル企画</a></li>
+            <li><a href="/monthly/?MC=5">FETI STYLE/フェチスタイル </a></li>
+            <li><a href="/monthly/?MC=6">CALENDAR/日めくり</a></li> 
+          </ul>
+        </li>
+        <li class="photo"><a href="/page/?ID=award">Award/アワード</a></li>
+        <li class="photo"><a href="/ppv/">PPV/単品ダウンロード</a></li>
+        <li class="photo"><a href="/page/?ID=guide">ABOUT SITE/サイト紹介</a></li>
+        <li class="photo"><a href="/page/?ID=contact">CONTACT/お問い合わせ</a></li>
+      </ul>
+    </navi>
+  </div>
+  <!--スライドナビ--> 
+  
+</header>
+<!-- /ヘッダーナビ --> 
+
+<!--登录の判断--> 
+
+<!--登录時スペース-->
+<div class="login-head-space"></div>
+<div id="wrapper" class="slide" style="display: block;"> 
+  
+  <!-- コンテンツ -->
+  <div id="content-gp">
+    <div id="switch-box">
+      <div id="switch-en">ENGLISH</div>
+      <div id="switch-jp">日本語</div>
+    </div>
+    <p class="pan-link"><a href="/">TOP</a> &gt; 会员中心/My page</p>
+    <section id="mypage-section">
+       <h3><span class="text-en">MY PAGE</span> <span class="text-jp">/会员中心</span></h3>
+     <!-- <div class="caution-info jp-on">
+        <div>
+          <p><span>关于点的有效期限</span></p>
+          购买点、服务点有有效期限。有效期限是共同的最后一次购买(或者继续提供定额服务)以来已经一年了。如果利用服务点使用期限延长的话，无法进行结算，所以不会有分数。因为那个要点的期限不延长，请注意。使用期限请在我的主页的积分利用期限内确认。※通过网站登录的积分服务不继续请注意。<br>
+          <a href="/page/?ID=rank-point">→详细情况</a> </div>
+      </div>
+      <div class="caution-info en-on">
+        <div>
+          <p><span>About point validity period</span></p>
+          There are expiration dates for purchase points and service points.The term of validity is one year since we last purchased points (or continued flat rate service) in common. If you extend the deadline by extending the fixed period expiration date by using the service point, the point will not be granted because the settlement will not be done.Therefore, please note that the point deadline will not be extended.Please check the expiration date on the my page's point use deadline.<br>
+          <a href="/page/?ID=rank-point">→For details, click here</a> </div>
+      </div>
+      <div class="free-info">
+        <ul>
+          <li><a href="/page/?ID=rank-point"><img src="/Public/webapp/user_files/bn_continu_point.jpg"></a></li>
+        </ul>
+      </div>
+      
+     
+    <div class="about-point-rank jp-on">
+    	<p class="red"><a href="/page/?ID=rank-point">&lt;継続システムとポイントについて&gt;</a></p>
+    </div>
+
+    <div class="about-point-rank en-on">
+    	<p class="red"><a href="/page/?ID=rank-point">&lt;About points and continuation&gt;</a></p>
+    </div>
+-->
+      
+      <div class="mypage-box member-info-box">
+        <p>■会员信息 /Member information</p>
+        <div>
+          <ul>
+            <li><span class="jp-on">用户名</span><span class="en-on">User name</span></li>
+            <li>{$user.user_name}</li>
+          </ul>
+          <ul>
+            <li><span class="jp-on">绑定手机</span><span class="en-on">mobile</span></li>
+            <li>18857850025</li>
+          </ul>
+          <ul style="display:none">
+            <li><span class="jp-on">平台费率</span><span class="en-on">Flat rate continuation rank</span></li>
+            <li> <br>
+              <span class="jp-on" title="定額継続ランクとは定額サービスの継続回数に応じて単品商品の割引が受けられます">系统根据VIP服务购买次数，可以享受单一商品的折扣。</span> <span class="en-on">（You can receive discounts for single items according to the number of times the flat rate service is continued）</span> </li>
+          </ul>
+          <ul>
+            <li><span class="jp-on">会员等级</span><span class="en-on">Grade</span></li>
+            <li> <span class="jp-on">普通会员 [<a href="#">升级</a>]</span><span class="en-on">[Purchased]</span>  </li>
+          </ul>
+          <ul>
+            <li><span class="jp-on">VIP剩余天数</span><span class="en-on">Point usage time limit</span></li>
+            <li> <span class="jp-on"> 50天 [<a href="#">续期</a>]<br>
+              </span> <span class="en-on"> There are no points that can be used because the point use time has expired.<br>
+              The currently displayed point is valid only today.<br>
+              (To accumulate login points, please purchase point for single item download after subscription to flat rate service.)<br>
+              </span> </li>
+          </ul>
+          <ul>
+            <li><span class="jp-on">注册时间</span><span class="en-on">Register Time</span></li>
+            <li> <span class="jp-on"> 2018-05-12 12:12:12 </li>
+          </ul>
+          <ul>
+            <li><span class="jp-on">上次登录时间</span><span class="en-on">Last Login Time</span></li>
+            <li> <span class="jp-on"> 2018-05-11 12:12:12 </li>
+          </ul>
+        </div>
+      </div>
+      <!--/.mypage-box-->
+      <!--
+      <div class="free-info jp-on none">
+        <ul>
+          <li><a href="/member/monthly.php"><img src="/Public/webapp/user_files/bn_service.jpg"></a></li>
+          <li class="red">感谢免费会员注册!观众观看的时候需要进行定额服务登记。</li>
+        </ul>
+      </div>-->
+      <div class="free-info en-on">
+        <ul>
+          <li><a href="/member/monthly.php"><img src="/Public/webapp/user_files/bn_service.jpg"></a></li>
+          <li class="red">Thank you for signing up for a free member! Regular service registration is necessary for watching the gallery.</li>
+        </ul>
+      </div>
+      <div class="mypage-box mypage-menu">
+        <p>■快捷菜单 /My page menu</p>
+        <div>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/myinfo.html">会员资料</a></span> <span class="en-on"><a href="/member/myinfo.html">Setting change</a></span> </li>
+            <li><span class="jp-on">修改基本的注册信息。</span><span class="en-on">We will change the registration information.</span></li>
+          </ul>
+          
+          <!--
+          <ul>
+            <li> <span class="jp-on"><a href="/member/monthly.php">服务申请</a></span> <span class="en-on"><a href="/member/monthly.php">Flat-rate service application</a></span> </li>
+            <li><span class="jp-on">可以使用定额服务。进入这里，可以购买购买积分。<br>
+              <a href="/page/?ID=rank-point" class="font-12px red">※申请之前一定要对要点进行说明。</a></span><span class="en-on">You can use flat rate service. If you join here you can purchase Purchase points.<br>
+              <a href="/page/?ID=rank-point" class="font-12px red">※Be sure to explain about the point from here.</a></span></li>
+          </ul>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/monthly_count.php">购买单品的浏览时间</a></span> <span class="en-on"><a href="/member/monthly_count.php">Add fixed number of times at purchase point</a></span> </li>
+            <li><span class="jp-on">你可以消费它的买点，增加定额服务的持续时间。<br>
+              <span class="font-12px red">※不会延长使用期限。</span></span><span class="en-on">We will consume purchase points and add the number of times the flat-rate service will be continued.<br>
+              <span class="font-12px red">※The period is not extended.</span></span></li>
+          </ul>
+            <ul>
+            <li><a href="/member/monthly_count.php">購入ポイントで定額継続回数の追加</a></li>
+            <li>購入ポイントを消費して定額サービスの継続回数の追加を行います。</li>
+            </ul>
+			-->
+          <ul>
+            <li> <span class="jp-on"><a href="/myalbum/index.html">我打赏过的专辑</a></span> <span class="en-on"><a href="/member/monthly_point.php">Extended fixed usage period due to point use</a></span> </li>
+            <li><span class="jp-on">登录会员中心可以永久免费观赏自己打赏过的专辑。</span><span class="en-on">You can consume service points and extend the fixed term use period.</span></li>
+          </ul> 
+          <ul>
+            <li> <span class="jp-on"><a href="/member/code.html">口令码</a></span> <span class="en-on"><a href="/member/mail.php">Mail reception settings</a></span> </li>
+            <li><span class="jp-on">输入口令码找回你打算过的专辑，永久免费观看。</span><span class="en-on">You can set whether to receive notification e-mail from the site.</span></li>
+          </ul>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/guestbook.html">意见反馈</a></span> <span class="en-on"><a href="#/member/mail.php">Mail reception settings</a></span> </li>
+            <li><span class="jp-on">欢迎你提供更多的建议给我们，以改进我们的服务。</span><span class="en-on">You can set whether to receive notification e-mail from the site.</span></li>
+          </ul>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/logout.html">注销</a></span> <span class="en-on"><a href="/member/logout.php">Logout</a></span> </li>
+            <li><span class="jp-on">退出会员中心重新登录。</span><span class="en-on">Log out from My Page.</span></li>
+          </ul>
+          <!--<ul>
+            <li> <span class="jp-on"><a href="/member/monthly_point.php">我的收藏</a></span> <span class="en-on"><a href="/member/monthly_point.php">Extended fixed usage period due to point use</a></span> </li>
+            <li><span class="jp-on">购买VIP会员包年服务。</span><span class="en-on">You can consume service points and extend the fixed term use period.</span></li>
+          </ul>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/monthly_point.php">VIP套餐</a></span> <span class="en-on"><a href="/member/monthly_point.php">Extended fixed usage period due to point use</a></span> </li>
+            <li><span class="jp-on">购买VIP会员包年服务。</span><span class="en-on">You can consume service points and extend the fixed term use period.</span></li>
+          </ul>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/hist.php">金币明细</a></span> <span class="en-on"><a href="/member/hist.php">Point history</a></span> </li>
+            <li><span class="jp-on">我们可以确认它的使用记录。</span><span class="en-on">You can check the point usage history.</span></li>
+          </ul>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/hist_ppv.php">购买记录</a></span> <span class="en-on"><a href="/member/hist_ppv.php">PPV purchase history</a></span> </li>
+            <li><span class="jp-on">可以确认单品的购买历史。</span><span class="en-on">You can check the purchase history of PPV items.</span></li>
+          </ul>
+              <ul>
+                <li>
+                    <span class="jp-on"><a href="/ppv/?T=1">お気に入り商品</a></span>
+                     <span class="en-on"><a href="/ppv/?T=1">My favorite item</a></span>
+               </li>
+                <li>
+                
+                                        
+                <span class="jp-on">お気に入りの商品がありません。</span><span class="en-on">There are no favorite items.</span><br>
+            
+                        
+            <a href="/ppv/?T=1"><span class="jp-on">お気に入り一覧はこちら</span><span class="en-on">List of favorites is here</span></a>
+                </li>
+            </ul>
+--> 
+        </div>
+      </div>
+      <!--/.login-box-->
+      <!--
+      <div class="mypage-box mypage-menu">
+        <p>■关于服务停止和退会 /About service suspension and withdrawal</p>
+        <div>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/monthly_stop.php">定额服务<br>
+              信用自动停止处理</a></span> <span class="en-on"><a href="/member/monthly_stop.php">Flat-rate service<br>
+              Credit automatic withdrawal stop processing</a></span> </li>
+            <li><span class="jp-on">自动持续处理被停止，并且使用定额使用期限。</span><span class="en-on">Automatic continuation processing is stopped and it will be used until the fixed term use deadline.</span></li>
+          </ul>
+          <ul>
+            <li> <span class="jp-on"><a href="/member/leave.php">免费的成员退会</a></span> <span class="en-on"><a href="/member/leave.php">Free members withdrawal</a></span> </li>
+            <li><span class="jp-on">进行退会手续。(退会的时候，所有的服务都不能接受。)</span><span class="en-on">I will unsubscribe.（All services will not be accepted at the time of withdrawal.）</span></li>
+          </ul>
+        </div>
+      </div>
+      /.login-box--> 
+      
+    </section>
+  </div>
+  <!--/#content-gp--> 
+  <!-- /コンテンツ --> 
+  
+  <!-- フッター -->
+  
+  <div id="navi-bottom-gp">
+    <div class="navi-bottom-logo"> <img src="/Public/webapp/user_files/gralogo.svg" alt="GRAPHIS"> </div>
+    <div class="navi-bottom-section"> 
+      
+      <!--登录の判断-->
+      
+      <ul>
+        <li><a href="/">TOP /トップページ</a></li>
+        <li><a href="/member/logout.php">Logout /ログアウト</a></li>
+        <li><a href="/monthly/">Models /公開モデル</a></li>
+      </ul>
+      <ul>
+        <!--<li><a href="#">スタッフ（モデル等）募集</a></li>-->
+        <li><a href="/files/htmlpage/legal.html" target="_blank">特定商取引法に基づく表示</a></li>
+        <li><a href="/files/htmlpage/legal02.html" target="_blank">改正風営法に基づく表記</a></li>
+        <li><a href="/files/htmlpage/kiyaku.html" target="_blank">ご利用規約</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--/#navi-bottom-->
+  
+  <footer class="tpl">
+    <p><span class="text-jp">当サイトに掲載されている画像・動画ファイル及び文章等の無断転載及び使用を固く禁じます。</span><br>
+      <span class="text-en">All contents on this website are the copyright of GRAPHIS.Unauthorized copy or any form of reproduction is strictly prohibited.</span></p>
+    <p>Copyright (C) 2018 graphis.ne.jp All rights reserved.</p>
+  </footer>
+  <!-- /フッター --> 
+  
+  <!--	google analytics等	--> 
+  
+</div>
+<!--/#wrapper--> 
+
+<!--	google analytics等	-->
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span><if condition="strtolower(ACTION_NAME)=='add'">Add New Address<else/>Edit Address</if></span>
+            <a href="{:U('UserAddress/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    <form id="address_form" method="post" >
+    	<div class="newAddress">
+        	<dl class="clearfix">
+           	  <dt>First Name</dt>
+              <dd><input type="text" name="first_name" value="{$list.first_name}" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+           	  <dt>Last Name</dt>
+                <dd><input type="text" name="last_name" value="{$list.last_name}" class="textIn" /></dd>
+            </dl>
+          <dl class="clearfix">
+           	<dt>Company Name</dt>
+                <dd><input name="company_name" type="text" id="company_name" value="<if condition='ACTION_NAME=="add"'>{$company_name}<else/>{$list.company_name}</if>" minlength="2" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>Address</dt>
+                <dd><textarea name="address" id="address" >{$list.address}</textarea> 
+                </dd>
+            </dl>
+            <dl class="clearfix">
+           	  <dt>City</dt>
+                <dd><input type="text" value="{$list.city}" name="city" id="city" class="textIn" /></dd>
+          </dl>
+            <dl class="clearfix">
+           	  <dt>Country</dt>
+                <dd><input type="text" class="textIn" value="U.S. Only" readonly="readonly" /></dd>
+            </dl>
+            <dl class="clearfix">
+           	  <dt>State/Region</dt>
+                <dd> 
+                    <select id="state" name="state">
+                                        	<option value="">--Select--</option>
+                                        	<volist name="regions" id="region">
+                                            	<option value="{$region.region_id}" <if condition="$list.state eq $region['region_id']">selected</if>>{$region.region_name}</option>
+                                            </volist>
+            		</select> 
+                </dd>
+            </dl>
+            <dl class="clearfix">
+           	  <dt>Zip</dt>
+                <dd><input type="text" name="zipcode" value="{$list.zipcode}" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+           	  <dt>Phone</dt>
+                <dd><input type="text" name="telephone" value="{$list.telephone}" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>Preferred</dt>
+                <dd> 
+                    <select name="type" id="type">
+              <option <if condition="$list.type eq 'shipping'" title="Shipping Address">selected</if> value="shipping">Shipping</option>
+              <option <if condition="$list.type eq 'billing'" title="Billing Address">selected</if> value="billing">Billing</option>
+              <php> if(empty($_REQUEST['address_id'])){ </php>
+              	<option value="both" title="Billing Address & Shipping Address">Billing Address & Shipping Address</option>
+              <php>
+                }
+              </php>
+            </select>
+                </dd>
+            </dl>
+             <input type="hidden" name="address_id" value="{:I('address_id')}" />
+             <notempty name='param.spec_ids'>
+             <input type="hidden" name="referer" value="{:U('Buy/index',$param)}" />
+             </notempty>
+            <a href="javascript:void(0)" class="Submit">Submit</a>
+        </div>	
+        </form>
+    </div>
+	<!--会员中心设置结束--> 
+    <script language="javascript">
+$(function(){
+	fn_billing=function(){ 
+		$('#billing_list').show();
+		$('#shipping_list').hide();
+		$('#billing_btn').addClass('current');	
+		$('#shipping_btn').removeClass('current');	
+	}
+	fn_shipping=function(){ 
+		$('#billing_list').hide();
+		$('#shipping_list').show();	
+		$('#billing_btn').removeClass('current');	
+		$('#shipping_btn').addClass('current');	
+	}	
+    $('#billing_btn').bind('mouseenter',function(){fn_billing();});	
+	$('#shipping_btn').bind('mouseenter',function(){fn_shipping();});	
+	<if condition='$list[type]=="Billing"'>fn_billing();<else/>fn_shipping();</if>
+	
+	
+	
+ 
+    //jQuery.validate();
+	jQuery.validator.addMethod("digits_3", function(value, element) {       
+		var tel = /^\d{3}$/;     
+		return this.optional(element) || (tel.test(value));       
+	}, "Please enter at 3 digits");  
+	
+	jQuery.validator.addMethod("digits_4", function(value, element) {       
+		var tel = /^\d{4}$/;     
+		return this.optional(element) || (tel.test(value));       
+	}, "Please enter at 4 digits");  	
+	
+	jQuery.validator.addMethod("digits_5", function(value, element) {       
+		var tel = /^\d{5}$/;     
+		return this.optional(element) || (tel.test(value));       
+	}, "Please enter at 5 digits"); 
+	 		
+	phone_format=function(n){alert('Phone must be checking that the required input format (xxx-xxx-xxx-xxxx).');$('#part'.n).focus();}		
+	
+	$('#address_form .Submit').click(function(){ $('#address_form').submit(); });
+	$('#address_form').validate({
+		rules : {  
+			first_name : {
+				required : true, 
+			},
+			last_name : {
+				required : true
+			},
+			address : {
+				required : true
+			},
+			city : {
+				required : true
+			},  
+			state : {
+				required : true
+			},
+			telephone : {
+				required : true
+			},
+			zipcode : {
+				required : true,
+				digits_5:true,
+			},
+			company_name : {
+				required : true, 
+			}, 
+			type : {
+				required : true, 
+			}, 
+		},
+		messages : { 
+			first_name : {
+				required : '<i></i>First Name is required.', 
+			},
+			last_name : {
+				required : '<i></i>Last Name is required.'
+			},
+			address : {
+				required : '<i></i>Address is required.'
+			}, 	
+			city : {
+				required : '<i></i>City is required.'
+			}, 
+			state : {
+				required : '<i></i>State is required.'
+			},
+			telephone : {
+				required : '<i></i>Phone is required.'
+			},
+			zipcode : {
+				required : '<i></i>Zip is required.'
+			},
+			company_name : {
+				required : '<i></i>Company is required.'
+			},
+			type : {
+				required : '<i></i>Preferred is required.', 
+			},
+			
+		},
+		focusCleanup:true,
+		focusInvalid: false,
+		onkeyup : false,
+		onfocusout : false,
+		success: '',
+		errorElement : 'span',
+		errorClass : 'form_tips',
+		validClass: 'InfoTrue',
+		
+	});
+	
+}); 
+</script>
+</div>
+<include file="./Shop/Webapp/View/footer.html" /> 

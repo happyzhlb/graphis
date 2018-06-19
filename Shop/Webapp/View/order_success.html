@@ -1,0 +1,27 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Confirm the Order Information</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--提交订单成功开始-->
+    <div class="orderSuccess">
+        <p class="tips"><strong>Congradulations!</strong>Order submitted successfully.</p>
+        <div class="orderInfo">
+        	<p><span>{$order_data.order_sn}</span>Order No.</p>
+            <p><span class="total">${$order_data.totle_fee}</span>Payment Amount</p>
+        </div>
+        <a href="{:U('Myorders/pay',array('id'=>$order_data['order_id']))}" class="payBtn">Pay Now</a>
+        <a href="{:U('Myorders/view',array('id'=>$order_data['order_id']))}" class="ViewOrderBtn">View Order Status</a>
+    </div>
+	<!--提交订单成功结束--> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

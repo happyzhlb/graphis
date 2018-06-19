@@ -1,0 +1,31 @@
+<include file="./Shop/Home/View/header.html" /> 
+	
+    
+<div class="skipTly skipTlybg_1">
+
+<present name="message">
+	<h3><?php echo($message); ?><p class="success"></p></h3>
+<else/>
+	<h3><?php echo($error); ?><p class="error"></p></h3>
+</present>
+
+    <p style="color:#cacaca">页面将在<span  id="wait">{$waitSecond}</span>秒内跳转.</p>
+    <a id="href" href="<?php echo($jumpUrl); ?>">点击返回</a>  
+    <a href="/">返回首页</a>
+</div>  
+ 
+<script type="text/javascript">
+(function(){
+var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+var interval = setInterval(function(){
+	var time = --wait.innerHTML;
+	if(time <= 0) {
+		location.href = href;
+		clearInterval(interval);
+	};
+}, 1000);
+})();
+</script>  
+    
+<include file="./Shop/Home/View/footer.html" /> 
+

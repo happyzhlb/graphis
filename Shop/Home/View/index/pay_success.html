@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>付款成功</title>
+<script src="/Public/js/jquery.min.js"></script>
+<script>
+$(function(){
+	//定时请求订单状态，已支付就跳转
+	var getOrderStatus = function(){
+		 $.post('/index/AjaxGetOrderStatus','order_sn={$Think.get.order_sn}',function(data){
+			if(data.status==1){
+				self.location=$('#page_url').attr('href');
+			}	 
+		});
+	}
+	//计时器
+	var countSecond = function(){　
+　     //meter1=setTimeout(getOrderStatus, 3000);
+	  meter1=setInterval(getOrderStatus, 30000);
+   } 
+	//countSecond();
+});
+</script>
+</head>
+<style>
+	* {
+ padding:0;
+ margin:0;
+ list-style:none;
+ box-sizing:border-box;
+ text-decoration:none;
+ font-family:PingFangSC-Regular,'Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','Microsoft YaHei','微软雅黑',STHeiti,'WenQuanYi Micro Hei',SimSun,sans-serif
+}
+body,html {
+ width:100%;
+ height:100%;
+ /*overflow:hidden;*/
+ position:relative;
+ background-color:#eeeeee; /*1c1c20*/
+}
+.swiper-container {
+ width:100%;
+ height:100%
+}
+#swiper-container1 {
+ opacity:0
+}
+.brick {
+ position:relative;
+ left:0;
+ top:0;
+ text-align:center;
+ z-index:10;
+ width:100%;
+ height:100%
+}
+.brick img {
+ height:100%;
+ object-fit:contain;
+ position:absolute;
+ left:50%;
+ top:0
+}
+.recommend_img img {
+ height:60%;
+ object-fit:contain;
+ position:inherit;
+ width:96%;
+ min-width:180px;
+ left:0 !important;
+ top:0
+}
+.swiper-zoom-container {
+ width:100%;
+ height:100%;
+ display:-webkit-box;
+ display:-moz-box;
+ display:-ms-flexbox;
+ -webkit-box-pack:center;
+ -moz-box-pack:center;
+ -ms-flex-pack:center;
+ -webkit-justify-content:center;
+ justify-content:center;
+ -webkit-box-align:center;
+ -moz-box-align:center;
+ -ms-flex-align:center;
+ -webkit-align-items:center;
+ align-items:center;
+ text-align:center;
+ transition-duration:300ms;
+ transform:translate3d(0,0,0)
+}
+.swiper-wrapper {
+ width:100%;
+ height:100%;
+ overflow:visible;
+ z-index:10;
+ transition-duration:300ms;
+ transform:translate3d(0,0,0) scale(1)
+}
+.swiper-slide {
+ text-align:center;
+ font-size:18px;
+ justify-content:center;
+ align-items:center
+}
+.top {
+ position:absolute;
+ width:100%;
+ z-index:9;
+ color:#000;
+ text-align:center;
+ left:0;
+ top:0
+}
+.bottom {
+ position:absolute;
+ width:100%;
+ z-index:9;
+ color:#000;
+ text-align:center;
+ left:0;
+ bottom:0
+} 
+.mask {
+ position:fixed;
+ left:0;
+ top:0;
+ z-index:11;
+ background-color:#000;
+ width:100%;
+ height:100%;
+ display:none;
+ -webkit-tap-highlight-color:rgba(0,0,0,0);
+ opacity:.7;
+ outline:0
+} 
+#photoNum {
+ position:absolute;
+ left:20px;
+ top:20px;
+ display:block;
+ background-color:rgba(0,0,0,0.5);
+ border-radius:10px;
+ font-size:14px;
+ color:#fff;
+ z-index:11;
+ box-sizing:content-box;
+ padding:7px
+} 
+#tip {
+ text-align:center;
+ width:100%;
+ color:#fff;
+ font-size:20px;
+ display:none;
+ position:fixed;
+ z-index:12;
+ left:0;
+ top:50%;
+ margin-top:-10px;
+ line-height:1
+}
+#bottomTip {
+ text-align:center;
+ width:100%;
+ color:#646464;
+ font-size:14px;
+ display:none1;
+ position:fixed;
+ z-index:0;
+ left:0;
+ bottom:10px;
+ line-height:1
+} 
+@media screen and (max-width:600px) {
+ .album_content {
+  width:100%;
+  height:100%;
+  position:relative
+ }
+}
+@media screen and (min-width:601px) {
+ .album_content {
+  width:600px;
+  height:100%;
+  margin:0 auto;
+  position:relative
+ }
+}
+.clean_tip {
+ display:none
+}
+#toast {
+ display:none;
+ width:100%;
+ height:200px;
+ position:fixed;
+ left:0;
+ top:50%;
+ margin-top:-100px;
+ z-index:999
+}
+.toast_content {
+ width:80%;
+ margin:0 auto;
+ border-radius:10px;
+ background-color:rgba(255,255,255,1);
+ font-size:16px;
+ color:#333;
+ padding:30px 0;
+ line-height:1.5;
+ text-align:center
+}
+
+.float_center{ margin:0 auto;}
+.center{ text-align:center;}
+.main_font{
+	color:#eee;
+}
+.line{ border-bottom:1px solid #5dac67;}
+.bold{font-weight:bold;}
+
+.mybtn{ width:50%;height:100px; border:0px solid #fcc !important; color:#fff;padding:20px 40px 50px 40px;background-color:#096; border-radius:25px; }
+.btn_font{
+  /*font-size:25px;2vh;2vmin;2vmax*/
+  font-size:4vw; 
+} 
+.font_1vw{font-size:1vw;}
+.font_2vw{font-size:2vw;}
+.font_3vw{font-size:3vw;}
+.font_4vw{font-size:4vw;}
+.payok{width:100px; height:100px;background-size:100px 100px; background:url(/static/ok.jpg) no-repeat; margin:0 auto;}
+
+@media screen and (max-width: 850px){/* 可视区域小于 850px, 设置更小font-size属性 */
+   .btn_font{
+     font-size:20px;
+   }
+   .mybtn{border-radius:15px;height:60px;}
+   .payok{background-size: 90px 90px;}
+}
+ 
+</style>
+<body>
+
+<div class="mask"></div>
+<div class="center">
+    <div class="main_font"><br>
+    <br>
+    <br>
+      <div class="payok"></div>
+      <p style="color:#5dac67;"><br>
+    <br>
+    <br>
+    <sapn class="bold font_3vw">支付成功</span>
+      </p>
+    </div>
+    <br>
+    <br>
+    <div class="line float_center" style="width:75%;"></div><br>
+<br>
+<br>
+	<a id="page_url" href="{$page_url}"><div class="float_center mybtn btn_font">欣赏完整的相册</div></a>
+    <br>
+<br>
+<br>
+	<div class="font_3vw">打赏口令码:{$command_code}</div>
+    
+    <br>
+<br>
+	<div class="font_3vw">在GRAPHIS网站使用<打赏口令码><br>即可永久欣赏打赏过的图片专辑</div>
+     <br>
+<br>
+	<div class="font_3vw"><strong>请截屏/截图/拍照保存本页内容</strong></div>
+    <div class="font_3vw"><i>http://w.graphis.club</i></div>
+</div>
+<br>
+<br>  
+</body>
+</html>

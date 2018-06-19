@@ -1,0 +1,48 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<body>
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>My Wish List</span>
+            <a href="{:U('Member/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="ViewedHistory">
+        	<!--没有收藏开始-->
+        	<!--<div class="empty">
+            	<p>Sorry! <br />Your Wish List is empty.</p>
+                <a href="index.html">Go Back To Home</a>
+            </div>-->
+            <!--没有收藏结束-->
+            <!--收藏列表开始-->
+            <div class="historyList">
+<volist name='list' id='vo'>
+            	<div class="each clearfix">
+                	<a href="{:U('delete','cid='.$vo['cid'])}" onclick="return confirm('Are you sure you want to remove this record ?');" title="Delete" class="delete"><em></em></a>
+                    <dl class="clearfix">
+                    	<dt><a href="{:U('Goods/index',array('id'=>$vo['goods_id']))}"><img src="/{$vo.goods_id|getNameById='goods_thumb','goods','goods_id',###}" width="50" height="50" /></a></dt>
+                        <dd>
+                        	<h4><a href="{:U('Goods/index',array('id'=>$vo['goods_id']))}">{$vo.goods_id|getNameById='goods_name','goods','goods_id',###}</a></h4>
+                            <p>{$vo.goods_id|get_range_price='$'}</p>
+                        </dd>
+                    </dl>	
+                </div>
+</volist>
+ 
+            </div>
+            <!--收藏列表结束-->
+        </div>	
+    </div>
+	<!--会员中心设置结束-->     
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

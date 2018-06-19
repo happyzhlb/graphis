@@ -1,0 +1,85 @@
+<include file="./Shop/Home/View/header.html" />
+<script type="text/javascript">
+$(function(){
+	$('#testimonials_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			name : {
+				required : true
+			},
+			email : {
+				required : true,
+				email : true
+			},
+			location : {
+				required : true,
+				minlength:2,
+			},
+			content : {
+				required : true
+			}
+		},
+		errorPlacement: function(error, element) {  
+			error.appendTo(element.parent());  
+		},
+		errorElement : 'span',
+		errorClass : 'InfoError'
+	});	
+});
+
+</script>
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <span>Write a Testimonial</span>
+</div>
+
+
+
+<div class="webC1000">
+	<div id="testimonial">
+    	<h2>Write a Testimonial</h2>
+        <div class="testimonialWrite">
+        	<p class="mainC">We are interested in your opinion. Let us and others know about your experience with our products by filling in the testimonial submission form below. We reserve the right to accept or reject testimonials; therefore, your testimonial may not appear immediately.</p>
+            <div class="doOrNot clearfix">
+            	<div class="do">
+                	<h3>Please do:</h3>
+                    <p>- Write 50-300 words for the testimonial<br />- Comment on the site value and effectiveness<br />- Explain why you like or dislike us</p>
+                </div>
+                <div class="do">
+                	<h3>Please do not:</h3>
+                    <p>- se profane, obscene, or spiteful language<br />- Enter phone numbers, mailing addresses, or internet addresses</p>
+                </div>
+            </div>
+            <form id="testimonials_form" method="post">
+            <dl class="clearfix">
+            	<dt>* Title:</dt>
+                <dd><input type="text" id="title" name="title" value="" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Your Name:</dt>
+                <dd><input type="text" id="name" name="name" value="{$Think.session.first_name} {$Think.session.last_name}" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* E-Mail Address:</dt>
+                <dd><input type="text" id="email" name="email" value="{$Think.session.email}" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Location:</dt>
+                <dd><input type="text" id="location" name="location" value="" class="textIn" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Describe Your Experience(s):</dt>
+                <dd><textarea name="content" id="content" cols="45" rows="5"></textarea></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>&nbsp;</dt>
+                <dd><input type="submit" value="Submit" class="submitBtn" title="submit" /></dd>
+            </dl>
+            </form>
+        </div>
+    </div>
+</div>
+<include file="./Shop/Home/View/viewed.items.html" />
+<include file="./Shop/Home/View/footer.html" />

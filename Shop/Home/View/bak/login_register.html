@@ -1,0 +1,232 @@
+<include file="./Shop/Home/View/header.html" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/home/css/account.css" />
+<load href="__PUBLIC__/js/jquery.validate.js"/>
+<load href="__PUBLIC__/home/js/login_register.js"/>
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account">
+    	<!--登录注册开始-->
+        <div class="loginMain clearfix">
+        
+                <p class="loginTip">To finish your order, you’ll need to log into your account. If you don’t have one, please register.</p>
+                
+                <div class="loginRegister login">
+             		<form id="login_form" action="{:U('/Index/login')}" method="post">
+                    <h3>LOGIN</h3>
+                    <dl>
+                        <dt>E-mail Address</dt>
+                        <dd><input type="text" id="email" name="email" class="loginIn" /></dd>
+                    </dl>
+                    <dl>
+                        <dt>Password:</dt>
+                        <dd><input type="password" id="password" name="password" class="loginIn" /> </dd>
+                    </dl>
+                   <dl>
+                    <dd id="show_msg" style='display:none;' class="InfoWarn">  <span id="a" class="InfoError" style="display:none;"></span>To finish your order, you'll need to log into your account. If you don't have one, please register.</dd>
+                   </dl>
+                    <div class="loginBox">
+                    	<input type="hidden" id="referer" name="referer" value="{$referer}">
+                        <input type="submit" value="" title="Login" class="loginBtn submit" />
+                        <a href="{:U('/Forgotpassword')}" title="Forgot your password?">Forgot your password?</a>
+                    </div>
+                    </form>
+                </div>
+        
+              <div class="loginRegister register">
+                  <form id="register_form" action="{:U('/Index/do_register')}" method="post"> 
+                  <h3>register</h3>
+                  <div class="Member">
+                  	<input type="radio" name="user_type" value="1" id="CompanyMember" />
+                    <label for="CompanyMember">Company Member</label>
+                    <input type="radio" name="user_type" value="0" id="IndividualMember" />
+                    <label for="IndividualMember">Individual Member</label>
+                  </div>
+                  <dl>
+                    <dt>First Name:</dt>
+                    <dd><input type="text" id="first_name" name="first_name" value="" class="loginIn" autocomplete="off" /></dd>
+                  </dl>
+                  <dl>
+                    <dt>Last Name:</dt>
+                    <dd><input type="text" id="last_name" name="last_name" value="" class="loginIn" autocomplete="off" /></dd>
+                  </dl>
+                  <dl class="CompanyName">
+                    <dt>Company Name:</dt>
+                    <dd><input type="text" id="company_name" name="company_name" value="" class="loginIn" autocomplete="off" /></dd>
+                  </dl>
+                  <dl>
+                    <dt>E-mail Address:</dt>
+                    <dd><input type="text" id="email" name="email" value="" class="loginIn" autocomplete="off" /></dd>
+                  </dl>
+                  <dl>
+                    <dt>New Password:</dt>
+                    <dd>
+                    	<input type="password" id="newpassword" name="newpassword" value="" class="loginIn" />
+                        <div class="pawIntension clearfix">
+                        	<span class="intension">
+                            	<i class="Weak"></i>
+                                <em>Weak</em>
+                            </span>
+                            <span class="intension">
+                            	<i class="Fair"></i>
+                                <em>Fair</em>
+                            </span>
+                            <span class="intension">
+                            	<i class="Strong"></i>
+                                <em>Strong</em>
+                            </span>
+                        </div>
+                    </dd>
+                  </dl>
+                  <dl>
+                    <dt>Confirm Password:</dt>
+                    <dd><input type="password" id="repassword" name="repassword" value="" class="loginIn" /></dd>
+                  </dl>
+                  <div class="registerBox">
+                      <input type="checkbox" name="is_subscription" id="is_subscription" value="1" />
+                      <label for="is_subscription">Please Subscribe to Our Newsletter. Sales, News & More!</label><br />
+                      <input type="checkbox" name="is_agree" id="is_agree" />
+                      <label for="is_agree">I agree to the OKchem <a href="/Article/detail/id/12.html" target="_blank">Terms & Conditions</a>.</label>
+                      <input type="hidden" id="referer" name="referer" value="{$referer}">
+                      <input type="submit" value="" class="registerBtn" title="Register" />
+                      <dl>
+                      <dd><span id="show_msg" class="InfoError" style="display:none"></span></dd>
+                      </dl> 
+                      <p>We'll use your email address to send order and shipping confirmations. We are committed to protecting your privacy. </p> 
+                  </div>
+                 </form> 
+              </div> 
+        </div>
+        <!--登录注册结束-->
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$("#CompanyMember").click();
+		
+		$('#newpassword').focus(function(){
+			$("div.pawIntension").fadeIn(300);	
+		}).blur(function(){
+			var thisVal = $(this).val();
+			if(thisVal == ""){
+				$("div.pawIntension").fadeOut(300);
+			}
+		});
+		
+		//个人和公司注册
+		if($("#CompanyMember").attr('checked') == 'checked'){
+			$("dl.CompanyName").show();
+		}else{
+			$("dl.CompanyName").hide();	
+		}
+		$("#CompanyMember").click(function(){
+			$("dl.CompanyName").show();		
+		});
+		$("#IndividualMember").click(function(){
+			$("dl.CompanyName").hide();		
+		});
+		
+		$('#newpassword').keyup(function () {
+			var __th = $(this);
+			if (!__th.val()) {
+				Primary();
+				return;
+			}
+			if (__th.val().length < 6) {
+				Weak();
+				return;
+			}
+			var _r = checkPassword(__th);
+			if (_r < 1) {
+				Primary();
+				return;
+			}
+	
+			if (_r > 0 && _r < 2) {
+				Weak();
+			} else if (_r >= 2 && _r < 4) {
+				Medium();
+			} else if (_r >= 4) {
+				Tough();
+			}
+		});	
+	});
+	function Primary() {
+		$("div.pawIntension span.intension").removeClass("current");
+	}
+
+	function Weak() {
+		$("div.pawIntension span.intension").eq(0).addClass("current");
+	}
+
+	function Medium() {
+		$("div.pawIntension span.intension:lt(2)").addClass("current");
+	}
+
+	function Tough() {
+		$("div.pawIntension span.intension").addClass("current");
+	}
+	function checkPassword(pwdinput) {
+		var maths, smalls, bigs, corps, cat, num;
+		var str = $(pwdinput).val()
+		var len = str.length;
+
+		var cat = /.{16}/g
+		if (len == 0) return 1;
+		//if (len > 16) { $(pwdinput).val(str.match(cat)[0]); }
+		cat = /.*[\u4e00-\u9fa5]+.*$/
+		if (cat.test(str)) {
+			return -1;
+		}
+		cat = /\d/;
+		var maths = cat.test(str);
+		cat = /[a-z]/;
+		var smalls = cat.test(str);
+		cat = /[A-Z]/;
+		var bigs = cat.test(str);
+		var corps = corpses(pwdinput);
+		var num = maths + smalls + bigs + corps;
+
+		if (len < 6) { return 1; }
+
+		if (len >= 6 && len <= 8) {
+			if (num == 1) return 1;
+			if (num == 2 || num == 3) return 2;
+			if (num == 4) return 3;
+		}
+
+		if (len > 8 && len <= 11) {
+			if (num == 1) return 2;
+			if (num == 2) return 3;
+			if (num == 3) return 4;
+			if (num == 4) return 5;
+		}
+
+		if (len > 11) {
+			if (num == 1) return 3;
+			if (num == 2) return 4;
+			if (num > 2) return 5;
+		}
+	}
+
+	function corpses(pwdinput) {
+		var cat = /./g
+		var str = $(pwdinput).val();
+		var sz = str.match(cat)
+		for (var i = 0; i < sz.length; i++) {
+			cat = /\d/;
+			maths_01 = cat.test(sz[i]);
+			cat = /[a-z]/;
+			smalls_01 = cat.test(sz[i]);
+			cat = /[A-Z]/;
+			bigs_01 = cat.test(sz[i]);
+			if (!maths_01 && !smalls_01 && !bigs_01) { return true; }
+		}
+		return false;
+	}
+</script>
+<include file="./Shop/Home/View/footer.html" />

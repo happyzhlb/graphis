@@ -1,0 +1,60 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Technology Center</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--下载中心开始-->
+    <div class="downloadCenter">
+    	<div class="downLoadChoose">
+        	<a href="{:U('DownloadCenter/index')}" class="current">MSDS</a>
+            <a href="{:U('DownloadCenter/COA')}">COA</a>
+        </div>	
+        <div class="MCsearch">
+        	<div class="Search">
+            	<form id="search_frm" method="get" action="{:U('MSDS')}">
+                <input type="text" name="goods_name" value="{:I('goods_name')}" placeholder='RC-708' class="search" />
+                <a href="javascript:void(0)" class="searchBtn">search</a>
+                </form>
+            </div>
+            <p>iPhone supports reading online but do not support download, Android supports download but do not support reading online!</p>
+        </div>
+        <div class="MClist">
+        <empty name='Think.get.goods_name'>
+          <volist name='brands' id='brand'>    
+        	<volist name='brand.goods' id='vo'>
+        	<div class="each clearfix">
+            	<a href="/{$vo.msds}" class="name">{$vo.goods_name}</a>
+                <a href="/{$vo.msds}" class="read"><span>Read/Download</span></a>
+            </div>
+            </volist>
+          </volist>
+        <else/>
+          <volist name='brands' id='vo'>     
+        	<div class="each clearfix">
+            	<a href="/{$vo.msds}" class="name">{$vo.goods_name}</a>
+                <a href="/{$vo.msds}" class="read"><span>Read/Download</span></a>
+            </div> 
+          </volist> 
+        </empty>     
+        </div>
+    </div>
+	<!--下载中心结束--> 
+    <script>
+    	$(function(){
+			$('.Search .searchBtn').click(function(){
+				$('.Search #search_frm').submit();	
+			});
+		});
+    </script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

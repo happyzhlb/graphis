@@ -1,0 +1,332 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Product Request</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--用户需求开始-->
+    <div class="RequestBox">
+     
+    	<div class="requestChoose clearfix">
+        	<a href="javascript:void(0)" class="current">Already a member</a>
+            <a href="javascript:void(0)">Not a member</a>
+            <a href="javascript:void(0)">About Request</a>
+        </div>
+        <div class="infoBox">
+        <form id="request_form" method="post" action="{:U('add')}"> 
+        	<div class="show">
+            	<h3>Please fill in the product request form below</h3>
+            	<dl class="clearfix">
+                  <dt>Product Name:</dt>
+                  <dd><input name="pro_name" type="text" class="textIn" id="pro_name" value="{$list.pro_name}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Cas Number:</dt>
+                  <dd><input name="cas_number" type="text" class="textIn" id="cas_number" value="{$list.cas_number}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Standard:</dt>
+                  <dd><input name="standard" type="text" class="textIn" id="standard" value="{$list.standard}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Package:</dt>
+                  <dd><input name="package" type="text" class="textIn" id="package" value="{$list.package}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Quantity:</dt>
+                  <dd>
+                  	<select name="quantity_unit" id="quantity_unit">
+                   	  <option value="t" <?php if(trim($list['quantity_unit'])=='t'){ echo 'selected';}?>>t</option>
+                        <option value="kg" <?php if(trim($list['quantity_unit'])=='kg'){ echo 'selected';}?>>kg</option>
+                        <option value="g" <?php if(trim($list['quantity_unit'])=='g'){ echo 'selected';}?>>g</option>
+                  </select>
+                  	<input name="quantity" type="text" class="textIn2" id="quantity" value="{$list.quantity}" maxlength="10" />
+                  </dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt></dt>
+                  <dd>
+                  	<select name="cycle_unit" id="cycle_unit">
+                   	  <option value="week" <?php if(trim($list['cycle_unit'])=='week'){ echo 'selected';}?>>week</option>
+                        <option value="month" <?php if(trim($list['cycle_unit'])=='month'){ echo 'selected';}?>>month</option>
+                        <option value="day" <?php if(trim($list['cycle_unit'])=='day'){ echo 'selected';}?>>day</option>
+                  </select>
+                  <input name="cycle" type="text" class="textIn2" id="cycle" value="{$list.cycle}" size="10" />
+                  </dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Expected Price:</dt>
+                  <dd><input name="expected_price" type="text" class="textIn" id="expected_price" value="{$list.expected_price}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Other Details:</dt>
+                  <dd><textarea name="description" id="OtherDetails" cols="45" rows="5">{$list.description} </textarea></dd>
+                </dl>
+                <h3>Contact Information</h3>
+            	<dl class="clearfix"> 
+                  <dt>Company Name:</dt>
+                  <dd><input name="company" type="text" class="textIn" id="company" value="{$user.company_name}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Contact Name:</dt>
+                  <dd><input name="contactor" type="text" class="textIn" id="contactor" value="{$user.contacts}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Phone:</dt>
+                  <dd><input name="phone" type="text" class="textIn" id="phone" value="{$user.phone}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Email:</dt>
+                  <dd><input name="email" type="text" class="textIn" id="email" value="{$user.email}" /></dd>
+                </dl>
+                <a href="javascript:void(0)" class="Submit">Submit</a>
+            </div>
+         </form>   
+         <form id="request_form_1" method="post" action="{:U('add')}">    
+            <div class="show" style="display:none">
+            	<h3>Please fill in the product request form below</h3>
+            	<dl class="clearfix">
+                  <dt>Product Name:</dt>
+                  <dd><input name="pro_name" type="text" class="textIn" id="pro_name" value="{$list.pro_name}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Cas Number:</dt>
+                  <dd><input name="cas_number" type="text" class="textIn" id="cas_number" value="{$list.cas_number}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Standard:</dt>
+                  <dd><input name="standard" type="text" class="textIn" id="standard" value="{$list.standard}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Package:</dt>
+                  <dd><input name="package" type="text" class="textIn" id="package" value="{$list.package}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Quantity:</dt>
+                  <dd>
+                  	<select name="quantity_unit" id="quantity_unit">
+                   	  <option value="t" <?php if(trim($list['quantity_unit'])=='t'){ echo 'selected';}?>>t</option>
+                        <option value="kg" <?php if(trim($list['quantity_unit'])=='kg'){ echo 'selected';}?>>kg</option>
+                        <option value="g" <?php if(trim($list['quantity_unit'])=='g'){ echo 'selected';}?>>g</option>
+                  </select>
+                  	<input name="quantity" type="text" class="textIn2" id="quantity" value="{$list.quantity}" maxlength="10" />
+                  </dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt></dt>
+                  <dd>
+                  	<select name="cycle_unit" id="cycle_unit">
+                   	  <option value="week" <?php if(trim($list['cycle_unit'])=='week'){ echo 'selected';}?>>week</option>
+                        <option value="month" <?php if(trim($list['cycle_unit'])=='month'){ echo 'selected';}?>>month</option>
+                        <option value="day" <?php if(trim($list['cycle_unit'])=='day'){ echo 'selected';}?>>day</option>
+                  </select>
+                  <input name="cycle" type="text" class="textIn2" id="cycle" value="{$list.cycle}" size="10" />
+                  </dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Expected Price:</dt>
+                  <dd><input name="expected_price" type="text" class="textIn" id="expected_price" value="{$list.expected_price}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Other Details:</dt>
+                  <dd><textarea name="description" id="OtherDetails" cols="45" rows="5">{$list.description} </textarea></dd>
+                </dl>
+                <h3>Contact Information</h3>
+            	<dl class="clearfix"> 
+                  <dt>Company Name:</dt>
+                  <dd><input name="company" type="text" class="textIn" id="company" value="{$user.company_name}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Contact Name:</dt>
+                  <dd><input name="contactor" type="text" class="textIn" id="contactor" value="{$user.contacts}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Phone:</dt>
+                  <dd><input name="phone" type="text" class="textIn" id="phone" value="{$user.phone}" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Email:</dt>
+                  <dd><input name="email" type="text" class="textIn" id="email" value="{$user.email}" /></dd>
+                </dl>
+                <a href="javascript:void(0)" class="Submit">Submit</a> 
+            </div>
+             </form>
+            <div class="show" style="display:none">
+            	<h4>Can’t find the product you want on our website?</h4>
+                <p>Can’t find the product you want on our website? Don’t worry, we are dedicated to improving customer satisfaction 
+from every aspect. Although there aresome chemical products we do not list on our website, we can source them from our best suppliers and help you get what you want. All you need to do is filling in the Product Request form below and submit it to us!We will try our best to supply the product you requested either from our website or only for you depending on how many people need it. You will be reached immediately when the requested product is available.</p>
+                <h4>Currently there is a promotion for the Product Request!</h4>
+                <p>Currently there is a promotion for the Product Request! You will get 100 reward points that can be used in future 
+purchase once the request is validated.</p>
+            </div>
+        </div> 
+    </div>
+	<!--用户需求结束--> 
+  <script>
+    	$(function(){ 
+			//用户需求选择
+			$(".requestChoose a").click(function(){
+				var showIndex = $(".requestChoose a").index(this);	
+				$(".requestChoose a").removeClass("current");
+				$(this).addClass("current");
+				$(this).parents(".RequestBox").find(".show").hide();
+				$(this).parents(".RequestBox").find(".show").eq(showIndex).fadeIn(300);
+			});
+			//提交
+			$('#request_form .Submit').click(function(){
+				$('#request_form').submit();	
+			}); 
+			//提交
+			$('#request_form_1 .Submit').click(function(){
+				$('#request_form_1').submit();	
+			}); 
+			
+			//验证
+			$('#request_form').validate({
+				rules : {  
+					pro_name : {
+						required : true, 
+					},
+					cas_number : {
+						required : true
+					},
+					standard : {
+						required : true
+					},
+					package : {
+						required : true
+					},  
+					quantity : {
+						required : true, 
+						number:true,
+					}, 
+					quantity_unit : {
+						required : true
+					},
+					cycle : {
+						required : true,
+						number:true,
+					},
+					cycle_unit : {
+						required : true
+					},
+					expected_price : {
+						required : true,
+						number:true,
+					},
+					company : {
+						required : true, 
+					},  
+					contactor : {
+						required : true, 
+					},  
+					phone : {
+						required : true, 
+					},  
+					email : {
+						required : true, 
+					},  
+				},
+				messages : {  
+					cycle_unit : {
+						required : '<i></i>cycle_unit is required.', 
+					},
+					pro_name : {
+						required : '<i></i>product name is required.'
+					},
+					cas_number : {
+						required : '<i></i>cas_number is required.'
+					} 					
+				},
+				focusCleanup:true,
+				focusInvalid: false,
+				onkeyup : false,
+				onfocusout : false,
+				success: 'dd',
+				errorElement : 'span',
+				errorClass : 'InfoError',
+				validClass: 'InfoTrue',
+				
+			});
+
+			//验证
+			$('#request_form_1').validate({
+				rules : {  
+					pro_name : {
+						required : true, 
+					},
+					cas_number : {
+						required : true
+					},
+					standard : {
+						required : true
+					},
+					package : {
+						required : true
+					},  
+					quantity : {
+						required : true, 
+						number:true,
+					}, 
+					quantity_unit : {
+						required : true
+					},
+					cycle : {
+						required : true,
+						number:true,
+					},
+					cycle_unit : {
+						required : true
+					},
+					expected_price : {
+						required : true,
+						number:true,
+					},
+					company : {
+						required : true, 
+					},  
+					contactor : {
+						required : true, 
+					},  
+					phone : {
+						required : true, 
+					},  
+					email : {
+						required : true, 
+					},   
+				},
+				messages : {  
+					cycle_unit : {
+						required : '<i></i>cycle_unit is required.', 
+					},
+					pro_name : {
+						required : '<i></i>product name is required.'
+					},
+					cas_number : {
+						required : '<i></i>cas_number is required.'
+					} 					
+				},
+				focusCleanup:true,
+				focusInvalid: false,
+				onkeyup : false,
+				onfocusout : false,
+				success: 'dd',
+				errorElement : 'span',
+				errorClass : 'InfoError',
+				validClass: 'InfoTrue',
+				
+			});
+						
+		});
+    </script> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

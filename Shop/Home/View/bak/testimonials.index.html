@@ -1,0 +1,69 @@
+<include file="./Shop/Home/View/header.html" />
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <span><a href="{:U('/Testimonials')}">Customer Testimonials</a></span>
+</div>
+
+
+
+<div class="webC1000">
+	<div id="testimonial">
+    	<!--<h2><a href="{:U('/Testimonials/add')}" class="write">Write testimonials</a>Customer Testimonials</h2>
+        <div class="testimonialList">
+        	<div class="listPage clearfix">
+            	<div id="orderPage">{$page}</div>
+            </div>
+            <volist name="tms" id="vo">
+            <div class="each">
+            	<h4><span class="time">{$vo.title} {$vo.ctime|todate=###,'Y-m-d H:i'}</span>By<span class="name">{$vo.name}</span></h4>
+                <div class="content">
+                	<p>{$vo.content}</p>
+                    <span class="sanj"></span>
+                </div>
+            </div>
+            </volist>
+            <div class="listPage clearfix">
+            	<div id="orderPage">{$page}</div>
+            </div>
+        </div>-->
+        
+        <h2>Customer Testimonials</h2>
+        <div class="testimonialList">
+        	<div class="allandPage">
+            	<div id="orderPage">
+                	{$page}
+                </div>
+                <a href="{:U('/Testimonials/add')}" class="write">Write testimonials</a>
+                <span class="total"><strong>{$count}</strong>Items in Total</span>
+            </div>
+            
+            
+            <!--单个评价开始-->
+            <volist name="tms" id="vo">
+            <dl class="clearfix">
+            	<dt>
+                	<span class="time">{$vo.ctime|todate=###,'Y-m-d H:i'}</span>
+                    <span class="name">{$vo.name}</span>
+                    <span class="num"><?php echo ($key+1)+$listRows*(($_GET['p']?$_GET['p']:1)-1); ?></span>
+                </dt>
+                <dd>
+                	<h4>{$vo.title}</h4>
+                    <p>{$vo.content}</p>
+                </dd>
+            </dl>
+            </volist>
+            <!--单个评价结束-->
+            
+            
+            <div class="allandPage">
+            	<div id="orderPage">
+                	{$page}
+                </div>
+                <a href="{:U('/Testimonials/add')}" class="write">Write testimonials</a>
+                <span class="total"><strong>{$count}</strong>Items in Total</span>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Shop/Home/View/viewed.items.html" />
+<include file="./Shop/Home/View/footer.html" />

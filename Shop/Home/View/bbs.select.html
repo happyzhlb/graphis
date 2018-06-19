@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+        <meta name="keywords" content=怀孕百事通 孕妈圈  />
+        <meta name="description" content=怀孕百事通 孕妈圈 />
+        <title>选择发帖版块_宝妈社区</title>
+		<link rel="stylesheet" href="__PUBLIC__/home/fonts/font.css">
+		<link rel="stylesheet" href="__PUBLIC__/bbs/style.css">
+        <script type="text/javascript" src="__PUBLIC__/bbs/jquery-1.4.4.min.js"></script>
+        <script type="text/javascript">
+         $('.lookmore').ready(function () {
+        	$('.lookmore').click(function(){
+                $(this).prev(".rol-2").toggleClass("autoh");
+                if ($(this).html() == '<span class="txt">查看更多</span>&nbsp;<span class="icon icon-down"></span>') {
+                    $(this).html('<span class="txt">收起</span>&nbsp;<span class="icon icon-up"></span>');
+                } else {
+                    $(this).html('<span class="txt">查看更多</span>&nbsp;<span class="icon icon-down"></span>');
+                }
+            });
+            });
+
+
+        </script>
+	</head>
+	<body>
+		<header>
+			<div class="l"><a href="javascript:history.back()" class="btn back"><span class="icon-back"></span></a></div>
+			<div class="c"><h1>选择发帖版块</h1></div>
+		</header>
+	<!--底部导航-->
+	<include file="./Shop/Home/View/bbs.footer.html" /> 
+
+		<div class="header-margin footer-margin body">
+        <volist name="cate_list" id='list'>
+			<div class='quanzi_one'>〖{$list.cate_name}〗</div>
+            <nav class='box mainav'>
+            	<div class='rol-2'>
+                <if condition="$list['children']">
+                	<?php $findCity=false; ?>
+                   	<volist name="list.children" id='ls'>
+                        <if condition="$user['city'] && strstr($ls['cate_name'],$user['city'])"> 
+                            <?php $findCity=true; ?>
+                            <a href="{:U('add',array('cate_id'=>$ls['cate_id']))}" class='box-flex-1'><img src='/Uploads/{$ls.photo}'>{$ls.cate_name}</a> 
+                        </if> 
+                   	</volist>
+                  	<?php if($findCity==false){ ?>
+                    	<volist name="list.children" id='ls'>
+                    	<a href="{:U('add',array('cate_id'=>$ls['cate_id']))}" class='box-flex-1'><img src='/Uploads/{$ls.photo}'>{$ls.cate_name}</a>
+                        </volist>
+                    <?php }?>
+               <else/>
+               	 	<a href="{:U('add',array('cate_id'=>$list['cate_id']))}" class='box-flex-1'><img src='/Uploads/{$list.photo}'>{$list.cate_name}</a>
+               </if>
+             	</div>
+             </nav>
+       </volist>    
+       <div style="width:100%; height:50px;"></div>
+	</body>
+</html>

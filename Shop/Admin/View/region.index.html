@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>地区列表</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/formClass.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/gcategory.js"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Region')}" class="text" target="workspace">地区管理</a>
+         </div>
+    </div>
+         <!--产品分类表start-->
+         <div class="tbox">
+              <div class="zone">
+                   <input type="button" class="btn btn_ys buttonadd" value="+ 新增">
+              </div>
+              <div class="cbox">
+                   <table class="table" cellpadding="0" cellspacing="0">
+                          <thead>
+                             <tr>
+                                 <th></th>
+                                 <th align="left">地区名称</th>
+                                 <th align="left">地区代码</th>
+                                 <th colspan="2">操作</th>
+                             </tr>
+                          </thead>
+                          
+                          <tbody>
+                          
+                             <volist name="region" id="list">
+                             <!--产品一级分类start-->
+                             <tr>
+                                 <td><input type="checkbox" name="items" value="{$list.region_id}"></td>
+                                 <td row="{$list.region_id}">
+                                     <div class="classNameF">
+                                          <if condition="$list.has_child eq false">
+                                          <i class="icon_class"></i>
+                                          <else />
+                                          <i class="icon_add"></i>
+                                          </if>
+                                          <span class="text">{$list.region_name}</span>
+                                     </div>                                     
+                                 </td>
+                                 <td row="{$list.region_id}"><span class="text">{$list.region_code}</span></td>
+                                 <td class="center"><a href="{:U('/Admin/Region/edit',array('id' => $list['region_id']))}" target="_self">编辑</a></td>
+                                 <td class="center"><a href="{:U('/Admin/Region/drop', array('id' => $list['region_id']))}" target="_self">删除</a></td>
+                             </tr>
+                             <!--产品一级分类end--> 
+                             
+                             <!--产品二级分类start-->
+                             <if condition="$list.has_child neq false">
+                             <volist name="list.has_child" id="clist">
+                             <tr class="parent_id_{$list.region_id}" style="display:none;">
+                                 <td><input type="checkbox" name="items" value="{$clist.region_id}"></td>
+                                 <td>
+                                     <div class="classNameS">
+                                          <i class="icon_class"></i>
+                                          <span class="text">{$clist.region_name}</span>
+                                     </div>
+                                 </td>
+                                 <td><span class="text">{$clist.region_code}</span></td>
+                                 <td class="center"><a href="{:U('/Admin/Region/edit', array('id' => $clist['region_id']))}" target="_self">编辑</a></td>
+                                 <td class="center"><a href="{:U('/Admin/Region/drop', array('id' => $clist['region_id']))}" target="_self">删除</a></td>
+                             </tr>
+                             </volist>
+                             </if>
+                             <!--产品二级分类end-->
+                             
+                             </volist>
+                             
+                             
+                                                              
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="11">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" name="" value="删除" class="btn btn_bs dropall">
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--产品分类表end-->
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

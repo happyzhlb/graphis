@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理员管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+$(function(){
+	$('#admin_form').validate({
+		rules : {
+			oldpassword : {
+				required : true
+			},
+			newpassword : {
+				required : true,
+				min : 6
+			},
+			repassword : {
+				required : true,
+				equalTo : "#newpassword"
+			}
+		},
+		messages : {
+			oldpassword : {
+				required : '<i></i>原密码不能为空'
+			},
+			newpassword : {
+				required : '<i></i>新密码不能为空',
+				min : '<i></i>新密码长度不能小于6位'
+			},
+			repassword : {
+				required : '<i></i>重复密码不能为空',
+				equalTo : '<i></i>两次输入的密码不一致'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+
+</script>
+</head>
+<style type="text/css">
+	/*清除浮动*/
+	.clearfix:before,.clearfix:after{display: table;line-height: 0;content: "";}
+	.clearfix:after{clear:both;}
+	.clearfix{*zoom:1;}
+
+	#changeBox{ padding:50px 100px;}
+	#changeBox dl{ font-size:12px; padding-bottom:20px;}
+	#changeBox dl dt{ display:block; width:80px; height:30px; line-height:30px; text-align:right; float:left;}
+	#changeBox dl dd{margin-left:85px; position:relative;}
+	#changeBox dl dd input.textIn{ width:200px; height:28px; padding:0 5px; line-height:28px; border:1px solid #aaa;}
+	#changeBox dl dd input.textIn:focus{ box-shadow:0 0 4px #aaa;}
+	#changeBox dl dd span.tips{ display:block; height:30px; line-height:30px; position:absolute; left:210px; top:0;}
+	#changeBox dl dd span.true{ color:#060;}
+	#changeBox dl dd span.error{ color:#f00; margin-left:10px;}
+	
+	
+	/*密码强度*/
+	.pawIntension{ display:none; margin-top:15px; padding-left:10px;}
+	.pawIntension span{ display:block; width:60px; float:left; margin-right:5px; text-align:center;}
+	.pawIntension span i{ display:block; width:60px; height:5px; background:#d6d3d3;}
+	.pawIntension span em{ display:block; padding:2px 0; font-style:normal; width:60px; text-align:center; font-size:11px; color:#b4b4b4;}
+	.pawIntension span.current i.Weak{ background:#f30;}
+	.pawIntension span.current i.Fair{ background:#099;}
+	.pawIntension span.current i.Strong{ background:#060;}
+	.pawIntension span.current em{ color:#333;}
+</style>
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+        <div class="page_tag">
+             <div class="tag">
+                  <i class="home"></i>
+                  <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Index/changepwd')}" class="text" target="workspace">修改密码</a>
+             </div>
+        </div>
+      
+      
+       <div class="tbox">
+       		<div class="widsbox">
+            	<div class="bar">
+                    <div class="bar_l"></div>
+                    <div class="text">修改密码</div>
+                    <div class="bar_r"></div>
+                </div>
+                
+                <div class="lined">
+                    <!--修改密码开始-->
+                    <form id="admin_form" method="post">
+                    <div id="changeBox">
+                        <dl class="clearfix">
+                            <dt>原密码：</dt>
+                            <dd>
+                                <input type="password" value="" class="textIn" id="oldpassword" name="oldpassword" />
+                                <span class="tips error">请输入原登录密码</span>
+                            </dd>
+                        </dl>
+                        <dl class="clearfix">
+                            <dt>新密码：</dt>
+                            <dd>
+                                <input type="password" value="" class="textIn" id="newpassword" name="newpassword" />
+                                <span class="tips error">请输入6-16由数字，字符组成的密码。反正就是设置的复杂一点，怎么设置随你。</span>
+                                <div class="pawIntension clearfix">
+                                    <span class="intension">
+                                        <i class="Weak"></i>
+                                        <em>弱</em>
+                                    </span>
+                                    <span class="intension">
+                                        <i class="Fair"></i>
+                                        <em>中</em>
+                                    </span>
+                                    <span class="intension">
+                                        <i class="Strong"></i>
+                                        <em>强</em>
+                                    </span>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl class="clearfix">
+                            <dt>确认密码：</dt>
+                            <dd>
+                                <input type="password" value="" class="textIn" id="repassword" name="repassword" />
+                                <span class="tips error">请再输入一次密码。</span>
+                            </dd>
+                        </dl>
+                        <dl class="clearfix">
+                            <dt></dt>
+                            <dd>
+                                <input type="button" class="submit btn btn_ds p_deline" value="确认" />
+                            </dd>
+                        </dl>	
+                     </div>
+                     </form>
+                    <!--修改密码结束-->
+				</div>
+                
+            </div>
+       </div>
+      
+      
+        
+     
+    </div>
+    <!--content end-->
+</section>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#newpassword').focus(function(){
+			$("div.pawIntension").fadeIn(300);	
+		}).blur(function(){
+			var thisVal = $(this).val();
+			if(thisVal == ""){
+				$("div.pawIntension").fadeOut(300);
+			}
+		});
+		
+		$('#newpassword').keyup(function () {
+			var __th = $(this);
+			if (!__th.val()) {
+				Primary();
+				return;
+			}
+			if (__th.val().length < 6) {
+				Weak();
+				return;
+			}
+			var _r = checkPassword(__th);
+			if (_r < 1) {
+				Primary();
+				return;
+			}
+	
+			if (_r > 0 && _r < 2) {
+				Weak();
+			} else if (_r >= 2 && _r < 4) {
+				Medium();
+			} else if (_r >= 4) {
+				Tough();
+			}
+		});	
+	});
+	function Primary() {
+		$("div.pawIntension span.intension").removeClass("current");
+	}
+
+	function Weak() {
+		$("div.pawIntension span.intension").eq(0).addClass("current");
+	}
+
+	function Medium() {
+		$("div.pawIntension span.intension:lt(2)").addClass("current");
+	}
+
+	function Tough() {
+		$("div.pawIntension span.intension").addClass("current");
+	}
+	function checkPassword(pwdinput) {
+		var maths, smalls, bigs, corps, cat, num;
+		var str = $(pwdinput).val()
+		var len = str.length;
+
+		var cat = /.{16}/g
+		if (len == 0) return 1;
+		//if (len > 16) { $(pwdinput).val(str.match(cat)[0]); }
+		cat = /.*[\u4e00-\u9fa5]+.*$/
+		if (cat.test(str)) {
+			return -1;
+		}
+		cat = /\d/;
+		var maths = cat.test(str);
+		cat = /[a-z]/;
+		var smalls = cat.test(str);
+		cat = /[A-Z]/;
+		var bigs = cat.test(str);
+		var corps = corpses(pwdinput);
+		var num = maths + smalls + bigs + corps;
+
+		if (len < 6) { return 1; }
+
+		if (len >= 6 && len <= 8) {
+			if (num == 1) return 1;
+			if (num == 2 || num == 3) return 2;
+			if (num == 4) return 3;
+		}
+
+		if (len > 8 && len <= 11) {
+			if (num == 1) return 2;
+			if (num == 2) return 3;
+			if (num == 3) return 4;
+			if (num == 4) return 5;
+		}
+
+		if (len > 11) {
+			if (num == 1) return 3;
+			if (num == 2) return 4;
+			if (num > 2) return 5;
+		}
+	}
+
+	function corpses(pwdinput) {
+		var cat = /./g
+		var str = $(pwdinput).val();
+		var sz = str.match(cat)
+		for (var i = 0; i < sz.length; i++) {
+			cat = /\d/;
+			maths_01 = cat.test(sz[i]);
+			cat = /[a-z]/;
+			smalls_01 = cat.test(sz[i]);
+			cat = /[A-Z]/;
+			bigs_01 = cat.test(sz[i]);
+			if (!maths_01 && !smalls_01 && !bigs_01) { return true; }
+		}
+		return false;
+	}
+</script>
+
+</body>
+</html>

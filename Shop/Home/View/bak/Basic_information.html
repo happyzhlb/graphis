@@ -1,0 +1,149 @@
+<include file="./Shop/Home/View/header.html" /> 
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Basic Information</h2>
+            <p class="eachTip">Please kindly fill in the basic information about individuals or companies for further cooperation.</p>
+            <div class="basicInf">
+            	<!--<div class="show infContent">
+                	<dl class="clearfix">
+                    	<dt>Contact Name : </dt>
+                        <dd>{$ls.contacts}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Company Name : </dt>
+                        <dd>{$ls.company_name}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Employee Scale : </dt>
+                        <dd>{$ls.company_size}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Office Address : </dt>
+                        <dd>{$ls.address}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>State/Region : </dt>
+                        <dd>{$ls.regions}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Office Phone :</dt>
+                        <dd>{$ls.phone}</dd>
+                    </dl>
+                    <div class="btnBox">
+                    	<a href="javascript:void(0)" class="accountToconBtn" title="Edit">Edit</a>
+                    </div>
+                </div>-->
+                <div class="EdidInfBox infContent">
+                	<form action="{:U('Member/basic_information')}" id="info_form" method="post" enctype="multipart/form-data">
+                	<dl class="clearfix">
+                    	<dt>Contact Name : </dt>
+                        <dd>
+                        	<input name="contacts" type="text" value="{$ls.contacts}" class="infTextIn" />
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Company Name : </dt>
+                        <dd><input id="company_name" name="company_name" value="{$ls.company_name}" type="text" class="infTextIn" /></dd>
+                    </dl>
+                    <dl class="clearfix">
+               	    <dt>Employee Scale : </dt>
+                        <dd>
+                        	<select name="company_size" id="company_size" style="width:auto">
+                              <option value="">--Select--</option>
+                              <volist name='company_size' id='vo'>
+                              <option value="{$vo}" <if condition="$vo==$ls['company_size']">selected</if> >{$vo}</option>
+                              </volist> 
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Office Address : </dt>
+                        <dd>
+                        	<input name="address" type="text" value="{$ls.address}" class="infTextIn" />
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                   	  <dt>State/Region : </dt>
+                        <dd>
+                        	<select name="state">
+                              <option value="">--Select--</option>
+                              <volist name='regions' id='region'>
+                              <option value="{$region.region_id}" <if condition="$region['region_id']==$ls['state']">selected</if>>{$region.region_name}</option>
+                              </volist> 
+                          </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Office Phone :</dt>
+                        <dd><input name="phone" type="text" class="infTextIn" id="phone" value="{$ls.phone}" /></dd>
+                    </dl> 
+                    <div class="btnBox">
+                        <input value="Preserve" class="accountToconBtn SubmitBtn" type="submit" />
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript">
+$(function(){ 
+	$('#info_form').validate({
+		rules : { 
+			contacts : {
+				required : true,   
+			},
+			company_name : {
+				required : true
+			},
+			company_size : {
+				required : true
+			},
+			address : {
+				required : true
+			},
+			state : {
+				required : true
+			},
+			phone : {
+				required : true
+			},
+		},
+		messages : {
+			contacts : {
+				required : '<i></i>Contact Name is required.'
+			},
+			company_name : {
+				required : '<i></i>Company Name is required.'
+			},
+			company_size : {
+				required : '<i></i>Employee Scale is required.'
+			},
+			state : {
+				required : '<i></i>State/Region is required.'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		success: 'InfoTrue',
+		errorElement : 'span',
+		errorClass : 'InfoError',
+		validClass:'InfoTrue',
+	});
+}); 
+
+	$(document).ready(function(){
+		$("div.btnBox a.accountToconBtn").click(function(){
+			$(this).parents("div.show").hide();
+			$(this).parents("div.show").next("div.EdidInfBox").show();
+		}); 
+	});
+</script>
+<include file="./Shop/Home/View/footer.html" /> 

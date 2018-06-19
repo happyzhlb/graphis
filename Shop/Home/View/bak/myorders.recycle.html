@@ -1,0 +1,199 @@
+<include file="./Shop/Home/View/header.html" />
+<script type="text/javascript">
+$(function(){
+	//还原
+	$('.grayBtn').click(function(){
+		$.ajax({
+			url : $(this).attr('href'),
+			type : 'get',
+			dataType : 'json',
+			success : function(data){
+				alert(data.info);
+				if(data.status){
+					location.reload();
+				}
+			}
+			
+		});
+		return false;	
+	});
+	
+	//删除订单
+	$('.orderDelete').click(function(){
+		sure_confirm($(this));
+		return false;
+	});
+	
+});
+
+//confirm
+function sure_confirm(obj){
+	$('.alertFaBox').hide();
+	obj.siblings('.alertFaBox').show();
+	obj.siblings('.alertFaBox').find('a.yes').bind('click',function(){
+		$.ajax({
+			url : obj.attr('href'),
+			tyep : 'get',
+			dataType : 'json',
+			success : function(data){
+				if(data.status){ //删除成功
+					location.reload();
+				}else{
+					alert(data.info);
+				}
+			}	
+		});
+		$(this).parents('.alertFaBox').hide();
+		return false;	
+	});
+	
+	obj.siblings('.alertFaBox').find('a.no').bind('click',function(){
+		$(this).parents('.alertFaBox').hide();	
+	});
+}
+</script>
+<!--分享插件相关-->
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "bd66dea7-9894-4301-8986-ed6e077283c8", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+<!--分享插件相关-->
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>My Recycle Orders</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>My Recycle Orders</h2>
+            <p class="eachTip">View the status of the orders or write reviews for purchased products.</p>
+            
+            <!--My Orders 开始-->
+          <div class="myOrders">
+                <!--订单在列表展示开始-->
+                <div class="orderShow">
+                	<div id="orderPage" class="clearfix" style="float:none; background:#f5f5f5; padding:8px; width:auto; border-bottom:1px solid #e4e4e4;">{$page}</div>
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr class="thisHeader">
+                        <td>Product</td>
+                        <td width="90" align="center">Detail</td>
+                        <td width="80" align="center">refund</td>
+                        <td width="80" align="center">Total</td>
+                        <td width="110" align="center">Order Status</td>
+                        <td width="90" align="center">Operations</td>
+                    </tr>
+                    <volist name="orders" id="list">
+                      <tr class="thisNumber">
+                        
+                        <td colspan="6">
+                        	<div class="deleteBox">
+                            	<div class="shareBox">
+                                	<a href="javascript:void(0)" title="Share" class="aShare">share</a>
+                                    <div class="sharShow">
+                                    	<span class='st_facebook_large' displayText='Facebook'></span>
+                                        <span class='st_twitter_large' displayText='Tweet'></span>
+                                        <span class='st_googleplus_large' displayText='Google +'></span>
+                                        <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                                        <span class='st_pinterest_large' displayText='Pinterest'></span>
+                                        <span class='st_blogger_large' displayText='Blogger'></span>
+                                    </div>
+                                </div>
+                            </div>
+                        	<p class="orderNum">Order Number : {$list.order_sn}<span>Time : {$list.add_time|todate}</span></p>
+                        </td>
+                    </tr>
+                    <volist name="list.ordergoods" id="goods" key="k">
+                    <if condition="$k eq 1">
+                      <tr>
+                        <td valign="top">
+                        	<dl class="padT15">
+                            	<dt><a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank"><img src="/{$goods.default_image}" width="50" height="50" alt="{$goods.goods_name}" /></a></dt>
+                                <dd>
+                                	<ul>
+                                    	<li><a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank">{$goods.goods_name}</a></li>
+                                        <li class="hui">{$goods.goods_attr}</li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </td>
+                        <td width="90" align="center" valign="top" class="padT15">{$goods.present_price|format_price} x {$goods.quantity}</td>
+                        <td width="80" align="center" valign="top" class="padT15">{$goods.refund_status|order_refund_status=###,$list['order_status'],$goods['rec_id']}
+                        </td>
+                        <td width="80" rowspan="{$list.ordergoods|count}" align="center" valign="top" class="padT15">{$list.totle_fee|format_price}</td>
+                        <td width="110" rowspan="{$list.ordergoods|count}" align="center" valign="top" class="padT15">
+                        	<if condition="($list.order_status eq 20) && ($list.refund_status eq 0)">
+                            	<i>Paid</i>
+                            <elseif condition="($list.order_status eq 30) && ($list.refund_status eq 0)" />
+                            	<i>Shipped</i>
+                            </if>
+                            <i>{$list.order_status|order_status=###,$list['refund_status']}</i>
+                            <if condition="($list.order_status eq 40) && ($list.refund_status eq 0)">
+                            <eq name="list.commnet_time" value="0">
+                            	<i>To Be Reviewed</i>
+                            <else />
+                            	<i>Reviewed</i>
+                            </eq>
+                            	
+                            </if>
+                            <i><a href="{:U('./Myorders/view',array('id'=>$list['order_id']))}">Order Deatils</a></i>
+                        </td>
+                       
+                       
+                        <td width="90" rowspan="{$list.ordergoods|count}" align="center" valign="top" class="padT15">
+                          <a href="{:U('/Myorders/restore',array('id'=>$list['order_id']))}" class="yellowBtn" title="Restore">Restore</a>
+                          <a href="{:U('/Myorders/drop',array('id'=>$list['order_id']))}" class="orderDelete" title="Delete">Delete</a>
+                          <div class="alertFaBox" style="display:none;">
+                          		<div class="alertConBox">
+                                	<div class="alert">
+                                    	<a href="javascript:void(0)" class="closedAlert" title="Closed">closed</a>
+                                        <h5>Are you sure to delete this order ?</h5>
+                                        <p class="alertTips">You can retrieve the order from the recycle bin, or delete it permanently.</p>
+                                        <div class="btnBox">
+                                        	<a href="javascript:void(0)" class="yes">Yes</a>
+                                            <a href="javascript:void(0)" class="no">No</a>
+                                        </div>
+                                    </div>
+                                </div>	
+                          </div>
+                        </td>
+                    </tr>
+                    <else />
+                      <tr>
+                        <td valign="top">
+                        	<dl>
+                            	<dt><a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank"><img src="/{$goods.default_image}" width="50" height="50" alt="{$goods.goods_name}" /></a></dt>
+                                <dd>
+                                	<ul>
+                                    	<li><a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank">{$goods.goods_name}</a></li>
+                                        <li class="hui">{$goods.goods_attr}</li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </td>
+                        <td width="90" align="center" valign="top">{$goods.present_price|format_price} x {$goods.quantity}</td>
+                        <td width="80" align="center" valign="top">{$goods.refund_status|order_refund_status=###,$list['order_status'],$goods['rec_id']}</td>
+                    </tr>
+                    </if>
+                    </volist>
+                    </volist>
+                  </table>
+                  <div id="orderPage2" class="clearfix" style="float:none; background:#f5f5f5; padding:8px; width:auto; border-bottom:1px solid #e4e4e4; border-top:1px solid #e4e4e4;">{$page}</div>
+              </div>
+                <!--订单在列表展示结束-->
+                
+          </div>
+            <!--My Orders 结束-->
+            
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var inHtml = $("#orderPage").find("a").length;
+		if(inHtml == 0){
+			$("#orderPage,#orderPage2").hide();
+		}
+	});
+</script>
+<include file="./Shop/Home/View/footer.html" />
+

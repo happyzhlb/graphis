@@ -1,0 +1,101 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Shopping Cart</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file="./Shop/Webapp/View/menu.html" />
+    </div>
+    <!--导航结束-->
+    
+    <!--购物车开始-->
+    <div class="myCart checkAllBox">
+    	<form id="cart_form" action="{:U('Order/index')}" method="get">
+    	<div class="pro proTotal clearfix">
+            <div class="proInfo">
+            	<a href="javascript:void(0)" class="CheckOut submit_form">Check Out</a>
+                <p class="total">Sub Total (<em id="checkitems">0</em>items) :<strong id="totle">$0.00</strong></p>
+            </div>
+            <span class="check"><input type="checkbox" value="" class="checkAllShow" /></span>
+        </div>
+       <volist name="carts" id="list">  
+        <div class="pro clearfix">
+            <div class="proInfo">
+            	<a href="javascript:_delete({$list.cart_id});" class="delete">delete</a>
+                <dl class="clearfix">
+                	<dt><a href="{:U('Goods/index',array('id'=>$list['cart_id']))}" target="_blank"><img src="/{$list.default_image}" width="50" height="50" /></a></dt>
+                    <dd>
+                    	<h4><a href="{:U('Goods/index',array('id'=>$list['goods_id']))}" target="_blank">{$list.goods_name}</a></h4>
+                        <p class="Batch">{$list.spec_attr}</p>
+                        <p class="Batch">Package:500g/Bag</p>
+                        <span><em class="show_price">{$list.price|format_price}&nbsp;&nbsp;×</em><input type="text" id="chekbox_{$list.cart_id}" value="{$list.quantity}" class="textIn totalNum" /></span>
+                    </dd>
+                </dl>
+            </div>
+            <span class="check"><input type="checkbox" name="items[]" value="{$list.cart_id}" spec_id="{$list.spec_id}" /></span>
+        </div>
+       </volist>  
+        <a href="javascript:void(0)" class="CheckOutAll submit_form">Check Out</a>
+        </form>
+    </div>
+    <!--购物车结束--> 
+</div>
+<script>
+$(function(){
+	_delete=function(n){
+		$.post('{:U("Cart/delete")}',{"id":n},function(data){
+			alert(data.info); 
+			self.location.reload();
+		});	
+	} 
+	
+	_calc=function(){
+		var totle = 0;
+		var checkitems = 0;		
+		$('input[name="items\[\]"]').each(function(){ 
+			if($(this).attr('checked') == 'checked'){ //$(this).attr('checked')
+				var str = $(this).parents('.pro').find('.show_price').html(); 
+				str = str.replace('$','').replace('&nbsp;','').replace('×','');
+				totalNum=$(this).parents('.pro').find('.totalNum').val();
+				totle += parseInt(str,10)*totalNum;
+				checkitems++;
+			}  
+		});
+		$('#checkitems').html(checkitems);
+		$('#totle').html('$'+formatCurrency(totle));
+	} 
+	
+	//表单提交
+	$('.submit_form').click(function(){
+		var rec_id = '';
+		var spec_ids='';
+		var spec_quantity='';
+		$('input[name="items\[\]"]').each(function(){
+			if($(this).attr('checked') == 'checked'){
+				rec_id += $(this).val() + ',';
+				spec_ids += $(this).attr('spec_id') + ',';
+				spec_quantity += $(this).parents('.pro').find('.totalNum').val() + ',';  //$(this).attr('spec_id') + ',';
+			} 
+		});
+		if(rec_id == ''){
+			alert('You have not selected any items yet.');
+		}else{
+			rec_id = rec_id.substring(0,rec_id.length - 1);
+			spec_ids = spec_ids.substring(0,spec_ids.length - 1);
+			spec_quantity = spec_quantity.substring(0,spec_quantity.length - 1);
+			location.href = '{:U("Buy/index","","")}/spec_ids/'+ spec_ids + '/spec_quantity/'+ spec_quantity +'.html'; 
+		}
+	});
+	
+	$('input[name="items\[\]"]').on('click',_calc);
+	$('input.totalNum').on('input',_calc);
+	$('.checkAllShow').click(_calc);
+	//$('.CheckOutAll').click(function(){$('#cart_form').submit();});
+});
+</script>
+<include file="./Shop/Webapp/View/footer.html" />

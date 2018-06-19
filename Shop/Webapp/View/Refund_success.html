@@ -1,0 +1,27 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Result of Refund Application</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--退款退货开始-->
+    <div class="refund">
+   		<div class="RefundSuccess">
+        	<h3>Congradulations!</h3>
+            <p>Merchants have agreed to refund application.</p>
+            <p>The refund amount will return within <strong>30</strong> days to pay the account!</p>
+            <a href="{:U('refund/logistics_information')}">Fill in the return of the logistics information</a>
+        </div>
+    </div>
+	<!--退款退货结束--> 
+    
+</div>
+<include file="./Shop/Webapp/View/footer.html" /> 

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>单页管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Admin')}" class="text" target="workspace">单页管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">单页列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增单页" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox"> 
+                   	   <form id="search_form" method="get">
+                           <input type="search" name="keywords" id="keywords" value="{$Think.get.keywords}" placeholder="输入信息">
+                           <select id="type_id" name="type_id">
+                                <option value="">==选择单页分类==</option>
+                                <volist name="_category" id="cate">
+                                	<option value="{$cate.type_id}" <if condition="$Think.get.type_id eq $cate['type_id']">selected</if>>{$cate}</option> 
+                                </volist>
+                           </select>
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th></th>
+                                 <th>单页标题</th>
+                                 <th>单页分类</th>
+                                 <th>是否显示</th>
+                                 <th>发布时间</th>
+                                 <th colspan="3">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="_list" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$admin.user_id}"></td>
+                                 <td>{$list.title}</td>
+                                 <td align="center"><?php echo $_category[$list['type_id']];?></td>
+                                 <td align="center"><if condition="$list.if_show eq 1"><span enpty="edit_status_ajax" url="{:U('/Admin/Singlepage/ajax_edit_status', array('id'=>$list['page_id']))}" title="显示" class="icon_right"></span><else /><span enpty="edit_status_ajax" url="{:U('/Admin/Singlepage/ajax_edit_status', array('id'=>$list['page_id']))}" title="不显示" class="icon_error"></span></if></td>
+                                 <td align="center">{$list.ctime|todate}</td>
+                                 <td class="center"><a href="#" title="">查看</a></td>
+                                 <td class="center"><a href="{:U('/Admin/Singlepage/edit',array('id'=>$list['page_id']))}" title="">编辑</a></td>
+                                 <td class="center"><a href="{:U('/Admin/Singlepage/drop',array('id'=>$list['page_id']))}" title="" class="delete">删除</a></td>
+                             </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="10">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

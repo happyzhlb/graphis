@@ -1,0 +1,27 @@
+<include file="./Shop/Webapp/View/header.html" />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Blog Detail</span>
+            <a href="{:U('Blog/index')}" class="back">back</a>
+        </div>	
+<include file="./Shop/Webapp/View/menu.html" />
+    </div>
+    <!--导航结束-->
+    
+    <!--博客开始-->
+    <div class="blogBox">
+		<div class="blogDetail">
+        	<h2>{$blog.title}</h2>
+            <h4>{$blog.cate_name}</h4>
+            <h4>{$blog.ctime|date='F d,Y',###}</h4>
+            {$blog.content|htmlspecialchars_decode}
+        </div>    	
+    </div>
+	<!--博客结束--> 
+    
+</div>
+<include file="./Shop/Webapp/View/footer.html" />

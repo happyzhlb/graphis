@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>交易跟踪明细</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('index')}" class="text" target="workspace">交易跟踪管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar none">
+                   <div class="bar_l1"></div>
+                   <div class="text">交易跟踪列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增交易跟踪" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox">
+                   	   <form id="search_form" method="get">
+                           <input type="search" name="order_id" id="order_id" value="{$Think.get.order_id}" placeholder="订单号">&nbsp;&nbsp;
+             <input type="search" name="shop_title" id="shop_title" value="{$Think.get.shop_title}" placeholder="店铺标题">
+                           <select id="topic" name="topic" style="width:200px;">
+                                <option value="" selected>==所有交易状态==</option>
+                                <volist name="topic" id="vo">
+                                	<option value="{$key}" <if condition="$Think.get.topic eq $key">selected</if>>{$vo}</option>
+                                </volist>
+                         </select>
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div> 
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th width="3%"></th>
+                                 <th width="17%">订单号</th>
+                                 <th width="10%">订单金额</th>
+                                 <th width="12%">卖家</th>
+                                 <th width="10%">买家</th>
+                                 <th width="11%">交易状态</th>
+                                 <th width="14%">下单时间</th>
+                                 <th width="12%">推送时间</th>
+                                 <th width="11%">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="_list" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$list.bid}"></td>
+                                 <td align="center" title="{$list.order_status}">{$list.order_id}</td>
+                                 <td align="center">{$list.paid_fee}</td>
+                                 <td align="center">{$list.shop_title} / {$list.seller_nick}</td>
+                                 <td align="center">{$list.buyer_id}</td>
+                                 <td align="center"><?php echo $topic[$list['topic']]; ?></td>
+                                 <td align="center">{$list.create_order_time}</td>
+                                 <td align="center">{$list.pub_time}</td>
+                                 <td align="center" class="center"><a href="{:U('view',array('id' => $list['ttid']))}" >查看</a></td>
+                               </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="11">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

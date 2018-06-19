@@ -1,0 +1,47 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Points History</span>
+            <a href="{:U('ScoreLog/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="PointsHistory">
+        	<div class="pointsChoose clearfix"> 
+                <a href="{:U('points_history',array('type'=>'+'))}" <?php if('+'==I('type','+','trim')){echo 'class="current"';}?> title="Points Income">Points Income</a>
+                <a href="{:U('points_history',array('type'=>'-'))}" <?php if('-'==I('type','','trim')){echo 'class="current"';}?> >Points Expense</a>
+                <a  href="{:U('points_history',array('type'=>'++'))}" <?php if('++'==I('type','','trim')){echo 'class="current"';}?> >Frozen Points</a>
+            </div>
+            <div class="History">
+            <volist name="list" id="vo">
+            	<div class="each">
+                	<span class="time">{$vo.ctime|toDate='Y-m-d'}</span>
+                    <span class="name">{$vo.desc}</span>
+                    <span class="total"><if condition="$vo['type']=='-'">-<else />+</if><em>{$vo.score|abs}</em></span>
+                </div>
+            </volist> 
+            </div>
+            <div class="History none" id="Expense">
+            </div>
+            <div class="History none" id="Frozen">
+            </div>
+            <div class="page">{$page}</div>
+        </div>	
+    </div>
+	<!--会员中心设置结束--> 
+  <style>
+  	.page{ margin-top:15px; font-size:16px;}
+	.page .current{ font-weight:bold; color:#000;}
+  	.page .num{border:1px solid #999; margin:6px; padding-right:6px; padding-left:6px;}
+  </style>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

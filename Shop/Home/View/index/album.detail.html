@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)/atlas?id=498 -->
+<html class="um landscape">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="/Public/home/files/jquery.js"></script>
+<script src="/Public/home/files/main.js"></script>
+<script src="/Public/home/files/tool.js"></script>
+<script src="/Public/home/files/login.js"></script>
+<script src="/Public/home/files/register.js"></script>
+<script type="text/javascript">
+$(function(){
+	if ("" == ""){
+		$("#not_login").show();
+	}
+	else{
+		$("#have_login").show();
+	}
+	if ("" == "true"){
+		$("#jinbi").show();
+	}
+	else{
+		$("#jinbi").hide();
+	}
+	
+}) </script>
+</head>
+
+<!--[if IE 8]>
+<style>
+.hd_l{ position:absolute;left:50%; margin-left:-600px;}
+.hd_l1{margin-left:520px;;left:50%; }
+</style>
+<![endif]-->
+
+<body class="um-vp bc-bg">
+<include file="./Shop/Home/View/index/header.html" />
+
+<title>{$album.title} | {:C('site_name')}</title>
+<meta name="keywords" content="{:C('site_keywords')} {$album.title}">
+<meta name="description" content="{:C('site_description')}">
+<meta charset="utf-8">
+<link rel="stylesheet" href="/Public/home/files/ui-base.css">
+<link rel="stylesheet" href="/Public/home/files/ui-color.css">
+<link rel="stylesheet" href="/Public/home/files/ui-icon.css">
+<link rel="stylesheet" href="/Public/home/files/ui-control.css">
+<link rel="stylesheet" href="/Public/home/files/main.css">
+<link rel="styleshee t" href="/resource/css/system.css">
+<div id="page_0" class="up ub ub-ver bc-bg"> 
+  <!--content开始-->
+  <div id="content" class="ub-f1 umar-ba">
+    <div class="mod18Box umar-ta">
+      <div class="mod18">
+        <div class="DB_page sc-white uwidth"><span class="DB_current ">1</span>/<span class="DB_total">{$total}</span><span class="DB_total"></span></div>
+        <span id="prev" class="btn prev"></span> <span id="next" class="btn next"></span> <span id="prevTop" class="btn prev" style="display: block;"></span> <span id="nextTop" class="btn next" style="display: block;"></span>
+        <div id="picBox" class="picBox">
+          <ul class="cf" style="width: 4800px;">
+            <volist name="pics" id="vo">
+              <li> <img src="{$vo.photo|getThumb='483x483'}" alt="1"> </li>
+            </volist>
+          </ul>
+        </div>
+        <div id="listBox" class="listBox">
+          <ul class="cf" style="width: 320px;">
+            <!--<li class="on"><div><img width="118" height="64" src="http://goddess-pic.b0.upaiyun.com/model/1452566430920.jpg" alt="GRAPHIS" /></div></li>-->
+            <volist name="pics" id="vo">
+              <li>
+                <div><img src="{$vo.photo|getThumb='90x120'}" alt="$vo.title"></div>
+              </li>
+            </volist>
+          </ul>
+        </div>
+        <div class="uwidth sc-bg4 uabs3 div_toop" id="noShow" style="top: 0px; height: 483px; display: none; background-color: rgba(0, 0, 0, 0.952941);">
+          <div class="DB_page sc-white uwidth"><span class="DB_current ">3</span>/<span class="DB_total">{$total}</span></div>
+          <div class="uwidth  umar-lg umar-te"> <i class="icon icon-turn"></i></div>
+          <div class="umar-lg umar-t ulev3 sc-white uinn-l">您还有{$total-3}张没看哦！</div>
+          <div class="tx-c umar-t"><i class="icon icon_key"></i></div>
+          <div class="tx-c ulev5 sc-white umar-t">VIP或使用女神点才能看全部哦</div>
+          <div class="tx-c ulev5 sc-white umar-t">会员请先通过会员专辑额度购买专辑阅读</div>
+          <div class="tx-c ulev5 sc-white umar-t">登陆用户可查看前五张！</div>
+          <div class="tx-c ulev5 sc-white umar-t">下载用户可查看全套高清图！</div>
+          <div class="umar-te clearfix" style="margin-left: 390px;">
+            <button class="uc-a2  tab_listbg ulev5  ufl tx-c btn_width umar-td div_btn" onclick="javascript:window.location.href=&#39;vipRg&#39;">成为VIP</button>
+            <button class="uc-a2  tab_listbg ulev5  ufl tx-c btn_width umar-td div_btn umar-le" onclick="javascript:gotoLogin();">立即购买</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--效果html结束--> 
+</div>
+<div class="umw1 umar-ta umar-ba ">
+  <div class="ufl">
+    <div class="cont_left3">
+      <div data-am-widget="titlebar" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+        <h2 class="am-titlebar-title ulev3"> <strong>专辑信息 /</strong> <span class="sc-view-b">INFORMATION</span> </h2>
+      </div>
+      <div class="umar-ba list2">
+        <div class="tab_left" style="vertical-align: top;">
+          <div><img src="{$album.photo|getThumb='180x240'}" alt="{$album.title}" width="180" height="240"></div>
+          <div class="umar5 umar-r">
+            <div>{$models.title}<span class="sc-text-b ufr  ulev0">{$models.city}</span></div>
+            <div class="umar-t"> <span class="sc-text-b ulev0"> <a state="false" onclick="javascript:updateConcernState(this);" class="a_active"> ★
+              加关注 </a> &nbsp;&nbsp;粉丝<span id="concernCount" class="sc-text-d">8</span>&nbsp;|&nbsp;专辑<span class="sc-text-d">1</span></span></div>
+          </div>
+        </div>
+        <div class="tab_right">
+          <div class="umar-l umar-r">
+            <div>
+              <h1 class="ufl ulev5">{$album.title}</h1>
+              <div style="clear: both"></div>
+            </div>
+            <div class="ulev0 umar-t"><span class="sc-text-b">发行时间：</span>{$album.pubdate}</div>
+            <div class="ulev0 umar-t">
+              <div class="sc-text-b umar-d">专辑介绍：</div>
+              <div class="line1 indent"> </div>
+            </div>
+            <div class="uinn10 tab">
+              <div class="tab_menu">
+                <ul class="tab_list bc-border-h">
+                  <li class="ufl tx-c uc-t tab_listbg">专辑下载</li>
+                  <!--<li class="ufl tx-c uc-t">VIP</li>-->
+                  <div style="clear: both;" class="bc-bg1"></div>
+                </ul>
+              </div>
+              <div class="tab_cont">
+                <ul class="umar-l umar-t" style="display: block;">
+                  <div class="ulev0">
+                    <div class="line4">价格：<span class="sc-text-d">{$album.coin} 金豆</span></div>
+                    <div class="line4">高清图数量：<span class="sc-text-d">{$album.photo_num} P</span></div>
+                    <!--<div class="">图片格式：JPG</div>
+                    <div class="line4">文件大小：151M</div>-->
+                   
+                    <?php if(empty($_SESSION['user_info'])){ ?>
+                    <div class="line4">
+                      <button class="uc-a2  tab_listbg ulev5  ufr tx-c btn_width umar-td" onclick="javascript:gotoLogin();">请先登录</button>
+                      <div style="clear: both"></div>
+                    </div>
+                    <?php } ?>
+                  </div>
+                </ul>
+                <ul class="umar-l umar-t" style="display: none;">
+                  <div class="ulev0">
+                    <div class="ufl">
+                      <div class="line4">价格：<span class="sc-text-d">70 女神点</span></div>
+                      <div class="line4">高清图数量：<span class="sc-text-d">25 P</span></div>
+                      <div class="line4">图片格式：JPG</div>
+                      <div class="line4">文件大小：151M</div>
+                    </div>
+                    <div class="ufr">
+                      <div class="line2">VIP说明</div>
+                      <div class="line2">升级VIP后,即可享受自升级之日起最新一期专辑以及白金(半年)<br>
+                        钻石(一年)时长的会员服务,拥有该时间段内出版的专辑/视频的<br>
+                        下载权限,同时享受购买往期普通专辑和VIP专辑的优惠权限!</div>
+                      <div class="umar-t">
+                        <button class="uc-a2  tab_listbg  ufr tx-c btn_width1 ulev1" onclick="javascript:window.location.href=&#39;vipRg&#39;">成为VIP</button>
+                      </div>
+                    </div>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!--评论-->
+        
+        <div style="clear: both"></div>
+      </div>
+      
+      <!--
+      <div data-am-widget="titlebar" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+        <h2 class="am-titlebar-title ulev3"> <strong>评论/</strong> <span class="sc-view-b">COMMENT</span> </h2>
+      </div>
+      <form action="" method="post" onsubmit="return validateSubmit();">
+        <input type="hidden" name="action" value="AtlasAction">
+        <input type="hidden" name="zjId" value="498">
+        <div class=" sc-bg  bc-border-d uinn ulev0">
+          <textarea type="text" class="uwidth" name="comment" id="comment"></textarea>
+        </div>
+        <div class="umar-tc umar-bc">
+          <div class="ufl ulev0"><span class="ver-mid">还可以输入<span class="sc-text-d">2000</span>个字符</span></div>
+          <div class="ufr">
+            <input class="uc-a2  tx-c btn_width2  bc-border-d bc-bg btn_active ulev1" name="event_submit_do_comment" type="submit" value="评论">
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+      </form>
+      <div class="umar-tb" id="pinglun">
+        <div class="bc-border-c uinn10  ulev0">全部评论</div>
+        <div class="bc-border-c uinn0 ulev0 pl_list sc-bg">
+          <div class="ub-img bc-border-d uwh-de1 umar-r ufl uc-br2"><img src="/Public/home/files/pic.png" class="uwidth uheight uc-br2"></div>
+          <div class="ufl">
+            <div class="uinl"> <span class="ufl ulev-4 ">浩哥</span><span class="ufr umar-lc  sc-text-b"> 2017-04-25 23:17:20</span>
+              <div style="clear: both"></div>
+            </div>
+            <div class=" umar-ta line2 tx-width"> 1 </div>
+          </div>
+          <div style="clear: both"></div>
+        </div> 
+        <div class="bc-border-c uinn0 ulev0 pl_list sc-bg">
+          <div class="ub-img bc-border-d uwh-de1 umar-r ufl uc-br2"><img src="/Public/home/files/pic.png" class="uwidth uheight uc-br2"></div>
+          <div class="ufl">
+            <div class="uinl"> <span class="ufl ulev-4 ">婆婆妈妈</span><span class="ufr umar-lc  sc-text-b"> 2017-04-25 23:14:51</span>
+              <div style="clear: both"></div>
+            </div>
+            <div class=" umar-ta line2 tx-width"> 2 </div>
+          </div>
+          <div style="clear: both"></div>
+        </div>
+        <div class="bc-border-c uinn0 ulev0 pl_list sc-bg">
+          <div class="ub-img bc-border-d uwh-de1 umar-r ufl uc-br2"><img src="/Public/home/files/pic.png" class="uwidth uheight uc-br2"></div>
+          <div class="ufl">
+            <div class="uinl"> <span class="ufl ulev-4 ">婆婆妈妈</span><span class="ufr umar-lc  sc-text-b"> 2017-04-25 23:14:45</span>
+              <div style="clear: both"></div>
+            </div>
+            <div class=" umar-ta line2 tx-width"> 2 </div>
+          </div>
+          <div style="clear: both"></div>
+        </div>
+      </div>
+      
+       
+    <nav class=" ufr">
+      <ul class="pagination">
+        <li> <a href="/atlas?page=1&id=498" class="page_link" aria-label="Previous">
+          <div aria-hidden="true" class="prevs page_width"></div>
+          </a> </li>
+        <li><a href="/atlas?page=1&id=498" class="page_link">1</a></li>
+        <li><a href="/atlas?page=2&id=498" class="page_link">2</a></li>
+        <li><a href="/atlas?page=3&id=498" class="page_link">3</a></li>
+        <li><a href="/atlas?page=4&id=498" class="page_link">4</a></li>
+        <li><a href="/atlas?page=5&id=498" class="page_link">5</a></li>
+        <li> <a href="/atlas?page=2&id=498" aria-label="Next" class="page_link">
+          <div aria-hidden="true" class="nexts page_width"></div>
+          </a> </li>
+      </ul>
+    </nav>
+    <div style="clear: both;"></div>
+      --> 
+      
+    </div>
+  </div>
+  <div class="cont_right ufl umar-lc cont_r">
+    <div data-am-widget="titlebar" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+      <h2 class="am-titlebar-title ulev3"> <strong>相关专辑  推荐/</strong> <span class="sc-view-b">RELATED</span> </h2>
+    </div>
+    <div class="uwidth list_right"> </div>
+  </div>
+  <div style="clear: both"></div>
+</div>
+<!--content结束--> 
+
+<script src="/Public/home/files/jquery.js"></script> 
+<script type="text/javascript" src="/Public/home/files/ZeroClipboard.min.js"></script> 
+<script type="text/javascript">
+(function(){
+$("#noShow").hide();
+$(".mod18 #prevTop").hide();
+$(".mod18 #nextTop").hide();
+
+	$(".mod18 .picBox ul").mouseover(function(){
+$(".mod18 #nextTop").show();
+$(".mod18 #prevTop").show();
+})
+	$(".mod18 .picBox ul").mouseout(function(){
+$(".mod18 #nextTop").hide();
+$(".mod18 #prevTop").hide();
+})
+$(".mod18 #nextTop").mouseover(function(){
+$(".mod18 #nextTop").show();
+$(".mod18 #prevTop").show();
+
+})
+$(".mod18 #prevTop").mouseover(function(){
+$(".mod18 #prevTop").show();
+$(".mod18 #nextTop").show();
+})
+$(".mod18 .listBox li:gt(2)").click(function(){
+                   $(".div_toop").show();
+              }) ;
+$(".mod18 .listBox li:lt(3)").click(function(){
+                   $(".div_toop").hide();
+              }); 	
+
+
+	function G(s){
+		return document.getElementById(s);
+	}
+	
+	function getStyle(obj, attr){
+		if(obj.currentStyle){
+			return obj.currentStyle[attr];
+		}else{
+			return getComputedStyle(obj, false)[attr];
+		}
+	}
+	
+	function Animate(obj, json){
+		if(obj.timer){
+			clearInterval(obj.timer);
+		}
+		obj.timer = setInterval(function(){
+			for(var attr in json){
+				var iCur = parseInt(getStyle(obj, attr));
+				iCur = iCur ? iCur : 0;
+				var iSpeed = (json[attr] - iCur) / 5;
+				iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+				obj.style[attr] = iCur + iSpeed + 'px';
+				if(iCur == json[attr]){
+					clearInterval(obj.timer);
+				}
+			}
+		}, 30);
+	}
+
+	var oPic = G("picBox");
+	var oList = G("listBox");
+	
+	var oPrev = G("prev");
+	var oNext = G("next");
+	var oPrevTop = G("prevTop");
+	var oNextTop = G("nextTop");
+
+	var oPicLi = oPic.getElementsByTagName("li");
+	var oListLi = oList.getElementsByTagName("li");
+	var len1 = oPicLi.length;
+	var len2 = oListLi.length;
+	
+	var oPicUl = oPic.getElementsByTagName("ul")[0];
+	var oListUl = oList.getElementsByTagName("ul")[0];
+	var w1 = oPicLi[0].offsetWidth;
+	var w2 = oListLi[0].offsetWidth;
+
+	oPicUl.style.width = w1 * len1 + "px";
+	oListUl.style.width = w2 * len2 + "px";
+
+	var index = 0;
+	
+	var num = 5;
+	var num2 = Math.ceil(num / 2);
+
+	function Change(){
+
+		Animate(oPicUl, {left: - index * w1});
+		
+		if(index < num2){
+			Animate(oListUl, {left: 0});
+		}else if(index + num2 <= len2){
+			Animate(oListUl, {left: - (index - num2 + 1) * w2});
+		}else{
+			Animate(oListUl, {left: - (len2 - num) * w2});
+		}
+
+		for (var i = 0; i < len2; i++) {
+			oListLi[i].className = "";
+			$(".DB_current").html(index+1);
+			if(i == index){
+				oListLi[i].className = "on";
+			}
+		}
+	}
+	
+	oNextTop.onclick = oNext.onclick = function(){
+		index ++;
+		index = index == len2 ? 0 : index;
+		Change();
+		if(index==3){
+		$(".div_toop").show();
+		$(".mod18 #nextTop").hide();
+        $(".mod18 #prevTop").hide();
+		}
+	}
+
+	oPrevTop.onclick = oPrev.onclick = function(){
+		index --;
+		index = index == -1 ? len2 -1 : index;
+		Change();
+		if(index==2){
+		$(".div_toop").show();
+		$(".mod18 #nextTop").hide();
+        $(".mod18 #prevTop").hide();
+		}
+		if(index>=3){
+		$(".div_toop").show();
+		$(".mod18 #nextTop").hide();
+        $(".mod18 #prevTop").hide();
+		}
+	}
+
+	for (var i = 0; i < len2; i++) {
+		oListLi[i].index = i;
+		oListLi[i].onclick = function(){
+			index = this.index;
+			Change();
+		}
+	}
+	
+})()
+
+</script> 
+<script>
+	function f(text){
+		//window.document.clipboardswf.SetVariable(text, clipboardswfdata);
+		if (window.clipboardData){
+        	window.clipboardData.setData("text",text);
+        	alert("复制成功");
+		}
+	}
+	
+	
+	function gotoLogin() {
+		$(".a_login").click();
+		//alert(window.location.href);
+	}
+	
+	function validateSubmit() {
+		if ($("#comment").val() == "") {
+			alert("请输入评论内容");
+			return false;
+		}
+		return true;
+	}
+	
+	function updateConcernState(e) {
+		var isConcern = $(e).attr("state");
+		
+		var updateState;
+		var updateText;
+		var concernCount = $("#concernCount").text();
+		var flag;
+		if (isConcern == "true") {	// 取消关注
+			flag = false;
+			updateState = "false";
+			updateText = "加关注";
+			concernCount -= 1;
+		} else {	// 加关注
+			flag = true;
+			updateState = "true";
+			updateText = "取消关注";
+			concernCount = concernCount - 0 + 1;
+		}
+		
+		$.
+			 ajax({
+        	  url: "json/data/update_atlas_concern_state.json",
+        	  data:{
+        	  	mtid: 212,
+				flag: flag
+        	  },
+        	  cache: false,
+        	  success: function(data){
+			  	alert(data.message);
+			  	if (data.result == "true") {
+					$(e).attr("state", updateState);
+					$(e).text(updateText);
+					$("#concernCount").text(concernCount);
+				} else {
+					if (data.returnFlag == "1") {
+						$("#login").show();
+					}
+				}
+        	  }
+        	});
+	}
+	$(document).ready(function() {
+	
+		    			init();
+	});
+	
+	function init() {
+	var clip = new ZeroClipboard($("#copy_tqm"), {
+        moviePath: "/resource/js/ZeroClipboard.swf"
+	  });
+	  clip.on( 'mousedown', function(client) {
+	      clip.setText($("#copy_tqm").attr("name"));
+	  });
+	  clip.on( 'complete', function(client, args) {
+	      alert('复制成功');
+	  });
+}
+
+    $('#DB_gallery').DB_gallery({
+
+        thumWidth:110,            
+
+        thumGap:8,                
+
+        thumMoveStep:4,           
+
+        moveSpeed:300,            
+
+        fadeSpeed:500            
+
+    });
+	
+	
+  
+    </script> 
+<include file="./Shop/Home/View/index/footer.html" />
+ 
+</body>
+</html>

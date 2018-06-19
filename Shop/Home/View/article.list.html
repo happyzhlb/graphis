@@ -1,0 +1,12 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+<div class="container">
+        <div class='list-news'>
+        <ul class='clearListStyle'>
+        <volist name="_list" id="list">
+        <li><a href="{:U('show',array('article_id'=>$list['article_id'],'cate_id'=>$list['cate_id']))}" class='display-box'><span class='box-flex-1 ellipsis'>{$list.title}</span><span class='icon-right color-c'></span></a></li> 
+        </volist>
+        </ul></div>
+		</div>
+           
+<include file="./Shop/Home/View/footer.html" /> 

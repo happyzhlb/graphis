@@ -1,0 +1,75 @@
+<include file="./Shop/Home/View/header.html" /> 
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('NewArrival/index')}">New Arrival</a>&gt;
+    <span>Index</span>
+</div>
+
+<div class="webC1000">
+	<div id="review">
+    	<!--列表开始-->
+        <dl class="reviewBrands clearfix">
+          <dt>Brands</dt>
+            <dd class="clearfix">
+            	<volist name="brands" id="brand">
+            	<a href="{:U('index',array_merge($parameter,array('bid'=>$brand['bid'])))}" <if condition="$brand['bid']==$_GET['bid']">style="color: #F7781B;font-weight:bold;"</if>>{$brand.bname}<i>({$brand.count})</i></a>
+                </volist> 
+            </dd>
+        </dl> 
+        
+        <div class="Sort">
+        		<div class="total"><strong>{$count}</strong>Items in Total</div>
+            	<span>Sort By</span>
+                <div class="SortChoose">
+                    <a href="{:U('index',array_merge($parameter,array('sort'=>'g.goods_id','order'=>'DESC')))}" <if condition="$sort eq 'g.goods_id'">class="current"</if>>Default</a>
+                    <if condition="$sort eq 'g.goods_name'">
+                        <if condition="$order eq 'DESC'">
+                            <a href="{:U('index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'Asc')))}" class="current">A-Z<i class="descendant"></i></a>
+                        <else />
+                            <a href="{:U('index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'DESC')))}" class="current">A-Z<i class="ascending"></i></a>
+                        </if>
+                    <else />
+                        <a href="{:U('index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'DESC')))}">A-Z<i></i></a>
+                    </if>
+                    <if condition="$sort eq 'gs.price'">
+                        <if condition="$order eq 'DESC'">
+                            <a href="{:U('index',array_merge($parameter,array('sort'=>'gs.price','order'=>'ASC')))}" class="current">Price<i class="descendant"></i></a>
+                        <else />
+                            <a href="{:U('index',array_merge($parameter,array('sort'=>'gs.price','order'=>'DESC')))}" class="current">Price<i class="ascending"></i></a>
+                        </if>
+                    <else />
+                        <a href="{:U('index',array_merge($parameter,array('sort'=>'gs.price','order'=>'DESC')))}">Price<i></i></a>
+                    </if>
+                    <if condition="$sort eq 'g.sales'">
+                        <if condition="$order eq 'DESC'">
+                            <a href="{:U('index',array_merge($parameter,array('sort'=>'g.sales','order'=>'ASC')))}" class="current">Sale<i class="descendant"></i></a>
+                        <else />
+                            <a href="{:U('index',array_merge($parameter,array('sort'=>'g.sales','order'=>'DESC')))}" class="current">Sale<i class="ascending"></i></a>
+                        </if>
+                    <else />
+                        <a href="{:U('index',array_merge($parameter,array('sort'=>'g.sales','order'=>'DESC')))}">Sale<i></i></a>
+                    </if>
+                </div>
+            </div>
+            
+        <div class="reviewList">
+        	<div class="listBox clearfix">
+
+
+        	<volist name="goods" id="vo">
+           
+            	<div class="each">
+                	<a target="_blank" href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" class="itemImg"><img src="/{$vo.goods_img}" width="180" height="180" alt="{$vo.goods_name}" /></a>
+                    <a target="_blank" href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" class="itemName">{$vo.goods_name}</a>
+                    <span>{$vo.goods_id|get_range_price=###,'$'}</span>
+                </div> 
+                
+			</volist> 
+            </div>
+        </div>
+        <!--列表结束-->
+        <div id="orderPage">{$page}</div>
+    </div>
+</div>
+
+<include file="./Shop/Home/View/footer.html" />

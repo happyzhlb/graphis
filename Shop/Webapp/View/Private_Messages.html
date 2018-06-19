@@ -1,0 +1,31 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Private Messages</span>
+            <a href="{:U('Member/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="msgList">
+        <volist name='list' id='vo'>
+        	<div class="each">
+                <a href="javascript:void(0)" class="delete"><i></i></a>
+                <a href="{:U('delete',array('mid'=>$vo['mid']))}" onclick="return confirm('Are you sure you want to delete this Message?');"  title="Delete" class="delete"><i></i></a>
+                <a href="{:U('detail',array('mid'=>$vo['mid']))}" class="name"><i></i>W{$vo.title}<if condition="$vo['is_new']=='1'"><em>New</em></if></a> 
+            </div>
+        </volist>
+        </div>	
+    </div>
+	<!--会员中心设置结束--> 
+    
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

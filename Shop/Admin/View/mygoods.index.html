@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>自营商品管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/listimg.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+
+$(function(){	
+	$('#search_auto').css({'width':$('#search_form input[name="keywords"]').width()+4});	
+	$('#search_form input[name="keywords"]').keyup(function(){
+		$.post('{:U("searchAuto")}',{'keywords':$(this).val()},function(data){　 
+			if(data=='0') $('#search_auto').html('').css('display','none');　 
+			else $('#search_auto').html(data).css('display','block');　 //返回的数据不等于０，则将返回的内容放到提示框内并显示提示框
+		});
+	});
+});
+
+</script>
+<style>
+	.expressZone{ float:right; width:60%; border:0px solid #999; list-style:none; padding:8px;}
+	.expressZone li{
+		border:1px solid #CCC; 
+		float:left; list-style:none; 
+		margin-left:10px; 
+		padding:2px 10px 2px 10px;
+		border-radius:5px; 
+		background:rgba(199,235,199,0.5);
+		display: inline-block;
+		cursor: pointer;
+		box-shadow:0px 0px 3px #ccc;
+	}
+	.f12{font-size:12px;}
+</style>
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text">Home</a> > <a href="{:U('index')}" title="" class="text">自营商品管理</a>
+         	 <?php 
+             	if(I('pending_modify')=='1'){ 
+             		echo '> <font class="f12">价格待修改区</font>';
+                }elseif( I('is_on_sale')=='0'){
+					echo '> <font class="f12">待上架区</font>';
+                }elseif(I('isSel')=='no'){
+                    echo '> <font class="f12">未被关联产品</font>';
+                }
+              ?>
+         </div>
+         <!--
+      <div class="expressZone"><li><a href="{:U('Goods/index',array('is_on_sale'=>0))}">待上架区</a></li>
+      <li><a href="{:U('Goods/index',array('pending_modify'=>1))}">价格待修改区</a></li>
+      <li><a href="{:U('Goods/index',array('isSel'=>'no'))}">未被关联产品</a></li>
+      </div>-->
+    </div>
+         <!--产品列表start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l"></div>
+                   <div class="text">产品列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 发布产品" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="cbox">
+                   <!--搜索区域start-->
+                   <div class="searchzone">
+                        <div class="searchbox">
+                        <form id="search_form" action="{:U('index')}" method="get">
+                             产品关键字：<input type="text" id="keywords" style="width:250px; height:30px;" name="keywords" value="{$keywords}"/>
+                             <div id="search_auto" style="border:1px solid #817FB2; position:absolute; background-color:#FcFcFc;display:none;"></div>
+                             产品ID：
+                             <input type="text" id="outer_id" style="width:100px; height:30px;" name="outer_id" value="{$Think.get.outer_id}"/>
+                            关联：<select name="isSel" >
+                             	<option value="all">全部</option>
+                                <!--<option value="yes" <if condition="$Think.get.isSel eq 'yes'">selected</if>>是</option>-->
+                                <option value="no" <if condition="$Think.get.isSel eq 'no'">selected</if>>未关联</option>
+                             </select>
+                             <!--
+                             分类：
+                             <select id="cate_id" name="cate_id">
+                             	 <option value="">==选择分类==</option>
+                                 <volist name="gcategory" id="cate">
+                                 	<option value="{$cate.cate_id}" <if condition="$Think.get.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                    <volist name="cate.children" id="c_cate">
+                                    	<option value="{$c_cate.cate_id}" <if condition="$Think.get.cate_id eq $c_cate['cate_id']">selected</if>>&nbsp;&nbsp;{$c_cate.cate_name}</option>
+                                        <volist name="c_cate.children" id="c_c_cate">
+                                        	<option value="{$c_c_cate.cate_id}" <if condition="$Think.get.cate_id eq $c_c_cate['cate_id']">selected</if>>&nbsp;&nbsp;&nbsp;&nbsp;{$c_c_cate.cate_name}</option>
+                                        </volist>
+                                    </volist>
+                                 </volist>
+                             </select>
+                             -->
+                             <input type="submit" value="搜索" class="btn btn_ys">
+                        </form> 
+                        </div>
+                   </div>
+                   <!--搜索区域end-->   
+					<table width="100%" cellpadding="0" cellspacing="0" class="table">
+                          <thead>
+                             <tr>
+                                 <th width="147">ID</th>
+                                 <th width="212">商品名称</th>
+                                 <th width="166">商品编码</th>
+                                 <th width="129">主图</th>  
+                                 <th width="97">价格</th>
+                                 <th width="148">收藏量</th>
+                                 <th width="120">上下架</th>
+                                 <th colspan="3">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="goods" id="value">
+                             <tr>
+                                 <td><input type="checkbox" name="items" value="{$value.goods_id}"> {$value.goods_id}</td> 
+                                 <td class="center">{$value.goods_name}</td>
+                                 <td class="center">{$value.goods_code}</td>
+                                 <td align="center"> 
+                                     <img src="{$value.goods_img}" alt="" title="" width="50" height="50"> 
+                                 </td>
+                               <td class="center">{$value.price}</td>
+                                 <td class="center">{$value['click_count']}</td>
+                                 <td align="center" class="center">{$value.is_on_sale|return_ico=###,"is_on_sale",$value['goods_id']}</td>
+                                 <td width="43" class="center"><a href="{:U('edit', array('id'=>$value['goods_id'],'flag'=>1))}" title="">关联</a></td>
+                                 <td width="43" class="center"><a href="{:U('edit', array('id'=>$value['goods_id']))}">修改</a></td>
+                                 <td width="43" class="center"><a class="drop" href="{:U('drop', array('id'=>$value['goods_id']))}">删除</a></td>
+                             </tr>
+							 </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="10">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" name="" value="删除" class="btn btn_bs dropall" onClick="">
+                                   <!-- <input type="button" name="" value="导出excel" class="btn btn_bs export" onClick="">-->
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>  
+           </div>
+         </div>
+         <!--产品列表end-->
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

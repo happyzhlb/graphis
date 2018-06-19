@@ -1,0 +1,55 @@
+<include file="./Shop/Home/View/user.header.html" />
+		<script language="javascript">
+        <!--
+            function check() {
+                if ($("#ypwd").val() == "") {
+                    alert("请输入原密码！")
+                    return (false)
+                }
+                if ($("#reguserpws").val() == "") {
+                    alert("请输入新密码！")
+                    return (false)
+                }
+                if ($("#reguserpws1").val() == "") {
+                    alert("请输入密码确认！")
+                    return (false)
+                }
+            }
+        //-->
+        </script>
+		<div class="header-margin footer-margin body">
+			<form method="post" action="{:U('Member/passwd')}" id="form1"> 
+			<div class="box">
+				<div class="display-box col">
+					<div>用户名：</div>
+					<div class="box-flex-1">
+                        <input name="user_name" type="text" value="{:session('user_name')}" readonly="readonly" id="userid" class="inp inp-block noborder text-right" />
+					</div>
+				</div>
+				<div class="display-box col">
+					<div>原密码：</div>
+					<div class="box-flex-1">
+                        <input name="oldpwd" id="oldpwd" type="password" class="inp inp-block noborder text-right" placeholder="6-20位数字／字母组合" />
+					</div>
+				</div>
+				<div class="display-box col">
+					<div>新密码：</div>
+					<div class="box-flex-1">
+                        <input name="password" id="password" type="password" class="inp inp-block noborder text-right" placeholder="6-20位数字／字母组合" />
+					</div>
+				</div>
+				<div class="display-box col">
+					<div>确认密码：</div>
+					<div class="box-flex-1">
+                        <input name="repassword" id="repassword" type="password" class="inp inp-block noborder text-right" placeholder="6-20位数字／字母组合" />
+					</div>
+				</div>
+	
+			</div>
+			<div class="submitdiv"><input type="submit" name="Button1" value="保存" id="Button1" class="btn btn-block btn-primary" /></div>			
+			</form>
+		</div>
+		
+		
+	</body>
+</html>

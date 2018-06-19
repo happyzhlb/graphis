@@ -1,0 +1,14 @@
+<div class="brandList">
+	<volist name="cates" id="cate">
+    <div class="h2"><a href="{:U('/Gcategory/index')}">{$cate.cate_name}</a></div>
+    	<volist name="cate.children" id="c_cate">
+        <div class="h3"><a href="{:U('/List/index',array('cate_id'=>$c_cate['cate_id']))}">{$c_cate.cate_name}</a></div>
+        <ul>
+        	<volist name="c_cate.children" id="c_c_cate">
+            <li><a href="{:U('/List/index',array('cate_id'=>$c_c_cate['cate_id']))}" <if condition="$Think.get.cate_id eq $c_c_cate['cate_id']">class="current"</if>>{$c_c_cate.cate_name}</a></li>
+            </volist>
+        </ul>
+        </volist>
+    </volist>
+    <a href="{:U('/DownloadCenter/index')}" target="_blank" class="downloadCenter">Download Center(MSDS,COA)</a>
+</div>

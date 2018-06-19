@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑品牌</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	//品牌故事编辑器
+	var ue = UE.getEditor('brandstore');
+	$('.submit').click(function(){
+		ue.sync();
+		$('#admin_form').submit();	
+	});
+	
+	$('#admin_form').validate({
+		rules : {
+			brand_name : {
+				required : true
+			},
+			blogo : {
+				accept : ["gif","jpg","jpeg","png"]
+			},
+			sort_order : {
+				required : true,
+				number : true
+			}
+		},
+		messages : {
+			brand_name : {
+				required : '<i></i>品牌名称不能为空'
+			},
+			blogo : {
+				accept : '<i></i>只能上传gif、jpg、jpeg、png格式文件'
+			},
+			sort_order : {
+				required : '<i></i>排序不能为空',
+				number : '<i></i>排序输入的必须是数字'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Brand')}" class="text">品牌管理</a> > <a href="{:U('/Admin/Brand/edit', array('id'=>$brand['brand_id']))}" class="text">编辑品牌</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">编辑品牌</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post" enctype="multipart/form-data">
+                              <div class="control-group">
+                                   <label class="control-label">品牌名称：</label>
+                                   <div class="controls">
+                                        <input type="text" id="brand_name" name="brand_name" value="{$brand.brand_name}" class="span300" placeholder="品牌名称">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">品牌类别：</label>
+                                   <div class="controls">
+                                        <select name="cate_id">
+                                        	<option value="0">请选择品牌类别</option> 
+                                            <volist name="brandCate" id="cate">
+                                            	<option <if condition="$brand['cate_id']==$key">selected</if> value="{$key}">{$cate}</option>
+                                            </volist>
+                                        </select>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group" style="min-height:130px;">
+                                   <label class="control-label">品牌LOGO：</label>
+                                   <div class="controls">
+                                        <input type="file" id="blogo" name="blogo">
+                                        <p style="color:#ccc">1.图片大小不超过200k；2.图片仅支持jpg(jpeg)，gif，png的格式。</p>
+                                        <p><img src="{$brand.blogo|dealImg=0}" height="60"></p>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group" style="min-height:130px;">
+                                   <label class="control-label">品牌主图：</label>
+                                   <div class="controls">
+                                        <input type="file" id="b_photo" name="b_photo">
+                                        <p style="color:#ccc">1.图片大小不超过500k；2.图片仅支持jpg(jpeg)，gif，png的格式。</p>
+                                        <p><img src="{$brand.b_photo|dealImg=0}"  height="80"></p>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">品牌标语：</label>
+                                   <div class="controls">
+                                         <input type="text" id="catchline" name="catchline" value="{$brand.catchline}" class="span300" placeholder="品牌标语">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">品牌简介：</label>
+                                   <div class="controls">
+                                        <textarea name="introduction" rows="4" style="min-height:80px;" class="span300" id="introduction" value="" placeholder="品牌介绍">{$brand.introduction}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div style="min-height:350px; min-width:500px;">
+                                   <label class="control-label">品牌故事：</label>
+                                   <div class="controls">
+                                        <textarea name="brandstore" rows="4" style="min-height:250px; min-width:600px;" class="span300" id="brandstore" value="" placeholder="品牌故事">{$brand.brandstore}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>      
+                              <div class="control-group">
+                                   <label class="control-label">首字母：</label>
+                                   <div class="controls">
+                                        <input type="text" id="letter" name="letter" value="{$brand.letter}" class="span80" placeholder="首字母">  <span style="color:#ccc">小写</span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>                 
+                              <div class="control-group">
+                                   <label class="control-label">展现量：</label>
+                                   <div class="controls">
+                                        <input type="text" id="views" name="views" value="{$brand.views}" class="span80" placeholder="0">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">收藏量：</label>
+                                   <div class="controls">
+                                        <input type="text" id="collect_num" name="collect_num" value="{$brand.collect_num}" class="span80" placeholder="0">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">排序：</label>
+                                   <div class="controls">
+                                        <input type="text" id="sort_order" name="sort_order" value="{$brand.sort_order}" class="span80" placeholder="排序">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                   <label class="control-label">显示：</label>
+                                   <div class="controls">
+                                       <label><input type="radio" id="if_show" name="if_show" value="1" <if condition="$brand.if_show eq 1">checked</if>>是</label>
+                                       <label><input type="radio" id="if_show" name="if_show" value="0" <if condition="$brand.if_show eq 0">checked</if>>否</label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" name="id" value="{$brand.brand_id}">
+                                   <button type="submit" class="btn btn_dm">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

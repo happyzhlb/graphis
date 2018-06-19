@@ -1,0 +1,50 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Product Information</span>
+            <a href="{:U('index','id='.$goods['goods_id'])}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--产品信息开始-->
+    <div class="proDetailInfo">
+    	<div class="proInfoChoose clearfix">
+        	<a href="javascript:void(0)" class="current">Product Details</a>
+            <a href="javascript:void(0)">Seller Guarantees</a>
+        </div>
+        <div class="infoDetail">
+        	<div class="show" style="display:block;">
+            	{$goods.goods_desc|htmlspecialchars_decode}
+            
+    		<div class="download">
+                	<a href="/{$goods.msds}"><i></i>{$goods.goods_name}(MSDS)</a>
+                    <volist name="goods_coas" id="goods_coa">
+                    <a href="/{$goods_coa.file}"><i></i>{$goods.goods_name}(COA) Batch{$goods_coa.batch}</a>
+                    </volist>
+     		</div> 
+            </div>
+            <div class="show">
+            	<h3>Quality Guarantee</h3>
+                <p>OKChem prides itself on the high level of quality and reliability of its products and services, and enjoys a great amount of positive feedbacks from our customers that we offer the best titanium dioxide and perfect customer service quality.</p>
+                <p>- We are continually improving the quality of our products and services to make customers satisfied and help 
+our business expand.</p>
+                <p>- We totally understand and anticipate market needs and delight our customers with passion and hard work, 
+therefore optimize our quality control process and obtain better results that customers care most.</p>
+                <h3>Customer Satisfaction Guarantee</h3>
+                <p>OKChem stands behind our products with 100% customer satisfaction guarantee. if you are not satisfied with 
+our products for any reason, you may return them within 20 days of purchase for an exchange or refund. For 
+more details, please see our Return Policy.</p>
+            </div>
+        </div>
+    </div>
+	<!--产品信息结束--> 
+
+
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

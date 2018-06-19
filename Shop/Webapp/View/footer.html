@@ -1,0 +1,20 @@
+    <div class="footer">
+    	<div class="loginBox">
+        	<a href="javascript:void(0)" class="backToTop">Return To Top</a>
+            <if condition="!session('?user_id')">
+            <a href="{:U('Login/index')}?referer={$referer}" class="login">Login</a><em>|</em>
+            <a href="{:U('Login/register')}" class="Register">Register</a>
+            <else/>
+           		 <a href="{:U('Member/index')}" class="login">{$first_name}</a><em>|</em><a class="login" href="{:U('Login/loginout')}?referer={$referer}" title="Exit">Logout</a>
+            </if>
+        </div>
+        <div class="footerInfo">
+        	<a href="javascript:void(0)" class="liveChat">Live Chat</a>
+            <span class="pc">For Computer<i></i></span>
+            <p>&copy;m.okchem.com</p>
+        </div>
+    </div> 
+</body>
+</html>
+
+

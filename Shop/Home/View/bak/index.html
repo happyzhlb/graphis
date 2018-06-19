@@ -1,0 +1,207 @@
+<include file="./Shop/Home/View/header.html" />
+<div class="content100">
+    <div id="indexNew">
+    {:Ad(1)}         
+        <!--首页产品开始-->
+        <div class="IndexProChoose">
+              <h1>Shop TiO2 by Applications</h1>
+              <h2>
+              <volist name="catelist" id="list" key="ct">
+                  <a href="javascript:void(0)" <if condition="$ct eq 1">class="current"</if> title="{$list.cate_name}">{$list.cate_name}</a>
+              </volist>
+              </h2>
+        </div>
+        <div class="newIndexPro">
+            <div class="indexProCon">
+             <volist name="catelist" id="list" key="ct">
+                <div class="show clearfix" <if condition="$ct eq 1">style="display:block"</if>>
+                    <volist name="list.goods" id="goods">
+                    <div class="each boxSizing">
+                        <a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank" class="proImg"><img imgsrc="{$goods.goods_img}" width="100%" alt="{$goods.goods_name}" /></a> 
+                        <a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank" class="proName">{$goods.goods_name}</a>
+                        <dl class="clearfix">
+                            <dt class="star star{$goods.estars}"></dt>
+                            <dd>({$goods.ecount})</dd>
+                        </dl>
+                        <p class="price">{$goods.goods_id|_get_range_price=###,'$'}</p>
+                    </div> 
+                    </volist>
+                </div>
+             </volist>   
+            </div>
+        </div>
+        
+        <div class="newIndexWebInfo clearfix">
+        	<div class="right">
+            	<h4>News Release</h4>
+                <ul class="info">
+                	<volist name='NewsRelease' id='vo'>
+                	<li><a href="{:U('/blog/detail',array('id'=>$vo['bid']))}" target="_blank">{$vo.title}</a></li>
+               	    </volist>  
+                </ul>
+                <h4>Knowledge Center</h4>
+                <ul class="info">
+                	<volist name='KnowledgeCenter' id='vo'>
+                	<li><a href="{:U('/blog/detail',array('id'=>$vo['bid']))}" target="_blank">{$vo.title}</a></li>
+                	</volist> 
+                </ul>
+                <h4>Customer Testimonials</h4>
+                <div class="scrInfo">
+                	<div class="infoList"> 
+                        <ul id="scroll">
+                        	<volist name="tms" id="vo">
+                            <li>{$vo.content}</li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+                <div class="Allwrite">
+                	<a href="{:U('/Testimonials')}" title="Read all testimonials">Read all testimonials</a>
+                    <a href="{:U('/Testimonials/add')}" title="Write testimonials">Write testimonials</a>
+                </div>
+            </div>
+            
+            <div class="left">
+            	<h3>Why Choose Us?</h3>
+                <p><em>●</em>We have one of the best sources for high quality titanium dioxide in the world as well as the strong ability to supply other chemical products. For those interested in coating, plastic, ink, paper and other industries, we offer an amazing variety of chemical supplies for almost any need.<br /><em>●</em>We pride ourselves on maintaining low minimums even for industrial products like titanium dioxide and making opportunities available for various types of businesses by supplying different package options for our customers.<br /><em>●</em>We import our chemical products directly from manufacturers all across the world which means you will never find any similar products with better price other than OKchem.<br /><em>●</em>We have built powerful local sales networks to ensure that our products can be delivered to you safely and fast.</p>
+                <h3>Commitment</h3>
+                <p>We strive to provide the most competitive price and the best quality in all of our products and guarantee we will do everything possible to meet the needs of our customers. When comparing our titanium dioxide and other chemical products to any competitor, you will find out the difference in the speed our products reach your house and the competitive price you get. We always pursue the perfect balance between the quality and price which will help customers pick a price point for any budget.</p>
+                <h3>What Do We Sell?</h3>
+                <p>We currently provide titanium dioxide for multiple uses including paints and coatings, plastics, ink and paper. To make these applications more specifically, customers can buy titanium dioxide by applications such as wood protection coatings, coil coatings, can coatings, floor coatings, marine coatings, powder coatings, interior architectural coatings, exterior architectural coatings, masterbatches, PVC, engineering plastics, ink, paper, etc.<br />Our product lines will be expanded soon in the near future. For now, you can simply submit a product request to get assistance in purchasing other chemical products that are not listed on our site.</p>
+            </div>
+            
+        </div>
+        
+        <div class="Strongly">
+        	<h2>Strongly Recommended</h2>
+            <div class="list clearfix">
+            	<volist name="promote_goods" id="goods" key="k">
+                <dl class="each boxSizing">
+                    <dt class="fa">
+                    	<a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank">{$goods.goods_name}</a>
+                        <dl class="clearfix">
+                            <dt class="star star{$goods.estars}"></dt>
+                            <dd>({$goods.ecount})</dd>
+                        </dl>
+                        <p class="price">{$goods.goods_id|_get_range_price=###,'$'}</p>
+                    </dt>
+                    <dd class="fa">
+                    	<a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" target="_blank"><img imgsrc="{$goods.goods_img}" width="100%" alt="{$goods.goods_name}" /></a>
+                    </dd>
+                    <span class="ranking ranking_{$key+1}"></span>
+                </dl>
+                </volist> 
+            </div>
+        </div>
+        
+        <!--首页产品结束-->
+    </div>
+</div>
+<!--[if lte IE 8]>
+<script type="text/javascript">
+	$(document).ready(function(){
+		IE8Width();
+        $(window).resize(function(){
+        	IE8Width();
+        });
+		$(".IndexProChoose a").click(function(){
+			IE8Width();
+		});
+	});
+	function IE8Width(){
+    	var conTentWidth = $(".indexProCon").width();
+        var eachWidth = conTentWidth / 4 - 45;
+        $(".newIndexPro .show .each").removeClass("boxSizing");
+        $(".newIndexPro .show .each").css("width",eachWidth);
+	}
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		//首页滚动
+		var liLength = $("#scroll li").length;
+		if(liLength !== 0){
+			list_scroll();
+		}
+		setTimeout(function(){
+			eachHeight();
+		},1000);
+		$(window).resize(function(){
+			eachHeight();
+		});		
+		
+	});
+	
+	//控制高度
+	function eachHeight(){
+		var boxHeight = [];
+		$(".newIndexPro .show .each").each(function() {
+			$(this).css("height","auto");
+			if($.browser.msie = true){
+				if($.browser.version !== "6.0" && $.browser.version !== "8.0"){
+					var thisHeight = $(this).height() + 40;
+					boxHeight.push(thisHeight); 	
+				}else{
+					var thisHeight = $(this).height();
+					boxHeight.push(thisHeight); 	
+				}	
+			}else{
+				var thisHeight = $(this).height() + 40;
+				boxHeight.push(thisHeight); 	
+			}
+        	
+        });
+		var maxHeight = Math.max.apply(null,boxHeight);
+		boxHeight = [];	
+		//alert(boxHeight);
+		$(".newIndexPro .show .each").css("height",maxHeight);
+	}
+	
+	//首页滚动
+	function list_scroll(){
+	  var i=1;
+	  var timer;
+	  var $scroll = $("#scroll");
+	  var len = $scroll.find("li").length;
+	  $scroll.append($scroll.find("li").clone());
+	  timer = setInterval(function(){
+		  if(i>len){
+			  i=1;
+			  $scroll.css("top",0);
+		  }
+		  $("#scroll").animate({
+			  "top":-$scroll.find(">li").eq(i).position().top+"px"
+		  },"slow");
+		  i++;
+	  },3000);
+	  $scroll.find("li").hover(function(){
+			  clearInterval(timer);
+		  },function(){
+			  timer = setInterval(function(){
+				  if(i>len){
+					  i=1;
+					  $scroll.css("top",0);
+				  }
+				  $("#scroll").animate({
+					  "top":-$scroll.find(">li").eq(i).position().top+"px"
+				  },"slow");
+				  i++;
+			  },3000);
+		  });
+	} 
+	//延时加载
+    function lazyloadimg(){
+        imgs=document.getElementsByTagName("img");
+        imgsnum=imgs.length;
+        for(i=0;i<imgsnum;i++){
+            if((typeof(imgs[i].src)=='undefined'||imgs[i].src=='')&&imgs[i].getAttribute('imgsrc')!=null){
+                imgs[i].src=imgs[i].getAttribute('imgsrc');
+            }
+        }
+    }
+    lazyloadimg();
+    </script>
+<include file="./Shop/Home/View/viewed.itemsIndex.html" />
+<include file="./Shop/Home/View/footer.html" />
+

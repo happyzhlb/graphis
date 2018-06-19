@@ -1,0 +1,214 @@
+<include file="./Shop/Home/View/header.html" />
+<load href="__PUBLIC__/home/js/order.js" />
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+
+<div class="webC1000">
+	<div id="pay">
+      <eq name="order.shipping_code" value="CPU">
+      <!--新步骤开始-->
+      <div id="newStepBox">
+          <div class="stepBj">
+              <div class="stepShow stepShow2"></div>
+              <div class="step first past">
+                  <span class="time">{$order.add_time|todate=###,'Y-m-d H:i'}</span>
+                  <span class="each">1</span>
+                  <span class="content">Submit Order Information</span>
+              </div>
+              <div class="step second current">
+                  <span class="time"></span>
+                  <span class="each">2</span>
+                  <span class="content">Payment</span>
+              </div>
+              <div class="step third">
+                  <span class="time"></span>
+                  <span class="each">3</span>
+                  <span class="content">Pick Up</span>
+              </div>
+              <div class="step fourth ">
+                  <span class="time"></span>
+                  <span class="each">4</span>
+                  <span class="content">Write a Review</span>
+              </div>
+          </div>
+        </div>
+        <!--新步骤结束-->
+        <else />
+      <!--步骤开始-->
+      <div id="newStepBox1">
+          <div class="stepBj">
+              <div class="stepShow stepShow2"></div>
+              <div class="step first past">
+                  <span class="time">{$order.add_time|todate=###,'Y-m-d H:i'}</span>
+                  <span class="each">1</span>
+                  <span class="content">Submit Order Informationaa</span>
+              </div>
+              <div class="step second  current">
+                  <span class="time"></span>
+                  <span class="each">2</span>
+                  <span class="content">Payment</span>
+              </div>
+              <div class="step third">
+                  <span class="time"></span>
+                  <span class="each">3</span>
+                  <span class="content">Delivery</span>
+              </div>
+              <div class="step fourth">
+                  <span class="time"></span>
+                  <span class="each">4</span>
+                  <span class="content">Confirm Delivery</span>
+              </div>
+              <div class="step fifth">
+                  <span class="time"></span>
+                  <span class="each">5</span>
+                  <span class="content">Write a Review</span>
+              </div>
+          </div>
+        </div>
+        <!--步骤结束-->
+        </eq>
+        <!--地址信息开始--><!--地址信息结束-->
+        
+        
+        
+      <!--订单支付详情开始-->
+        <form id="payment_form" action="{:U('/Myorders/pay')}" method="post">
+        <div class="orderPay clearfix">
+        	
+            <!--订单支付提醒开始-->
+            <div id="payTimeTips">
+                <h5>You need to pay <strong>{$order.totle_fee|format_price}</strong> for this order. </h5>
+                <p>Please finish payment in one hour, or the order will be cancelled. Time remaining:<span class="hour">--</span>hours<span class="minite">--</span>minutes<span class="second">--</span>seconds</p>
+            </div>
+            <!--订单支付提醒结束-->
+            <script type="text/javascript">
+				 $(function(){
+					var rest_time = parseInt('{$rest_time}')
+				 	countdown_hms(rest_time);
+				 })
+			 </script>
+            
+            <!--支付信息开始-->
+            <div class="payInfo820">
+            	<h2>Payment</h2>
+                <volist name="payments" id="payment">
+                <eq name="payment.pay_code" value="Authorize">
+                <div class="card clearfix">
+                    <div class="genre clearfix">
+                    	<a href="javascript:void(0)" class="Authorize current" title="{$payment.pay_name}"><span>{$payment.pay_name}</span></a>
+                        <input type="hidden" id="pay_code" name="pay_code" value="{$payment.pay_code}" />
+                    </div>
+                    <div class="genreDetail clearfix">
+                    	<ul>
+                        	<li class="Visa">
+                            	<input type="radio" name="card_type" id="Visa" value="Visa" checked="checked" />
+                                <label for="Visa">Visa</label>
+                            </li>
+                            <li class="Maste">
+                            	<input type="radio" name="card_type" id="Maste" value="Maste" />
+                                <label for="Maste">Master Card</label>
+                            </li>
+                            <li class="Discover">
+                            	<input type="radio" name="card_type" id="Discover" value="Discover" />
+                                <label for="Discover">Discover</label>
+                            </li>
+                            <li class="Express">
+                            	<input type="radio" name="card_type" id="Express" value="Express" />
+                                <label for="Express">American Express</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                </eq>
+                </volist>
+                <div class="writeInfo">
+                	<dl>
+                    	<dt>* Name on Card</dt>
+                        <dd><input type="text" id="card_name" name="card_name" value="" class="textIn textIn_1" /></dd>
+                    </dl>
+                    <dl>
+                    	<dt>* Credit Card No.</dt>
+                        <dd><input type="text" id="card_no" name="card_no" value="" class="textIn textIn_1" /></dd>
+                    </dl>
+                    <dl>
+                    	<dt>* Exp. date</dt>
+                        <dd>
+                        	<div class="father">
+                        		<input type="text" id="exp_month" name="exp_month" value="" maxlength="2" class="textIn textIn_2" />
+                            	<i>Month</i>
+                            </div>
+                            <div class="father">
+                            	<input type="text" id="exp_year" name="exp_year" value="" maxlength="2" class="textIn textIn_2" />
+                            	<i>Year</i>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                    	<dt>* CCID</dt>
+                        <dd class="clearfix">
+                        	<div class="father">
+                        		<input type="text" id="ccid" name="ccid" value="" maxlength="4" class="textIn textIn_3" />
+                            </div>
+                            <div class="show clearfix">
+                                <img src="__PUBLIC__/home/images/creditCard.jpg" width="153" height="98" />
+                                <p>As an added security measure, we ask that you enter the last 3 digits on the back of your credit card, on or near the signature panel, called the CCID. See sample on right.</p>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+          </div>
+            <!--支付信息结束-->
+      </div>
+        
+        <!--确认支付开始-->
+        <div class="surePay">
+        	<input type="hidden" name="id" value="{$order.order_id}" />
+            <a href="javascript:void(0)" class="sureBtn submit" title="Confirm Payment">Confirm Payment</a>
+        </div>
+        <!--确认支付结束-->
+        </form>
+        <!--订单支付详情结束-->
+    </div>
+</div>
+<script type="text/javascript"> 
+	 Date.prototype.dateDiff = function(interval,objDate){
+		if(arguments.length<2||objDate.constructor!=Date) return undefined;
+		switch (interval) {
+			case "s":return parseInt((objDate-this)/1000);
+			case "n":return parseInt((objDate-this)/60000);
+			case "h":return parseInt((objDate-this)/3600000);
+			case "d":return parseInt((objDate-this)/86400000);
+			case "w":return parseInt((objDate-this)/(86400000*7));
+			case "m":return (objDate.getMonth()+1)+((objDate.getFullYear()-this.getFullYear())*12)-(this.getMonth()+1);
+			case "y":return objDate.getFullYear()-this.getFullYear();
+			default:return undefined;
+		}
+	}
+	function countdown_hms (date){
+		//var sdt = new Date();
+		//var edt = new Date(date);
+		//var seconds_msb1 = sdt.dateDiff("s",edt);
+		var seconds_msb1 = date; 
+		var objms1 = window.setInterval(SetRemainTimeMs1, 1000);
+		function SetRemainTimeMs1() {
+			if (seconds_msb1 > 0) {
+					seconds_msb1 = seconds_msb1 - 1;
+					var second_msb1 = Math.floor(seconds_msb1 % 60);
+					var minite_msb1 = Math.floor((seconds_msb1 / 60) % 60);
+					var hour_msb1 = Math.floor(seconds_msb1 / 3600);
+					$('#payTimeTips span.hour').text(hour_msb1);
+					$('#payTimeTips span.minite').text(minite_msb1);
+					$('#payTimeTips span.second').text(second_msb1);
+			 }else{
+					window.clearInterval(objms1);
+					window.location.reload();
+			 }
+		}
+	}
+</script>
+
+<include file="./Shop/Home/View/footer.html" />
+

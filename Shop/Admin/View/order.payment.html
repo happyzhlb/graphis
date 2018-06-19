@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑订单支付方式</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+$(function(){
+	$('#admin_form').validate({
+		rules : {
+			password : {
+				minlength : 6
+			},
+			repassword : {
+				equalTo : "#password"
+			}
+		},
+		messages : {
+			password : {
+				minlength : '<i></i>密码长度不能小于6位'
+			},
+			repassword : {
+				equalTo : '<i></i>两次输入的密码不一致'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Order')}" class="text">订单管理</a> > <a href="{:U('/Admin/Order/payment',array('id'=>$order['order_id']))}" class="text">编辑订单支付方式</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">编辑订单支付方式</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post">
+                              <div class="control-group">
+                                   <label class="control-label">支付方式：</label>
+                                   <div class="controls">
+                                        <select id="payment" name="payment">
+                                        	<volist name="payments" id="vo">
+                                        		<option value="{$vo.pay_code}|{$vo.pay_name}">{$vo.pay_name}</option>
+                                            </volist>
+                                        </select>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" id="id" name="id" value="{$order.order_id}">
+                                   <button type="submit" class="btn btn_dm">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

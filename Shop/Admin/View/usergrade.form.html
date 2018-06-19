@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新增用户等级</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#admin_form').validate({
+		rules : {
+			grade_name : {
+				required : true
+			},
+			logo : {
+				accept : ["gif","jpg","jpeg","png"]
+			},
+			score : {
+				required : true,
+				number : true
+			},
+			level_id : {
+				required : true,
+				number : true
+			}
+		},
+		messages : {
+			grade_name : {
+				required : '<i></i>用户等级名称不能为空'
+			},
+			logo : {
+				accept : '<i></i>只能上传gif、jpg、jpeg、png格式文件'
+			},
+			level_id : {
+				required : '<i></i>排序不能为空',
+				number : '<i></i>排序输入的必须是数字'
+			},
+			score : {
+				required : '<i></i>积分不能为空',
+				number : '<i></i>排序输入的必须是数字'
+			}			
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('index')}" class="text">用户等级管理</a> > <a href="{:U('edit', array('id'=>$usergrade['grade_id']))}" class="text">编辑用户等级</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">编辑用户等级</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post" enctype="multipart/form-data">
+                              <div class="control-group">
+                                   <label class="control-label">用户等级名称：</label>
+                                   <div class="controls">
+                                        <input type="text" id="grade_name" name="grade_name" value="{$usergrade.grade_name}" class="span300" placeholder="用户等级名称">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group" style="display:none;">
+                                   <label class="control-label">用户等级LOGO：</label>
+                                   <div class="controls">
+                                        <input type="file" id="logo" name="logo">
+                                        <p>1.图片大小不超过200k；2.图片仅支持jpg(jpeg)，gif，png的格式。</p>
+                                        <p><img src="/{$usergrade.logo}"></p>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                   <label class="control-label">积分：</label>
+                                   <div class="controls">
+                                        <input type="text" id="score" name="score" class="span300"  value="{$usergrade.score}"> 
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">等级：</label>
+                                   <div class="controls">
+                                        <input type="text" id="level_id" name="level_id" value="{$usergrade.level_id}" class="span80" placeholder="排序">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" name="id" value="{$usergrade.grade_id}">
+                                   <button type="submit" class="btn btn_dm">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

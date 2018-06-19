@@ -1,0 +1,47 @@
+<include file="./Shop/Home/View/header.html" /> 
+<div id="crumbs"> 
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Address Book</span> 
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Address Book</h2>
+            <p class="eachTip">Manage your address book or add new addresses.</p>
+          <div class="addressBook">
+           	<h4><a href="{:U('UserAddress/add')}">Add New Address</a>Manage Addresses</h4>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <thead>
+                      <tr>
+                        <td width="205">Name </td>
+                        <td width="473">Address </td>
+                        <td width="70">Zip</td>
+                        <td width="100">Type </td>
+                        <td width="120">Priority </td>
+                        <td width="61">Edit </td>
+                        <td width="65">Delete </td>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  <volist name='list' id='vo'>
+                      <tr>
+                        <td> {$vo.first_name} {$vo.last_name}</td>
+                        <td><a href="{:U('UserAddress/edit',array('address_id'=>$vo['address_id']))}" class="a_addAddress">{$vo.address}</a></td>
+                        <td>{$vo.zipcode}</td>
+                        <td width="112"><i>{$vo.type|ucfirst}</i></td>
+                        <td width="170"><i>{$vo.is_default|is_default}</i></td>
+                        <td width="61"><a href="{:U('UserAddress/edit',array('address_id'=>$vo['address_id']))}" class="Edit" title="Edit"></a></td>
+                        <td width="65"><a href="{:U('UserAddress/delete',array('address_id'=>$vo['address_id']))}" onclick="return confirm('Are you sure you want to delete this Address?');" class="Delete" title="Delete"></a></td>
+                      </tr>
+             </volist> 
+                  </tbody>
+            </table>
+            <p class="bookTip">* For credit card purchases: Your billing address must match the address on your credit card statement to avoid any delays in the authorization process.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="./Shop/Home/View/footer.html" /> 

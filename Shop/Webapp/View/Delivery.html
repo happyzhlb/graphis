@@ -1,0 +1,34 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Shipping Information</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--物流方式开始-->
+    <div class="DeliveryChoose">
+    	<h3>Type of Delivery</h3>
+        <volist name='shipping' id='vo'>
+        	<a href="{:U('Buy/index',array_merge($param,array('delivery'=>$vo['shipping_code'])))}"><span <if condition='$Think.get.delivery eq $vo["shipping_code"]'>class="current"</if>><em></em>{$vo.shipping_name}</span></a>
+        </volist>
+       <!-- <span><em></em>YRC Freight. ( Product more than 50kg ) FedEx ( Product no more than 50kg ) </span>-->
+    </div>
+	<!--物流方式结束-->     
+    <script>
+    $(function(){
+		$('.DeliveryChoose').click(function(){
+				
+			
+		});	
+		
+	}); 
+    </script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

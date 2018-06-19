@@ -1,0 +1,195 @@
+<include file='./Shop/Webapp/View/header.html' /> 
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span title="{$order.shipping_code}">Order Detail</span>
+            <a href="{:U('index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--订单列表开始-->
+    <div class="order">
+		<div class="orderDetail">
+        	<div class="orderInfo">
+            	<h3>Order Information </h3>
+       <if condition="$order.shipping_code neq 'CPU'">         
+                <dl class="clearfix">
+                	<dt>Order No.:</dt>
+                    <dd>{$order.order_sn}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Order Time:</dt>
+                    <dd>{$order.add_time|toDate}</dd>
+                </dl>
+                <if condition="$order.order_status egt 20">
+                    <dl class="clearfix">
+                        <dt>Payment No.: </dt>
+                        <dd>{$order.pay_code|default='--'}<!--20140812181526300--></dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>Payment Time:</dt>
+                        <dd>{$order.pay_time|toDate}</dd>
+                    </dl>
+                </if>
+                <if condition="$order.order_status egt 30">
+                    <dl class="clearfix">
+                        <dt>Tracking No.:</dt>
+                        <dd>{$order.invoice_no}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>Delivery Time:</dt>
+                        <dd>{$order.shipping_time|toDate}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>Confirm Time: </dt>
+                        <dd>{$order.finish_time|toDate}</dd>
+                    </dl>
+                </if>
+                <dl class="clearfix">
+                	<dt>Order Status:</dt>
+                    <dd><strong>{$order.order_status|order_status=###,$order['refund_status']}</strong></dd>
+                </dl>
+     <else/>           
+                
+                <!--注释部分为自提的状态--开始-->
+                <dl class="clearfix">
+                	<dt>Order No.:</dt>
+                    <dd>{$order.order_sn}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Order Time:</dt>
+                    <dd>{$order.add_time|toDate}</dd>
+                </dl>
+                <if condition="$order.order_status egt 20">
+                    <dl class="clearfix">
+                        <dt>Payment No.: </dt>
+                        <dd>{$order.pay_code|default='--'}<!--20140812181526300--></dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>Payment Time:</dt>
+                        <dd>{$order.pay_time|toDate}</dd>
+                    </dl>
+                </if>
+                <dl class="clearfix">
+                	<dt>Consignee:</dt>
+                    <dd>{$order.consignee|default='--'}</dd>
+                </dl>
+                <if condition="$order.order_status egt 30">
+                	<notempty name="$order.shipping_time">
+                    <dl class="clearfix">
+                        <dt>Pick Up Time:</dt>
+                        <dd>{$order.shipping_time|todate=###,'Y-m-d H:i'}}</dd>
+                    </dl>
+                    </notempty> 
+                    <dl class="clearfix">
+                        <dt>Confirm Time: </dt>
+                        <dd>{$order.finish_time|toDate}</dd>
+                    </dl>
+                </if>
+                <dl class="clearfix">
+                	<dt>Order Status:</dt>
+                    <dd><strong>{$order.order_status|order_status=###,$order['refund_status']}</strong></dd>
+                </dl>
+                <!--<dl class="clearfix">
+                	<dt>Pick Up Time:</dt>
+                    <dd>2014-12-12 18:56</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Review Time: </dt>
+                    <dd>2014-12-12 18:56</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Order Status:</dt>
+                    <dd><strong>Completed</strong></dd>
+                </dl> 
+                注释部分为自提的状态--结束-->
+      </if>          
+                <dl class="clearfix">
+                        <if condition="$order.order_status eq 11">
+                        	<a href="{:U('Myorders/pay',array('id'=>$order['order_id']))}">Pay Now</a>
+                            <a href="{:U('Myorders/cancel',array('id'=>$order['order_id']))}">Cancel</a>
+                        <elseif condition="($order.order_status eq 40) && ($order.refund_status eq 0)" />
+                        	<eq name="order.comment_time" value="0"> 
+                            	<a href="{:U('/Myorders/review',array('id'=>$order['order_id']))}">Review</a> 
+                            <else/>  
+                                <dt>Review Status:</dt>
+                                <dd>
+                                <strong>Reviewed</strong>
+                                </dd> 
+                            </eq>
+                        </if>
+                        <!--
+               	    <a href="javascript:void(0)">Review</a>
+                	<a href="Track_Order.html">Track Order</a>-->
+                    
+                </dl>
+            </div> 
+         <eq name="order.shipping_code" value="CPU">
+            <div class="orderInfo">
+            	<h3>Pick Up Information</h3>
+                <p class="tips">Please call our third party warehouse before picking up your order in <strong>14 days</strong> from the payment date. You will be told to bring your order number and personal ID (driver's license or passport) with you. </p>
+                <p>- Working Hours: Monday-Friday 8am-5pm.</p>
+                <p>- Warehouse Address: 173 West Service Road, Champlain, NY 12919.</p>
+                <p>- Trena Guerin (tguerin@anderinger.com) phone # 518-298-7424.</p>
+                <p>- Jaime Guerin (jguerin1@anderinger.com) phone # 518-298-7462.</p>
+                <p>- Travis Duprey (tduprey@anderinger.com) phone # 518-298-7470.</p>
+            </div>
+         <else/>
+            <div class="orderInfo">
+            	<h3>Shipping Information</h3>
+                <dl class="clearfix">
+                	<dt>Recipient Name:</dt>
+                    <dd>{$order.consignee}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Shipping Address:</dt>
+                    <dd>{$order.address},{$order.zipcode} </dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Phone:</dt>
+                    <dd>{$order.telephone}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Type of Delivery:</dt>
+                    <dd>{$order.shipping_name} </dd>
+                </dl>
+            </div>
+		 </eq>
+            <div class="detailPro">
+            	<h3>Order Detail</h3>
+                <volist name="order.ordergoods" id="goods">
+                <div class="proInfo clearfix">
+                    <div class="info">
+                        <span class="price">{$goods.present_price|format_price}</span>
+                        <span class="num">×{$goods.quantity}</span>
+                    </div>
+                    <dl class="clearfix">
+                        <dt><a href="{:U('Goods/index',array('id'=>$goods['goods_id']))}" target="_blank"><img src="/{$goods.default_image}" alt="{$goods.goods_name}" " width="50" height="50"/></a></dt>
+                        <dd>
+                            <h4><a href="{:U('Goods/index',array('id'=>$goods['goods_id']))}" target="_blank">{$goods.goods_name}</a></h4>
+                            {$goods.goods_attr|str_replace=' ','<br>',###} 
+                        </dd>
+                    </dl>
+                </div>
+                </volist>
+               
+                <div class="allTotal">
+                    Total: {$order.goods_amount|format_price} 
+                </div>
+            </div>
+            <div class="orderTotal">
+            	<p><span>- {$order.discount_fee|format_price} </span>Discount</p>
+                <p><span>- {$order.integral_fee|format_price} </span>Points Redeemed</p>
+                <p><span>{$order.shipping_fee|format_price}</span>Shipping</p>
+                <p><span class="colorNum">{$order.totle_fee|format_price}</span>Final</p>
+            </div>
+        </div>
+    </div>
+	<!--订单列表结束--> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

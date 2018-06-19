@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo $recipe['title'];?> -  孕妈购ymg280.com</title>
+</head>
+ <body>
+		<div class="container"> 
+			<blog class="box mt1rem pagecontent">
+				<h3 class="none page-header">{$recipe.title}</h3>
+                <div class="page-body clearfix" style="color:#ccc;"> 分类: {$recipe.relateCatename}&nbsp;&nbsp;&nbsp; 浏览:{$recipe.view_num}</div>
+				<div class="page-body clearfix">
+                	<div style="text-align:center; padding-bottom:8px;"><img src="{$recipe.photo}" alt="{$recipe.title}"  style="min-width:50%;max-width:99%" ></div>
+                	<p style="text-indent:0em">【菜谱简介】<?php echo strip_tags( $recipe['cutline'],'<br><b><strong><span><p>');?></p>
+					<p style="word-wrap:break-word;padding:0px;border:0px;color:#535353;font-family:微软雅黑;font-size:14px;line-height:28px;background-color:#FFFFFF;text-align:left;margin-top:0px;margin-bottom:0px;"> 
+                       <?php echo strip_tags( $recipe['content'],'<br><b><strong><span><p>');?>
+                       <?php  
+                       		$pics = explode(',',$recipe['cooking_pic']); 
+                       		foreach($pics as $pic){
+                            	echo  "<br><br><img src='$pic' max-width=500 />" ;
+                       		}
+                       ?>
+                    </p>
+				</div>
+			</blog>
+		</div>
+
+</body>
+</html>

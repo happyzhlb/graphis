@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑商品规格</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	var ue = UE.getEditor('content');
+	$('.submit').click(function(){
+		ue.sync();
+		$('#admin_form').submit();	
+	});
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			content : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>商品规格标题不能为空'
+			},
+			content : {
+				required : '<i></i>商品规格内容不能为空'
+			}
+		},
+		errorPlacement: function(error, element) {
+			if ( element.attr('id') == 'ueditor_textarea_content' )
+				error.appendTo($('#forcontent'));
+			else
+				error.appendTo(element.parent());
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span',
+		ignore : ""
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Article')}" class="text">商品规格管理</a> > <a href="{:U('/Admin/Article/edit',array('id'=>$can['can_id']))}" class="text">编辑商品规格</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">编辑商品规格</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post" enctype="multipart/form-data">
+                              <div class="control-group">
+                                   <label class="control-label">名称：</label>
+                                   <div class="controls">
+                                        <input type="text" id="name" name="name" value="{$list.name}" class="span300" placeholder="商品规格名称">
+                             		</div>
+                                   <div class="clear"></div>
+                              </div>     
+                              
+                              <div class="control-group none">
+                                   <label class="control-label">是否显示：</label>
+                                   <div class="controls">
+                                       <label><input type="radio" id="if_show" name="if_show" value="1" <if condition="$can.if_show eq 1">checked</if>>是</label>
+                                       <label><input type="radio" id="if_show" name="if_show" value="0" <if condition="$can.if_show eq 0">checked</if>>否</label>
+                                   </div>
+                                   
+                              </div>
+                              <div class="form-actions">
+                              		<div class="clear"></div>
+                              	   <input type="hidden" id="id" name="id" value="{$list.option_id}">
+                                   <button type="button" class="btn btn_dm submit">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end--><div style="clear:both;"></div>
+</section>
+</body>
+</html>

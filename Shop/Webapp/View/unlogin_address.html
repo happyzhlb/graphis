@@ -1,0 +1,315 @@
+<include file='./Shop/Webapp/View/header.html' /> 
+<div class="appContent"> 
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Fill in the Address Information</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--未登录添加地址开始-->
+    <div class="unloginAddress">
+    	<div class="unloginChoose">
+        	<a href="javascript:void(0)" class="current">Company Member</a>
+            <a href="javascript:void(0)">Individual Member</a>
+        </div>
+        <div class="addAddress">
+         <form id="address_form" method="post">
+         	<input type="hidden" name="user_type" value="1"  />
+        	<div class="show">
+            	<dl class="clearfix">
+                  <dt>First Name</dt>
+                  <dd><input type="text" name="first_name" class="textIn" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Last Name</dt>
+                    <dd><input type="text" name="last_name" class="textIn" /></dd>
+                </dl>
+                <dl class="clearfix" id="company">
+                	<dt>Company Name</dt>
+                    <dd><input type="text" name="company_name" class="textIn" /></dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>Address</dt>
+                    <dd>
+                        <textarea name="address" id="address"></textarea>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>City</dt>
+                    <dd><input type="text" name="city" value="" class="textIn" /></dd>
+              </dl>
+                <dl class="clearfix">
+                  <dt>State/Region</dt>
+                    <dd>
+                        <select name="state">
+                        		<option value="">--Select--</option>
+                                <volist name="regions" id="region">
+                                    <option value="{$region.region_id}" <if condition="$list.state eq $region['region_id']">selected</if>>{$region.region_name}</option>
+                                </volist>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Country</dt>
+                    <dd><input type="text" class="textIn" value="U.S. Only" readonly="readonly" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Zip</dt>
+                    <dd><input type="text" name="zipcode" value="" class="textIn" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Phone</dt>
+                    <dd><input type="text" name="telephone" value="" class="textIn" /></dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>Preferred</dt>
+                    <dd>
+                        <select id="type" name="type">
+                            <option value="shipping">Shipping Address</option>
+                            <option value="billing">Billing Address</option>
+                            <option value="both">Billing Address && Shipping Address</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Email Address</dt>
+                  <dd><input type="text" name="email" value="" class="textIn" /></dd>
+                </dl>
+                <dl class="clearfix">
+                  <dt>Password</dt>
+                    <dd><input type="password" id="password" name="password" value="" class="textIn" /></dd>
+                </dl>
+              <dl class="clearfix">
+                <dt>Re-Password</dt>
+                    <dd><input type="password" name="repassword" id="repassword" value="" class="textIn" /></dd>
+                </dl>
+            </div>
+            <div class="clearfix tips" id="show_msg" style="display:none;">Error</div>
+            <a href="javascript:void(0)" class="submitBtn">Submit</a>
+            </form> 
+        </div>
+    </div>
+	<!--未登录添加地址结束--> 
+    <script language="javascript">
+$(function(){
+	fn_billing=function(){ 
+		$('#billing_list').show();
+		$('#shipping_list').hide();
+		$('#billing_btn').addClass('current');	
+		$('#shipping_btn').removeClass('current');	
+	}
+	fn_shipping=function(){ 
+		$('#billing_list').hide();
+		$('#shipping_list').show();	
+		$('#billing_btn').removeClass('current');	
+		$('#shipping_btn').addClass('current');	
+	}	
+    $('#billing_btn').bind('mouseenter',function(){fn_billing();});	
+	$('#shipping_btn').bind('mouseenter',function(){fn_shipping();});	
+	<if condition='$list[type]=="Billing"'>fn_billing();<else/>fn_shipping();</if>
+	
+	
+	//未登录添加地址切换
+	$(".unloginChoose a").click(function(){
+		var infoIndex = $(".unloginChoose a").index(this);
+		$(".unloginChoose a").removeClass("current");
+		$(this).addClass("current");
+		if(infoIndex=='0'){
+			$('#company').fadeIn(100);
+			$('#address_form input[name="user_type"]').val('1');
+		}else{
+			$('#company').hide(100);
+			$('#address_form input[name="user_type"]').val('0');
+		}
+	//	$(this).parents(".unloginAddress").find(".show").hide();
+	//	$(this).parents(".unloginAddress").find(".show").eq(infoIndex).fadeIn(100);
+	});
+	
+ 
+    //jQuery.validate();
+	jQuery.validator.addMethod("digits_3", function(value, element) {       
+		var tel = /^\d{3}$/;     
+		return this.optional(element) || (tel.test(value));       
+	}, "Please enter at 3 digits");  
+	
+	jQuery.validator.addMethod("digits_4", function(value, element) {       
+		var tel = /^\d{4}$/;     
+		return this.optional(element) || (tel.test(value));       
+	}, "Please enter at 4 digits");  	
+	
+	jQuery.validator.addMethod("digits_5", function(value, element) {       
+		var tel = /^\d{5}$/;     
+		return this.optional(element) || (tel.test(value));       
+	}, "Please enter at 5 digits"); 
+	 		
+	phone_format=function(n){alert('Phone must be checking that the required input format (xxx-xxx-xxx-xxxx).');$('#part'.n).focus();}		
+	
+	$('#address_form .submitBtn').click(function(){ $('#address_form').submit(); });
+	$('#address_form').validate({
+		rules : {  
+			first_name : {
+				required : true, 
+			},
+			last_name : {
+				required : true
+			},
+			address : {
+				required : true
+			},
+			city : {
+				required : true
+			},  
+			state : {
+				required : true
+			},
+			telephone : {
+				required : true
+			},
+			zipcode : {
+				required : true,
+				digits_5:true,
+			},
+			company_name : {
+				required : true, 
+			}, 
+			type : {
+				required : true, 
+			}, 
+			email : {
+				required : true, 
+				email : true,
+				remote : {
+					url : '/Index/check_email.html',
+					type: "post",               //数据发送方式
+					dataType: "json",           //接受数据格式   
+					data : {
+						email : function(){
+							return $('#address_form input[name=email]').val();
+						}
+					}
+				}
+			}, 
+			password : {
+				required : true, 
+			}, 
+			repassword : {
+				required : true, 
+				equalTo : "#password"
+			},
+		},
+		messages : { 
+			first_name : {
+				required : '<i></i>First Name is required.', 
+			},
+			last_name : {
+				required : '<i></i>Last Name is required.'
+			},
+			address : {
+				required : '<i></i>Address is required.'
+			}, 	
+			city : {
+				required : '<i></i>City is required.'
+			}, 
+			state : {
+				required : '<i></i>State is required.'
+			},
+			telephone : {
+				required : '<i></i>Phone is required.'
+			},
+			zipcode : {
+				required : '<i></i>Zip is required.'
+			},
+			company_name : {
+				required : '<i></i>Company is required.'
+			},
+			type : {
+				required : '<i></i>type is required.', 
+			},
+			email : {
+				required : '<i></i>email is required.', 
+				remote: '<i></i>This email address is already in use. ', 
+			}, 
+			password : {
+				required : '<i></i>password is required.', 
+			}, 
+			repassword : {
+				required : '<i></i>repassword is required.', 
+			},
+			
+		},
+		focusCleanup:true,
+		focusInvalid: false,
+		onkeyup : false,
+		onfocusout : false,
+		success: '',
+		errorElement : 'span',
+		errorClass : 'tips',
+		validClass: 'InfoTrue',
+		/* Ajax提交注册*/
+		submitHandler: function(form){ //回调函数参数：form 
+			$("#address_form #show_msg").html('<img src="/Public/home/images/loading.gif" style="vertical-align:middle;" /> Creating...').show();
+			var reg_url="{:U('Buy/unlogin_address')}";
+			$.post(reg_url,{
+						first_name: function(){
+								return $('#address_form input[name="first_name"]').val();
+							},
+						last_name: function(){
+								return $('#address_form input[name="last_name"]').val();
+							},
+						user_type: function(){
+								return $('#address_form input[name="user_type"]').val();
+							},	
+						company_name: function(){
+								return $('#address_form input[name="company_name"]').val();
+							},			
+						email: function(){
+								return $('#address_form input[name="email"]').val();
+							},
+						password: function(){
+								return $('#address_form input[name="password"]').val();
+							},
+						repassword: function(){
+								return $('#address_form input[name="repassword"]').val();
+							},
+						address: function(){
+								return $('#address_form #address').val();
+							},	
+						state: function(){
+								return $('#address_form select[name="state"]').val();
+							},	
+						zipcode: function(){
+								return $('#address_form input[name="zipcode"]').val();
+							},			
+						telephone: function(){
+								return $('#address_form input[name="telephone"]').val();
+							},	
+						city: function(){
+								return $('#address_form input[name="city"]').val();
+							},	
+						type: function(){
+								return $('#address_form select[name="type"]').val();
+							},		
+						spec_ids:"{$param.spec_ids}",
+						spec_quantity:"{$param.spec_quantity}", 
+				},function(data){  
+					if(data.status=='0'){
+						$("#address_form #show_msg").html(data.info);
+						return;
+					}else{
+						$("#address_form #show_msg").html('OK.');
+						alert('Congratulations, you have successfully registered and saved your address.');
+						self.location=data.info;	
+					}  
+				},'json'); 
+		},
+	});
+	
+}); 
+</script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

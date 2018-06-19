@@ -1,0 +1,84 @@
+<include file="./Shop/Home/View/header.html" />
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>My Wish List</h2>
+            <p class="eachTip">Keep track of items you purchase often and easily add them to your cart.</p>
+            
+            <!--My Wish List 开始-->
+          	<div class="wishList">
+           	  <form id='private_message_form' action="{:U('delete')}" method="post" enctype="multipart/form-data">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr class="tfoot">
+                        <td width="20" align="center"><input type="checkbox" name="checkbox5" id="SelectAll1"  class="checkAllShow" /></td>
+                        <td colspan="5">
+                            <div id="orderPage">{$page}</div>
+                            <label for="SelectAll1">Select All</label>
+                            <!--<input type="submit" value="Delete" onclick="return confirm('Are you sure you want to remove all selected records? ?');"  title="Delete" class="deleteAll" />-->
+                            <a href="javascript:void(0)" class="deleteAll" onclick="return confirm('Are you sure you want to remove all selected records? ?');"  title="Delete">Delete</a>
+                        </td>
+                    </tr>
+                  <tr class="thead">
+            	    <td width="20" align="center">&nbsp;</td>
+            	    <td align="left"><span>Product</span></td>
+            	    <td width="120" align="center">Price</td>
+            	    <td width="120" align="center">Time</td>
+            	    <td width="90" align="center">Buy </td>
+            	    <td width="60" align="center">Delete</td>
+          	    </tr>
+                <volist name='list' id='vo'>
+            	  <tr class="tbody">
+            	    <td width="20" align="center">
+            	      <input type="checkbox" name="cid[]" value="{$vo.cid}" id="checkbox" />
+          	      	</td>
+            	    <td align="left">
+                    	<dl class="clearfix">
+                        	<dt><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" target="_blank"><img src="/{$vo.goods_id|getNameById='goods_thumb','goods','goods_id',###}" width="50" height="50" alt="{$vo.goods_id|getNameById='goods_name','goods','goods_id',###}" /></a></dt>
+                            <dd><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" target="_blank">{$vo.goods_id|getNameById='goods_name','goods','goods_id',###}</a></dd>
+                        </dl>
+                    </td>
+            	    <td width="120" align="center">{$vo.goods_id|get_range_price='$'}</td>
+            	    <td width="120" align="center"><span class="time">{$vo.ctime|toDate='Y:m:d H:i'}</span></td>
+            	    <td width="90" align="center"><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" title="Buy Now" target="_blank" class="buy">Buy Now</a></td>
+            	    <td width="60" align="center"><a href="{:U('delete','cid='.$vo['cid'])}" onclick="return confirm('Are you sure you want to remove this record ?');" title="Delete" class="delete">Delete</a></td>
+          	    </tr>
+               </volist>  
+            	  <tr class="tfoot">
+            	    <td width="20" align="center"><input type="checkbox" name="checkbox5" id="SelectAll"  class="checkAllShow" /></td>
+            	    <td colspan="5">
+                    	<div id="orderPage">{$page}</div>
+                        <label for="SelectAll">Select All</label>
+                        <!--<input type="submit" value="Delete" onclick="return confirm('Are you sure you want to remove all selected records? ?');"  title="Delete" class="deleteAll" />-->
+                        <a href="javascript:deleteall()" class="deleteAll" onclick="return confirm('Are you sure you want to remove all selected records? ?');"  title="Delete">Delete</a>
+                    </td>
+           	    </tr>
+          	  </table>
+              </form>
+            </div>
+            <!--My Wish List 结束-->
+ <script language="javascript">
+  	$(function(){
+		deleteall=function(){ 
+					var mid= new Array();
+					$('#private_message_form input[name="cid[]"]').each(function(i){ 
+						if($(this).attr('checked')=='checked')
+							mid[i]=$(this).val();
+					});
+					mid=mid.join(','); 
+					$.post('{:U("delete")}',{'cid':mid},function(data){
+							alert(data.info);
+							self.location=data.url;
+					});	 	 
+		}
+	});
+ </script>  
+        </div>
+    </div>
+</div>
+<include file="./Shop/Home/View/footer.html" />

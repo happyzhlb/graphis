@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑角色</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<style>
+	.auth_rule{ margin-left:10px; line-height:2;}
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script type="text/javascript">
+$(function(){
+	//var ue = UE.getEditor('content');
+	$('#checkall').click(function(){
+		if($(this).attr('checked')){
+			$('.auth_rule').attr('checked',true);
+		}else{
+			$('.auth_rule').attr('checked',false);
+		}
+	});
+	$('.submit').click(function(){ 
+		$('#admin_form').submit();	
+	});
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			rules : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>角色标题不能为空'
+			},
+			rules : {
+				required : '<i></i>角色权限不能为空'
+			}
+		},
+		errorPlacement: function(error, element) {
+			if ( element.attr('id') == 'ueditor_textarea_content' )
+				error.appendTo($('#forcontent'));
+			else
+				error.appendTo(element.parent());
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span',
+		ignore : ""
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Blog')}" class="text">角色管理</a> > <a href="{:U('/Admin/Blog/edit',array('id'=>$auth_group['id']))}" class="text">编辑角色</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">新增角色</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post">
+                              <div class="control-group">
+                                   <label class="control-label">角色标题：</label>
+                                   <div class="controls">
+                                        <input type="text" id="title" name="title" value="{$auth_group.title}" class="span300" placeholder="角色标题">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                   <label class="control-label">角色描述：</label>
+                                   <div class="controls">
+                                        <input type="text" id="remark" name="remark" value="{$auth_group.remark}" class="span300" placeholder="角色描述">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>                               
+                              <div class="control-group">
+                                   <label class="control-label">角色权限：</label>
+                                   <div class="controls">
+                                        <!--<input type="text" id="rules" name="rules" value="{$auth_group.rules}" class="span300" placeholder="作者">--> 
+                                        <volist name='auth_rule' id='a'>
+                                        	<input type="checkbox" id="a_{$a.id}" name="rules[]" <if condition="strstr( ','.$auth_group['rules'].',' , ','.$a['id'].',')">checked</if> value="{$a.id}" class="auth_rule" /><label for="a_{$a.id}">{$a.title}</label>
+                                        </volist>
+                                        <input name="checkall" type="checkbox" id="checkall" /> <label for="checkall">全选</label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                              <div class="control-group">
+                                   <label class="control-label">是否启用：</label>
+                                   <div class="controls">
+                                       <label><input type="radio" id="status" name="status" value="1" <if condition="$auth_group.status eq 1">checked</if>>是</label>
+                                       <label><input type="radio" id="status" name="status" value="0" <if condition="$auth_group.status eq 0">checked</if>>否</label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" id="id" name="id" value="{$auth_group.id}">
+                                   <button type="submit" class="btn btn_dm submit">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

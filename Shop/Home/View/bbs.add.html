@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+        <meta name="keywords" content="怀孕百事通 孕妈圈 " />
+        <meta name="description" content="怀孕百事通 孕妈圈" />
+        <title>怀孕圈_宝妈社区</title>
+		<link rel="stylesheet" href="css/loading.css" />
+		<script src="../js/loading.js"></script>
+		<link rel="stylesheet" href="__PUBLIC__/home/fonts/font.css">
+		<link rel="stylesheet" href="__PUBLIC__/bbs/style.css">
+        <script type="text/javascript" src="__PUBLIC__/bbs/jquery-1.4.4.min.js"></script>
+		<link rel="stylesheet" href="__PUBLIC__/bbs/default.css" />
+        <link rel="stylesheet" href="css/face.css" />
+		<script src="__PUBLIC__/bbs/kindeditor-min.js"></script> 
+        <script src="__PUBLIC__/bbs/face.js" type="text/javascript"></script>
+		<script>
+		    var timer;
+		    KindEditor.ready(function (K) {
+		        var uploadbutton = K.uploadbutton({
+		            button: K('#uploadButton')[0],
+		            fieldName: 'imgFile',
+		            url: '/kindeditor/php/upload_json.php?dir=file',
+		            afterUpload: function (data) {
+		                jQuery("#fatie_load").hide();
+		                clearInterval(timer);
+		                if (data.error === 0) {
+		                    var url = K.formatUrl(data.url, 'absolute');
+		                    var con = "<div class='item writeimg'><input type='hidden' name='posts_pic' value='" + url + "' /><img src='" + url + "'><div class='delete'><span class='icon-jian'></span></div></div>"
+		                    $("#item_url").append(con);
+		                } else {
+		                    alert(data.message);
+		                }
+		            },
+		            afterError: function (str) {
+		                alert('自定义错误信息: ' + str);
+		            }
+		        });
+		        uploadbutton.fileBox.change(function (e) {
+		            jQuery("#fatie_load").show();
+		            countdown(5);
+		            uploadbutton.submit();
+		        });
+		    });
+
+		    function countdown(on) {
+		        setTime();
+		        var left = on;
+		        timer = window.setInterval(setTime, 1000);
+		        function setTime() {
+		            if (left < 130) {
+		                left = left + 5;
+		            }
+		            bar_img.width = left;
+		        }
+		    }
+
+		</script>
+		<script type="text/javascript">
+		    $(document).ready(function () {
+		        if ($("#isshow").val() == "1") {
+		            jQuery("#jifen_jia").show(); //显示showId
+		            setTimeout("document.getElementById('jifen_jia').style.display = 'none';", 2000);
+                    setTimeout('delayer()', 3000);
+		        }
+		    });	
+            function delayer(){  window.location = "tiezi_list.aspx?id=18"; } 
+		</script>
+        <script language="javascript">
+        <!--
+            function check() {
+                var p_title = $("#title").val();
+                if (p_title == "") {
+                    alert("请输入贴子标题！")
+                    return (false)
+                }
+                if (p_title.length < 5 || p_title.length>25) {
+                    alert("发帖标题为5-25个字！")
+                    return (false)
+                }
+                if ($("#content").val() == "") {
+                    alert("请输入贴子内容！")
+                    return (false)
+                }
+            }
+        //-->
+        </script>
+	</head>
+	<body>
+		<header>
+			<div class="l"><a href="javascript:history.back()" class="btn back"><span class="icon-back"></span></a></div>
+			<div class="c"><h1>发帖</h1></div>
+		</header>
+	<!--底部导航-->
+	<include file="./Shop/Home/View/bbs.footer.html" /> 
+        <div id="jifen_jia" style="display:none;">发贴成功<br />+5积分</div>
+        <div id="fatie_load" style="display:none;">
+            <div><img src="images/Survey_1.jpg" width="0" id="bar_img" name="bar_img"></div>
+        </div>
+		<div class="header-margin footer-margin body">
+        <form method="post" action="{:U('add')}" id="form1" onSubmit="return check()"> <input type="hidden" name="cate_id" id="cate_id" value="{$Think.get.cate_id}">
+			<div class="box">
+				<div class="display-box col2">
+					<div class="box-flex-1"><input name="title" type="text" id="title" class="inp2 inp-block noborder" placeholder="请输入标题 5-25个字" /></div>
+				</div>
+                <div class="Input_Box">
+                  <textarea name="content" rows="2" cols="20" id="content" placeholder="请输入内容" class="Input_text">
+</textarea>
+                  <div class="faceDiv"> </div>
+                  <div class="Input_Foot"> <a class="bqBtn" href="javascript:void(0);"></a> <a class="imgBtn" id="uploadButton" href="javascript:void(0);"></a><input type="submit" name="Button1" value="点击发布" id="Button1" class="postBtn" /></div>
+                </div>
+			</div>
+			<div class="clearfix upload">
+			    <div id="item_url">
+			    </div>
+			</div>
+        </form>
+		</div> 
+		<script>
+
+		    $("#item_url").on("click", '.delete', function () {
+		        $(this).parents(".writeimg").remove();
+		    });
+		</script>
+	</body>
+</html>

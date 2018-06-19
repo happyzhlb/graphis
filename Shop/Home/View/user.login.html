@@ -1,0 +1,109 @@
+<include file="./Shop/Home/View/user.header.html" />
+		<script language="javascript">
+        <!-- 			
+		 $(function(){
+		//注册表单验证
+			$('#login_form').validate({
+				rules : {
+					user_name : {
+						required : true
+					},  
+					password : {
+						required : true,
+						minlength : 6
+					} 
+				},
+				messages : {
+					user_name : {
+						required : function(){ alert('请输入用户名.');},
+					}, 
+					password : {
+						required :  function(){ alert('请输入密码.');},
+						minlength : function(){ alert('密码至少6位数字和字母组合.');},
+					} 
+				},
+				/* Ajax提交注册*/
+				submitHandler: function(form){ //回调函数参数：form 
+					$("#login_form #show_msg").html('<img src="/Public/home/images/loading.gif" style="vertical-align:middle;" /> Creating...').show();
+					$.post('/Index/login.html',{
+								user_name: function(){
+										return $('#login_form input[name="user_name"]').val();
+									}, 	 
+								password: function(){
+										return $('#login_form input[name="password"]').val();
+									}, 
+						},function(data){  
+							if(data.status=='0'){
+								alert(data.info); 
+								$('#user_name').focus();
+								$("#login_form #show_msg").html(data.info);
+								return;
+							}else{
+								$("#login_form #show_msg").html('OK.');
+								//alert('恭喜，登录成功.');
+								self.location=data.url;	
+							}  
+						},'json');
+					//form.submit(); //提交表单
+				},
+				/*
+				errorPlacement: function(error, element) {  
+					if(element.attr('name') == 'is_agree'){
+						element.next().next().after(error);
+					}else{
+						error.appendTo(element.parent()); 
+					}
+				},*/
+				focusInvalid: true, //当为false时，验证无效时，没有焦点响应  
+                onkeyup: false,   
+				//success: 'InfoTrue',
+				//errorElement : 'span',
+				//errorClass : 'InfoError',
+				//validClass : 'InfoTrue'
+				
+			});	
+		 });	
+        //-->
+        </script>
+		<div class="header-margin footer-margin body">
+			<form method="post" action="user_mod.aspx" id="login_form">  
+			<div class="box">
+				<div class="display-box col">
+					<div>用户名：</div>
+					<div class="box-flex-1">
+                        <input name="user_name" type="text" value=""  id="user_name" class="inp inp-block noborder text-right" />
+					</div>
+				</div> 
+		  <div class="display-box col">
+					<div>密 &nbsp;&nbsp;&nbsp;码：</div>
+					<div class="box-flex-1">
+                        <input name="password" id="password" type="password" class="inp inp-block noborder text-right" placeholder="6-20位数字／字母组合" />
+					</div>
+				</div>
+				<div class="display-box col"></div>
+	
+			</div>
+			<div class="submitdiv">
+            	<input type="submit" name="Button1" value="登 录" id="Button1" class="btn btn-block btn-primary" />
+            </div>	
+			<div class="submitdiv">
+					<a href="{:U('Index/register')}" class="btn btn-block btn-default">注&nbsp;&nbsp;册</a>
+			</div>
+                <div style="display:none">
+                   <table width="90%" border="0" cellspacing="0" align="center">
+                    <tr>
+                    <td style="text-align:right;"><a href="javascript:void(0)" onClick="alert('找回密码，请加微信：abiaok');" class="frogetpwd">忘记密码？</a></td>
+                    </tr>
+                    </table>
+                </div> 
+			</form>
+		</div>
+		<div class="login_pic"> 
+            <!--ad5 start-->
+            	<?php //echo Ad(5); ?>
+            <!--ad5 end-->
+            <br /><br /><br /><br />
+        </div>
+		
+	</body>
+</html>

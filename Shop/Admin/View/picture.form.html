@@ -1,0 +1,632 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新增图片</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui.js"></script>
+<link href="__PUBLIC__/js/jquery-ui.css" type="text/css" rel="stylesheet">
+
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script src="/Public/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	var ue = UE.getEditor('content');
+	$('.submit').click(function(){
+		ue.sync();
+		$('#admin_form').submit();	
+	});
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			content : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>图片标题不能为空'
+			},
+			content : {
+				required : '<i></i>图片内容不能为空'
+			}
+		},
+		errorPlacement: function(error, element) {
+			if ( element.attr('id') == 'ueditor_textarea_content' )
+				error.appendTo($('#forcontent'));
+			else
+				error.appendTo(element.parent());
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span',
+		ignore : ""
+	});
+	
+	//显示显示图片
+	showImg=function(objId,lnk){ 
+		var url= $('#'+objId).attr('value'); 
+		$(lnk).attr('href',url);	 
+	}	
+	//上传图片
+	$('.upload_goods_img').click(function(){  
+		$('#uploadW').show();
+		var ref=$(this).attr('ref');	
+		$('#uploadFrame').attr('src','/Admin/picture/upload.html?fieldId='+ref);
+	});
+	//关闭上传窗口
+	$('#closeW1').click(function(){  
+		$('#uploadW').hide();	
+	});
+
+
+	//动态显示标签
+	$("#cate_id").on('change',function(){
+		var data = ($("#cate_id option:selected").attr('data'));
+		data = data.split(',');
+		var _option = '';
+		for(i in data){
+			_option += '<option>'+(data[i])+'</option>';
+		}
+		$('#cate_label').html(_option);
+	});
+	
+	
+	
+	
+	//打开选择框
+	$('#sel_category').click(function(){ 
+		$('#selFrame').show();
+	});
+	//关闭选择框
+	$('#closeW').click(function(){ 
+		$('#selFrame').hide();	
+	});	
+	//弹窗可移动
+	$('#selFrame').draggable();
+	
+	//Ajax请求关联分类
+	$.post("{:U('Picturecate/ajax_get_cate')}",'cate_ids='+"{$cate_ids}",function(data){  
+		$('#cate_name').html(data);
+	});	
+	//孕期群体标签点击事件
+	$('.label').click(function(){ 
+		var _ids = $(this).parents('.controls').find('input[type="hidden"]').val();
+		var arrIds = _ids.split(',');
+		var nowid = $(this).attr('data');
+		
+		if($(this).hasClass('label_normal')){
+			$(this).addClass('label_current').removeClass('label_normal');  
+			for(i=0;i<arrIds.length;i++){ 
+				if(arrIds[i]=='' || arrIds[i]==nowid ) arrIds.splice(i,1)
+			}; 
+			arrIds.push(nowid);
+		}else{
+			$(this).addClass('label_normal').removeClass('label_current');	
+			for(i=0;i<arrIds.length;i++){ 
+				if(arrIds[i]==nowid) arrIds.splice(i,1)
+			};
+		}
+		$(this).parents('.controls').find('input[type="hidden"]').val(arrIds);
+	}); 	
+});
+</script>
+<style>
+	#cate_name li{color:#777; font-weight:bold;}
+	.label{ padding:0px 2px 0px 2px; border:1px solid #ccc;}
+	.label_normal{ color:#7979bb; border:1px solid #7979bb; }
+	.label_current{ border:1px solid #f00; color:#f00;}
+	.controls{ padding-top:5px; }
+</style>
+</head>
+<body>
+<section>
+<!--selFrame start-->
+  <div id="selFrame" style="display:none;cursor:move;margin-left:20%; margin-top:80px; position:absolute; z-index:99999; border:5px solid #a8a8a8;width:860;height:50%;min-width:860px; min-height:350px; background:rgba(255,255,255,0.95);border-radius:6px;box-shadow:0 0 15px #999;">
+        <div id="closeW"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+        <div style="height:99%; clear:both; padding:10px;">
+            <iframe id="iframe" src="/Admin/Picturecate/selcate.html?ids={$cate_ids}&multi=true" width="100%" height="90%"></iframe> 
+        </div>
+    </div>
+<!--selFrame end-->
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('index')}" class="text">图片管理</a> > <a href="{:U('add')}" class="text">新增图片</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">新增图片</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post">
+                              <div class="control-group">
+                                   <label class="control-label">图片标题：</label>
+                                   <div class="controls">
+                                        <input type="text" id="title" name="title" value="{$picture.title}" class="span300" placeholder="图片标题">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group none">
+                                   <label class="control-label">链接URL：</label>
+                                   <div class="controls">
+                                        <input type="text" id="link_url" name="link_url" value="{$picture.link_url}" class="span300" placeholder="URL">
+                             (填上链接URL就不需要填图片内容)</div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">选择专辑：</label>
+                                   <div class="controls">
+                                   		
+                                    	<select id="album_id" name="album_id">
+                                        	<option value="" style="color:#ccc;">所属专辑</option> 
+                                            <volist name="albums" id="vo">
+                                               <option value="{$vo.id}" data="{$vo.cate_label}" <if condition="$picture.album_id eq $vo['id']">selected</if>>{$vo.title}</option> 
+                                            </volist>
+                                        </select>   
+                                        
+                                        
+                                        <input id='cate_id' name="cate_id" value="{$picture.cate_id}" type="hidden" />
+                                        <!--<div id="cate_name" style="padding:5px;"></div> 
+                                        <input type="button" id="sel_category" value="选择分类" />
+                                        -->
+                                   </div>     
+                                   <div class="clear"></div>
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                    <!--uploadW start-->
+                                    <div id="uploadW" style="display:none; margin-left:50px; margin-top:40px; position:absolute; z-index:90000; border:5px solid #a8a8a8; width:760px; height:450px; background:rgba(255,255,255,8.2); border-radius:6px; box-shadow:0 0 15px #999; left: 94px; top: 5px;">
+                                        <div id="closeW1"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+                                        <div style="height:490px; clear:both; padding:10px;">
+                                            <iframe id="uploadFrame" src="/Admin/picture/upload.html?fieldId=goods_img"  width="730px;" height="400px;"></iframe> 
+                                        </div>
+                                    </div>
+                                    <!--uploadW end-->   
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo2" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo2',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo2" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo3" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo3',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo3" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div> 
+                              
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo4" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo4',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo4" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo5" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo5',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo5" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo6" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo6',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo6" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo7" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo7',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo7" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo8" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo8',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo8" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo9" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo9',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo9" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo10" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo10',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo10" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo11" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo11',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo11" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo12" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo12',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo12" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo13" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo13',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo13" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo14" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo14',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo14" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo15" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo15',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo15" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo16" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo16',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo16" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo17" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo17',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo17" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo18" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo18',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo18" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo19" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo19',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo19" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo20" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo20',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo20" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>                               
+                              
+                              <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo21" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo21',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo21" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo22" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo22',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo22" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo23" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo23',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo23" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo24" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo24',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo24" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo25" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo25',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo25" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo26" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo26',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo26" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo27" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo27',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo27" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo28" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo28',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo28" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo29" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo29',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo29" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo30" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo30',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo30" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>      
+                              
+                              
+                              
+                              <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo31" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo31',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo31" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo32" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo32',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo32" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo33" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo33',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo33" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo34" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo34',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo34" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo35" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo35',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo35" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo36" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo36',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo36" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo37" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo37',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo37" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo38" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo38',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo38" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo39" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo39',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo39" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo40" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo40',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo40" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>  
+                              
+                              
+                              
+                              <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo41" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo41',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo41" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo42" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo42',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo42" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo43" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo43',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo43" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo44" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo44',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo44" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo45" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo45',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo45" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo46" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo46',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo46" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo47" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo47',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo47" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                      
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo48" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo48',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo48" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo49" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo49',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo49" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>                               
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="photo50" name="photo[]" value="/Uploads/800/" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('photo50',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="photo50" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>  
+                              </div>  
+                              
+                              
+                             <div class="control-group">
+                                   <label class="control-label">标签：</label>
+                                   <div class="controls">
+                                    <input type="text" id="labels" name="labels" value="{$picture.labels}" class="span300" placeholder=""> 									<span style="color:#ccc;"> (多个标签用逗号,隔开)</span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                              <div class="control-group">
+                                   <label class="control-label">简介：</label>
+                                   <div class="controls">
+                                        <textarea id="cutline" name="cutline">{$picture.cutline}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                            <!--
+                              <div class="control-group" style="min-height:390px;">
+                                   <label class="control-label">图片介绍：</label>
+                                   <div class="controls" id="forcontent">
+                                        <script id="content" name="content" type="text/plain" style="width:800px;height:300px;"><?php echo  htmlspecialchars_decode($picture['content']);?></script>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                            -->     
+                             <!--  
+                              <div class="control-group">
+                                   <label class="control-label">浏览量：</label>
+                                   <div class="controls">
+                                        <input type="text" id="view_num" name="view_num" value="{$picture.view_num|default=0}" class="span300" placeholder=""></span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                             
+							 <div class="control-group">
+                                   <label class="control-label">收藏量：</label>
+                                   <div class="controls">
+                                        <input type="text" id="collect_num" name="collect_num" value="{$picture.collect_num|default=0}" class="span300" placeholder=""></span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              
+                              <div class="control-group">
+                                   <label class="control-label">作者：</label>
+                                   <div class="controls">
+                                        <input type="text" id="author" name="author" value="{$picture.author}" class="span300" placeholder="作者">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              -->
+                              <div class="control-group none">
+                                   <label class="control-label">排序：</label>
+                                   <div class="controls">
+                                        <input type="text" id="sort_order" name="sort_order" value="0" class="span300" placeholder="排序"> <span style="color:#ccc">(越小排序越靠前)</span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                              <div class="control-group">
+                                   <label class="control-label">是否推荐：</label>
+                                   <div class="controls"> 
+                                     <label> <input type="radio" id="is_recommend" name="is_recommend" value="1" <if condition="$picture.is_recommend eq 1">checked</if>>是 </label>
+                     <label> <input type="radio" id="is_recommend" name="is_recommend" value="0" <if condition="$picture.is_recommend eq 0">checked</if> >否 </label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>   
+                   <div class="control-group">
+                                   <label class="control-label">是否显示：</label>
+                                   <div class="controls">
+                                       <label><input type="radio" id="if_show" name="if_show" value="1" checked>是</label>
+                                       <label><input type="radio" id="if_show" name="if_show" value="0" >否</label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" id="id" name="id" value="{$picture.id}">
+                                   <button type="button" class="btn btn_dm submit">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

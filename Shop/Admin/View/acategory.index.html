@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>专题分类列表</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/formClass.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<style>
+	.overColor{background-color:#f8f9f9;}
+	.sort{width:50px;text-align:center;}
+	.red{color:#f00;}
+	.bold{font-weight:bold;}
+	#showmsg{ position:absolute;  z-index:50; ;
+			  background:rgba(0,0,0,0.4); 
+			  width:50%; height:50px; 
+			  left:25%; top:20%; 
+			  border:5px solid #666; 
+			  border-radius: 4px;
+			  display:none;
+			  box-shadow: 0 0 10px #999;
+			  text-align:center;
+			  padding-top:50px;
+			  color:#fff;
+			  font-weight:bold;
+			  
+			 }
+	.pp0{float:left;color:#123;background-color:rgba(200,160,255,0.9); border-radius:5px; box-shadow:0px 0px 1px #ccc; border:1px solid #CCC; padding:2px 10px 2px 10px; margin-left:12px;}
+	.pp1{float:left;color:#123;background-color:rgba(255,160,200,0.9); border-radius:5px; box-shadow:0px 0px 1px #ccc; border:1px solid #CCC; padding:2px 10px 2px 10px; margin-left:12px;}
+	
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/gcategory.js"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+
+$(function(){
+	$('table tr').hover(function(){
+		$(this).addClass('overColor').siblings('tr').removeClass('overColor');	
+	});	
+	
+	//ajax保存排序
+	$('.sort').live('change',function(){ 
+			var cateIdObj=$(this).parent().parent().find("input[name='items']");
+			$(this).addClass('red');
+			var postStr='cate_id='+$(cateIdObj).val()+'&sort_order='+$(this).val();
+			$.post("{:U('ajaxSortOrder')}",postStr,function(data){
+				$('#showmsg').html(data.info).fadeIn(800).fadeOut(300);
+				//$("input[value='"+$(cateIdObj).val()+"']").parent().parent().find('.sort_order').removeClass('red');	
+				$('.sort').removeClass('red');
+			}); 
+	});
+	//$('.sort').on('blur',function(){ $(this).removeClass('red');});
+	$('#alltext').click(function(){
+			var html=$(this).html();
+			if(html=='-全部收缩'){
+				$('.icon_minus').click();
+				$(this).html('+全部展开');
+			}else{
+				$('.icon_add').click();
+				$(this).html('-全部收缩');
+			}
+	});
+	$('#alltext').click();
+	
+	pl=(function(n){  
+		 $('.parent_id_'+n+'_0').show();  
+		 $('.parent_id_'+n+'_1').show();  
+		 $('.parent_id_'+n+'_2').hide();	
+	});
+	pp=(function(n){ 
+		 $('.parent_id_'+n+'_0').hide();  
+		 $('.parent_id_'+n+'_1').hide();  
+		 $('.parent_id_'+n+'_2').show();	
+	});
+});
+</script> 
+</head>
+
+<body>
+<section>
+    <div id="showmsg"></div>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Acategory')}" class="text" target="workspace">专题分类</a>
+         </div>
+    </div>
+         <!--产品分类表start-->
+         <div class="tbox">
+              <div class="zone">
+                   <input type="button" class="btn btn_ys buttonadd" value="+ 新增">
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table">
+                          <thead>
+                             <tr>
+                                 <th width="2%"><div id="all" style="position:absolute; margin-top:-15px;margin-left:20px;"><a href="#" id="alltext">-全部收缩</a></div></th>
+                                 <th width="32%">分类名称</th>
+                                 <th width="8%">排序</th>
+                                 <th width="7%">cate_id</th>
+                                 <th width="17%">类型</th>
+                                 <th width="11%">是否显示</th>
+                                 <th width="9%">是否推荐</th>
+                                 <th colspan="2">操作</th>
+                             </tr>
+                          </thead> 
+                          <tbody>
+                          
+                             <!--产品一级分类start-->
+                             <volist name="acategory" id="cate">
+                             <tr>
+                                 <td><input type="checkbox" name="items" value="{$cate.cate_id}"></td>
+                                 <td row="{$cate.cate_id}">
+                                     <div class="classNameF">
+                                          <if condition="$cate.children eq false">
+                                          <i class="icon_class"></i>
+                                          <else />
+                                          <i class="icon_minus"></i>
+                                          </if>
+                                          <span class="text">{$cate.cate_name}</span>
+                                     </div>                                     
+                                 </td>
+                                 <td class="center"><input type="text" name="sort_order" class="sort" value="{$cate.sort_order}"></td>
+                                 <td class="center">{$cate.cate_id}</td>
+                                 <td class="center">&nbsp;</td>
+                                 <td class="center"><if condition="$cate.if_show eq 1"><i class="icon_right"></i><else /><i class="icon_error"></i></if></td>
+                                 <td class="center">
+   <if condition="$cate.is_recommend eq 1"><span enpty="edit_status_ajax" url="{:U('ajax_edit_isrecommend', array('id'=>$list['article_id']))}" title="已推荐" class="icon_right"></span><else /><span enpty="edit_status_ajax" url="{:U('ajax_edit_isrecommend', array('id'=>$list['article_id']))}" title="未推荐" class="icon_error"></span></if>                              
+                                 </td>
+                                 <td width="7%" class="center"><a href="{:U('/Admin/Acategory/edit',array('id' => $cate['cate_id']))}" target="_self">编辑</a></td>
+                                 <td width="7%" class="center"><eq name="cate.is_hold" value="1">删除<else/><a onClick="return confirm('确定要删除吗？')" href="{:U('/Admin/Acategory/drop', array('id' => $cate['cate_id']))}" target="_self">删除</a></eq></td>
+                             </tr>
+                             <!--产品一级分类end--> 
+                             
+                             <!--产品二级分类start-->
+                             <if condition="$cate.children neq false">
+                             <tr class="parent_id_{$cate.cate_id} catetype{$ccate.type}">
+                                 <td></td>
+                                 <td><a href="javascript:pl({$cate.cate_id})"><div class="pp0 bold">品类</div></a>  <a href="javascript:pp({$cate.cate_id})"><div class="pp1">品牌</div></a></td>
+                                 <td class="center"></td>
+                                 <td class="center"></td>
+                                 <td class="center"></td>
+                                 <td class="center"></td>
+                                 <td class="center"></td>
+                                 <td class="center"></td>
+                                 <td class="center"></td>
+                             </tr> 
+                             <volist name="cate.children" id="ccate">                               
+                             <tr class="parent_id_{$cate.cate_id} parent_id_{$cate.cate_id}_{$ccate.type}">
+                                 <td><input type="checkbox" name="items" value="{$ccate.cate_id}"></td>
+                                 <td row="{$ccate.cate_id}">
+                                     <div class="classNameS">
+                                          <if condition="$ccate.children eq false">
+                                          <i class="icon_class"></i>
+                                          <else />
+                                          <i class="icon_minus"></i>
+                                          <!--<i class="icon_add"></i>-->
+                                          </if>
+                                          <span class="text">{$ccate.cate_name}</span>
+                                     </div>
+                                 </td>
+                                 <td class="center"><input type="text" name="sort_order" class="sort" value="{$ccate.sort_order}"></td>
+                                 <td class="center">{$ccate.cate_id}</td>
+                                 <td class="center">{$ccate.type|getCateType}</td>
+                                 <td class="center"><if condition="$ccate.if_show eq 1"><i class="icon_right"></i><else /><i class="icon_error"></i></if></td>
+                                 <td class="center">&nbsp;&nbsp;<if condition="$ccate.is_recommend eq 1"><i class="icon_right"></i><else /><i class="icon_error"></i></if></td>
+                                 <td class="center"><a href="{:U('/Admin/Acategory/edit', array('id' => $ccate['cate_id']))}" target="_self">编辑</a></td>
+                                 <td class="center"><a href="{:U('/Admin/Acategory/drop', array('id' => $ccate['cate_id']))}" class="drop" target="_self">删除</a></td>
+                             </tr> 
+                                 <if condition="$ccate.children neq false">
+                                 <volist name="ccate.children" id="third">
+                                 <tr class="parent_id_{$cate.cate_id}" style="display:none;">
+                                     <td><input type="checkbox" name="items" value="{$third.cate_id}"></td>
+                                     <td row="{$third.cate_id}" style="padding-left:20px;">
+                                         <div class="classNameS">
+                                              <if condition="$third.children eq false">
+                                              <i class="icon_class"></i>
+                                              <else />
+                                              <i class="icon_add"></i>
+                                              </if>
+                                              <span class="text">{$third.cate_name}</span>
+                                         </div>
+                                     </td>
+                                     <td class="center"><input type="text" name="sort_order" class="sort" value="{$third.sort_order}"></td>
+                                     <td class="center">{$third.cate_id}</td>
+                                     <td class="center">{$third.type|getCateType}</td>
+                                     <td class="center"><if condition="$third.if_show eq 1"><i class="icon_right"></i><else /><i class="icon_error"></i></if></td>
+                                     <td class="center"><if condition="$third.is_recommend eq 1"><i class="icon_right"></i><else /><i class="icon_error"></i></if></td>
+                                     <td class="center"><a href="{:U('/Admin/Acategory/edit', array('id' => $third['cate_id']))}" target="_self">编辑</a></td>
+                                     <td class="center"><a href="{:U('/Admin/Acategory/drop', array('id' => $third['cate_id']))}" class="drop" target="_self">删除</a></td>
+                                 </tr> 
+                                 
+                                 </volist>
+                                 </if>
+                             </volist>
+                             </if>
+                             <!--产品二级分类end-->
+                             </volist>
+                                                              
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="13">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" name="" value="删除" class="btn btn_bs dropall">
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--产品分类表end-->
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

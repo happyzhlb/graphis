@@ -1,0 +1,40 @@
+<div class="Recently2">
+	<h3>Your Recently Viewed Items</h3>
+    <div id="slide-box">
+        <div class="slide-content" id="tempShow">
+            <div class="wrap">
+              <ul class="JQ-slide-content">
+                <volist name="history" id="hlist">
+                <li>
+                	<div class="each">
+                        <a href="{:U('/Goods/index',array('id'=>$hlist['goods_id']))}" target="_blank" class="proImg"><img src="/{$hlist.goods_thumb}" width="140" height="140" alt="{$hlist.goods_name}" /></a>
+                        <a href="{:U('/Goods/index',array('id'=>$hlist['goods_id']))}" target="_blank" class="proName">{$hlist.goods_name}</a>
+                        <p class="proInf">{$hlist.goode_desc}</p>
+                        <dl class="clearfix">
+                            <dt class="star star{$hlist.estars}"></dt>
+                            <dd>({$hlist.ecount})</dd>
+                        </dl>
+                    </div>
+                </li>
+                </volist>
+              </ul>
+            </div>
+            <div class="JQ-slide-nav">
+              <a class="prev" href="javascript:void(0)"><span>&#8249;</span></a>
+              <a class="next" href="javascript:void(0)"><span>&#8250;</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<load href="__PUBLIC__/home/js/jquery.Slide.js" />
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#tempShow").Slide({
+			effect : "scroolLoop",
+			autoPlay : false,
+			speed : "normal",
+			timer : 1000,
+			steps:1
+		});	
+	});
+</script>

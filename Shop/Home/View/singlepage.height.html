@@ -1,0 +1,24 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+
+		<div class="container">
+			<form name="editForm"  id="editForm" method="post" action="{:U('Singlepage/height')}">
+			 <div class=" text-center sgs"><img src="__PUBLIC__/home/images/sgs.png"></div>
+			 <div class="manwoman display-box text-center">
+			 	<div style="width: 50%;">
+			 		<img src="__PUBLIC__/home/images/man.png">
+		 		  <h3>爸爸身高</h3>
+			 		<p><input type="number" name="fa" id="fa" class="inp"> 厘米</p>
+			 	</div>
+			 	<div style="width: 50%;">
+			 		<img src="__PUBLIC__/home/images/woman.png">
+		 		  <h3>妈妈身高</h3>
+			 		<p><input type="number" name="mo" id="mo" class="inp"> 厘米</p>
+			 	</div>
+			 </div>
+			 <div class="sexselect text-center mt2rem">孩子性别 <input type="radio" name="sex" id="man" value="0" checked="checked"><label for="man"><span class="icon-man"></span> 男孩</label><input type="radio" name="sex" id="woman" value="1"><label for="woman"><span class="icon-woman"></span> 女孩</label></div>
+			<div class="p2rem"><button type="submit" class="btn btn-block btn-ornament">开始预测</button></div>
+			</form>
+		</div>
+           
+<include file="./Shop/Home/View/footer.html" /> 

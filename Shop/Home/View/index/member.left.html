@@ -1,0 +1,63 @@
+<div class="tab_menus subLeft_menu ufl sc-bg uinn0">
+<style>.hpLeft_nav li{border-radius:15px; height:42px;} .line7{line-height:42px;} .uabs4{ top:25px;}</style>
+          <div data-am-widget="titlebar" class="am-titlebar  am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+            <h2 class="am-titlebar-title ulev3"> <a href="/member/index.html"><strong style="color:#000;">个人中心 </strong></a>/ <span class="sc-view-b">UCENTER</span> </h2>
+          </div>
+          <div class="ulev0 bc-border-c hpLeft_nav">
+            <div class="uinn umar5 tx-c">
+              <div class="uc-br2 pic_size sc-bg3"><img src="/Public/home/files/tx1.png" class="uc-br2" height="80" width="80"></div>
+            </div>
+            <div class="uinn">用户名: {$user.user_name}</div>
+            <div class="uinn">会员等级:<font color="red">{$user['is_vip']?'VIP会员':'普通会员'}</font> <if condition="$user['is_vip']">剩余:<span style="font-family:Verdana, Geneva, sans-serif; color:red;">{$user.remain_days}</span>天</if></div>
+            <notempty name="user.nick_name"><div class="uinn sc-text-c overhide">昵称: {$user['nick_name']?$user['nick_name']:$user['user_name']}</div></notempty>
+            <!--<div class="uinn  sc-text-c">余额: <font color="red"> {$user.balance} </font> 金币</div>
+            <div class="uinn umar-b"><button class="uc-a2  tab_listbg  tx-c btn_width1 ulev1">充值</button></div>-->
+            <div class="uinn umar-b"><!--<button class="uc-a2  tab_listbg  tx-c btn_width1 ulev1" onclick="openDetails(event);">成为VIP</button>--></div>
+          </div>
+          <ul class="ulev0 hpLeft_nav">
+            <li class="uinn line6 urela tx-c bc-border-c"><a class="uinn13" href="/member/recharge.html">
+              <div class="uinl">
+                <div class="line2 line7">充值VIP</div>
+              </div>
+            <i class="icon icon-turnl uabs4"></i></a></li>
+            
+            <li class="uinn line6 urela tx-c bc-border-c"><a class="uinn13" href="/member/code.html">
+              <div class="uinl">
+                <div class="line2 line7">打赏码</div>
+              </div>
+            <i class="icon icon-turnl uabs4"></i></a></li>
+            
+            <li class="uinn line6  urela tx-c bc-border-c"><a class="uinn13" href="/myalbum/index.html">
+              <div class="uinl">
+                <div class="line2 line7">已购专辑</div>
+              </div>
+            <i class="icon icon-turnl uabs4"></i></a></li>
+            <!--
+            <li class="uinn line6 urela tx-c bc-border-c"><a class="uinn13" href="/member/mycare.html">
+              <div class="uinl">
+                <div class="line2 line7">我的关注</div>
+              </div>
+            <i class="icon icon-turnl uabs4"></i></a></li>
+            -->
+            <li class="uinn line6 urela tx-c bc-border-c"><a class="uinn13" href="/member/myinfo.html">
+              <div class="uinl">
+                <div class="line2 line7">个人资料</div>
+              </div>
+              <i class="icon icon-turnl uabs4"></i></a></li>
+            <li class="uinn line6 urela tx-c bc-border-c"><a class="uinn13" href="/member/passwd.html">
+              <div class="uinl">
+                <div class="line2 line7">密码修改</div>
+              </div>
+            <i class="icon icon-turnl uabs4"></i></a></li>
+            <li class="uinn line6 urela tx-c bc-border-c"><a class="uinn13" href="/member/guestbook.html">
+              <div class="uinl">
+                <div class="line2 line7">留言反馈</div>
+              </div>
+            <i class="icon icon-turnl uabs4"></i></a></li>
+            <li class="uinn line6 urela tx-c bc-border-c"><a class="uinn13" href="/member/logout.html">
+              <div class="uinl">
+                <div class="line2 line7">退出登录</div>
+              </div>
+            <i class="icon icon-turnl uabs4"></i></a></li>
+          </ul>
+        </div>

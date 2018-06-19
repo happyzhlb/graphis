@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+        <meta name="keywords" content=怀孕百事通 孕妈圈  />
+        <meta name="description" content=怀孕百事通 孕妈圈 />
+        <title>搜索中心_孕妈圈</title>
+        <link rel="stylesheet" href="__PUBLIC__/home/fonts/font.css" />
+        <link rel="stylesheet" href="__PUBLIC__/home/css/style.css" />
+		<link rel="stylesheet" href="__PUBLIC__/home/js/swiper/swiper.3.1.2.min.css" />
+	</head>
+	<body>
+		<header>
+			<div class="l"><a href="javascript:history.back()" class="l fz24rem"><span class="icon-back"></span></a></div>
+            <form name="editForm"  id="editForm" class="search" method="post" action="{:U('search')}">
+				<h1><input type="text" class="inp inp-block" name="search_name" value="" /></h1>
+				<div class="r"><button type="submit" class="btn btn-block"><span class="icon-search"></span></button></div>
+			</form>
+		</header>
+		
+		<script>(function () { document.write('<div id="clear300mm" style="position:fixed; left:0; right:0; top:0; bottom:0; z-index:9999;"></div>'); var div = document.getElementById("clear300mm"); if (div) { setTimeout(function () { div.style.display = "none"; }, 300); } })();</script> 		
+		<footer> 
+			<a href="{:U('Index/index')}" tppabs="/" class='box-flex-1 <if condition="CONTROLLER_NAME eq 'Index'">active</if>'><span class='icon-home'></span>首页</a><a href="{:U('Bbs/index')}" class='box-flex-1'><span class='icon-qp'></span>社区</a><a href="{:U('/Found')}" class='box-flex-1 <if condition="strtolower(CONTROLLER_NAME) eq 'found'">active</if>'><span class='icon-search'></span>发现</a><a href="{:U('Member/record')}" class='box-flex-1'><span class='icon-bj'></span>记录</a><a href="{:U('Member/index')}" class='box-flex-1 '><span class='icon-user'></span>我的</a>		
+		</footer>
+
+		<div class="container">
+			<div class="box p1rem">话题：{$total}个结果</div>
+			<div class='box search-list'>
+            <volist name="_list" id="list">
+            <div class='search-item'><a href="{:U('show',array('bbs_id'=>$list['bbs_id']))}"><span class='title'>{$list.title}</span><span class='desc ellipsis-2'></span></a><div class='mt1rem clearfix'><div class='pull-left'>来自&nbsp;<a href='#'><span class='color-blue'>{$list.user.nick_name}</span></a></div><div class='pull-right'><span class='icon-time'></span>{$list.ctime|formatTime}</div></div></div>
+            </volist>
+            </div>
+		</div>
+		
+		<script src="__PUBLIC__/home/js/jquery.min.js"></script>
+		<script src="__PUBLIC__/home/js/swiper/swiper.3.1.2.jquery.min.js"></script>
+		<script src="__PUBLIC__/home/js/mobile.js"></script>
+		<script src="__PUBLIC__/home/js/script.js"></script>
+	</body>
+</html>

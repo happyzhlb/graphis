@@ -1,0 +1,26 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Settings</span>
+            <a href="{:U('Member/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="allSettings">
+        	<a href="{:U('Member/basic_information')}"><i></i>Basic Information<span></span></a>	
+            <a href="{:U('Member/account_settings')}"><i></i>Account Settings<span></span></a>	
+            <a href="{:U('UserAddress/index')}"><i></i>Address Book<span></span></a>	
+        </div>
+    </div>
+	<!--会员中心设置结束--> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

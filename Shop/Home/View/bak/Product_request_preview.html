@@ -1,0 +1,50 @@
+<include file="./Shop/Home/View/header.html" />  
+
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Product Request Information</h2>
+          	<div class="proRequestInf">
+            	<dl class="clearfix">
+                	<dt>Product name: </dt>
+                    <dd>{$list.pro_name}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Cas number:</dt>
+                    <dd>{$list.cas_number}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Standard:</dt>
+                    <dd>{$list.standard}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Package: </dt>
+                    <dd>{$list.package}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Quatity:</dt>
+                    <dd>{$list.quantity} {$list.quantity_unit}<em>per</em>{$list.cycle} {$list.cycle_unit}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Expected Price: </dt>
+                    <dd>{$list.expected_price}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Other Details: </dt>
+                    <dd>{$list.description} </dd>
+                </dl>
+                <div class="btnBox">
+                   <a href="{:U('edit','id='.$list['id'])}" class="accountToconBtn" title="Edit">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="./Shop/Home/View/footer.html" />  

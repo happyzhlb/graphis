@@ -1,0 +1,129 @@
+<include file="./Shop/Home/View/user.header.html" />
+<link rel="stylesheet" href="__PUBLIC__/bbs/default.css">
+<script src="__PUBLIC__/bbs/kindeditor-min.js"></script>
+<script>
+		    KindEditor.ready(function (K) {
+		        var uploadbutton = K.uploadbutton({
+		            button: K('#uploadButton')[0],
+		            fieldName: 'imgFile',
+		            //url: '{:U("uploadimg")}',
+					url: '/myeditor/php/upload_json.php?dir=image',
+		            afterUpload: function (data) {
+		                if (data.error === 0) {
+		                    var url = K.formatUrl(data.url, 'absolute');
+		                    $("#u_pic").val(url);
+		                    document.getElementById("touxiang_pic").style.backgroundImage = "url(" + url + ")";
+
+		                } else {
+		                    alert(data.message);
+		                }
+		            },
+		            afterError: function (str) {
+		                alert('自定义错误信息: ' + str);
+		            }
+		        });
+		        uploadbutton.fileBox.change(function (e) {
+		            uploadbutton.submit();
+		        });
+		    });
+		</script>
+<script type="text/javascript">
+		    $(document).ready(function () {
+		        if ($("#isshow").val() == "1") {
+		            jQuery("#jifen_jia").show(); //显示showId
+		            setTimeout("document.getElementById('jifen_jia').style.display = 'none';", 2000);
+		            setTimeout('delayer()', 3000);
+		        }
+		    });
+		    function delayer() { window.location = "user_index.aspx"; } 
+		</script>
+<script language="javascript">
+        <!--
+            function check() {
+                if ($("#per_name").val() == "") {
+                    alert("请输入昵称！")
+                    return (false)
+                }
+                if ($("#per_phone").val() == "") {
+                    alert("请输入电话！");
+                    return (false)
+                }
+            }
+        //-->
+        </script>
+<body>
+<header>
+  <div class="l"><a href="javascript:history.back()" class="btn back"><span class="icon-back"></span></a></div>
+  <div class="c">
+    <h1>我的资料</h1>
+  </div>
+</header>
+<div id="jifen_jia" style="display:none;">上传头像成功<br>
+  +100积分</div>
+<style type="text/css">
+        <!--
+        .touxiang .tx_pic{ border-radius:2px;width:50px; height:50px; background:url(/Public/home/images/uppic.png);background-size:100% 100%; float:right;margin-right:10px;}
+        .touxiang .tx_pic input{width:50px; height:50px;}
+        }
+        -->
+        </style>
+<div class="header-margin footer-margin body">
+  <form method="post" action="{:U('myinfo')}" id="form1">
+    <input type="hidden" name="isshow" id="isshow" value="0">
+    <div class="box">
+      <div class="display-box col">
+        <div>头像：
+          <input type="hidden" id="u_pic" name="u_pic" value="{$user.u_pic|default='/Public/home/images/nopic.jpg'}">
+        </div>
+        <div class="box-flex-1">
+          <div class="touxiang" >
+            <div style="padding-top:15px;"><span class="icon-right"></span></div>
+            <div class="tx_pic" id="touxiang_pic" style="border:1px solid #fCfCfc; float:left; <if condition="$user['u_pic']!=''">background-image:url({$user.u_pic})</if>">
+              <input type="button" id="uploadButton" value="" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="display-box col">
+        <div>用户名：</div>
+        <div class="box-flex-1">
+          <input name="per_user_id" disabled type="text" value="{$user.user_name}" id="per_user_id" class="inp inp-block noborder text-right" placeholder="">
+        </div>
+      </div>
+      <div class="display-box col">
+        <div>昵称：</div>
+        <div class="box-flex-1">
+          <input name="nick_name" type="text" value="{$user.nick_name}" id="nick_name" class="inp inp-block noborder text-right" placeholder="昵称或真实姓名">
+        </div>
+      </div>
+      <div class="display-box col">
+        <div>城市：</div>
+        <div class="box-flex-1">
+          <input name="city" type="text" value="{$user.city}" id="city" class="inp inp-block noborder text-right" placeholder="请填写你所在的城市">
+        </div>
+      </div>
+      <div class="display-box col">
+        <div>育儿情况</div>
+        <div class="box-flex-1">
+          <select name="memo" id="memo" class="inp inp-block noborder text-right" style="color:#999; text-align:right;">
+            <option value="无">选择育儿情况</option>
+            <option value="备孕" selected="">备孕</option>
+            <option value="已怀孕">已怀孕</option>
+            <option value="有宝宝">有宝宝</option>
+          </select>
+        </div>
+      </div>
+      <div class="display-box col">
+        <div>邮箱：</div>
+        <div class="box-flex-1">
+          <input name="email" type="text" id="email" value="{$user.email}" class="inp inp-block noborder text-right" placeholder="请填写你的Email">
+        </div>
+      </div>
+    </div>
+    <div class="submitdiv">
+      <input type="submit" name="Button1" value="保存" id="Button1" class="btn btn-block btn-primary">
+    </div>
+  </form>
+</div>
+</body>
+</html>

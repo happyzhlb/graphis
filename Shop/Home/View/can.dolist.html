@@ -1,0 +1,52 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+		
+
+		<div class="container">
+			<div class="chilist">
+            <volist name="_list" id="list">
+            	<a href="{:U('do_detail',array('can_id'=>$list['can_id']))}" style="width:100%;" class='box item display-box col'><span class='img'><img src='/Uploads/{$list.photo_small}'></span>
+                
+                <span class='box-flex-1'>
+                    <span class='tit block fz16rem color-3'>{$list.title}</span>
+                    <span class='block fz12rem ellipsis color-6'></span>
+					
+                    <span  class='fz12rem'>
+                    <?php if($list['yq']== '0'){?>
+                        <span class='icon-gou color-success'></span>孕期&nbsp;&nbsp;
+                    <?php }elseif($list['yq']== '1'){?>    
+                        <span class='icon-tanhao color-warning'></span>孕期&nbsp;&nbsp;
+                    <?php }else{?>
+                    	<span class='icon-cha color-danger'></span>孕期&nbsp;&nbsp;
+                    <?php }?>
+                    
+                    <?php if($list['yzq']== '0'){?>
+                        <span class='icon-gou color-success'></span>月子期&nbsp;&nbsp;
+                    <?php }elseif($list['yzq']== '1'){?>    
+                        <span class='icon-tanhao color-warning'></span>月子期&nbsp;&nbsp;
+                    <?php }else{?>
+                    	<span class='icon-cha color-danger'></span>月子期&nbsp;&nbsp;
+                    <?php }?>
+                    
+                    <?php if($list['brq']== '0'){?>
+                        <span class='icon-gou color-success'></span>哺乳期&nbsp;&nbsp;
+                    <?php }elseif($list['brq']== '1'){?>    
+                        <span class='icon-tanhao color-warning'></span>哺乳期&nbsp;&nbsp;
+                    <?php }else{?>
+                    	<span class='icon-cha color-danger'></span>哺乳期&nbsp;&nbsp;
+                    <?php }?>                         
+                     
+                    </span> 
+                </span>
+                <span class='color-c icon-right'>
+                </span>
+                
+                </a>
+            </volist>
+            
+            
+             
+			</div>
+		</div>
+        
+<include file="./Shop/Home/View/footer.html" /> 

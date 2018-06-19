@@ -1,0 +1,407 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*===============================================
+●tablet.css 画面の横幅が960pxまで
+===============================================*/
+@media screen and (max-width: 960px){
+img{
+	max-width: 100%;
+	height: auto;
+	width /***/:auto;　
+	}
+
+
+
+#content {
+	}
+
+
+div.topimage .image-768 {
+	display: block;
+	/*background-image: url(../images/top-v.jpg);*/
+	background-size: cover;
+	background-position: center;
+	}
+
+
+div.topimage .image-768 {
+	display: block;
+	background-size: cover;
+	background-position: center;
+	}
+
+div.topimage .image-full .fullSlideShow {
+	display: none;
+	}
+
+
+
+#login-top-contents ul.contets-list >li {
+	width: 33%;
+	}
+
+#login-top-contents div.col {
+	display: block;
+	}
+
+#login-top-contents div.col >div {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+	}
+	
+#login-top-contents div.col >div >div{
+	margin-bottom: 32px;
+	}
+
+.on-w960 {
+	display: none !important;
+	}
+
+
+
+/*CSSスライドショー
+----------------------------------*/
+
+.image-768-slideshow { 
+    height: 100%; /*表示したい大きさ*/
+    margin: 0; /*縦余白30pxは任意*/
+    position: relative;
+    width: 100%; /*表示したい大きさ、height と合わせる*/
+}
+
+.image-768-slideshow div { 
+    animation: show 12s infinite;
+    -webkit-animation: show 12s infinite;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    position: absolute; /*画像を全て重ねる*/
+}
+
+
+/*アニメーション*/
+
+@keyframes show {
+    0% {opacity:0}
+    10% {opacity:1}
+    40% {opacity:1}
+    50% {opacity:0}
+ }
+
+@-webkit-keyframes show {
+    0% {opacity:0}
+    10% {opacity:1}
+    40% {opacity:1}
+    50% {opacity:0}
+}
+
+/*各画像のアニメーションの開始時間をずらす*/
+
+.image-768-slideshow div:nth-of-type(1) {
+	background-image: url(../images/top-v01.jpg);
+	background-size: cover;
+	background-position: center;
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+}
+
+.image-768-slideshow div:nth-of-type(2) {
+	background-image: url(../images/top-v02.jpg);
+	background-size: cover;
+	background-position: center;
+    animation-delay: 4s;
+    -webkit-animation-delay: 4s;
+}
+
+.image-768-slideshow div:nth-of-type(3) {
+	background-image: url(../images/top-v03.jpg);
+	background-size: cover;
+	background-position: center;
+    animation-delay: 8s;
+    -webkit-animation-delay: 8s;
+}
+
+
+
+
+/*ナビ
+----------------------------------*/
+
+
+#col-left {
+	display: none;
+	}
+
+div#head-navi2 {
+	display: block;
+	/*padding: 16px;*/
+	}
+
+div#head-navi3 {
+	display: none;
+	}
+
+.login-head-space {
+	height: 12px;
+	}
+
+
+/*トップイメージ
+----------------------------------*/
+
+a.scrolltab {
+	padding-left: 0;
+	}
+
+
+
+img.about-top {
+	width: 480px;
+	min-width: 0;
+	}
+
+
+/*ログイントップ
+----------------------------------*/
+#login-top-header h3 span.text-jp {
+	display: none;
+	}
+
+#login-top-contents div.user-info-box ul li.btn-mypage {
+	flex: 0.5;
+	}
+
+#login-top-contents div.user-info-box .btn-mypage a.mypage-link {
+	background-color: #000;
+	color: #eee;
+	display: block;
+	text-align: center;
+	height: auto;
+	padding: 16px 0;
+	}
+
+#login-top-contents div.user-info-box .btn-mypage a.mypage-link:hover {
+	background-color: #444;
+	text-decoration: none;
+	}
+
+#login-top-contents div.user-info-box .btn-mypage a.mypage-link ul {
+	display: block;
+	width: auto;
+	height: auto;
+	vertical-align: baseline;
+	margin: 0;
+	}
+
+
+#login-top-image-box .login-top-area div.col-left {
+	width: 100%;
+	}
+
+#login-top-image-box .login-top-area div.col-right {
+	display: none;
+/*	
+	padding: 16px;
+	box-sizing: border-box;
+	background-color: #222;
+	width: 30%;
+	color: #eee;
+	overflow: hidden;
+	position: relative;
+*/	
+	}
+
+ul.close-list >li {
+	width: 25%;
+	padding: 16px;
+	}
+
+div.calender-box {
+	display: block;
+	}
+
+
+
+
+/*コンテンツ
+----------------------------------*/
+
+#wrapper #content {
+	margin-left: 0px;
+	}
+
+
+div#about-box {
+	margin-top: -62px;
+	padding-top: 62px;
+	margin-left: 0;
+	}
+
+p.scroll-top {
+	right: 8px;
+	bottom: 8px;
+	}
+
+div.gp-model-thumb-box {
+	width: 96%;
+	}
+
+div.gp-model-thumb-box div.list-thumb-box {
+	padding: 0 8px;
+	}
+
+
+.gp-model-thumb-box div.gp-model-box {
+	width: 25%;
+	}
+
+.gp-model-thumb-box div.gp-model-box ul {
+	width: 96%;
+	}
+
+.ppv-list-box .product-box {
+	width: 25%;
+	}
+
+/*NEW FACE
+----------------------------------*/
+
+section#newface {
+	margin-left: 0;
+	}
+
+div.newface-model-box {
+	flex-wrap: wrap;
+	}
+
+div.newface-model {
+	flex-basis: 50%;
+	}
+
+div.newface-model>ul {
+	width: 70%;
+	}
+
+div.newface-model-box div:nth-child(n+3) {
+	margin-top: 16px;
+	} 
+
+div.newface-model-box div:nth-child(2n) {
+	border: none;
+	}
+
+
+
+/*POPULUR MODELS
+----------------------------------*/
+
+section#populur-models {
+	margin-left: 0;
+	}
+
+.pop-model-thumb-box .pop-model {
+	flex-wrap: wrap;
+	}
+
+.pop-model-thumb-box .pop-model:nth-child(n+7) {
+	display: none;
+	}
+
+div.pop-model {
+	flex-basis: 33%;
+	}
+
+
+/*PPV インフォ
+----------------------------------*/
+div.ppv-exp-txt-box {
+	display: block;
+	margin: 0 8px;
+	}
+
+
+/*インフォ
+----------------------------------*/
+
+
+div.info-box {
+	display: block;
+	margin-left: 0;
+	}
+
+/*ボトムナビ
+----------------------------------*/
+
+div#navi-bottom,
+div#navi-bottom-gp {
+	margin-left: 0px;
+	display: block;
+	text-align: center;
+	}
+
+div.navi-bottom-section {
+	padding: 24px 16px;
+	justify-content: space-around; 
+	}
+
+div.navi-bottom-section ul {
+	flex: 0 0 auto;
+	}
+
+div.navi-bottom-logo {
+	max-width: 100%;
+	}
+
+div.navi-bottom-logo {
+	width: 100%;
+	border: 0;
+	box-sizing: border-box;
+	}
+
+
+
+/*フッター
+----------------------------------*/
+
+#content footer {
+	margin-left: 0;
+	}
+
+
+
+/* HTMLスペース
+----------------------------------*/
+
+section#html-space {
+	margin-left: 0;
+	}
+
+
+}
+
+/*===============================================
+●tablet.css 画面の横幅が720pxまで
+===============================================*/
+@media screen and (max-width: 720px){
+
+#login-top-contents ul.contets-list >li {
+	width: 50%;
+	}
+
+.ppv-list-box .product-box {
+	width: 33%;
+	}
+
+
+
+
+
+	
+}
+
+
+
+

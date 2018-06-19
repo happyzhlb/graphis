@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>订单明细</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/order_detail.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+<script src="/Public/admin/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Order')}" class="text" target="workspace">订单管理</a> > <a href="{:U('/Admin/Order/view',array('id'=>$order['order_id']))}" class="text" target="_self">订单明细</a>
+         </div>
+    </div>
+         
+         <!--订单明细start-->
+         <div class="obox">
+              <div class="onum">
+                   <ul>
+                       <li><label>订单号：</label>{$order.order_sn}</li>
+                       <li><label>订单状态：</label>{$order.order_status|order_status=###,$order['refund_status']}</li>
+                       <li><label>购买者：</label>{$order.user_name|default='匿名'}</li>
+                       <li><label>下单时间：</label>{$order.add_time|todate}</li>
+                       <li><label>支付方式：</label>{$order.pay_name|default='--'} [ <a href="{:U('/Admin/Order/payment',array('id'=>$order['order_id']))}" target="_self">编辑</a> ]</li>
+                       <li><label>付款时间：</label>{$order.pay_time|todate}</li>
+                       <if condition="$order['order_status'] gt 11" >
+                       <li><label>配送方式：</label>{$order.shipping_name|default='--'} [ <a href="{:U('/Admin/Order/send_way',array('id'=>$order['order_id']))}" target="_self">编辑</a> ]</li>
+                       <li><label>发货时间：</label>{$order.shipping_time|todate}</li>
+                       <li><label>发货单号：</label>{$order.invoice_no|default='--'} [ <a href="{:U('/Admin/Order/send_way',array('id'=>$order['order_id']))}" target="_self">编辑</a> ]</li>
+                       </if>
+                       <li><label>完成时间：</label>{$order.finish_time|todate}</li>
+                       <li><label>订单类型：</label>{$order.order_type}</li>
+                       <div class="clear"></div>
+                   </ul>
+              </div>
+              <div class="onum">
+                   <div class="tbar">收货人信息</div>
+                   <ul>
+                       <li><label>收货人：</label>{$order.consignee|default='--'}</li>
+                       <li><label>电子邮件：</label>{$order.email|default='--'}</li>
+                       <li><label>地址：</label>{$order.address}</li>
+                       <li><label>邮编：</label>{$order.zipcode|default='--'}</li>
+                       <li><label>电话：</label>{$order.telephone|default='--'}</li>
+                       <li><label>手机：</label>{$order.mobile|default='--'}</li> 
+                       <div class="clear"></div>                 
+                   </ul>
+              </div>
+              <div class="onum">
+                   <div class="tbar">商品信息</div>
+              </div>
+              <div class="table1"> 
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th>产品名称</th>
+                            <th class="center">单价</th>
+                            <th class="center">数量</th>
+                            <th class="center">重量</th>
+                            <th class="center">小计</th>
+                            <th class="center">状态</th>
+                            <th class="center">售后</th>
+                          </tr>
+                          <volist name="ordergoods" id="goods">
+                          <tr>
+                            <td>
+                                <div class="pbox">
+                                <img src="{$goods.default_image}" alt="" title="" width="50" height="50" class="pimg">
+                                <div class="proifo">
+                                     <a href="#" title="">{$goods.goods_name}</a>
+                                  <p>{$goods.goods_attr}</p>
+                                </div> 
+                                <div class="clear"></div>
+                                </div>
+                            </td>
+                            <td class="center">{$goods.present_price|format_price}</td>
+                            <td class="center">{$goods.quantity}</td>
+                            <td class="center">{$goods.weight|show_weight}</td>
+                            <td class="center">{$goods.goods_totle|format_price}</td>
+                            <td class="center">{$goods.order_status|order_status=###,0}</td>
+                            <td class="center">{$goods.refund_status|order_refund_status=###,$goods['order_status'],$goods['rec_id']}</td>
+                          </tr>
+                          </volist>
+                          <tr>
+                          	<td colspan="7" style="border-bottom:none; text-align:right">合计：{$order.goods_amount|format_price}</td>
+                          </tr>
+                    </table>  
+              </div>
+              <div class="onum">
+                   <div class="tbar">费用信息 [ <a href="{:U('/Admin/Order/adjust_fee',array('id'=>$order['order_id']))}" target="_self">编辑</a> ]</div>
+                   
+                   <div class="subtotal"><p>商品（{$order.goods_amount|format_price}） + 配送费用（{$order.shipping_fee|format_price}） - 积分抵扣（{$order.integral_fee|format_price}） - 折扣（{$order.discount_fee|format_price}） - 退款（{$order.refund_fee|format_price}） = <span>{$order.totle_fee|format_price}</span></p><div class="clear"></div></div>
+              </div>
+              <div class="onum">
+                   <div class="tbar">操作信息</div>
+                   <div class="cbox">
+                   		<form id="handle_form" method="post" action="{:U('/Admin/Order/orderstatus')}">
+                        <p><label>操作备注：</label><textarea id="note" name="note"></textarea></p>
+                        <p><label>订单状态：</label>
+                          {$order.order_status|order_status=###,$order['refund_status']}</p>
+                        <p>
+                        <label>更改状态：</label>
+                        <volist name="handle" id="vo">
+                        	<input type="submit" class="btn btn_ds" name="{$vo.handle}" value="{$vo.text}" >
+                        </volist>
+                        </p> 
+                        
+                        <input type="hidden" id="id" name="id" value="{$order.order_id}">
+                        </form>
+                   </div>       
+              </div>
+              <div class="table"> 
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th>操作者</th>
+                            <th>订单状态</th>
+                            <th>付款状态</th>
+                            <th>操作备注</th>
+                            <th>操作时间</th>
+                          </tr>
+                          <volist name="logs" id="log">
+                          <tr>
+                            <td>{$log.log_user}</td>
+                            <td>{$log.from_status|order_status=###,$log['from_refund_status']}</td>
+                            <td>{$log.to_status|order_status=###,$log['to_refund_status']}</td>
+                            <td>{$log.note|default='--'}</td>
+                            <td>{$log.log_time|todate}</td>
+                          </tr>
+                          </volist>
+                    </table>  
+              </div>  
+         </div>
+         <!--订单明细end-->
+         
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

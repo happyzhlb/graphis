@@ -1,0 +1,137 @@
+<include file="./Shop/Home/View/header.html" />
+<div id="crumbs">
+	<a href="/">Home</a>&gt;
+    <a href="{:U('/Gcategory/index')}">Titanium Dioxide</a>&gt;
+    <span>{$gcate.cate_name}</span>
+</div>
+
+<div id="brand" class="clearfix">
+    <!--左侧列表开始-->
+    <include file="./Shop/Home/View/list.left.html" />
+    <!--左侧列表结束-->
+    <!--右侧产品开始-->
+    <div id="Pclass">
+    	<notempty name="gcate">
+        <dl class="clearfix num1Show" <empty name="brands">style="border:none; padding:0;"</empty>>
+			<dt><img src="/{$gcate.cate_image}" width="200" height="200" alt="{$gcate.cate_name}" /></dt>
+            <dd>
+            	<h1>{$gcate.cate_name}</h1>
+                <p>{$gcate.cate_desc}</p>
+            </dd>        
+        </dl>
+        </notempty>
+        
+        <notempty name="gcates">
+        <div class="PclassChoose clearfix">
+        	<h2>Categories:</h2>
+        	<ul>
+            	<volist name="gcates" id="vo">
+                <li><a href="{:U('/List/index',array_merge($parameter,array('cate_id'=>$vo['cate_id'])))}">{$vo.cate_name}</a>({$vo.count})</li>
+				</volist>
+            </ul>
+        </div>
+        </notempty>
+        <notempty name="brands">
+        <dl class="pclassBrands clearfix">
+          <dt><h2>Brands</h2></dt>
+            <dd class="clearfix">
+            	<volist name="brands" id="brand">
+            	<a href="{:U('/List/index',array_merge($parameter,array('bid'=>$brand['bid'])))}" <if condition="$parameter.bid eq $brand['bid']">class="current"</if>>{$brand.bname}<i>({$brand.count})</i></a>
+                </volist>
+            </dd>
+        </dl>
+        </notempty>
+        <notempty name="goods">
+        <div class="PclassSort">
+        	<div id="orderPage">
+                {$page}
+            </div>
+            <div class="Sort">
+            	<span class="titleTip">Sort By</span>
+                <div class="SortChoose">
+                <a href="{:U('/List/index',array_merge($parameter,array('sort'=>'g.goods_id','order'=>'DESC')))}" <if condition="$sort eq 'g.goods_id'">class="current"</if>>Default</a>
+                <if condition="$sort eq 'g.goods_name'">
+                	<if condition="$order eq 'DESC'">
+                		<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'Asc')))}" class="current">A-Z<i class="descendant"></i></a>
+                    <else />
+                     	<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'DESC')))}" class="current">A-Z<i class="ascending"></i></a>
+                    </if>
+                <else />
+                	<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'DESC')))}">A-Z<i></i></a>
+                </if>
+                <if condition="$sort eq 'gs.price'">
+                	<if condition="$order eq 'DESC'">
+                		<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'gs.price','order'=>'ASC')))}" class="current">Price<i class="descendant"></i></a>
+                	<else />
+                    	<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'gs.price','order'=>'DESC')))}" class="current">Price<i class="ascending"></i></a>
+                	</if>
+                <else />
+                	<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'gs.price','order'=>'DESC')))}">Price<i></i></a>
+                </if>
+                <if condition="$sort eq 'g.sales'">
+                	<if condition="$order eq 'DESC'">
+                		<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'g.sales','order'=>'ASC')))}">Sale<i class="descendant"></i></a>
+                    <else />
+                    	<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'g.sales','order'=>'DESC')))}">Sale<i class="ascending"></i></a>
+                    </if>
+                <else />
+                	<a href="{:U('/List/index',array_merge($parameter,array('sort'=>'g.sales','order'=>'DESC')))}">Sale<i></i></a>
+                </if>
+                </div>
+            </div>
+        </div>
+        
+        <div class="productList">
+        	<volist name="goods" id="vo">
+            <dl class="clearfix">
+            	<dt><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}"><img src="/{$vo.goods_img}" width="135" height="135" alt="{$vo.goods_name}" /></a></dt>
+                <dd>
+                	<h3><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a></h3>
+                    <p>{$vo.goods_sub_desc}</p>
+					<div class="price">
+                    	{$vo.goods_id|get_range_price=###,'$'}
+                    	<div class="starShows">
+                        	({$vo.ecount})
+                        	<span class="star star{$vo.estars}"></span>
+                        </div>
+                    </div>
+                    <div class="showBtn">
+                    	<div class="alertFaBox">
+                            <if condition="$vo['is_collect']">
+                            <a href="javascript:void(0)" class="addToWishListLink currentLink" title="Cancel Wish List" data-goods-id="{$vo.goods_id}">Cancel Wish List</a>
+                            <else />
+                            <a href="javascript:void(0)" class="addToWishListLink" title="Add to Wish List" data-goods-id="{$vo.goods_id}">Add to Wish List</a>
+                            </if>
+                            <div class="alertConBox" style="display:none;">
+                                <div class="alert">
+                                    <a href="javascript:void(0)" class="closedAlert" title="Closed">closed</a>
+                                    <h5><span class="success"></span><!--<span class="fault"></span>-->Added to Wish List successfully !</h5>
+                                    <div class="btnBox">
+                                        <a href="javascript:void(0)" class="otherB">Close current page</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" class="more" title="More Details">More Details</a>
+                    </div>
+                </dd>
+            </dl>
+			</volist>
+            <div class="secPage clearfix">
+            	<div id="orderPage">
+                    {$page}
+                </div>
+            </div>
+        </div>
+        <else />
+        <div class="searchResult">
+        	<h2>Sorry!</h2>
+            <p>Could not find any results.</p>
+        </div>
+        </notempty>
+        
+    </div>
+    <!--右侧产品结束-->
+</div>
+<include file="./Shop/Home/View/viewed.items.html" />
+<include file="./Shop/Home/View/footer.html" />

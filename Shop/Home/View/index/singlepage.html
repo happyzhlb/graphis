@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html class="um landscape">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script src="/Public/home/files/jquery.js"></script><script src="/Public/home/files/main.js"></script><script src="/Public/home/files/tool.js"></script><script src="/Public/home/files/login.js"></script><script src="/Public/home/files/register.js"></script><script type="text/javascript">
+$(function(){
+	if ("" == ""){
+		$("#not_login").show();
+	}
+	else{
+		$("#have_login").show();
+	}
+	if ("" == "true"){
+		$("#jinbi").show();
+	}
+	else{
+		$("#jinbi").hide();
+	}
+	
+})
+</script>
+
+<!--[if IE 8]>
+<style>
+.hd_l{ position:absolute;left:50%; margin-left:-600px;}
+.hd_l1{margin-left:520px;;left:50%; }
+</style>
+<![endif]-->
+ 
+<title>GRAPHIS官方网站 | 日本女优真人写真图片</title> 
+<meta name="keywords" content="{:C('site_keywords')}">
+<meta charset="utf-8">
+<link rel="stylesheet" href="/Public/home/files/ui-base.css">
+<link rel="stylesheet" href="/Public/home/files/ui-color.css">
+<link rel="stylesheet" href="/Public/home/files/ui-icon.css">
+<link rel="stylesheet" href="/Public/home/files/ui-control.css">
+<link rel="stylesheet" href="/Public/home/files/main.css">
+
+
+</head>
+<body class="um-vp bc-bg">
+<include file="./Shop/Home/View/index/header.html" /> 
+
+<div id="page_0" class="up ub ub-ver bc-bg"> 
+  
+  <!--content开始-->
+  <div id="content" class="ub-f1 umar-bd">
+  	<div class="umw1 umar-ta umar-ba sc-bg"  style="padding:15px; min-height:250px;">
+        
+        {$page.content}
+    </div>
+   
+    <!--content结束--> 
+    
+  </div>
+  <include file="./Shop/Home/View/index/footer.html" />
+</div>
+<div id="ads"></div>
+</body>
+</html>
+<!--弹出广告end-->

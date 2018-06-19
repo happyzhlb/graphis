@@ -1,0 +1,86 @@
+<include file="./Shop/Home/View/header.html" /> 
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Private Messages</h2>
+            <p class="eachTip">Check out your private messages here.</p>
+            
+            <!--My Wish List 开始-->
+          	<div class="priMessages">
+           	  <div class="titH">
+                	<h3>Inbox</h3>
+                    <span><i>{$count}</i> private messages in total</span>
+                </div>
+              <form id='private_message_form' action="{:U('delete')}" method="post" enctype="multipart/form-data">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr class="tfoot">
+                    <td width="30" align="center">
+                      <input type="checkbox" name="checkbox" id="SelectAll" class="checkAllShow" />
+                    </td>
+                    <td colspan="7" align="left">
+                    	<div id="orderPage">
+                            {$page}
+                        </div>
+                    	<label for="SelectAll">Select All</label>
+                        <!--<input type="submit" value="Delete" onclick="return confirm('Are you sure to remove selected private messages?');"  title="Delete" class="deleteAll">-->
+                        <a href="javascript:void(0)" title="Delete" class="deleteAll">Delete</a>
+                    </td>
+                  </tr>
+                  <tr class="thead">
+                    <td width="30">&nbsp;</td>
+                    <td width="110" align="center">Sender </td>
+                    <td align="center">Title </td>
+                    <td width="120" align="center">Time </td>
+                    <td width="70" align="center">Delete</td>
+                  </tr>
+                  <volist name='list' id='vo'>
+                  <tr class="tbody">
+                    <td width="30" align="center"><input type="checkbox" name="mid[]" value="{$vo.mid}" /></td>
+                    <td width="110" align="center">{$vo.from_user|from_user}</td>
+                    <td width="380" align="center" <if condition="$vo['is_new']=='1'">style='font-weight:bold;'</if>><a href="{:U('detail',array('mid'=>$vo['mid']))}" class="msgCon">{$vo.title}</a></td>
+                    <td width="120" align="center"><i class="time">{$vo.send_time|toDate='Y-m-d H:i'}</i></td>
+                    <td width="70" align="center"><a href="{:U('delete',array('mid'=>$vo['mid']))}" onclick="return confirm('Are you sure you want to delete this Message?');"  title="Delete" class="delete">Delete</a></td>
+                  </tr>
+                 </volist>   
+                  <tr class="tfoot">
+                    <td width="30" align="center">
+                      <input type="checkbox" name="checkbox" id="SelectAll2" class="checkAllShow" />
+                    </td>
+                    <td colspan="7" align="left">
+                    	<div id="orderPage">
+                           {$page}
+                        </div>
+                    	<label for="SelectAll2">Select All</label>
+                        <a href="javascript:deleteall()" onclick="return confirm('Are you sure you want to delete all selected records?');" title="Delete" class="deleteAll">Delete</a>
+                    </td>
+                  </tr>
+              </table>
+              </form>
+            </div>
+            <!--My Wish List 结束-->
+ <script language="javascript">
+  	$(function(){
+		deleteall=function(){ 
+					var mid= new Array();
+					$('#private_message_form input[name="mid[]"]').each(function(i){ 
+						if($(this).attr('checked')=='checked')
+							mid[i]=$(this).val();
+					});
+					mid=mid.join(','); 
+					$.post('{:U("delete")}',{'mid':mid},function(data){
+							alert(data.info);
+							self.location=data.url;
+					});	 	 
+		}
+	});
+ </script>           
+        </div>
+    </div>
+</div>
+<include file="./Shop/Home/View/footer.html" /> 

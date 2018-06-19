@@ -1,0 +1,203 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Order Information</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--提交订单开始-->
+    <div class="orderShipping">
+    <form id="order_form" action="{:U('Buy/inlogin')}" method="post">
+        <div class="Delivery">
+        	<h3>Delivery Method</h3>
+            <a href="javascript:void(0)" class="current"><em></em>Shipping<i>(From Champlain 178 West Service Road Champlain, NY 12919)</i></a>
+            <a href="javascript:void(0)"><em></em>Pick Up<i>(To Champlain 178 West Service Road Champlain, NY 12919 )</i></a>
+        </div>
+        <div class="address">
+        	<h3>Address Information</h3>
+            <div class="addressEach">
+            	<a href="{:U('Buy/unlogin_address',$param)}?type=shipping"><em></em>Shipping Address</a> 
+                <notempty name='shipping_address'>
+                <div class="addressDetail">
+                	<h4>{$shipping_address.first_name} {$shipping_address.last_name}<span>Phone: {$shipping_address.telephone}</span></h4>
+                    <p>{$shipping_address.address},{$shipping_address.city}, {$shipping_address.state}, {$shipping_address.zipcode}</p>
+                </div> 
+                </notempty> 
+            </div>
+            <div class="addressEach">
+            	<a href="{:U('Buy/unlogin_address',$param)}?type=billing"><em></em>Billing Address</a> 
+                <notempty name='billing_address'>
+                <div class="addressDetail">
+                	<h4>{$billing_address.first_name} {$billing_address.last_name}<span>Phone: {$billing_address.telephone}</span></h4>
+                    <p>{$billing_address.address},{$billing_address.city}, {$billing_address.state}, {$billing_address.zipcode}</p>
+                </div>
+                </notempty>
+            </div>
+        </div>
+        <div class="shippingInfo">
+        	<h3><a href="{:U('Buy/delivery',array_merge($param,array('delivery'=>$shipping_method['shipping_code'])))}"><em></em>Shipping Information</a></h3>
+            <p><span id="show_shipping_name">{$shipping_method.shipping_name}</span>Shipping Method</p>
+            <a href="javascript:void(0)" id="show_inside_fee" class="Inside" data-price="0" ><em></em>Delivery Inside</a>
+            <p><span id="show_shipping_fee">$0.00</span>Shipping Fee</p>
+        </div>
+        <div class="Discounts <if condition='empty($has_login)'>none</if>">
+        	<!--<h3><a href="javascript:void(0)"><em></em>Discount Information</a></h3>-->
+            <h3>Discount Information</h3>
+            <div class="each clearfix">
+            	<span>- <em id="show_score_fee">$0.00</em></span>
+              <input type="text" value="0" name="score_num" data-max="{$score}" class="typeIn" />
+                Points Redeemed
+            </div>
+        </div>
+        <div class="orderTotal">
+        <input type="hidden" id="shipping_method" name="shipping_method" value="shipping" />
+        <input type="hidden" id="shipping_address_id" name="shipping_address_id" value="{$shipping_address.address_id}" />
+        <input type="hidden" id="billing_address_id" name="billing_address_id" value="{$billing_address.address_id}" />
+        <input type="hidden" id="spec_ids" name="spec_ids" value="{:I('spec_ids')}" />
+        <input type="hidden" id="spec_quantity" name="spec_quantity" value="{:I('spec_quantity')}" />
+        <input type="hidden" id="subtotle" value="{$order.carts.subtotle}" />
+        <input type="hidden" id="inside_fee" value="0" />
+        <input type="hidden" id="shipping_fee" value="0" />  
+        <input type="hidden" id="discount_fee" value="0" /> 
+        <input type="hidden" id="score_fee" value="0" />
+        
+        	<p class="none"><span id="sub_total">$0.00</span>Sub Total</p>
+        	<p><span id="Initial">$0.00</span>Initial</p>
+            <p><span class="colorNum" id="Final">$0.00</span>Final</p>
+        </div>
+        <a href="javascript:void(0);" class="submitOrderBtn">Submit the order information</a>
+        </form>
+    </div>
+	<!--提交订单结束--> 
+    <script>
+    $(function(){ 
+		$('.submitOrderBtn').click(function(){$('#order_form').submit();});
+		$('#order_form').on('submit',function(){
+			if($('#shipping_address_id').val()==''){
+				alert('You have not set shipping address.');
+				return false;
+			}  
+			if($('#billing_address_id').val()==''){
+				alert('You have not set billing address.');
+				return false;
+			}  			
+		});
+		is_pick_up=function(){
+			return $('.Delivery a').eq(1).attr('class')=='current'; 
+		}
+		$('.Delivery a').click(function(){
+			$('.Delivery a').removeClass('current'); 
+			$(this).addClass('current');  
+			if(is_pick_up()){ 
+				$('#shipping_method').val('CPU'); 
+				$('.shippingInfo').fadeOut(200);
+				$('#show_inside_fee').removeClass('current'); 
+			}else{
+				$('.shippingInfo').show();	
+				$('#shipping_method').val('shipping'); 
+			} 
+			fn_calc();
+		});
+		
+		//初始化运费数据
+		init_shipping_fee=function(){ 
+			$('#show_shipping_fee').html('<i class="loading">loading</i>');
+			$('#Initial').html('<i class="loading">loading</i>');	
+			$('#Final').html('<i class="loading">loading</i>');	
+			$.ajax({
+				url : '{:U("Buy/ajax_shipping_fee")}',
+				type : 'post',
+				dataType : 'json',
+				data : {'id':$('#shipping_address_id').val(),'spec_ids':$('#spec_ids').val(),'spec_quantity':$('#spec_quantity').val()},
+				success : function(data){
+					if(data.status){
+						$('#show_shipping_name').html(data.info.delivery.shipping_name);
+						$('#shipping_fee').val(formatCurrency(data.info.shipping_fee)); 
+						if(data.info.inside_delivery > 0){
+							$('#inside_fee').val(data.info.inside_delivery);  
+						} 
+						//var sub_total = parseFloat($('#sub_total').html().replace('$','').replace(',',''));
+						var sub_total = $('#subtotle').val();
+						var grand_total = parseFloat(data.info.shipping_fee) + parseFloat(sub_total);
+						var score_fee = parseFloat($('#score_fee').val());
+						$('#Initial').html('$'+formatCurrency(grand_total));
+						$('#Final').html('$'+formatCurrency(grand_total - score_fee)); 
+						fn_calc();
+					}else{
+						alert(data.info);
+						$('#show_shipping_fee').html('$0.00');
+						$('#Initial').html('$0.00');
+						$('#Final').html('$0.00');
+					}
+				}
+			});
+		} 
+		init_shipping_fee();
+		
+		//计算订单价格
+		fn_calc=function(){  
+			var inside_fee = parseFloat($('#inside_fee').val().replace(',',''));  
+			var shipping_fee = parseFloat($('#shipping_fee').val().replace(',',''));  //alert(shipping_fee);
+			var subtotle_fee = parseFloat($('#subtotle').val());  //商品总金额
+			var discount_fee = parseFloat($('#discount_fee').val());  
+			var score_fee = parseFloat($('#score_fee').val()); 
+			if($($('#show_inside_fee')).attr('class') != 'Inside current'){
+				inside_fee=0;
+			} 
+			if($('.Delivery a').eq(1).attr('class') == 'current'){
+				shipping_fee=0;
+			} 			
+			$('#show_shipping_fee').html('$'+formatCurrency(shipping_fee + inside_fee));
+			$('#Initial').html('$'+formatCurrency(subtotle_fee + shipping_fee + inside_fee));
+			$('#Final').html('$'+formatCurrency(subtotle_fee + shipping_fee + inside_fee - discount_fee - score_fee)); 
+		} 
+		//进仓费点击事件
+		$('#show_inside_fee').click(function(){ 
+			//if($('#inside_fee').val()>0)
+			if($(this).attr('class')=='Inside current'){
+				$(this).removeClass('current'); 
+			}else{
+				$(this).addClass('current'); 	
+			}
+			fn_calc();		
+		});  
+
+		//积分手动输入
+		$('input[name="score_num"]').on('input',function(){ 
+			var smax = parseInt($(this).attr('data-max'));
+			var val = 0;
+			if($(this).val() != ''){
+				val = parseInt($(this).val());
+			}
+			if(isNaN(val)){
+				alert('Please enter numbers.');
+				$(this).val(0);
+			} 
+			if(val > smax){
+				alert('Please enter a value less than or equal to '+ smax +'.');
+				$(this).val(smax); 
+				val=smax;
+			} 
+			var score_fee = val / 100;
+			$('#show_score_fee').html(formatCurrency(score_fee));
+			$('#score_fee').val(score_fee);
+			fn_calc(); 
+		});
+		
+		is_num=function(n){
+			var s=/^\d*$/ ;
+			return (s.test(n));	
+		}
+		 
+	});
+    
+    </script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo $wiki['title'];?>-  孕妈购ymg280.com</title>
+<!--
+<link href="__PUBLIC__/home/css/style.css" type="text/css" rel="stylesheet">
+-->
+<style>
+a, a:link {
+	color:#fb264d;
+	line-height:2;
+}
+body{
+	font-size:34px !important;
+	line-height:1.5 !important;
+}
+
+p {
+	font-size:30px !important;
+	line-height:1.5 !important;
+}
+
+.container {
+	min-height: 100%;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	min-width:400px; margin:0 auto;
+}
+.app-download{width:90%; min-width:376px;}
+.app-icon-top{width:50%;}
+.app-download-top{width:50%;}
+</style>
+</head>
+<body>
+<div class="container">
+  <blog class="box mt1rem pagecontent"> 
+  <?php if($_GET['share']==1):?>
+             <a href="{:U('download',array('type'=>'wiki'))}" class="download-content download-content-sm" target="_blank">
+            	<table width="100%" border="0" cellspacing="3" cellpadding="0">
+                  <tr>
+                    <th align="left" scope="row"><img class="app-icon-top" src="/Public/images/wiki@topbannerLogo.png" /></th>
+                    <td align="right"><img class="app-download-top" src="/Public/images/clickDownloadBt@2x_3d02296.png" /></td>
+                  </tr>
+                </table> 
+              </a>
+   <?php endif; ?>
+    <h2 class="none page-header">{$wiki.title}</h2>
+    <div class="page-body clearfix" style="color:#ccc;"> 分类: {$wiki.relateCatename}&nbsp;&nbsp;&nbsp; 浏览:{$wiki.view_num}</div>
+    
+    <div class="page-body clearfix">
+      <div style="text-align:center; padding-bottom:8px;"><img src="{$wiki.photo}" alt="{$wiki.title}" style="min-width:50%;max-width:99%" ></div>
+      <p style="word-wrap:break-word;padding:0px;border:0px;color:#535353;font-family:微软雅黑;font-size:14px;line-height:28px;background-color:#FFFFFF;text-align:left;margin-top:0px;margin-bottom:0px;"> <?php echo strip_tags(preg_replace("/<div class=\"detail-title J_floor\">(.*?)div(.*?)【导读】/is",'',htmlspecialchars_decode($wiki['content'])),'<br><b><strong><span><p>');?> </p>
+    </div>
+  </blog>
+
+<table width="100%" border="0" cellspacing="3" cellpadding="0">
+  <tr>
+    <td width="50%" align="left">上一条： <a href="{:U('wikidetail',array('id'=>$prev_list['id'],'share'=>$_GET['share']))}">{$prev_list.title}</a></td>
+  </tr>
+  <tr>
+    <td align="left">下一条： <a href="{:U('wikidetail',array('id'=>$next_list['id'],'share'=>$_GET['share']))}">{$next_list.title}</a></td>
+  </tr>
+</table>
+<div id="recommend"> <br>
+  <br>
+  <span>推荐文章：</span>
+  <ul>
+    <volist name="recommend_list" id="rlist">
+      <li><a href="{:U('wikidetail',array('id'=>$rlist['id'],'share'=>$_GET['share']))}">{$rlist.title}</a></li>
+    </volist>
+  </ul>
+</div>
+<?php if($_GET['share']==1):?>
+<div style="text-align:center; width:100%"> <a href="{:U('download',array('type'=>'wiki'))}" class="download-content download-content-sm" target="_blank"> <img class="app-download" src="/Public/images/wiki@tabDownloadBt.png" /> </a> </div>
+<?php endif;?>
+</div>
+</body>
+</html>

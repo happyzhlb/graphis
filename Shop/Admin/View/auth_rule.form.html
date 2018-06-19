@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新增权限规则</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script type="text/javascript">
+$(function(){
+	var ue = UE.getEditor('content');
+	$('.submit').click(function(){
+		//ue.sync();
+		$('#admin_form').submit();	
+	});
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			name : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>标题不能为空'
+			},
+			name : {
+				required : '<i></i>名称不能为空'
+			}
+		},
+		errorPlacement: function(error, element) {
+			if ( element.attr('id') == 'ueditor_textarea_content' )
+				error.appendTo($('#forcontent'));
+			else
+				error.appendTo(element.parent());
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span',
+		ignore : ""
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Article')}" class="text">权限规则管理</a> > <a href="{:U('/Admin/Article/add')}" class="text">新增权限规则</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">新增权限规则</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post">
+                              <div class="control-group">
+                                   <label class="control-label">标题：</label>
+                                   <div class="controls">
+                                        <input type="text" id="title" name="title" value="" class="span300" placeholder="标题">
+                                   *</div>
+                                   <div class="clear"></div>
+                              </div> 
+     
+                              <div class="control-group">
+                                   <label class="control-label">名称：</label>
+                                   <div class="controls">
+                                        <input type="text" id="auth_rules" name="name" value="" class="span300" placeholder="名称">
+                                   *</div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                   <label class="control-label">条件：</label>
+                                   <div class="controls">
+                                         <textarea id="condition" name="condition" cols="3" >{$auth_rule.condition}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>                                                           
+                              <div class="control-group">
+                                   <label class="control-label">是否启用：</label>
+                                   <div class="controls">
+                                       <label><input type="radio" id="status" name="status" value="1" checked>是</label>
+                                       <label><input type="radio" id="status" name="status" value="0">否</label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                                   <button type="button" class="btn btn_dm submit">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

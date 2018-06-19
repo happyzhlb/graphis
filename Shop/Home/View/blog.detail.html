@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo $blog['title'];?></title>
+</head>
+ <body>
+		<div class="container"> 
+			<blog class="box mt1rem pagecontent">
+				<h3 class="none page-header">{$blog.title}</h3>
+				<div class="page-body clearfix">
+					<p style="word-wrap:break-word;padding:0px;border:0px;color:#535353;font-family:微软雅黑;font-size:14px;line-height:28px;background-color:#FFFFFF;text-align:left;margin-top:0px;margin-bottom:0px;"> 
+                       {$blog.content|htmlspecialchars_decode}
+                    </p>
+				</div>
+			</blog>
+		</div>
+
+</body>
+</html>

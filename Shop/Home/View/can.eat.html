@@ -1,0 +1,23 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+		<!--
+		<form class="search-box display-box" action="can_search.aspx" method="post">
+					<div class="box-flex-1">
+						<div class="display-box searchk">
+							<span class="icon icon-search"></span>
+							<input type="text" name="search_name" class="inp inp-block inp-noborder box-flex-1" placeholder="输入食物名称" />				
+						</div>		
+					</div>
+					<button type="submit" class="btn btn-primary">搜索</button>
+		</form>-->
+		<div class="container">
+			<nav class="gird-3 chitype">
+				<ul class="clearListStyle">
+                <volist name="_cate.children" id="cate">
+					<li><a href="{:U($action,array('cate_id'=>$cate['cate_id']))}"><span class='img'><img src='/Uploads/{$cate.photo}'></span><span class='name'>{$cate.cate_name}</span></a></li>
+               </volist> 
+				</ul>
+			</nav>
+		</div>
+        
+<include file="./Shop/Home/View/footer.html" /> 

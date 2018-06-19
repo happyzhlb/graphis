@@ -1,0 +1,138 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Orders</span>
+            <a href="{:U('Member/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--订单列表开始-->
+    <div class="order">
+    	<div class="orderStatus">
+        	<div class="box">
+                <a href="javascript:void(0)" class="Status" val="0">Order Status<i></i></a>
+                <div class="statusChoose">
+                	<a href="{:U('myorders/index')}"><em>{$ALL}</em>All Orders</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'Await Payment'))}"><em>{$AwaitPayment}</em>Await Payment</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'Await Shipment'))}"><em>{$AwaitShipment}</em>Await Shipment</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'Await Pick Up'))}"><em>{$AwaitPickUp}</em>Await Pick Up</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'Await Confirmation'))}"><em>{$AwaitConfirmation}</em>Await Confirmation</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'To Be Reviewed'))}"><em>{$ToBeReviewed}</em>To Be Reviewed</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'In Refund Process'))}"><em>{$InRefundProcess}</em>In Refund Process</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'Within Three Months'))}"><em>{$WithinThreeMonths}</em>Within Three Months</a>
+                    <a href="{:U('myorders/index',array('order_status'=>'Beyond Three Months'))}"><em>{$BeyondThreeMonths}</em>Beyond Three Months</a>
+                </div>
+            </div>
+        </div>
+    	<div class="orderSearch">
+           <form id="myorder_form" method="get">
+        	<input type="text" name="order_sn" value="{:I('order_sn')}" placeholder='Order Number' class="search" />
+            <a href="javascript:void(0)" class="searchBtn">search</a>
+           </form>
+        </div> 
+<volist name="orders" id="list"> 
+        <div class="orderEach" title="{$a++}">
+        	<h3 title="{$list.add_time|toDate} {$list.shipping_code} "><em>{$list.order_status|order_status=###,$list['refund_status']}</em>
+            			<!--
+                        <if condition="($list.order_status eq 20) && ($list.refund_status eq 0)">
+                            	<em>Paid &nbsp;</em>
+                        <elseif condition="($list.order_status eq 30) && ($list.refund_status eq 0)" />
+                            	<i>Shipped &nbsp;</i>
+                        </if> 
+                        <if condition="($list.order_status eq 40) && ($list.refund_status eq 0)">
+                            <eq name="list.comment_time" value="0">
+                            	<em>To Be Reviewed &nbsp;</em>
+                            <else />
+                            	<em>Reviewed &nbsp;</em>
+                            </eq>  
+                		</if> -->
+                            Order Number : {$list.order_sn} </h3>
+            <volist name="list.ordergoods" id="goods" key="k">
+            <div class="proInfo clearfix">
+            	<div class="info">
+                	<span class="price">{$goods.present_price|format_price}</span>
+                    <span class="num">×{$goods.quantity}</span> 
+                <!--    <a href="{:U('Refund/choice',array('id'=>$goods['spec_id']))}">Apply Refund</a>--> {$goods.refund_status|order_refund_status=###,$list['order_status'],$goods['rec_id']}
+                </div>
+            	<dl class="clearfix">
+                	<dt><a href="{:U('Goods/index',array('id'=>$goods['goods_id']))}" target="_blank"><img src="/{$goods.default_image}" alt="{$goods.goods_name}" " width="50" height="50"/></a></dt>
+                    <dd>
+                    	<h4><a href="{:U('Goods/index',array('id'=>$goods['goods_id']))}" target="_blank">{$goods.goods_name}</a></h4>
+                        {$goods.goods_attr|str_replace=' ','<br>',###} 
+                    </dd>
+                </dl>
+            </div>
+			</volist> 
+            <div class="allTotal">
+            	<span class="total">Total: {$list.totle_fee|format_price}</span> 
+                <!--
+                <a href="javascript:void(0)" class="yellowBtn">Confirm</a> 
+                <a href="javascript:void(0)" class="CancellBtn">Cancel</a>
+                <a href="{:U('Myorders/delete',array('id'=>$list['order_id']))}" class="deleteBtn">delete</a>  
+               -->
+                <a href="{:U('Myorders/view',array('id'=>$list['order_id']))}" class="CancellBtn">Detail..</a> 
+                 <if condition="($list.order_status eq 40) &&($list.refund_status eq 0) && ($list.comment_time eq 0)">
+                 <a href="{:U('Myorders/review',array('id'=>$list['order_id']))}" class="yellowBtn" title="Review">Review</a>
+                 </if>
+                  <volist name="list.handles" id="handle">
+                  <a href="{:U('Myorders/'.$handle['handle'],array('id'=>$list['order_id']))}" class="{$handle.css}" title="{$handle.text}">{$handle.text}</a>
+                  </volist>
+                  
+            </div>
+        </div> 
+</volist> 
+<if condition="$totalpages gt 1">
+<div id="page">
+                <a href="javascript:void(0)" class="prev"><em></em></a>
+              <div class="pageChoose">
+                    <select name="select" id="select_page">
+                    <for start="1" end="$totalpages" comparison='elt'>
+                        <option value="{$i}" <if condition="$i==$_GET['p']">selected</if>>Page {$i}/{$totalpages}</option>
+                    </for> 
+                    </select>
+                </div>
+                <a href="javascript:void(0)" class="next"><em></em></a>
+</div>
+</if>
+ <empty name='a'>
+    <div class="refund">
+   		<div class="RefundSuccess">
+        	<h3>Sorry!</h3>
+            <p>There is no any result of search.</p> 
+        </div>
+    </div>
+ </empty>
+    </div>
+	<!--订单列表结束--> 
+    <script>
+    $(function(){
+		$('.searchBtn').click(function(){ $('#myorder_form').submit(); });
+			
+			fn_change_page=function(){
+				 self.location="{:U('Myorders/index','goods_id='.I('goods_id'),'')}/p/"+$(this).val();				
+			}
+			$('#select_page').bind('change',fn_change_page);
+			
+			max_page='{$totalpages}';
+			now_page='{$Think.get.p|default=1}';
+			next_page=parseInt(now_page)+1;
+			prev_page=parseInt(now_page)-1;
+			
+			if(next_page<=max_page){  
+				$('#page .next').click(function(){ self.location="{:U('Myorders/index','goods_id='.I('goods_id'),'')}/p/"+ next_page; }); 
+			}			
+			if(prev_page>=1){
+				$('#page .prev').click(function(){ self.location="{:U('Myorders/index','goods_id='.I('goods_id'),'')}/p/"+ prev_page; }); 
+			}
+			
+	});
+    </script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

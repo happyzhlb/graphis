@@ -1,0 +1,20 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+		<div class="container">
+			<div class="box zhishitype">
+				<ul class="display-box clearListStyle">  
+                <volist name='_cate.0.children' id='cate'> 
+                	<li class='box-flex-1 <?php if(empty($sub_id) && $key==0 || $sub_id==$cate['cate_id']){ echo "active";} ?>'><a href="{:U('Article/knowledge',array('sub_id'=>$cate['cate_id']))}">{$cate.cate_name}</a></li> 
+                </volist>
+				</ul> 	
+			</div> 
+          <volist name="subcate.0.children" id="list">  
+            <div class='header-public'><h2>{$list.cate_name}</h2></div>
+            <ul class='clearListStyle clearfix knowledge-list'> 
+            	<volist name="list.article" id="article">
+            	<li><a href='{:U("show",array("cate_id"=>$article["cate_id"],"article_id"=>$article["article_id"]))}'>{$article.title}</a></li>
+                </volist>
+            </ul>
+          </volist>  
+           
+<include file="./Shop/Home/View/footer.html" /> 

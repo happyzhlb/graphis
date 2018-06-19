@@ -1,0 +1,344 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新增孕期进展</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui.js"></script>
+<link href="__PUBLIC__/js/jquery-ui.css" type="text/css" rel="stylesheet">
+
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script src="/Public/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	var ue = UE.getEditor('content');
+	$('.submit').click(function(){
+		ue.sync();
+		$('#admin_form').submit();	
+	});
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			content : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>孕期进展标题不能为空'
+			},
+			content : {
+				required : '<i></i>孕期进展内容不能为空'
+			}
+		},
+		errorPlacement: function(error, element) {
+			if ( element.attr('id') == 'ueditor_textarea_content' )
+				error.appendTo($('#forcontent'));
+			else
+				error.appendTo(element.parent());
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span',
+		ignore : ""
+	});
+	
+	//显示显示图片
+	showImg=function(objId,lnk){ 
+		var url= $('#'+objId).attr('value'); 
+		$(lnk).attr('href',url);	 
+	}	
+	//上传图片
+	$('.upload_goods_img').click(function(){  
+		$('#uploadW').show();
+		var ref=$(this).attr('ref');	
+		$('#uploadFrame').attr('src','/Admin/recipe/upload.html?fieldId='+ref);
+	});
+	//关闭上传窗口
+	$('#closeW1').click(function(){  
+		$('#uploadW').hide();	
+	});
+
+
+	//动态显示标签
+	$("#cate_id").on('change',function(){
+		var data = ($("#cate_id option:selected").attr('data'));
+		data = data.split(',');
+		var _option = '';
+		for(i in data){
+			_option += '<option>'+(data[i])+'</option>';
+		}
+		$('#cate_label').html(_option);
+	});
+	
+	
+	
+	
+	//打开选择框
+	$('#sel_category').click(function(){ 
+		$('#selFrame').show();
+	});
+	//关闭选择框
+	$('#closeW').click(function(){ 
+		$('#selFrame').hide();	
+	});	
+	//弹窗可移动
+	$('#selFrame').draggable();
+	
+	//Ajax请求关联分类
+	$.post("{:U('Recipecate/ajax_get_cate')}",'cate_ids='+"{$cate_ids}",function(data){  
+		$('#cate_name').html(data);
+	});	
+});
+</script>
+<style>
+	#cate_name li{color:#777; font-weight:bold;}
+</style>
+
+</head>
+<body>
+<section>
+<!--selFrame start-->
+  <div id="selFrame" style="display:none;cursor:move;margin-left:25%; margin-top:80px; position:absolute; z-index:99999; border:5px solid #a8a8a8;width:860;height:50%;min-width:860px; min-height:350px; background:rgba(255,255,255,0.95);border-radius:6px;box-shadow:0 0 15px #999;">
+        <div id="closeW"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+        <div style="height:99%; clear:both; padding:10px;">
+            <iframe id="iframe" src="/Admin/Recipecate/selcate.html?ids={$cate_ids}&multi=true" width="100%" height="90%"></iframe> 
+        </div>
+    </div>
+<!--selFrame end-->
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Article')}" class="text">孕期进展管理</a> > <a href="{:U('/Admin/Article/add')}" class="text">新增孕期进展</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">新增孕期进展</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post">
+                              <div class="control-group">
+                                   <label class="control-label">孕期进展标题：</label>
+                                   <div class="controls">
+                                        <input type="text" id="baby_age_show" name="baby_age_show" value="{$gestate.baby_age_show}" class="span300" placeholder="孕期进展标题">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group none">
+                                   <label class="control-label">链接URL：</label>
+                                   <div class="controls">
+                                        <input type="text" id="link_url" name="link_url" value="{$gestate.link_url}" class="span300" placeholder="URL">
+                          (填上链接URL就不需要填孕期进展内容)</div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">选择分类：</label>
+                                   <div class="controls">
+                                   		
+                                    	<select id="cate_id" name="cate_id">
+                                        	<option value="" style="color:#ccc;">选择分类</option> 
+                                            <volist name="gestatecate" id="cate">
+                                               <option value="{$cate.cate_id}" data="{$cate.cate_label}" <if condition="$gestate.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                               <if condition="$cate.children neq false">
+                                               <volist name="cate.children" id="c_cate">
+                                               <option value="{$c_cate.cate_id}" data="{$c_cate.cate_label}" <if condition="$gestate.cate_id eq $c_cate['cate_id']">selected</if> style="color:#a33">&nbsp;&nbsp;|_ {$c_cate.cate_name}</option>
+                                                   <if condition="$c_cate.children neq false">
+                                                   <volist name="c_cate.children" id="cc_cate">
+                                                   <option value="{$cc_cate.cate_id}" data="{$cc_cate.cate_label}" <if condition="$gestate.cate_id eq $cc_cate['cate_id']">selected</if>  style="color:#999">&nbsp;&nbsp;&nbsp;&nbsp; |_ {$cc_cate.cate_name}</option>
+                                                   </volist>
+                                                   </if>
+                                               </volist>
+                                               </if>
+                                            </volist>
+                                        </select>    
+                                       <!-- 
+                                        <input id='cate_id' name="cate_id" value="{$cate_ids}" type="hidden" />
+                                        <div id="cate_name" style="padding:5px;"></div> 
+                                        <input type="button" id="sel_category" value="选择分类" />
+                                         -->
+                                   </div>    &nbsp;&nbsp;<span style="color:#ccc">参考分类：{$gestate.navigation|strip_tags}</span>
+                                   <div class="clear"></div>
+                              </div>
+							<!--
+                            <div class="control-group">
+                                   <label class="control-label">标签：</label>　
+                              	   <div class="controls">
+                                        <select id="cate_label" name="cate_label"> 
+                                        	<optgroup>
+                                        	<option value="" style="color:#ccc;">选择标签</option> 
+                                            </optgroup>
+                                        	<volist name="gestate.cate_labels" id="cl">
+                                       		<option value="{$cl}" <if condition="$gestate.cate_label eq $cl">selected</if>>{$cl}</option> 
+                                            </volist> 
+                                        </select>   
+                                   </div>    
+                                   &nbsp;&nbsp;<span style="color:#ccc">分类自定义的标签(可选)..</span>
+                                   <div class="clear"></div>
+                          	 </div>
+                             --> 
+                             <div class="control-group">
+                                   <label class="control-label">图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="pic" name="pic" value="{$gestate.pic}" class="span300" placeholder="http://"> </div>&nbsp; <a href="#" onMouseOver="showImg('pic',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="pic" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div> 
+                                    <!--uploadW start-->
+                                    <div id="uploadW" style="display:none; margin-left:50px; margin-top:40px; position:absolute; z-index:90000; border:5px solid #a8a8a8; width:760px; height:450px; background:rgba(255,255,255,8.2); border-radius:6px; box-shadow:0 0 15px #999; left: 94px; top: 5px;">
+                                        <div id="closeW1"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+                                        <div style="height:490px; clear:both; padding:10px;">
+                                            <iframe id="uploadFrame" src="/Admin/gestate/upload.html?fieldId=goods_img"  width="730px;" height="400px;"></iframe> 
+                                        </div>
+                                    </div>
+                                    <!--uploadW end-->   
+                              </div>
+                              
+                              <div class="control-group">
+                                <label class="control-label">小标题1：</label>
+                                   <div class="controls">
+                                        <input type="text" id="tips_title" name="tips_title" value="{$gestate.tips_title}" class="span300" placeholder=""></span>
+                                   </div>
+                                   <div class="clear"></div>
+                          </div> 
+                              
+                              <div class="control-group">
+                                <label class="control-label">小标题1：</label>
+                                   <div class="controls">
+                                        <input type="text" id="tips_title" name="tips_title" value="{$gestate.tips_title}" class="span300" placeholder=""> 
+                                   </div>
+                                   <div class="clear"></div>
+                         	  </div> 
+                              <div class="control-group">
+                                   <label class="control-label">描述1：</label>
+                                   <div class="controls"> 
+                                        <textarea id="tips_des" name="tips_des">{$gestate.tips_des}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                <label class="control-label">小标题2：</label>
+                                   <div class="controls">
+                                        <input type="text" id="tips_title2" name="tips_title2" value="{$gestate.tips_title2}" class="span300" placeholder=""> 
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                             
+                              <div class="control-group">
+                                   <label class="control-label">描述2：</label>
+                                   <div class="controls"> 
+                                        <textarea id="tips_des2" name="tips_des2">{$gestate.tips_des2}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              
+                              <div class="control-group">
+                                   <label class="control-label">营养：</label>
+                                   <div class="controls">
+                                        <textarea id="nutrition_des" name="nutrition_des">{$gestate.nutrition_des}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                              <div class="control-group">
+                                   <label class="control-label">营养图片：</label>
+                                   <div class="controls">
+                                        <input type="text" id="nutrition_pic" name="nutrition_pic" value="{$gestate.nutrition_pic}" class="span300" placeholder=""></span>
+                            		</div>&nbsp; <a href="#" onMouseOver="showImg('nutrition_pic',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="nutrition_pic" class="upload_goods_img" value="上传图片" />
+                                   <div class="clear"></div>
+                              </div>                              
+                               
+                              <div class="control-group">
+                                   <label class="control-label">教育：</label>
+                                   <div class="controls">
+                                        <textarea id="educate_des" name="educate_des">{$gestate.educate_des}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                              <div class="control-group">
+                                   <label class="control-label">educate_json：</label>
+                                   <div class="controls">
+                                         <textarea id="educate_json" name="educate_json">{$gestate.educate_json}</textarea>
+                            		</div>
+                                   <div class="clear"></div>
+                              </div>
+							  <div class="control-group">
+                                   <label class="control-label">baby_json：</label>
+                                   <div class="controls">
+                                         <textarea id="baby_json" name="baby_json">{$gestate.baby_json}</textarea>
+                            		</div>
+                                   <div class="clear"></div>
+                              </div>
+                                
+                              <div class="control-group" style="min-height:400px;display:none;">
+                                   <label class="control-label">孕期进展内容：</label>
+                                   <div class="controls" id="forcontent">
+                                        <script id="content" name="content" type="text/plain" style="width:800px;height:300px;"><?php echo strip_tags(preg_replace("/<div class=\"detail-title J_floor\">(.*?)div(.*?)【导读】/is",'',htmlspecialchars_decode($gestate['content'])),'<br><b><strong><span><p>');?></script>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                               
+                              <div class="control-group">
+                                   <label class="control-label">距离预产期天数：</label>
+                                   <div class="controls">
+                                        <input type="text" id="expect_baby_day" name="expect_baby_day" value="{$gestate.expect_baby_day}" class="span300" placeholder=""></span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>                               
+                              <div class="control-group none">
+                                   <label class="control-label">浏览量：</label>
+                                   <div class="controls">
+                                        <input type="text" id="view_num" name="view_num" value="{$gestate.view_num}" class="span300" placeholder=""></span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group none">
+                                   <label class="control-label">作者：</label>
+                                   <div class="controls">
+                                        <input type="text" id="author" name="author" value="{$gestate.author}" class="span300" placeholder="作者">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group none">
+                                   <label class="control-label">排序：</label>
+                                   <div class="controls">
+                                        <input type="text" id="sort_order" name="sort_order" value="0" class="span300" placeholder="排序"> <span style="color:#ccc">(越小排序越靠前)</span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                   <label class="control-label">是否显示：</label>
+                                   <div class="controls">
+                                       <label><input type="radio" id="if_show" name="if_show" value="1" <if condition="$gestate.if_show eq 1">checked</if>>是</label>
+                                       <label><input type="radio" id="if_show" name="if_show" value="0" <if condition="$gestate.if_show eq 0">checked</if>>否</label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" id="id" name="id" value="{$gestate.id}">
+                                   <button type="button" class="btn btn_dm submit">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

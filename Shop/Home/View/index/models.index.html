@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="um landscape">
+<head>
+<title>日本女优目录 | {$Think.get.cate_id|getNameById='cate_name','modelscate','cate_id',###} GRAPHIS官方网站 - 日本女优专辑介绍</title> 
+<meta charset="utf-8">
+<link rel="stylesheet" href="/Public/home/files/ui-base.css">
+<link rel="stylesheet" href="/Public/home/files/ui-color.css"> 
+<link rel="stylesheet" href="/Public/home/files/main.css"> 
+<meta name="keywords" content="GRAPHIS，日本女优，美女图片，性感美女，美女写真,三上悠亜,头条女神">
+<meta name="description" content="GRAPHIS-美女写真图片站|toutiaonvshen|头条女生|头条女神">
+<script src="/Public/home/files/jquery.js"></script>
+<script src="/Public/home/files/main.js"></script>
+<script src="/Public/home/files/tool.js"></script>
+<script src="/Public/home/files/login.js"></script>
+<script src="/Public/home/files/register.js"></script>
+<script type="text/javascript">
+$(function(){
+	if ("ab" == ""){
+		$("#not_login").show();
+	}
+	else{
+		$("#have_login").show();
+	}
+	if ("false" == "true"){
+		$("#jinbi").show();
+	}
+	else{
+		$("#jinbi").hide();
+	}
+	
+})
+</script> 
+<style type="text/css">  
+	a{ color:#333;}
+	a:hover{ color:#000; font-weight:bold;}
+	a.a_regsiter,a.a_login{color:#fff;} 
+/*翻页*/
+.page { float:right; margin:6px 15px 0; vertical-align:middle;} 
+.num,a.num {border:1px solid #ccc; line-height:20px; margin:0 3px; padding:3px 8px; color:#666;}
+.page span.current{
+	margin:0 3px;
+ 	padding:3px 8px;position:inherit;
+  	 
+ 	color:#eee;
+ 	font-weight:bold;
+ } 
+.page #gotoPage{text-align:center;border:1px solid #ccc; height:30px;}
+.page input[value='Go']{border:1px solid #aaa; color:#999; height:32px!important; margin-left:2px; padding:0 2px !important;}
+.current,a.current{ color:red !important; border:1px solid #ccc;}  
+
+ .current,a.current{ color:red !important;}
+table dl dt,dd{float:left; width:150px; overflow:hidden; border:1px solid #ccc;}
+table a:link{color:#999;}
+table a:visited{color:#333;}
+</style>  
+<!--[if IE 8]>
+<style>
+.hd_l{ position:absolute;left:50%; margin-left:-600px;}
+.hd_l1{margin-left:520px;;left:50%; }
+</style>
+<![endif]-->
+</head>
+<body class="um-vp">
+<include file="./Shop/Home/View/index/header.html" /> 
+
+<div id="page_0" class="up ub ub-ver bc-bg"> 
+  
+  <!--content开始-->
+  <div id="content" class="ub-f1 umar-bd">
+    <div class="umw1 umar-ba clearfix" style="padding-top:20px;">
+      <div class="ufl">
+        <div class="cont_left2">
+          <div data-am-widget="titlebar" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+            <h2 class="am-titlebar-title ulev3"> <strong>所有模特 /</strong> <span class="sc-view-b">ALL</span> </h2>
+          </div>
+          
+          <table width="100%" border="0">
+          <tr>
+            <td width="89" height="57" align="right">筛选:</td>
+            <td width="921">
+                <table width="100%">
+                <volist name="modelscate" id="vo">
+                <tr style="line-height:2;">
+                    <td width="14%" align="right" valign="top" style="font-weight:bold;">{$vo.cate_name}:</td>
+                    <td width="86%">
+                    <volist name="vo.children" id="v">
+                        &nbsp; <a href="{:U('models/index',array('cate_id'=>$v['cate_id']))}" <if condition="$v['cate_id'] eq $_GET['cate_id']">class="current"</if>>{$v.cate_name}</a> | <if condition="$key eq '7'"><br></if>
+                    </volist>
+                    </td>
+                </tr> 
+                </volist>
+                </table>
+              </td>
+          </tr>
+          <tr>
+            <td align="right">&nbsp;</td>
+            <td align="right">&nbsp; 
+            排序：<a href="{:U('models/index',$param)}">按日期<?php if($orderdate=='asc'){ echo '↑';}else{ echo '↓';}?></a> &nbsp;<a href="{:U('models/index',$param)}">按人气<?php if($orderhot=='asc'){ echo '↑';}else{ echo '↓';}?></a></td>
+          </tr>
+        </table>
+        
+          <ul class="umar-e list2">
+          <volist name="models_list" id="vo">
+           <?php if($key % 4==0){ echo '</ul><ul class="umar-e list2">';}?>
+            <li class="bx-shadow sc-bg" onclick="//javascript:window.open('/models/albumlist/id/{$vo.id}.html')">
+              <div class="view view-first"><img src="{$vo.photo|getThumb='180x240'}" alt="{$vo.title}" height="240" width="180">
+                <div class="mask">
+                  <a href="{$random_url}{:U('models/albumlist',array('id'=>$vo['id']))}" target="_blank">
+                    <h4>{$vo.title}</h4></a>
+                  <a href="{$random_url}/models/albumlist/id/{$vo.id}.html" class="info" target="_blank">立即查看</a>
+                  <div class="bd_line"></div>
+                  <div class="bd_line1"></div>
+                  <div class="bd_line2"></div>
+                </div>
+              </div>
+              <div class="umar2">
+                <div class="sc-text-b ufl ulev0">{$vo.city}</div>
+                <div class="ufr sc-text-b ulev0"><a href="{$random_url}{:U('models/albumlist',array('id'=>$vo['id']))}" style="color:#222;" target="_blank">{$vo.title}&nbsp;|&nbsp;专辑:{$vo.album_num}</a></div>
+                <div style="clear: both;"></div>
+              </div>
+              <br>
+            </li>
+            </volist> 
+          </ul>  
+        </div>
+        <!--page--> 
+        <div class="page">{$page}</div>
+      </div>
+      
+      <!--每周之星开始
+      < include file="./Shop/Home/View/index/right.html" /> -->
+      
+    </div>
+    
+    <!--content结束--> 
+  </div> 
+    <include file="./Shop/Home/View/index/footer.html" />
+</div>
+   
+</body>
+</html>
+<!--每周之星结束-->
+<!--弹出广告end-->

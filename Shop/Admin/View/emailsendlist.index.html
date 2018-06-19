@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理员管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U(ACTION_NAME)}" class="text" target="workspace">邮件发送队列管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">邮件发送队列</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增邮件队列" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox" style="font-size:12px;">
+                   	   <form id="search_form" method="get">
+                          To Email: <input type="search" name="email" id="email" value="{$Think.get.email}" style="width:100px;" placeholder="邮件">  邮件内容: <input type="search" name="send_content" id="send_content" value="{$Think.get.send_content}" style="width:100px;" placeholder="邮件发送队列内容关键字"> 
+                          发送状态：<select name="send_status"> 
+                          		<option value="">不限</option>
+                                <volist name='email_send_status' id='_type'> 
+                                <option value="{$key}" <if condition="$Think.get.send_status eq $key && is_numeric( $Think.get.send_status ) ">selected</if>>{$_type}</option>
+                                </volist> 
+                          	</select>
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox"> 
+                   <table class="table table-bordered data-table" cellpadding="0" cellspacing="0">
+                          <thead>
+                             <tr>
+                                 <th></th>
+                                 <th width="120">发送To Email</th>
+                                 <th width="40%">邮件内容</th>
+                                 <th>错误次数</th> 
+                                 <th width="120">最后一次发送时间</th> 
+                                 <th>发送状态</th>
+                                 <th>操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="list" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$list.send_id}"></td>
+                                 <td align="center">{$list.email} </td>
+                                 <td align="center">{$list.send_content|htmlspecialchars_decode|strip_tags}</td>   
+                                 <td align="center">{$list.error}</td>
+                                 <td align="center">{$list.last_send|todate}</td>  
+                                 <td align="center"><?php echo $email_send_status[$list['send_status']];?>&nbsp;</td>
+                                 <td class="center"><a href="{:U('edit',array('id'=>$list['send_id']))}" title="">编辑</a> <a onClick="return confirm('确定要删除该记录？');" href="{:U('drop',array('id'=>$list['send_id']))}" title="">删除</a></td>
+                               </tr> 
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="12">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <span class="selectALL"><label for="selectAll">全选</label></span>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

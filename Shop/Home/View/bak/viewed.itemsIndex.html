@@ -1,0 +1,22 @@
+<div class="Recently">
+  <h3>Your Recently Viewed Items</h3>
+  <div id="RecentlyBox">
+        <div class="RecentlyContent clearfix"> 
+            <volist name="history" id="hlist">
+                <div class="each boxSizing">
+                    <a href="{:U('/Goods/index',array('id'=>$hlist['goods_id']))}" target="_blank" class="proImg"><img src="/{$hlist.goods_img}" width="100%" alt="{$hlist.goods_name}" /></a>
+                    <a href="{:U('/Goods/index',array('id'=>$hlist['goods_id']))}" target="_blank" class="proName">{$hlist.goods_name}</a>
+                    <dl class="clearfix">
+                        <dt class="star star{$hlist.estars}"></dt>
+                        <dd>({$hlist.ecount})</dd>
+                    </dl>
+                    <p class="proInf">{$hlist.goode_desc}</p>
+                </div>
+            </volist>
+        </div>
+        <a href="javascript:void(0)" class="prev">&#8249;</a>
+		<a href="javascript:void(0)" class="next">&#8250;</a>
+  </div>
+    
+</div>
+<load href="__PUBLIC__/home/js/jquery.IndexSlide.js" />

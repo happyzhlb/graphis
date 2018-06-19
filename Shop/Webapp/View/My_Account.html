@@ -1,0 +1,35 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>My Account</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <div class="myAccountIndex">
+    	<div class="user">Hi, {$first_name} !</div>
+    	<div class="myOrder clearfix">
+        	<a href="{:U('myorders/index',array('order_status'=>'Await Payment'))}"><span>{$await_payment}</span>Await Payment</a>
+            <a href="{:U('myorders/index',array('order_status'=>'Shipped','shipping_code'=>'CPU'))}"><span>{$await_pickup}</span><i class="minWidthShow">Await Pick Up</i><i class="otherWidthShow">Await<br />Pick Up</i></a>
+            <a href="{:U('myorders/index',array('order_status'=>'Shipped'))}"><span>{$await_confirmation}</span>Await Confirmation</a>
+            <a href="{:U('myorders/index',array('order_status'=>'To Be Reviewed'))}"><span>{$to_be_reviewed}</span>To Be Reviewed</a>
+        </div>
+        <div class="accountList clearfix">
+        	<a href="{:U('Myorders/index')}"><span class="icon_1"></span>Order</a>
+            <a href="{:U('Cart/index')}"><span class="icon_2"></span>Cart</a>
+            <a href="{:U('Collect/index')}"><span class="icon_3"></span>Wish List</a>
+            <a href="{:U('ProductsRequest/index')}"><span class="icon_4"></span>Request</a>
+            <a href="{:U('ScoreLog/index')}"><span class="icon_5"></span>Points</a>
+            <a href="{:U('Member/settings')}"><span class="icon_6"></span>Settings</a>
+            <a href="{:U('UserPmessage/index')}"><span class="icon_7"></span>Messages</a>
+            <a href="{:U('Member/viewed_history')}"><span class="icon_8"></span>Viewed</a>
+        </div>
+    </div>     
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

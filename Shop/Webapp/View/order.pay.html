@@ -1,0 +1,141 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Confirm the Order Information</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--支付开始-->
+    <div class="payBox"> 
+    <form action="" id="pay_form" action="{:U('Myorders/pay')}" method="post">
+    <volist name="payments" id="payment">
+      <eq name="payment.pay_code" value="Authorize">
+    	<input type="hidden" id="pay_code" name="pay_code" value="{$payment.pay_code}" />
+        <input type="hidden" name="id" value="{$order.order_id}" />
+        <dl class="none">
+        	<dt>Payment Method *</dt>
+            <dd>
+            	<div class="Paypal">
+                	<h3>Paypal</h3>
+                    <a href="javascript:void(0)" class="current">Visa<em></em></a>
+                    <a href="javascript:void(0)">Master Card<em></em></a>
+                    <a href="javascript:void(0)">Discover<em></em></a>
+                    <a href="javascript:void(0)">American Express<em></em></a>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+        	<dt>Name on Card *</dt>
+            <dd><input type="text" value="" name="card_name" class="textIn" /></dd>
+        </dl>
+        <dl>
+        	<dt>Credit Card No. *</dt>
+            <dd><input type="text" value="" name="card_no" class="textIn" /></dd>
+        </dl>
+        <dl>
+        	<dt>Exp. Date*</dt>
+            <dd>
+            	<input type="text" value="" class="textIn" name="exp_month" maxlength="2" placeholder="Month" />
+                <input type="text" value="" class="textIn" name="exp_year" maxlength="2" placeholder="Year" />
+            </dd>
+        </dl>
+        <dl>
+        	<dt>CCID * <i>(The last 3 digits on the back of your credit card)</i></dt>
+            <dd><input type="text" value="" name="ccid"  maxlength="3" class="textIn" /></dd>
+        </dl>
+        <dl id="show_msg" style="display:none;">
+        	<dt></dt>
+            <dd></dd>
+        </dl>        
+        <a href="javascript:do_submit();" class="payBtn">Confirm the Payment</a>
+        </eq>
+      </volist>
+        </form>
+    </div>
+	<!--支付结束--> 
+   <script language="javascript" type="text/javascript">
+    $(function(){
+	 //用户注册表单验证 
+			$('#pay_form').validate({
+						rules : {
+				card_name : {
+					required : true
+				},
+				card_no : {
+					required : true,
+					creditcard : true
+				},
+				exp_month : {
+					required : true,
+					number : true
+				},
+				exp_year : {
+					required : true,
+					number : true
+				},
+				ccid : {
+					required : true,
+					number : true
+				}
+			},
+			messages : { 
+			},
+			/* Ajax提交注册*/
+			submitHandler: function(form){ //回调函数参数：form 
+				$("#pay_form #show_msg").html('<img src="/Public/home/images/loading.gif" style="vertical-align:middle;" /> In handling...').show();
+				$.post('{:U("Myorders/pay")}',{
+							id: function(){
+									return $('#pay_form input[name="id"]').val();
+								},
+							pay_code: function(){
+									return $('#pay_form input[name="pay_code"]').val();
+								},
+							card_name: function(){
+									return $('#pay_form input[name="card_name"]').val();
+								}, 
+							card_no: function(){
+									return $('#pay_form input[name="card_no"]').val();
+								},
+							exp_month: function(){
+									return $('#pay_form input[name="exp_month"]').val();
+								}, 	
+							exp_year: function(){
+									return $('#pay_form input[name="exp_year"]').val();
+								}, 
+							ccid: function(){
+									return $('#pay_form input[name="ccid"]').val();
+								},		
+					},function(data){  
+						if(data.status=='0'){
+							$("#pay_form #show_msg").html(data.info);
+							return;
+						}else{
+							$("#pay_form #show_msg").html('OK.');
+							alert('The success of payment.');
+							self.location=data.info;	
+						}  
+					},'json'); 
+			},
+			
+			errorPlacement: function(error, element) {  
+				error.appendTo(element.parent());  
+			},
+			//success: 'InfoTrue',
+			errorElement : 'span',
+			errorClass : 'tips',
+			validClass : 'InfoTrue'
+		});	 
+	do_submit=function(){ 
+		$('#pay_form').submit();	 
+	} 
+ });
+  </script>  
+</div>
+<include file="./Shop/Webapp/View/footer.html" /> 

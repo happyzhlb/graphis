@@ -1,0 +1,25 @@
+<div class="accountList">
+        <h2><a href="{:U('/Member/index')}">My Account</a></h2>
+        <h3>orders</h3>
+        <ul>
+            <li><a href="{:U('ScoreLog/index')}">Reward Points [ <strong>{$score}</strong> ]</a></li>
+            <li><a href="{:U('/Myorders')}">My Orders [ <strong>{$order_count}</strong> ]</a></li>
+            <li><a href="{:U('/Cart')}">My Cart [ <strong>{$carts_count}</strong> ]</a></li>
+            <li><a href="{:U('Collect/index')}">My Wish List [ <strong>{$wishs_count}</strong> ]</a></li>
+            <li><a href="{:U('Comments/index')}">My Reviews</a></li>
+        </ul>
+        <h3>Account Settings</h3>
+        <ul>
+        	<if condition="$user_type=='1'">
+            <li><a href="{:U('Member/basic_information')}" <if condition="strtolower(ACTION_NAME)=='basic_information'">class="current"</if>>Basic Information</a></li>
+            </if>
+            <li><a href="{:U('Member/account_settings')}" <if condition="strtolower(ACTION_NAME)=='account_settings'">class="current"</if>>Account Settings</a></li>
+            <li><a href="{:U('UserAddress/add')}" <if condition="strtolower(CONTROLLER_NAME)=='useraddress'">class="current"</if>>Address Book</a></li>
+        </ul>
+        <h3>Others</h3>
+        <ul>
+            <li><a href="{:U('UserPmessage/index')}">Private Messages [ <strong>{$msg_num}</strong> ]</a></li>
+            <li><a href="{:U('ProductsRequest/index')}">Product Request [ <strong>{$request_num}</strong> ]</a></li>
+            <li><a href="{:U('Member/subscription')}">Subscription</a></li>
+        </ul>
+</div>

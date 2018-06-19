@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="um landscape">
+<head> 
+<title>{:C('site_name')}官网 | 日本女优性感美图写真专辑</title>
+<meta name="keywords" content="{:C('site_keywords')} 高桥圣子">
+<meta name="description" content="{:C('site_description')}"> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="360-site-verification" content="91e032526f371f2c497f3d1e516ac415" />
+<meta name="baidu-site-verification" content="VXtknnBfGb" />
+<script src="/Public/home/files/jquery.js"></script>
+<script src="/Public/home/files/main.js"></script>
+<script src="/Public/home/files/tool.js"></script>
+<script src="/Public/home/files/login.js"></script>
+<script src="/Public/home/files/register.js"></script>
+ 
+<!--[if IE 8]>
+<style>
+.hd_l{ position:absolute;left:50%; margin-left:-600px;}
+.hd_l1{margin-left:520px;;left:50%; }
+</style>
+<![endif]-->
+<link rel="stylesheet" href="/Public/home/files/ui-base.css">
+<link rel="stylesheet" href="/Public/home/files/ui-color.css">
+<link rel="stylesheet" href="/Public/home/files/main.css">
+<link rel="stylesheet" href="/Public/home/files/slide.css">
+<link rel="stylesheet" href="/Public/home/files/ui-control.css">
+<link rel="stylesheet" href="/Public/home/files/ui-icon.css">
+<link rel="stylesheet" href="/Public/home/files/index.css">
+<style>
+	a{ color:#333;}
+	a:hover{ color:#000; font-weight:bold;}
+	a.a_regsiter,a.a_login{color:#fff;}
+</style> 
+<script type="text/javascript"> 
+var mobileAgent = new Array("iphone", "ipod", "ipad", "android", 
+"mobile", "blackberry", "webos", "incognito", "webmate", "bada", 
+"nokia", "lg", "ucweb", "skyfire"); 
+var browser = navigator.userAgent.toLowerCase();  
+var isMobile = false;  
+for (var i=0; i<mobileAgent.length; i++){ if 
+(browser.indexOf(mobileAgent[i])!=-1){ isMobile = true;  
+//alert(mobileAgent[i]);  
+ //location.href = 'mobile/index'; 
+break; } }  
+
+$(function(){
+	if ("" == ""){
+		$("#not_login").show();
+	}
+	else{
+		$("#have_login").show();
+	}
+	if ("" == "true"){
+		$("#jinbi").show();
+	}
+	else{
+		$("#jinbi").hide();
+	}
+	
+});
+</script>  
+</head>  
+<body class="um-vp"> 
+<a name="backTop" id="backTop"></a>
+<include file="./Shop/Home/View/index/header.html" /> 
+
+<div id="page_0" class="up ub ub-ver bc-bg"> 
+  <!--焦点图开始-->
+  <div id="imageShow">
+    <ul class="imagebg" id="imagebg">
+    <volist id="ad" name="ads">
+      <li class="bannerbg" data-spic="/{$ad.thumb}" style="display: block; opacity: {$key=='1'?'1':'0'};">
+        <div class="bannerbg_main"> <a href="{$ad.url}" target="_blank"><img src="/{$ad.img}"></a> </div>
+      </li>
+    </volist> 
+    </ul>
+    <div class="scrollbg">
+      <div class="scroll"> <a id="left_img_btn" class="s_pre" href="javascript:void(0)"></a>
+        <div class="current" id="current" style="left: 815px;"></div>
+        <div class="outScroll_pic">
+          <ul class="scroll_pic cls" id="small_pic" style="left: 0px;">
+            <volist id="ad" name="ads">
+            	<li onclick="img.play({$key-1})" class="{$key=='1'?'currently':''}"><img src="/{$ad.thumb}"></li>  
+            </volist>  
+          </ul>
+        </div>
+        <a id="right_img_btn" class="s_next" href="javascript:void(0)"></a> </div>
+    </div>
+    <!--焦点图结束--> 
+  </div>
+  <script src="/Public/home/files/jquery_002.js"></script> 
+  <script type="text/javascript">
+img.init();
+img.play(0);
+function estop(e){
+	var e=arguments.callee.caller.arguments[0]||event;
+	if (e && e.stopPropagation){
+	   e.stopPropagation();
+	}else{
+	   window.event.cancelBubble = true;
+	   return false;
+	}
+}
+</script> 
+  
+  <!--content开始-->
+  <div id="content" class="ub-f1 umar-bd">
+    <div class="umw1 umar-ta uinn8 clearfix">
+      <div class="ufl">
+        <div class="cont_left">
+          <div style="width:100%;" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+            <h2 class="am-titlebar-title ulev3"> <strong>新刊上架/</strong> <span class="sc-view-b">LATEST</span> </h2>
+            <nav class="am-titlebar-nav" style = "float:right; position:absolute; width:830px; border:0px solid #ccc;"> <a href="/album/index.html" class="sc-text-b" style="font-size:13px">+更多>></a> </nav>
+          </div>
+            
+          <ul class="umar-e list1">
+            <volist name="albumlist" id="vo">
+              <?php if($key%4 =='0'){ echo '</ul><ul class="umar-e list1">';} ?>
+              <li class="bx-shadow list1 sc-bg" style="height:255px;" >
+                <div class="ufl list_left view view-first" style="text-align:left;"><img src="{$vo.photo|getThumb='180x240'}" alt="{$vo.models_title}" height="240" width="180">
+                  <div class="mask">
+                    <div class="uinn15"><a href="{$random_url}{:U('album/reward',array('id'=>$vo['id']))}">
+                      <div class="view-top">
+                        <div class="sc-view">{$vo.title}</div>
+                        <p class="ulev0 umar-tc"><span>模特：</span><span class="sc-view-b">{$vo.models_title}</span></p>
+                        <p class="ulev0"><span>时间：</span><span class="sc-view-b">{$vo.pubdate}</span></p>
+                        <p class="ulev0  umar-bc"><span>阅读量：</span><span class="sc-view-b">{$vo.view_num}人阅读</span></p>
+                        <div class="ulev0 sc-text-b"><span class="line detail">{$vo.labels}</span>&nbsp;&nbsp;<a title="{$vo.models_title}私处美图详情查看" href="{$random_url}{:U('album/reward',array('id'=>$vo['id']))}" target="_blank" class="sc-view-b">[详情]</a></div>
+                      </div></a>
+                    </div>
+                  </div>
+                </div>  
+                  <div class="ufr sc-text-b ulev0" style=" height:30px; padding-top:7px;"><a target="_blank" href="{$random_url}{:U('album/reward',array('id'=>$vo['id']))}">{$vo.cate_id|getNameById="cate_name","albumcate","cate_id",###}&nbsp;|&nbsp;{$vo.models_title}</a></div>
+                <div style="clear:both"></div>
+              </li>
+            </volist>
+          </ul>
+        </div>
+        <div class="cont_left1">
+          <div data-am-widget="titlebar" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+            <h2 class="am-titlebar-title ulev3"> <strong>模特推荐 /</strong> <span class="sc-view-b">MODLE</span> </h2>
+            <nav class="am-titlebar-nav"> <a href="/models/index.html" class="sc-text-b" style="font-size:13px">+更多</a> </nav>
+          </div>
+          <ul class="umar-e list1">
+            <volist name="modelslist" id="vo">
+              <li class="bx-shadow sc-bg" >
+                <div class="view view-first"><img src="{$vo.photo|getThumb='180x240'}" alt="{$vo.models_title}" height="240" width="180">
+                  <div class="mask">
+                  	<a href="{$random_url}{:U('models/albumlist',array('id'=>$vo['id']))}" target="_blank">
+                    <h4>{$vo.title}</h4></a>
+                    <a href="{$random_url}{:U('models/albumlist',array('id'=>$vo['id']))}" target="_blank" class="info">立即查看</a>
+                    <div class="bd_line"></div>
+                    <div class="bd_line1"></div>
+                    <div class="bd_line2"></div>
+                  </div>
+                </div>
+                <div class="umar2 clearfix">
+                  <div class="sc-text-b ufl ulev0">{$vo.city}</div>
+                  <div class="ufr sc-text-b ulev0"><a href="{$random_url}{:U('models/albumlist',array('id'=>$vo['id']))}" style="color:#222;" target="_blank">{$vo.title}&nbsp;|&nbsp;专辑:{$vo.album_num}</a></div>
+                </div>
+              </li>
+            </volist>
+          </ul>
+        </div>
+      </div>
+      <!--每周之星开始
+        <include file="./Shop/Home/View/index/right.html" /> 
+      -->
+      <script>
+		function formatVal(val) {
+			if (!val || val == undefined) {
+				return "";
+			}
+			return val;
+		}
+	
+		function getMzzxList() {
+			 $.
+			 ajax({
+        	  url: "json/data/get_mzzx_list.json",
+        	  data:{
+        	  	
+        	  },
+        	  cache: false,
+        	  success: function(data){
+			  		var mzzxTop = data["mzzxTop"];
+        			if (mzzxTop) {
+					
+        				$("#topStarImg").attr("src", data["baseImgUrl"] + 
+mzzxTop["mtb"]["zp"]);
+					$("#mzlink").attr("href", "/models/albumlist?id=" + mzzxTop["mtb"]["id"])
+					            .attr("target","_blank");
+        				$("#topStarModel").html(mzzxTop["mtb"]["mtm"] + 
+        										"<span class='umar-l ulev0 '>" + 
+formatVal(mzzxTop["qs"]) + "</span>");
+        				$("#topStarRegion").html(mzzxTop["mtb"]["dq"]);
+        				$("#topStarMembers").html("粉丝" + mzzxTop["mtb"]["gzrs"] + 
+"&nbsp;|&nbsp;专辑" + 
+        										mzzxTop["mtb"]["zjbCount"]);
+        			} else {
+        				$("#topStar").html("");
+        			}
+        				
+        			var mzzxList = data["mzzxList"];
+        			if (mzzxList) {
+        				var htmlStr = "";
+        				for (var i=0; i<mzzxList.length; i++) {
+        					htmlStr += "<li>";
+        					htmlStr += "<a href='{$random_url}/models/albumlist?id=" + mzzxList[i]["mtb"]["id"] + "' target='_blank'><div class='ufl'><img src='" + data["baseImgUrl"] + mzzxList[i]["mtb"]["zp"] + '' +"' width='90' height='120'></div>";
+        					htmlStr += "<div class='ufl umar-l' style='width:90px;'>";
+        					
+        					htmlStr += "<div class='sc-text ulim'>" + mzzxList[i]["mtb"]["mtm"] + "<span class='umar-l ulev0'>" + formatVal(mzzxList[i]["qs"]) + "</span></div>";
+        					htmlStr += "<div class='ulev0 sc-text'>" + mzzxList[i]["mtb"]["dq"] +"</div>";
+        					htmlStr += "<div class='ulev0 umar-th sc-text-b'>粉丝" + mzzxList[i]["mtb"]["gzrs"] + 
+        											"&nbsp;|&nbsp;专辑" + mzzxList[i]["mtb"]["zjbCount"] + "</div>";        					
+        					htmlStr += "</div><div style='clear: both;'></div></a></li>";
+        				}
+        				$("#topStarList").append(htmlStr);
+        			}
+        	  }
+        	});
+		}
+		
+		$(document).ready(function() {
+			getMzzxList();
+		});
+    </script> 
+    </div>
+  </div>
+  <!--content结束--> 
+  
+</div> 
+  <include file="./Shop/Home/View/index/footer.html" /> 
+</body>
+</html> 

@@ -1,0 +1,580 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑产品</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/formlist.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<style>
+	.small_input{width:50px;}
+	li{list-style:none;}
+	.clear{clear:both;}
+	label{width:auto}
+	.option_div{width:100px;float:none;}
+	.option_value_div{width:600px; margin-left:20px; display:none;}
+	.spec_list td{font-size:12px; color:#CCC;}
+	.title_txt{font-size:12px;padding-top:30px;color:#a3aCa6; line-height:3; border-bottom:1px dotted #CCC; width:430px;}
+	.table_spec th{ line-height:2;}
+</style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/common.js"></script>
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<load href="__PUBLIC__/admin/js/mygoods.js" />
+<load href="__PUBLIC__/js/jquery-ui.js" />
+<load href="__PUBLIC__/js/jquery-ui.css" />
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+var root = '__ROOT__';  
+$(function(){
+	showImg=function(objId,lnk){ 
+		var url= $('#'+objId).attr('value'); 
+		$(lnk).attr('href',url);	 
+	}	
+
+	var ue = UE.getEditor('wapDesc');
+	
+	//采集动作
+	getTbInfo=function(){
+		var outer_id = $.trim($('#outer_id').val()); 
+		var goods_id = "{$Think.get.id}";
+		$.post('/Admin/Mygoods/is_exists',{'outer_id':outer_id},function(req){
+			if(req.status==1 && req.info!=goods_id){
+				$('#tips').fadeIn(300); 
+				var edit_url="{:U('edit','','')}/id/"+req.info;
+				$('#a3').attr('href',edit_url); 
+			}else{
+				getGoodsInfo(outer_id); 
+			}
+		});  
+	}
+	 
+	//执行采集
+	getGoodsInfo=function(outer_id){
+		$.post('/Admin/TbGoods/getGoodsInfo',{'id':outer_id},function(req){
+			 if(!req.data){
+					alert('采集失败.'); 
+					return;
+			  } 
+			 $('#goods_name').val(req.data.item_info.title);
+			 if(req.data.price_info.item_price.promotion_price ){
+			 	$('#price').val(req.data.price_info.item_price.promotion_price.price);
+			 }else{
+				$('#price').val(req.data.price_info.item_price.price.price); 
+			 }
+			 $('#market_price').val(req.data.price_info.item_price.price.price);
+			 $('#wapDesc').html(req.data.desc_info.content);
+			 
+			 if(req.data.item_info.pics.string[0]=='h'){
+			 	$('#goods_img').val(req.data.item_info.pics.string);
+				 $('#goods_img2').val('');
+				 $('#goods_img3').val('');
+				 $('#goods_img4').val('');
+				 $('#goods_img5').val('');				
+			 }else{
+				 $('#goods_img').val(req.data.item_info.pics.string[0]);  $('#img_goods_img').attr('src',req.data.item_info.pics.string[0]);
+				 $('#goods_img2').val(req.data.item_info.pics.string[1]); $('#img_goods_img02').attr('src',req.data.item_info.pics.string[1]);
+				 $('#goods_img3').val(req.data.item_info.pics.string[2]); $('#img_goods_img03').attr('src',req.data.item_info.pics.string[2]);
+				 $('#goods_img4').val(req.data.item_info.pics.string[3]); $('#img_goods_img04').attr('src',req.data.item_info.pics.string[3]);
+				 $('#goods_img5').val(req.data.item_info.pics.string[4]); $('#img_goods_img05').attr('src',req.data.item_info.pics.string[4]);
+			 }
+			 $('#seller_nick').val(req.data.seller_info.seller_nick);
+			 $('#seller_type').val(req.data.seller_info.seller_type);
+			 $('#shop_name').val(req.data.seller_info.shop_name);
+		},'json'); 	
+	}
+	
+	//点击方案二
+	$('#a2').click(function(){
+		var tb_id=$.trim($('#outer_id').val());
+		getGoodsInfo(tb_id);
+		$('#tips').hide();
+	})
+	 
+	$('#selButton').click(function(){
+		$('#articleW').toggle();	
+	});
+	
+	$('#closeW').click(function(){ 
+		$('#articleW').hide();	
+	});
+	
+	$('.upload_goods_img').click(function(){  
+		$('#uploadW').show();
+		var ref=$(this).attr('ref');	
+		$('#uploadFrame').attr('src','/Admin/Mygoods/upload.html?fieldId='+ref);
+	});
+	
+	$('#closeW1').click(function(){  
+		$('#uploadW').hide();	
+	});
+	
+	$.post("{:U('Myarticle/ajax_get_article')}",'article_ids='+"{$article_ids}",function(data){  
+		$('#aTitle').html(data);
+	});
+	
+	//关联
+	<?php if($_GET['flag']==1){ ?>
+	$('.movebar').find("ul li:eq(3)").click();
+	<?php }?>
+	
+	
+	$('.option_div').click(function(){
+		if($(this).find('input').attr('checked')){
+		 	$(this).find('.option_value_div').show();	
+		}else{
+			$(this).find('.option_value_div').hide();		
+		}
+	});
+	
+	makelist=function(){ 
+			var arr_str=new Array();
+			var option_str='';
+			$('.option_div').each(function(i){
+				v=$(this).find('.option_value_div input:radio:checked').val();
+				option_name=$(this).find('.option_value_div input:radio:checked').next().html();
+				isChecked = $(this).find('input:checkbox').attr('checked');
+				option_div_checked = $(this).find("input[type='checkbox']").attr('checked');
+				if(v && isChecked && option_div_checked ){
+					arr_str.push(v);
+					$('#sp_table').show();
+					option_str+="<li>"+option_name+"</li>";
+				}  
+				$('.option_list').html(option_str);
+				$('#spec_v').val(arr_str);
+			}); 
+			return(arr_str);
+	}
+	
+	$('.option_div').find("input:checkbox").click(function(){ makelist(); });
+	$(".option_value_div input[type='radio']").click(function(){
+		makelist(); 
+	});
+	
+	//添加规格
+	 $('.spec_plus').click(function(){
+		 var spec_v=$('#spec_v').val();
+		 var sp_price = $('#sp_price').val();
+		 var sp_qty = $('#sp_qty').val();
+		 
+		 if(spec_v==''){ 
+			alert('请选择规格') ;
+			return;
+		 }		 
+		 if(sp_price==''){
+			$('#sp_price').focus();
+			alert('请输入价格') ;
+			return;
+		 }
+		 if(sp_qty==''){
+			$('#sp_qty').focus();
+			alert('请输入数量') ;
+			return;
+		 } 
+		 var find_spec_v=0;
+		 var _td='<tr><td align="center" valign="middle" class="spec_value_td">'+spec_v+'<input type="hidden" name="option_value_ids[]" value="'+spec_v+'" /></td><td align="center"><div class="option_line">'+$('#option_list').html()+'</div></td><td align="center" valign="middle">'+sp_price+'<input type="hidden" name="option_price[]" class="price" value="'+sp_price+'" /></td><td align="center" valign="middle">'+sp_qty+'<input type="hidden" name="option_quantity[]" class="quantity" value="'+sp_qty+'" /></td><td align="center" valign="middle"><a href="#" class="spec_minus">删除</a></td></tr>';
+		 $('.spec_value_td input').each(function(){
+				if(spec_v==$(this).val()){
+					alert('该属性已经存在.');
+					find_spec_v++;
+				}	 
+		 }); 
+		 
+		 if(!find_spec_v){
+			 $('.table_spec').append(_td);
+			 $('#sp_price').val('');
+			 $('#sp_qty').val('10000');
+		 }
+		 
+		 //更新总库存
+		 $('.total_qty').html(getTotalQty());
+	});
+	
+	//计算总库存
+	var getTotalQty = function(){ 
+		var quantity = 0;
+		$('.spec_value_td').each(function(){			
+			quantity += parseInt($(this).parent().find('.quantity').val());	
+		}); 
+		return quantity;
+	 }
+	 
+	//删除规格
+	$('.spec_minus').live('click',function(){ 
+		 $(this).parent().parent().remove();
+		 $('.total_qty').html(getTotalQty());
+	});
+	 
+	//绑定图片动态改变事件
+	$('#goods_img').live('change',function(){
+	 	 $('#img_goods_img').attr('src',$(this).val());	
+	}); 
+	$('#goods_img2').live('change',function(){
+	 	 $('#img_goods_img02').attr('src',$(this).val());	
+	});
+	$('#goods_img3').live('change',function(){
+	 	 $('#img_goods_img03').attr('src',$(this).val());	
+	});
+	
+	$('#goods_img4').live('change',function(){
+	 	 $('#img_goods_img04').attr('src',$(this).val());	
+	});	
+	
+	$('#goods_img5').live('change',function(){
+	 	 $('#img_goods_img05').attr('src',$(this).val());	
+	});	 
+	 
+	 $('.ui-draggable').draggable();
+	 
+	 
+	 
+});
+
+</script>
+
+</head>
+
+<body>
+<section> 
+  <!--content start-->
+  <div class="main">
+    <div class="page_tag">
+      <div class="tag"> <i class="home"></i> <a href="{:U('/Admin/Main')}" class="text" target="_self">Home</a> > <a href="{:U('/Admin/Goods')}" class="text" target="_self">产品管理</a> > <a href="{:U('edit',array('id' => $goods['goods_id']))}" class="text" target="_self">编辑产品 > {$goods.goods_name}</a></div>
+    </div>
+    <div class="clear"></div>
+    <!--表格start-->
+    <div class="tbox" style="min-height:500px;"> 
+      <!--列表区域start-->
+      <div class="movezone">
+        <form id="admin_form" method="post" enctype="multipart/form-data">
+          <div class="movebar">
+            <ul> 
+              <li class="current"><a href="javascript:void(0)">产品表</a></li>
+              <li><a href="javascript:void(0)">产品描述</a></li>
+              <li><a href="javascript:void(0)">产品规格</a></li>
+              <li><a href="javascript:void(0)">关联文章</a></li>
+              <!---->
+            </ul>
+            <div class="clear"></div>
+          </div>
+          <div id="signupForm">
+            <div class="error"></div>
+          </div>
+          <div class="selectbox"> 
+            <!--产品表start-->
+            <div class="movelist" id="movelist_0">
+              <div class="formbox">
+                <div class="listname">
+                  <label>淘宝ID:</label>
+                  <div class="inbox">
+                    <input type="text" id="outer_id" name="outer_id" value="{$goods.outer_id}" class="span240">
+                    <input type="button" onClick="getTbInfo();" value="采集淘宝数据" /> </div>
+                </div> 
+                <div class="listname" id="tips" style="display:none;">
+                  <label style="color:#f00">提示:</label>
+                  <div class="inbox">该淘宝ID已经存在！！！
+                  方案一：<a href="{:U('add')}" id="a1">发布其它产品</a>   &nbsp;&nbsp;                   
+                  方案二：<a href="javascript:void(0);" id="a2">继续新增该产品</a>   &nbsp;&nbsp; 
+                  方案三：<a href="{:U('edit')}" id="a3">修改老产品</a>
+                  </div>
+                </div> 
+                <div class="listname">
+                  <label>产品名称:</label>
+                  <div class="inbox">
+                    <input type="text" id="goods_name" name="goods_name" value="{$goods.goods_name}" class="span240">
+                  (逗号","列表页显示换行)</div>
+                </div>
+                <div class="listname">
+                  <label>产品编码:</label>
+                  <div class="inbox">
+                    <input type="text" id="goods_code" name="goods_code" value="{$goods.goods_code}" class="span240">
+                  </div>
+                </div>
+                <div class="listname">
+                  <label>市场价:</label>
+                  <div class="inbox">
+                    <input type="text" id="market_price" name="market_price" value="{$goods.market_price}" class="span240">
+                  </div>
+                </div>
+                <div class="listname">
+                  <label>折后价:</label>
+                  <div class="inbox">
+                    <input type="text" id="price" name="price" value="{$goods.price}" class="span240">
+                  </div>
+                </div>                
+                <div class="listname">
+                  <label>产品主图:</label>
+                  <div class="inbox"> 
+                       <!--uploadW start-->
+                        <div id="uploadW" class="ui-draggable" style="display:none; cursor:move; margin-left:50px; margin-top:40px; position:absolute; z-index:1999; border:5px solid #a8a8a8; width:760px; height:450px; background:rgba(255,255,255,8.2); border-radius:6px; box-shadow:0 0 15px #999; left: 94px; top: 5px;">
+                        	<div id="closeW1"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+                            <div style="height:490px; clear:both; padding:10px;">
+                            	<iframe id="uploadFrame" src="/Admin/Mygoods/upload.html?fieldId=goods_img"  width="730px;" height="400px;"></iframe> 
+                            </div>
+                        </div>
+                        <!--uploadW end-->
+                        <table id="preview" width="500" border="0" cellspacing="0" cellpadding="0" >
+                      <tr>
+                        <td width="90" height="103" align="center"><img id="img_goods_img" src="{$goods.goods_img}" width="80"/><div><input name="default_img" type="radio" value="1" checked /></div></td>
+                        <td width="90" align="center"><img id="img_goods_img02" src="{$goods.goods_img2}" width="80"/><div><input type="radio" value="2" name="default_img" /></div></td>
+                        <td width="90" align="center"><img id="img_goods_img03" src="{$goods.goods_img3}" width="80"/><div><input type="radio" value="3" name="default_img" /></div></td>
+                        <td width="90" align="center"><img id="img_goods_img04" src="{$goods.goods_img4}" width="80"/><div><input type="radio" value="4" name="default_img" /></div></td>
+                        <td width="90" align="center"><img id="img_goods_img05" src="{$goods.goods_img5}" width="80"/><div><input type="radio" value="5" name="default_img" /></div></td>
+                      </tr>
+                    </table>
+                    
+                        <table width="648" border="0" cellpadding="0" cellspacing="2">
+                      <tr>
+                        <td><input type="text" id="goods_img" name="goods_img" value="{$goods.goods_img}" class="span240"> <a href="#" onMouseOver="showImg('goods_img',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="goods_img" class="upload_goods_img" value="上传图片" />
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" id="goods_img2" name="goods_img2" value="{$goods.goods_img2}" class="span240"> <a href="#" onMouseOver="showImg('goods_img2',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="goods_img2" class="upload_goods_img" value="上传图片" /></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" id="goods_img3" name="goods_img3" value="{$goods.goods_img3}" class="span240"> <a href="#)" onMouseOver="showImg('goods_img3',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="goods_img3" class="upload_goods_img" value="上传图片" /></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" id="goods_img4" name="goods_img4" value="{$goods.goods_img4}" class="span240"> <a href="#" onMouseOver="showImg('goods_img4',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="goods_img4" class="upload_goods_img" value="上传图片" /></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" id="goods_img5" name="goods_img5" value="{$goods.goods_img5}" class="span240"> <a href="#" onMouseOver="showImg('goods_img5',this)" target="_blank">预览</a>&nbsp;&nbsp; <input type="button" ref="goods_img5" class="upload_goods_img" value="上传图片" /></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div> 
+                
+                <div class="listname none">
+                  <label>详情页图片:</label>
+                  <div class="inbox"> 
+                    <table width="648" border="0" cellpadding="0" cellspacing="2">
+                      <tr>
+                        <td><textarea cols="100" name="wapImg" style="width:500px; height:150px; font-size:12px;" >{$goods.wapImg}</textarea>
+                            <br>(多张图片用逗号“,”分割开)
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div> 
+
+                <div class="listname">
+                  <label>详情页图文:</label>
+                  <div class="inbox"> 
+                    <table width="648" border="0" cellpadding="0" cellspacing="2">
+                      <tr>
+                        <td><textarea cols="100" id="wapDesc" name="wapDesc" style="width:750px; height:400px; font-size:12px;" >{$goods.wapDesc}</textarea>
+                            <br>(多张图片用逗号“,”分割开)
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>                 
+                <div class="listname">
+             		<label>收藏量:</label>
+                  <div class="inbox">
+                    <input type="text" id="click_count" name="click_count" value="{$goods.click_count}" class="span240">
+                  </div>
+                </div>
+                <div class="listname">
+             		<label>排序:</label>
+                  <div class="inbox">
+                    <input type="text" id="sort_order" name="sort_order" value="{$goods.sort_order}" class="span240">
+                  </div>
+                </div>
+                <div class="listname">
+                  <label>是否上架:</label>
+                  <div class="inbox">
+                    <p class="radio"> <input type="radio" id="is_on_sale" name="is_on_sale" value="1" 
+                      
+                      <if condition="$goods.is_on_sale eq 1">checked</if>
+                      >是 </p>
+                    <p class="radio"> <input type="radio" id="is_on_sale" name="is_on_sale" value="0" 
+                      
+                      <if condition="$goods.is_on_sale eq 0">checked</if>
+                      >否 </p>
+                  </div>
+                </div>
+ 
+              </div>
+            </div>
+            <!--产品表end--> 
+            
+            <!--产品描述start-->
+            <div class="movelist" id="movelist_1" style="display:none;">
+              <div class="formbox">
+                <div class="listname"> 
+                  <script id="goods_desc" name="goods_desc" type="text/plain" style="width:1024px;height:300px;">{$goods.goods_desc|htmlspecialchars_decode}</script> 
+                </div>
+              </div>
+            </div>
+            <!--产品描述end--> 
+            
+ 			<!--选择产品规格start-->
+            <div class="movelist none" id="movelist_3" style="min-height:450px;">
+            
+              <div class="formbox">
+                <div class="listname111"> 
+                      <volist name='options' id='opt'>
+                            <li class="option_div">
+                            	<label style="font-weight:bold;"><input name="opt" type="checkbox" value="{$opt.option_id}" /> {$opt.name}</label>
+                            	<div class="clear option_value_div">
+                                	<volist name="opt.option_value" id="v">
+                                		<label style="width:150px; line-height:1.5; float:left; border:0px solid #CCC;"><input name="option_value_{$opt.option_id}" type="radio" value="{$v.option_value_id}" /> <span>{$v.value_name}</span></label>
+                                	</volist>
+                                </div>
+                            </li>
+                      </volist>  
+                      <div class="clear"></div>
+                      
+                    <div id="spec_list"><br>
+                   		  <table width="328" id="sp_table" class="none" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td align="center">属性</td>
+                              <td align="center">价格</td>
+                              <td align="center">库存</td>
+                              <td align="center">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td align="center"><div id="option_list" class="option_list"></div>
+                              	 <input type="hidden" id="spec_v" name="spec_v" value="">
+                              </td>
+                              <td align="center" valign="middle"><input id="sp_price" name="sp_price" type="text" value="" class="small_input"/></td>
+                              <td align="center" valign="middle"><input id="sp_qty" name="sp_qty" type="text" value="10000" class="small_input"/></td>
+                              <td align="center" valign="middle"><input type="button" class="spec_plus" value="添加+" /></td>
+                            </tr>
+                          </table>
+                        <!---------已添加规格--------->  
+                   		<div class="clear title_txt">已添加规格：<div style="float:right; width:120px;">总库存：<span class="total_qty">{$total_qty|default=0}</span></div></div>
+                   		  <table class="table_spec" width="400" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <th>属性编码</th> 
+                              <th>规格</th>
+                              <th>价格</th>
+                              <th>库存</th>
+                              <th>&nbsp;</th> 
+                            </tr> 
+                            <volist name="specs" id="spec">
+                            	<tr><td align="center" valign="middle" class="spec_value_td">{$spec.option_value_ids}<input type="hidden" name="option_value_ids[]" value="{$spec.option_value_ids}" /></td><td align="center"><div class="option_line">{$spec.option}</div></td><td align="center" valign="middle">{$spec.price}<input type="hidden" name="option_price[]" value="{$spec.price}" class="price" /></td><td align="center" valign="middle">{$spec.quantity}<input type="hidden" name="option_quantity[]" value="{$spec.quantity}" class="quantity" /></td><td align="center" valign="middle"><a href="#" class="spec_minus">删除</a></td></tr>
+                            </volist>
+                          </table> 
+                     	</div>
+                  	</div>
+                </div>
+              </div> 
+            
+            <!--选择产品规格end--> 
+            
+			<!--选择关联文章start-->
+            <div class="movelist" id="movelist_4" style="display:none; min-height:450px;">
+              <div class="formbox">
+                <div class="listname">
+                  <div class="inbox coa"> 
+                      <div class="addipt"> <!--<i class="icon_add"></i>-->
+                        <div class="imginbox">
+                        <span> 文章ID:</span> 
+                        <span> <input type="hidden" id="article_ids" name="article_ids" value="{$article_ids}"></span>
+                        <span> <input type="button" id="selButton" name="selButton" value="选择文章" class="span80 ml5"></span>
+                        <span id="aTitle" style="font-weight:normal;font-size:14px;">{$article_ids}</span> 
+                        </div>
+                        <!--articleW start-->
+                        <div id="articleW" style="display:none; margin-left:50px; margin-top:40px; position:absolute; z-index:99; border:5px solid #a8a8a8; width:760px; height:350px; background:rgba(195,195,195,0.2); border-radius:6px;box-shadow:0 0 15px #999;">
+                        	<div id="closeW"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+                            <div style="height:490px; clear:both; padding:10px;">
+                            	<iframe src="/Admin/Myarticle/sel.html?ids={$article_ids}"  width="730px;" height="300px;"></iframe> 
+                            </div>
+                        </div>
+                        <!--articleW end-->
+                        
+                      </div> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--选择关联文章end--> 
+            
+            <!--产品相册start-->
+            <div class="movelist" id="movelist_2" style="display:none;">
+              <div class="formbox">
+                <div class="listname"> 
+                  <!--图片展示start-->
+                  <div class="imgbox">
+                    <ul>
+                      <volist name="gallery" id="list">
+                        <li>
+                          <p><img src="/{$list.img_thumb}"  width="50" height="50"></p>
+                          <p>
+                            <input type="text" value="{$list.sort_order}" id="upload_sort_order" name="upload_sort_order[]" class="span40">
+                          </p>
+                          <p>
+                            <input type="text" value="{$list.img_desc}" id="upload_img_desc" name="upload_img_desc[]" class="span100">
+                          </p>
+                          <p>
+                            <input type="hidden" id="upload_img_id" name="upload_img_id[]" value="{$list.img_id}">
+                            <a href="javascript:;" enpty="drop_img" url="{:U('ajax_drop_gallery',array('id'=>$list['img_id']))}">删除</a></p>
+                        </li>
+                      </volist>
+                    </ul>
+                    <div class="clear"></div>
+                  </div>
+                  <!--图片展示end-->
+                  
+                  <div class="inbox">
+                    <div class="addipt"> <i class="icon_add"></i>
+                      <div class="imginbox"> <span>排序
+                        <input type="text" id="sort_order" name="img_order[]" value="" class="span40 ml5">
+                        </span> <span>图片描述
+                        <input type="text" id="img_desc" name="img_desc[]" value="" class="span240 ml5">
+                        </span> <span>上传文件
+                        <input type="file" id="imgs" name="imgs[]" value="" class="ml5">
+                        </span> </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--产品相册end-->  
+                       
+           
+            
+           <!--SEO优化start-->
+            <div class="movelist" id="movelist_5" style="display:none;">
+              <table width="100%" height="93" border="0">
+                <tr>
+                  <td width="157" align="right">SEO Title:</td>
+                  <td width="964" align="left"><input type="text" id="seo_title" name="seo_title" value="{$goods.seo_title}" class="span240"></td>
+                </tr>
+                <tr>
+                  <td align="right">SEO keywords:</td>
+                  <td align="left"><input type="text" id="seo_keywords" name="seo_keywords" value="{$goods.seo_keywords}"  class="span240">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="right">SEO Descriptions:</td>
+                  <td align="left"><textarea name="seo_descriptions" id="seo_descriptions">{$goods.seo_descriptions}</textarea>&nbsp;</td>
+                </tr>
+              </table>
+            </div>
+            <!--SEO优化end-->
+            
+          </div>
+          <input type="hidden" id="shop_name" name="shop_name" value="{$goods.shop_name}">
+          <input type="hidden" id="seller_type" name="seller_type" value="{$goods.seller_type}">
+          <input type="hidden" id="seller_nick" name="seller_nick" value="{$goods.seller_nick}">
+          <input type="hidden" id="id" name="id" value="{$goods.goods_id}">
+          <input type="hidden" id="referer" name="referer" value="{$_SERVER.HTTP_REFERER}">
+          <input type="button" value="保存" class="submit1 btn btn_ds p_deline"/>
+        </form>
+      </div>
+      <!--列表区域end--> 
+      
+    </div>
+    <!--表格end--> 
+  </div>
+  <!--content end--> 
+</section>
+</body>
+</html>

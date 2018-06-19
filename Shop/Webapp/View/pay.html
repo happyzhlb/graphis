@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://graphis.ne.jp/member/edit.php -->
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<title>マイページ - GRAPHIS NO.1 GRAVURE WEB SITE</title>
+
+<!--キャッシュクリア-->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!--css-->
+<link rel="stylesheet" type="text/css" href="./user_files/reset_html5.css">
+<link rel="stylesheet" type="text/css" href="./user_files/default.css">
+<link rel="stylesheet" type="text/css" href="./user_files/default-tb.css">
+<link rel="stylesheet" type="text/css" href="./user_files/default-sp.css">
+<link rel="stylesheet" type="text/css" href="./user_files/modelpage.css">
+<link rel="stylesheet" type="text/css" href="./user_files/item-himekuri.css">
+<link rel="stylesheet" type="text/css" href="./user_files/loader.css">
+<link rel="stylesheet" type="text/css" href="./user_files/jquery.mCustomScrollbar.css">
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" type="text/css" href="/files/css/lte_ie9.css">
+<![endif]-->
+
+<!--js-->
+<script src="./user_files/jquery.min.js"></script>
+<script src="./user_files/fullSlideShow.js"></script>
+<script src="./user_files/gra-common.js"></script>
+<script src="./user_files/loader.js"></script>
+<style type="text/css">
+#wrapper {
+	display: none;
+}
+#fade, #loader {
+	display: block;
+}
+</style>
+<script src="./user_files/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="./user_files/slide_menu.js"></script>
+<script src="./user_files/slide_show.js"></script>
+<script src="./user_files/flexibility.js"></script>
+
+<!--[if lte IE 9]>
+<script src="/files/js/flexibility.js"></script>
+<script>
+    $(function(){
+        flexibility(document.documentElement);
+    });
+</script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- java script-->
+<script>
+		(function($){
+			$(window).load(function(){
+				
+				$(".scroll-box").mCustomScrollbar({
+					theme:"light",
+					scrollInertia:400
+				});
+			});
+		})(jQuery);
+		
+</script>
+<!-- java script-->
+
+<!-- java script-->
+<script>
+/*日本語英語切り替え*/
+$(function() {
+    $('#switch-en').click(function(){
+        $('.jp-on').css('display','none');
+        $('.jp-txt').css('display','none');
+		$('.en-on').css('display','block');
+		$('.en-txt').css('display','inline');
+		$(this).css({'display':'none'});
+		$('#switch-jp').css('display','inline-block');
+    });
+
+    $('#switch-jp').click(function(){
+		$('.en-on').css('display','none');
+		$('.en-txt').css('display','none');
+        $('.jp-on').css('display','block');
+        $('.jp-txt').css('display','block');
+		$(this).css({'display':'none'});
+		$('#switch-en').css('display','inline-block');
+    });
+});
+/*日本語英語切り替え*/
+</script>
+<!-- java script-->
+
+<link rel="stylesheet" type="text/css" href="./user_files/member.css">
+</head>
+<body>
+
+<!-- ヘッダーナビ -->
+<header>
+  <div id="head-navi3">
+    <div class="head-navi3-box">
+      <div class="head-navi-logo"><a href="http://graphis.ne.jp/"><img src="./user_files/gralogo.svg" class="gralogo-head"></a></div>
+      <div class="head-navi-list"> 
+        
+        <!--ログインの判断-->
+        
+        <nav>
+          <ul>
+            <li class="acd-models"> <a href="http://graphis.ne.jp/monthly/"><span class="text-en">Models</span><br>
+              <span class="text-jp">公開モデル</span></a>
+              <ul class="acd-models-box" style="display: none; height: 469px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                <li><a href="http://graphis.ne.jp/monthly/">NEW MODELS/新モデル</a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?RM=1">MEMBER/メンバー公開一覧</a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?RM=2">STAGE.1/ステージ1公開一覧</a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?RM=3">STAGE.2/ステージ2公開一覧</a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?MC=1">GRAPHIS GALS/グラフィスギャルズ</a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?MC=2">FIRST GRAVURE/初脱ぎ娘！</a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?MC=3">LIMITED EDITTION/期間限定</a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?MC=4">SPECIAL/スペシャル企画 </a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?MC=5">FETI STYLE/フェチスタイル </a></li>
+                <li><a href="http://graphis.ne.jp/monthly/?MC=6">CALENDAR/日めくり</a></li>
+                <!--                
+                <li class="close-gallery"><a href="http://graphis.ne.jp/monthly/?MIC03=7">SHIFT to STAGE1/ステージ1へ移行</a></li>
+                <li class="close-gallery"><a href="http://graphis.ne.jp/monthly/?MIC03=8">SHIFT to STAGE2/ステージ2へ移行</a></li>
+                <li class="close-gallery"><a href="http://graphis.ne.jp/monthly/?MIC03=6">CLOSE GALLERY/公開終了</a></li>
+-->
+              </ul>
+            </li>
+            <li><a href="http://graphis.ne.jp/page/?ID=award"><span class="text-en">Award</span><br>
+              <span class="text-jp">アワード</span></a></li>
+            <li><a href="http://graphis.ne.jp/ppv/"><span class="text-en">PPV</span><br>
+              <span class="text-jp">単品ダウンロード</span></a></li>
+            <li><a href="http://graphis.ne.jp/page/?ID=guide"><span class="text-en">Guide</span><br>
+              <span class="text-jp">サイト紹介</span></a></li>
+            <li><a href="http://graphis.ne.jp/page/?ID=contact"><span class="text-en">Contact</span><br>
+              <span class="text-jp">お問い合わせ</span></a></li>
+          </ul>
+        </nav>
+        <div class="head-join-box">
+          <ul>
+            <li class="btn-mypage"><a href="http://graphis.ne.jp/member/menu.php"><span class="text-en">MY PAGE</span><br>
+              <span class="text-jp">マイページ</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /.head-navi-list --> 
+      
+    </div>
+    
+    <!--ログインの判断-->
+    
+    <div class="login-info-box">
+      <div class="user-nfo-box">
+        <ul>
+          <li>rainman828</li>
+          <li class="on-w960">[購入Pt/Purchased Pt] 0pt</li>
+          <li class="on-w960">[サービスPt/Service Pt] 0pt</li>
+          <li class="on-w00">[利用期限/period] </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!--ヘッダーナビ縮小-->
+  <div id="head-navi2">
+    <div class="head-navi2-box">
+      <ul>
+        <li id="btn-menu">
+          <div>MENU</div>
+        </li>
+        <li class="head-logo">
+          <div><a href="http://graphis.ne.jp/"><img src="./user_files/gralogo.svg"></a></div>
+        </li>
+        
+        <!--ログインの判断-->
+        
+        <li class="btn-mypage"><a href="http://graphis.ne.jp/member/menu.php">MY PAGE</a></li>
+      </ul>
+    </div>
+    
+    <!--ログインの判断-->
+    
+    <div class="login-info-box">
+      <div class="user-nfo-box">
+        <ul>
+          <li>rainman828</li>
+          <li class="on-w960">[購入Pt/Purchased Pt] 0pt</li>
+          <li class="on-w960">[サービスPt/Service Pt] 0pt</li>
+          <li class="on-w00">[利用期限/period] </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--ヘッダーナビ縮小--> 
+  
+  <!--スライドナビ-->
+  <div id="slide-menu">
+    <navi class="slide-navi">
+      <ul>
+        
+        <!--ログインの判断-->
+        
+        <div class="login-space"></div>
+        <li class="model accordion"> <span class="toggle">MODELS/モデル一覧</span>
+          <ul>
+            <li><a href="http://graphis.ne.jp/monthly/">NEW MODELS/新モデル</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?RM=1">MEMBER/メンバー公開一覧</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?RM=2">STAGE.1/ステージ1公開一覧</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?RM=3">STAGE.2/ステージ2公開一覧</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?MC=1">GRAPHIS GALS/グラフィスギャルズ</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?MC=2">FIRST GRAVURE/初脱ぎ娘！</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?MC=3">LIMITED EDITTION/期間限定</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?MC=4">SPECIAL/スペシャル企画</a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?MC=5">FETI STYLE/フェチスタイル </a></li>
+            <li><a href="http://graphis.ne.jp/monthly/?MC=6">CALENDAR/日めくり</a></li>
+            <!--        
+                <li class="close-gallery"><a href="http://graphis.ne.jp/monthly/?MIC03=7">SHIFT to STAGE1/ステージ1へ移行</a></li>
+                <li class="close-gallery"><a href="http://graphis.ne.jp/monthly/?MIC03=8">SHIFT to STAGE2/ステージ2へ移行</a></li>
+                <li class="close-gallery"><a href="http://graphis.ne.jp/monthly/?MIC03=6">CLOSE GALLERY/公開終了</a></li>
+-->
+          </ul>
+        </li>
+        <li class="photo"><a href="http://graphis.ne.jp/page/?ID=award">Award/アワード</a></li>
+        <li class="photo"><a href="http://graphis.ne.jp/ppv/">PPV/単品ダウンロード</a></li>
+        <li class="photo"><a href="http://graphis.ne.jp/page/?ID=guide">ABOUT SITE/サイト紹介</a></li>
+        <li class="photo"><a href="http://graphis.ne.jp/page/?ID=contact">CONTACT/お問い合わせ</a></li>
+      </ul>
+    </navi>
+  </div>
+  <!--スライドナビ--> 
+  
+</header>
+<!-- /ヘッダーナビ --> 
+
+<!--ログインの判断--> 
+
+<!--ログイン時スペース-->
+<div class="login-head-space"></div>
+<div id="wrapper" class="slide" style="display: block;"> 
+  
+  <!-- コンテンツ -->
+  <div id="content-gp">
+    <p class="pan-link"><a href="http://graphis.ne.jp/">TOP</a> &gt; <a href="http://graphis.ne.jp/member/menu.php">マイページ/My page</a> &gt; 定額サービス申し込み/service application</p>
+    <section id="message-section">
+      <h3><span class="text-en">SERVICE APPLICATION</span> <span class="text-jp">/定額サービス申込み</span></h3>
+      <div class="join-box main-box apply-box">
+        <p>【定額サービス申し込み/Flat-rate service application】</p>
+        <div class="go-en">
+          <ul>
+            <li class="jp">日本国外の方は専用ページよりお申込みください。</li>
+            <li class="en">If you are outside Japan please apply from dedicated page.</li>
+          </ul>
+          <a href="http://graphis.ne.jp/member/monthly.php?lang=en" target="_self">Click here if you are outside Japan</a> </div>
+        <div class="credit-info">
+          <div class="head">【CREDIXクレジットカード決済(セキュアリンクバッチ)】</div>
+          <div class="credit-exp"> クレジットカードは、VISA、Master、JCBが使えます。
+            <ul class="credit-icons">
+              <li><img src="./user_files/credit-visa.png"></li>
+              <li><img src="./user_files/credit-mc.png"></li>
+              <li><img src="./user_files/credit-jcb.png"></li>
+            </ul>
+            <div class="text"> 当サービスは自動継続ですので、サービス停止をされるまで 30日毎、60日毎、90日毎ごとに課金されます。決済日はお申し込みされた日からそれぞれ30日、60日、90日後のAM7:00です。システムは決済は実績と信頼の株式会社CREDIXによるクレジットカード決済なので安心です。 </div>
+          </div>
+          <div class="course-list">
+            <div>
+              <ul>
+                <li class="course">COURSE <span>1</span></li>
+                <li class="price"><span>1,980</span>&nbsp;円<br>
+                  (ご継続時:1,980&nbsp;円)</li>
+                <li class="days"><span>30</span>&nbsp;日<br>
+                  (ご継続時:30&nbsp;日)</li>
+                <li class="point"><span>500</span>&nbsp;Pt<br>
+                  (ご継続時:500&nbsp;Pt)</li>
+                <li class="application">
+                  <form method="post" action="https://secure.credix-web.co.jp/cgi-bin/credit/order.cgi" target="_blank">
+                    <input type="hidden" name="clientip" value="56575">
+                    <input type="hidden" name="money" value="1980">
+                    <input type="hidden" name="sendid" value="8060">
+                    <input type="hidden" name="sendpoint" value="">
+                    <input type="hidden" name="telno" value="">
+                    <input type="hidden" name="email" value="adiao828@hotmail.com">
+                    <input type="hidden" name="success_url" value="http://graphis.ne.jp/">
+                    <input type="hidden" name="success_str" value="トップページへ">
+                    <input type="hidden" name="failure_url" value="http://graphis.ne.jp/">
+                    <input type="hidden" name="failure_str" value="トップページへ">
+                    <input type="submit" value="決済ページへ">
+                  </form>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li class="course">COURSE <span>2</span></li>
+                <li class="price"><span>3,800</span>&nbsp;円<br>
+                  (ご継続時:3,800&nbsp;円)</li>
+                <li class="days"><span>60</span>&nbsp;日<br>
+                  (ご継続時:60&nbsp;日)</li>
+                <li class="point"><span>1,000</span>&nbsp;Pt<br>
+                  (ご継続時:1,000&nbsp;Pt)</li>
+                <li class="application">
+                  <form method="post" action="https://secure.credix-web.co.jp/cgi-bin/credit/order.cgi" target="_blank">
+                    <input type="hidden" name="clientip" value="56575">
+                    <input type="hidden" name="money" value="3800">
+                    <input type="hidden" name="sendid" value="8060">
+                    <input type="hidden" name="sendpoint" value="">
+                    <input type="hidden" name="telno" value="">
+                    <input type="hidden" name="email" value="adiao828@hotmail.com">
+                    <input type="hidden" name="success_url" value="http://graphis.ne.jp/">
+                    <input type="hidden" name="success_str" value="トップページへ">
+                    <input type="hidden" name="failure_url" value="http://graphis.ne.jp/">
+                    <input type="hidden" name="failure_str" value="トップページへ">
+                    <input type="submit" value="決済ページへ">
+                  </form>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li class="course">COURSE <span>3</span></li>
+                <li class="price"><span>5,600</span>&nbsp;円<br>
+                  (ご継続時:5,600&nbsp;円)</li>
+                <li class="days"><span>90</span>&nbsp;日<br>
+                  (ご継続時:90&nbsp;日)</li>
+                <li class="point"><span>1,500</span>&nbsp;Pt<br>
+                  (ご継続時:1,500&nbsp;Pt)</li>
+                <li class="application">
+                  <form method="post" action="https://secure.credix-web.co.jp/cgi-bin/credit/order.cgi" target="_blank">
+                    <input type="hidden" name="clientip" value="56575">
+                    <input type="hidden" name="money" value="5600">
+                    <input type="hidden" name="sendid" value="8060">
+                    <input type="hidden" name="sendpoint" value="">
+                    <input type="hidden" name="telno" value="">
+                    <input type="hidden" name="email" value="adiao828@hotmail.com">
+                    <input type="hidden" name="success_url" value="http://graphis.ne.jp/">
+                    <input type="hidden" name="success_str" value="トップページへ">
+                    <input type="hidden" name="failure_url" value="http://graphis.ne.jp/">
+                    <input type="hidden" name="failure_str" value="トップページへ">
+                    <input type="submit" value="決済ページへ">
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- /.course-list --> 
+          
+          <br>
+          <br>
+          <!--※自動継続タイプの場合は、「ご継続時」の表示有り-->
+          
+          <div class="credit-exp"> ※必ずお読みください。<br>
+            <ul class="read">
+              <li><a href="https://secure.credix-web.co.jp/cgi-bin/pc_exp.cgi?clientip=56575" target="_blank">&gt;&gt;クレジットカード決済に関するご説明</a></li>
+              <li><a href="http://graphis.ne.jp/files/htmlpage/kiyaku.html" target="_blank">&gt;&gt;会員規約</a></li>
+            </ul>
+            <ul class="small">
+              <li>※１時間以上経過しても決済メール（ ID・パスワード記入）が届かない場合、お客様のメールアドレスが間違っている等の不具合の可能性がありますので、至急こちらのフォームからお問い合わせ下さい。</li>
+              <li>※請求書は「CREDIX」または「ちょコム－０５７００７３２１０」名義で請求されます。GRAPHISの文字はどこにも記載されません。</li>
+              <li>※クレジットカードの請求内容に関するお問い合せは、（株）CREDIXサポートセンターでお電話とメールにて承っております。<br>
+                電話番号：0570-07-3210（つながらない場合は 03-6832-1339）、Eメール：creditinfo@credix-web.co.jp　※24時間365日対応しております。 </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /.credit-info-->
+        
+        <hr>
+        <div class="bank-apply">
+          <div class="head">【銀行振込】</div>
+          <div class="bank-exp"> <span class="red">銀行振込のお申し込みの方法が変わりました。</span><br>
+            希望のコース等の登録は必要ありません。下記の振込先に希望のコースの金額をお振込いただいて忘れずにメールでご連絡ください。<br>
+            お振込名からお客様の本人確認が困難でございますのでお振込後のメールは必ずお願いいたします。<br>
+            <br>
+            銀行決済では90日決済と180日決済の2つの方法の中からお選びいただけます！<br>
+            自動継続はされませんので、90日毎、180日毎にお振込みのお手続きが必要になります。 </div>
+          <table>
+            <tbody>
+              <tr>
+                <td>コース</td>
+                <td>金額</td>
+                <td>日数</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>5600&nbsp;円</td>
+                <td>90&nbsp;日</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>10000&nbsp;円</td>
+                <td>180&nbsp;日</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <br>
+          <div class="bank-guide">
+            <p>【お申込み方法】</p>
+            <img src="./user_files/bank-guide.svg"> </div>
+          <div class="bank-info">
+            <p>【振込先ご案内】</p>
+            <div> <span class="red">※お振込の際は必ず、振込名のはじめに「01」とご入力下さい。</span><br>
+              <br>
+              例）　01　ヤマダタロウ（お振込名）<br>
+              <br>
+              <ul class="bank-accounts">
+                <p>■ 振込先</p>
+                <li>三菱UFJ銀行 目黒支店</li>
+                <li>普通口座： 1047619</li>
+                <li>口座名義： 株式会社グラフィス</li>
+                ※送金手数料はご負担ください。<br>
+                ※早朝・夜間・土日祝はご返答ができませんのでご了承ください。
+              </ul>
+            </div>
+          </div>
+          <div class="bank-mail-box">
+            <p>【振込完了メール】</p>
+            <div> 料金のお振込みが完了しましたら下記より振込名、登録メールアドレス、ご入金額をご連絡ください。<br>
+              <span class="font-12px">※クリックしてもメーラーが立ち上がらない場合は、card@graphis.ne.jpまで直接メールを送信してください。</span> </div>
+            <div class="transfer-report"> <a href="mailto:card@graphis.ne.jp?subject=%E6%8C%AF%E8%BE%BC%E5%AE%8C%E4%BA%86%E3%83%A1%E3%83%BC%E3%83%AB&amp;body=%E5%BF%85%E8%A6%81%E4%BA%8B%E9%A0%85%E3%82%92%E3%81%94%E8%A8%98%E5%85%A5%E3%81%AE%E4%B8%8A%E3%80%81%E9%80%81%E4%BF%A1%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0d%0a%0d%0a%E6%8C%AF%E8%BE%BC%E5%90%8D%EF%BC%9A%0d%0a%0d%0aID(%E7%99%BB%E9%8C%B2%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9)%EF%BC%9A%0d%0a%0d%0a%E5%85%A5%E9%87%91%E9%A1%8D%EF%BC%9A%0d%0a%0d%0a">&lt;振込完了の連絡をする&gt;</a> </div>
+          </div>
+        </div>
+        <!-- /.bank-apply --> 
+        
+      </div>
+    </section>
+  </div>
+  <!--/#content-gp--> 
+  <!-- /コンテンツ --> 
+  
+  <!-- フッター -->
+  
+  <div id="navi-bottom-gp">
+    <div class="navi-bottom-logo"> <img src="./user_files/gralogo.svg" alt="GRAPHIS"> </div>
+    <div class="navi-bottom-section"> 
+      
+      <!--ログインの判断-->
+      
+      <ul>
+        <li><a href="http://graphis.ne.jp/">TOP /トップページ</a></li>
+        <li><a href="http://graphis.ne.jp/member/logout.php">Logout /ログアウト</a></li>
+        <li><a href="http://graphis.ne.jp/monthly/">Models /公開モデル</a></li>
+      </ul>
+      <ul>
+        <!--<li><a href="#">スタッフ（モデル等）募集</a></li>-->
+        <li><a href="http://graphis.ne.jp/files/htmlpage/legal.html" target="_blank">特定商取引法に基づく表示</a></li>
+        <li><a href="http://graphis.ne.jp/files/htmlpage/legal02.html" target="_blank">改正風営法に基づく表記</a></li>
+        <li><a href="http://graphis.ne.jp/files/htmlpage/kiyaku.html" target="_blank">ご利用規約</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--/#navi-bottom-->
+  
+  <footer class="tpl">
+    <p><span class="text-jp">当サイトに掲載されている画像・動画ファイル及び文章等の無断転載及び使用を固く禁じます。</span><br>
+      <span class="text-en">All contents on this website are the copyright of GRAPHIS.Unauthorized copy or any form of reproduction is strictly prohibited.</span></p>
+    <p>Copyright (C) 2018 graphis.ne.jp All rights reserved.</p>
+  </footer>
+  <!-- /フッター --> 
+  
+  <!--	google analytics等	--> 
+  
+</div>
+<!--/#wrapper--> 
+
+<!--	google analytics等	-->
+
+</body>
+</html>

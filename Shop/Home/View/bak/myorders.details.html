@@ -1,0 +1,339 @@
+<include file="./Shop/Home/View/header.html" />
+<if condition="($order.order_status eq 30) && ($order.refund_status eq 0)">
+<script type="text/javascript">
+var intDiff = parseInt('{$order.auto_confirm_delivery}');
+$(function(){
+	timer(intDiff);	
+});
+function timer(intDiff){
+	window.setInterval(function(){
+		var day=0,
+			hour=0,
+			minute=0,
+			second=0;//时间默认值		
+		if(intDiff > 0){
+			day = Math.floor(intDiff / (60 * 60 * 24));
+			hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+			minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+			second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+		}
+		if (minute <= 9) minute = '0' + minute;
+		if (second <= 9) second = '0' + second;
+		$('.tips strong').html(day + " days " + hour + " hours " + minute + " minutes " + second + " seconds ");
+		intDiff--;
+	}, 1000);
+}
+</script>
+</if>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var boxLength = $("#newStepBox1").length;
+		if(boxLength == 1){
+			var stepShow = ["stepShow1","stepShow2","stepShow3","stepShow4","stepShow5"];
+			var stepCur = $("#newStepBox1 .step").index($("#newStepBox1 .current"));
+			var curLength = $("#newStepBox1 .current").length;
+			if(curLength == 0){
+				$("#newStepBox1 .stepShow").addClass("stepShow5");
+			}else{
+				$("#newStepBox1 .stepShow").addClass(stepShow[stepCur]);	
+			}	
+		}else{
+			var stepShow = ["stepShow1","stepShow2","stepShow3","stepShow4"];
+			var stepCur = $("#newStepBox .step").index($("#newStepBox .current"));
+			var curLength = $("#newStepBox .current").length;
+			if(curLength == 0){
+				$("#newStepBox .stepShow").addClass("stepShow4");
+			}else{
+				$("#newStepBox .stepShow").addClass(stepShow[stepCur]);	
+			}	
+		}
+		$("div.shipInfo .info dl").each(function(){
+			var dtHeight = $(this).find("dd").height() - 1;
+			$(this).find("dt").css({height:dtHeight,"line-height":dtHeight + "px"});
+		});
+	});
+</script>
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('/Member/index')}">My Account</a>&gt;
+    <a href="{:U('/Myorders')}">My Orders</a>&gt;
+    <span>Order Details</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<!--Order Details开始-->
+        <div class="orderDetail">
+            <neq name="order.order_status" value="0">
+            <eq name="order.shipping_code" value="CPU">
+            <!--新增步骤4步骤类型开始-->
+            <div id="newStepBox">
+              <div class="stepBj">
+                  <div class="stepShow"></div>
+                  <div class="step first past">
+                      <span class="time">{$order.add_time|todate=###,'Y-m-d H:i'}</span>
+                      <span class="each">1</span>
+                      <span class="content">Submit Order Information</span>
+                  </div>
+                  <div class="step second <if condition="$order.pay_time gt 0">past<elseif condition="$order.order_status eq 11"/>current</if>">
+                      <span class="time"><gt name="order.pay_time" value="0">{$order.pay_time|todate=###,'Y-m-d H:i'}</gt></span>
+                      <span class="each">2</span>
+                      <span class="content">Payment</span>
+                  </div>
+                  <div class="step third <if condition="$order.finish_time gt 0">past<elseif condition="$order.order_status eq 20"/>current</if>">
+                      <span class="time"><gt name="order.finish_time" value="0">{$order.finish_time|todate=###,'Y-m-d H:i'}</gt></span>
+                      <span class="each">3</span>
+                      <span class="content">Pick Up</span>
+                  </div>
+                  <div class="step fourth <if condition="$order.comment_time gt 0">past<elseif condition="$order.order_status eq 40"/>current</if>">
+                      <span class="time"><gt name="order.comment_time" value="0">{$order.comment_time|todate=###,'Y-m-d H:i'}</gt></span>
+                      <span class="each">4</span>
+                      <span class="content">Write a Review</span>
+                  </div>
+              </div>
+            </div>
+            <!--新增步骤4步骤类型结束-->
+            <else />
+            <div id="newStepBox1">
+                <div class="stepBj">
+                	<div class="stepShow"></div>
+                    <div class="step first past">
+                    	<span class="time">{$order.add_time|todate}</span>
+                        <span class="each">1</span>
+                        <span class="content">Submit Order Information</span>
+                    </div>
+                    <if condition="$order.pay_time gt 0">
+                    <div class="step second past">
+                    	<span class="time">{$order.pay_time|todate}</span>
+                    <elseif condition="$order.order_status eq 11" />
+                    <div class="step second  current">
+                    	<span class="time"></span>
+                    <else />
+                    <div class="step second">
+                    	<span class="time"></span>
+                    </if>
+                        <span class="each">2</span>
+                        <span class="content">Payment</span>
+                    </div>
+                    <if condition="$order.shipping_time gt 0">
+                    <div class="step third  past">
+                    	<span class="time">{$order.shipping_time|todate}</span>
+                    <elseif condition="$order.order_status eq 20" />
+                    <div class="step third current">
+                    	<span class="time"></span>
+                    <else />
+                    <div class="step third">
+                    	<span class="time"></span>
+                    </if>
+                        <span class="each">3</span>
+                        <span class="content">Delivery</span>
+                    </div>
+                    <if condition="$order.finish_time gt 0">
+                    <div class="step fourth  past">
+                    	<span class="time">{$order.finish_time|todate}</span>
+                   	<elseif condition="$order.order_status eq 30" />
+                   	<div class="step fourth  current">
+                    	<span class="time"></span>
+                    <else />
+                    <div class="step fourth">
+                    	<span class="time"></span>
+                    </if>
+                        <span class="each">4</span>
+                        <span class="content">Confirm Delivery</span>
+                    </div>
+                    <if condition="$order.comment_time gt 0">
+                    <div class="step fifth past">
+                    	<span class="time">{$order.comment_time|todate}</span>
+                    <else />
+                    <div class="step fifth">
+                    	<span class="time"></span>
+                    </if>
+                        <span class="each">5</span>
+                        <span class="content">Write a Review</span>
+                    </div>
+                </div>
+            </div>
+            </eq>
+            </neq>
+            
+            <neq name="order.shipping_code" value="CPU">
+            <!--Shipping Information 开始-->
+            <div class="shipInfo clearfix">
+            	<div class="info">
+                	<h4>Shipping Information</h4>
+                    <dl class="clearfix">
+                    	<dt>Recipient Name</dt>
+                        <dd>{$order.consignee}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Shipping Address</dt>
+                        <dd><p>{$order.address}&nbsp;&nbsp;{$order.zipcode}</p></dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Phone</dt>
+                        <dd>{$order.telephone}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Type of Delivery</dt>
+                        <dd>{$order.shipping_name}</dd>
+                    </dl>
+                    <dl class="clearfix">
+                    	<dt>Tracking Number</dt>
+                        <dd>{$order.invoice_no}</dd>
+                    </dl>
+                </div>
+                
+                <div class="doOther">
+                	<h2>Current order status: {$order.order_status|order_status=###,$order['refund_status']}</h2>
+                    <if condition="$order.refund_status neq 0">
+					<p>Refund Time: <em>{$order.refund_time|todate}</em></p>
+                    <else />
+                    	<if condition="$order.order_status eq 0">
+                        	<p>cancel Time: <em>{$order.cancel_time|todate}</em></p>
+                        <elseif condition="$order.order_status eq 11" />
+                    		<p class="tips">Your order has been submitted and awaits payment, please finish payment as soon as possible to get the order shipped.
+</p>						<div class="doSomeThing">
+                                <a href="{:U('/Myorders/pay',array('id'=>$order['order_id']))}">Pay Now</a>
+                                <a href="{:U('/Myorders/cancel',array('id'=>$order['order_id']))}">Cancel</a>
+                            </div>
+                        <elseif condition="$order.order_status eq 20" />
+                        	<p class="tips">Your payment has been confirmed and the order will be shipped in 1 business day.</p>
+                        <elseif condition="$order.order_status eq 30" />
+                        	<p class="tips">Order will be confirmed automatically in <strong><i class="loading"></i></strong>.Please confirm delivery in time.</p>
+                            <p>Type of Delivery: <em>{$order.shipping_name}</em>Tracking Number: {$order.invoice_no} </p>
+                            <neq name="track.Notification.Severity" value="SUCCESS">
+                            	<p>{$track.Notification.Message}</p>	
+                            <else />
+                                <volist name="track.Events" id="event">
+                                <p>{$event.Timestamp}<strong>{$event.EventDescription}</strong><span>{$event.StatusExceptionDescription}</span></p>
+                                </volist>
+                            </neq>
+                            <div class="doSomeThing">
+                                <a href="{:U('/Myorders/confirm',array('id'=>$order['order_id']))}">Confirm Delivery</a>
+                            </div>
+                        <elseif condition="$order.order_status eq 40" />
+                        	<p class="tips">Your review on our products will be much appreciated.Please note that you can make a refund/return request in 60 days since the payment date.</p>
+                            <p>{$order.finish_time|todate}<strong>Completed</strong>.</p>
+                            <eq name="order.comment_time" value="0">
+                            <div class="doSomeThing">
+                            	<a href="{:U('/Myorders/review',array('id'=>$order['order_id']))}">Review</a>
+                            </div>
+                            </eq>
+                        </if>    
+                    
+                    </if>
+                </div>
+                
+            </div>
+            <!--Shipping Information 结束-->
+        	<else />
+			<div class="pickUpDetail <eq name="order.order_status" value="0">pickUpCancelBox</eq>">
+            	<div class="pickUpInfo">
+                	<h2>Order Status:{$order.order_status|order_status=###,$order['refund_status'],'CPU'}</h2>
+                    <eq name="order.order_status" value="0">
+                        <p>{$order.cancel_time|todate}<em>canceld</em></p>
+                    </eq>
+                    <notempty name="$order.shipping_time">
+                    <p>{$order.shipping_time|todate=###,'Y-m-d H:i'}<em>Picked Up</em>.</p>
+                    </notempty>
+                    <div class="clearfix">
+                    	<if condition="$order.order_status eq 11">
+                        	<a href="{:U('/Myorders/pay',array('id'=>$order['order_id']))}">Pay Now</a>
+                            <a href="{:U('/Myorders/cancel',array('id'=>$order['order_id']))}">Cancel</a>
+                        <elseif condition="($order.order_status eq 40) && ($order.refund_status eq 0) && ($order.comment_time eq 0)" />
+                        	<a href="{:U('/Myorders/review',array('id'=>$order['order_id']))}">Review</a>
+                        </if>
+                    </div>
+                </div>
+                <eq name="order.order_status" value="20">
+                <!--支付成功等待收货开始-->
+                <div class="pickUpOk">
+                    <p class="tips">We have successfully received your payment! Please call our third party warehouse before picking up your order in 14 days from the payment date. You will be told to bring your order number and personal ID (driver’s license or passport) with you. Thank you for your cooperation.</p>
+                    <div class="otherInfo">
+                    	<h5>Please see below the contacts and working hours are Monday-Friday 8am-5pm.</h5>
+                        <p>- Warehouse Address: 173 West Service Road, Champlain, NY 12919.</p>
+                        <p>- Trena Guerin (tguerin@anderinger.com) phone # 518-298-7424.</p>
+                        <p>- Jaime Guerin (jguerin1@anderinger.com) phone # 518-298-7462.</p>
+                        <p>- Travis Duprey (tduprey@anderinger.com) phone # 518-298-7470.</p>
+                    </div>
+                </div>
+                <!--支付成功等待收货结束-->
+                </eq>
+            </div>          
+          	</neq>
+          <h3 class="mrgT25">Order Information</h3>
+          
+          <div class="orderInfo clearfix">
+          		<ul>
+                	<li>Order No.: {$order.order_sn}</li>
+                    <li>Payment Method: {$order.pay_name}</li>
+                    <li>Order Time: {$order.add_time|todate}</li>
+                    <li>Transaction Time: {$order.pay_time|todate}</li>
+                    <li>Confirm Time: {$order.finish_time|todate}</li>
+                </ul>
+          </div> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <thead>
+                  <tr>
+                    <td>Item Name </td>
+                    <td>Unit Price </td>
+                    <td>Quantity</td>
+                    <td>Total </td>
+                    <td>Order Status </td>
+                    <td>Refund Status </td>
+                    <td>Discount </td>
+                    <td>Points Redeemed</td>
+                    <td>Shipping Fee </td>
+                    <td>Sub Total </td>
+                  </tr>
+              </thead>
+              <volist name="order.ordergoods" id="goods" key="k">
+              <if condition="$k eq 1">
+              <tr>
+                <td>
+                	<dl class="clearfix">
+                    	<dt><a href="{:U('./Goods/index',array('id'=>$goods['goods_id']))}" target="_blank"><img src="/{$goods.default_image}" width="50" height="50" alt="{$goods.goods_name}" /></a></dt>
+                        <dd>
+                        	<p><a href="{:U('./Goods/index',array('id'=>$goods['goods_id']))}" target="_blank">{$goods.goods_name}</a></p>
+                            <p><em>{$goods.goods_attr}</em></p>
+                        </dd>
+                    </dl>
+                </td>
+                <td align="center">{$goods.present_price|format_price}</td>
+                <td align="center">{$goods.quantity}</td>
+                <td align="center">{$goods.goods_totle|format_price}</td>
+                <td align="center">{$goods.order_status|order_status=###,0}</td>
+                <td align="center">{$goods.refund_status|refund_status}</td>
+                <td rowspan="{:count($order['ordergoods'])}" align="center">{$order.discount_fee|format_price}</td>
+                <td rowspan="{:count($order['ordergoods'])}" align="center">{$order.use_integral|default=0} <br />
+                -{$order.integral_fee|format_price}</td>
+                <td rowspan="{:count($order['ordergoods'])}" align="center">{$order.shipping_fee|format_price}</td>
+                <td rowspan="{:count($order['ordergoods'])}" align="center">{$order.totle_fee|format_price}</td>
+              </tr>
+              <else />
+              <tr>
+                <td>
+                	<dl class="clearfix">
+                    	<dt><a href="{:U('./Goods/index',array('id'=>$goods['goods_id']))}" target="_blank"><img src="/{$goods.default_image}" width="50" height="50" alt="{$goods.goods_name}" /></a></dt>
+                        <dd>
+                        	<p><a href="{:U('./Goods/index',array('id'=>$goods['goods_id']))}" target="_blank">{$goods.goods_name}</a></p>
+                            <p><em>{$goods.goods_attr}</em></p>
+                        </dd>
+                    </dl>
+                </td>
+                <td align="center">{$goods.present_price|format_price}</td>
+                <td align="center">{$goods.quantity}</td>
+                <td align="center">{$goods.goods_totle|format_price}</td>
+                <td align="center">{$goods.order_status|order_status=###,0}</td>
+                <td align="center">{$goods.refund_status|refund_status}</td>
+              </tr>
+              </if>
+              </volist>
+            </table>
+            <div class="total">
+            	Grand Total:<span>{$order.totle_fee|format_price}</span>
+            </div>
+        </div>
+        <!--Order Details结束-->
+    </div>
+</div>
+<include file="./Shop/Home/View/footer.html" />

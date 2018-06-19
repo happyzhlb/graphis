@@ -1,0 +1,244 @@
+<include file="./Shop/Home/View/header.html" /> 
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Account Settings</h2>
+            <p class="eachTip">Change your password, e-mail address or name.</p>
+            <form id="account_settings_form" action="{:U('Member/account_settings')}" method="post" >
+            <div class="Settingsbox">
+                <h3 class="SettingsH">Change your e-mail address</h3>
+                <dl class="SettingsEach clearfix">
+                    <dt>New e-mail address:</dt>
+                    <dd><input name="email" type="text" value="{$user.email}" class="typein"  autocomplete="off" /></dd>
+                </dl>
+                <h3 class="SettingsH">Change your password</h3>
+                <dl class="SettingsEach clearfix">
+                    <dt>New password:</dt>
+                    <dd>
+                    	<input name="password" id="password" title="Please leave it blank if there is no need to change the password." type="password" value="" class="typein" autocomplete="off" />
+                    	<div class="pawIntension clearfix">
+                        	<span class="intension">
+                            	<i class="Weak"></i>
+                                <em>Weak</em>
+                            </span>
+                            <span class="intension">
+                            	<i class="Fair"></i>
+                                <em>Fair</em>
+                            </span>
+                            <span class="intension">
+                            	<i class="Strong"></i>
+                                <em>Strong</em>
+                            </span>
+                        </div>
+                    </dd>
+                </dl>
+                <dl class="SettingsEach clearfix">
+                    <dt>Re-enter new password:</dt>
+                    <dd><input name="re_password" type="password" value="" class="typein" /></dd>
+                    <dd style="color:#CCC; height:15px; padding-top:5px; float:right; padding-right:30px; font-size:11px; display:none;">Please leave it blank if there is no need to change the password.</dd>
+                </dl>
+                <h3 class="SettingsH" style="margin-top:30px;">Change your name</h3>
+                <dl class="SettingsEach clearfix">
+                    <dt>New first name:</dt>
+                    <dd><input name="first_name" type="text" value="{$user.first_name}" class="typein"  autocomplete="off" /></dd>
+                </dl>
+                <dl class="SettingsEach clearfix">
+                    <dt>New last name:  </dt>
+                    <dd><input name="last_name" type="text" value="{$user.last_name}" class="typein"  autocomplete="off" /></dd>
+                </dl>
+               
+            </div>
+            <!--<a href="javascript:void(0)" class="accountToconBtn setBtn" title="Done">Done</a>--> 
+            <input value="Done" class="accountToconBtn setBtn" type="submit" /> 
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"> 
+var URL = '__CONTROLLER__'; 
+$(function(){ 
+	$('#account_settings_form').validate({
+		rules : { 
+			email : {
+				required:true,
+				email : true,   
+				remote : {
+					url : URL + '/check_email.html',
+					type : 'post',
+					dataType : 'json',
+					data : {
+						email : function(){
+							return $('input[name="email"]').val();
+						}
+					}
+				} 
+			}, 
+			password : {
+				minlength:6
+			},
+			re_password : {
+				minlength:6,
+				equalTo:"#password"
+			},
+			first_name : {
+				required : true
+			},
+			last_name : {
+				required : true
+			},
+		},
+		messages : {
+			email : {
+				required : '<i></i>E-mail address is required.',
+				remote : '<i></i>E-mail address is used by another user.',
+			},
+			password : {
+				minlength: $.validator.format("Please enter at least {0} characters."),
+			},
+			re_password : {
+				equalTo : '<i></i>Enter the new password twice inconsistent.'
+			}, 
+			first_name : {
+				required : '<i></i>First Name is required.'
+			},
+			last_name : {
+				required : '<i></i>Last Name is required.'
+			},
+		},
+		focusCleanup:true,
+		focusInvalid: false,
+		onkeyup : false,
+		onfocusout : false,
+		success: 'InfoTrue',
+		errorElement : 'span',
+		errorClass : 'InfoError',
+		validClass: 'InfoTrue',
+		
+	});
+}); 
+
+	$(document).ready(function(){
+		$("div.btnBox a.accountToconBtn").click(function(){
+			$(this).parents("div.show").hide();
+			$(this).parents("div.show").next("div.EdidInfBox").show();
+		}); 
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#password').focus(function(){
+			$("div.pawIntension").fadeIn(300);	
+		}).blur(function(){
+			var thisVal = $(this).val();
+			if(thisVal == ""){
+				$("div.pawIntension").fadeOut(300);
+			}
+		});
+		
+		$('#password').keyup(function () {
+			var __th = $(this);
+			if (!__th.val()) {
+				Primary();
+				return;
+			}
+			if (__th.val().length < 6) {
+				Weak();
+				return;
+			}
+			var _r = checkPassword(__th);
+			if (_r < 1) {
+				Primary();
+				return;
+			}
+	
+			if (_r > 0 && _r < 2) {
+				Weak();
+			} else if (_r >= 2 && _r < 4) {
+				Medium();
+			} else if (_r >= 4) {
+				Tough();
+			}
+		});	
+	});
+	function Primary() {
+		$("div.pawIntension span.intension").removeClass("current");
+	}
+
+	function Weak() {
+		$("div.pawIntension span.intension").eq(0).addClass("current");
+	}
+
+	function Medium() {
+		$("div.pawIntension span.intension:lt(2)").addClass("current");
+	}
+
+	function Tough() {
+		$("div.pawIntension span.intension").addClass("current");
+	}
+	function checkPassword(pwdinput) {
+		var maths, smalls, bigs, corps, cat, num;
+		var str = $(pwdinput).val()
+		var len = str.length;
+
+		var cat = /.{16}/g
+		if (len == 0) return 1;
+		//if (len > 16) { $(pwdinput).val(str.match(cat)[0]); }
+		cat = /.*[\u4e00-\u9fa5]+.*$/
+		if (cat.test(str)) {
+			return -1;
+		}
+		cat = /\d/;
+		var maths = cat.test(str);
+		cat = /[a-z]/;
+		var smalls = cat.test(str);
+		cat = /[A-Z]/;
+		var bigs = cat.test(str);
+		var corps = corpses(pwdinput);
+		var num = maths + smalls + bigs + corps;
+
+		if (len < 6) { return 1; }
+
+		if (len >= 6 && len <= 8) {
+			if (num == 1) return 1;
+			if (num == 2 || num == 3) return 2;
+			if (num == 4) return 3;
+		}
+
+		if (len > 8 && len <= 11) {
+			if (num == 1) return 2;
+			if (num == 2) return 3;
+			if (num == 3) return 4;
+			if (num == 4) return 5;
+		}
+
+		if (len > 11) {
+			if (num == 1) return 3;
+			if (num == 2) return 4;
+			if (num > 2) return 5;
+		}
+	}
+
+	function corpses(pwdinput) {
+		var cat = /./g
+		var str = $(pwdinput).val();
+		var sz = str.match(cat)
+		for (var i = 0; i < sz.length; i++) {
+			cat = /\d/;
+			maths_01 = cat.test(sz[i]);
+			cat = /[a-z]/;
+			smalls_01 = cat.test(sz[i]);
+			cat = /[A-Z]/;
+			bigs_01 = cat.test(sz[i]);
+			if (!maths_01 && !smalls_01 && !bigs_01) { return true; }
+		}
+		return false;
+	}
+</script>
+
+<include file="./Shop/Home/View/footer.html" />

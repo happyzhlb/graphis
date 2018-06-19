@@ -1,0 +1,64 @@
+<include file="./Shop/Home/View/header.html" />
+<load href='__PUBLIC__/home/js/jquery.raty.js' />
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.starShow').each(function(){
+		$(this).raty({
+			onClick: function(score){
+				$(this).parent().siblings('input').val(score);
+			},
+			scoreName : 'score[]',
+		});
+	});
+});
+</script>
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <a href="{:U('/Member')}">My Account</a>&gt;
+    <span>Order Review</span>
+</div>
+
+
+
+<div class="webC1000">
+	<div id="review">
+    
+    	<!--步骤开始--><!--步骤结束-->
+    
+    	<!--写商品评价开始-->
+        <form id="review_form" method="post">
+        <volist name="order_goods" id="goods" key="key">
+        <div class="writeDetail clearfix">
+            <div class="leftItem">
+                <div class="item">
+                	<a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" class="itemImg" target="_blank"><img src="/{$goods.default_image}" width="135" height="135" /></a>
+                    <a href="{:U('/Goods/index',array('id'=>$goods['goods_id']))}" class="itemName" target="_blank">{$goods.goods_name}</a>
+                    <span>{$goods.goods_attr}</span></div>
+            </div>
+            <div class="rightWrite">
+                <dl class="clearfix">
+               	  <dt>* Ratings:</dt>
+                  <dd>
+                    	<div id="starShow_{$key}" class="starShow"></div>
+                  </dd>
+                </dl>
+              <dl class="clearfix">
+                <dt>* Content:</dt>
+                <dd>
+                    <textarea name="content[]" id="textarea" cols="45" rows="5"></textarea>
+                    <input type="hidden" name="rec_id[]" value="{$goods.rec_id}" />
+                </dd>
+              </dl>
+            </div>
+        </div>
+        </volist>
+        <div class="reviewSureBtn">
+        	<input type="hidden" name="id" value="{$order.order_id}" />
+        	<a href="javascript:void(0)" class="submit">submit</a>
+        </div>
+        </form>
+        <!--写商品评价结束-->
+    </div>
+</div>
+<include file="./Shop/Home/View/footer.html" />
+

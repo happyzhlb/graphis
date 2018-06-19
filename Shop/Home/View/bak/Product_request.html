@@ -1,0 +1,80 @@
+<include file="./Shop/Home/View/header.html" />  
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Product Request</h2>
+            <p class="eachTip">Submit a new product request to our support team.</p>
+          <div class="addressBook">
+           	<h4><a href="{:U('/ProductRequest/index')}" title="Add New">Add New</a>Product Request Management</h4>
+            <form id='private_message_form' action="{:U('delete')}" method="post" enctype="multipart/form-data">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr class="tfoot">
+                        <td width="20" align="center" valign="middle"><input type="checkbox" name="checkbox2" id="SelectAll" class="checkAllShow" /></td>
+                        <td colspan="4" class="left">
+                            <div id="orderPage" style="margin-top:8px;">
+                               {$page}
+                            </div>
+                            <label for="SelectAll">Select All</label>
+                            <!--<input type="submit" value="Delete" onclick="return confirm('Are you sure you want to batch remove records selected ?');"  class="deleteAll" title="Delete" />-->
+                       		<a href="javascript:void(0)" onclick="return confirm('Are you sure you want to batch remove records selected ?');" class="deleteAll" title="Delete">Delete</a>
+                        </td>
+                      </tr>
+                      <tr class="thead">
+                        <td width="20" align="center" valign="middle">&nbsp;</td>
+                        <td class="left">Product Request Content </td>
+                        <td width="140">Time </td>
+                        <td width="90">Details </td>
+                        <td width="65">Operation</td>
+                      </tr>
+                  <volist name="list" id="vo">
+                      <tr class="tbody">
+                        <td width="20" align="center" valign="middle">
+                          <input type="checkbox" name="id[]" value="{$vo.id}" />
+                        </td>
+                        <td class="left">{$vo.pro_name} </td>
+                        <td width="140"><i>{$vo.add_time|todate='Y:m:d H:i'}</i></td>
+                        <td width="90"><a href="{:U('detail',array('id'=>$vo['id']))}" class="DetailsL">Details</a></td>
+                        <td width="65"><a href="{:U('edit',array('id'=>$vo['id']))}" class="Edit" title="Edit"></a><i>|</i>
+                        <a href="{:U('delete',array('id'=>$vo['id']))}" class="Delete" title="Delete" onclick="return confirm('Are you sure to delete this record ?');"></a></td>
+                      </tr>
+                  </volist> 
+                      <tr class="tfoot">
+                        <td width="20" align="center" valign="middle"><input type="checkbox" name="checkbox2" id="SelectAll" class="checkAllShow" /></td>
+                        <td colspan="4" class="left">
+                            <div id="orderPage" style="margin-top:8px;">
+                               {$page}
+                            </div>
+                            <label for="SelectAll">Select All</label>
+                            <!--<input type="submit" value="Delete" onclick="return confirm('Are you sure you want to batch remove records selected ?');"  class="deleteAll" title="Delete" />-->
+                       		<a href="javascript:deleteall()" onclick="return confirm('Are you sure you want to batch remove records selected ?');" class="deleteAll" title="Delete">Delete</a>
+                        </td>
+                      </tr>
+            </table>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+ <script language="javascript">
+  	$(function(){
+		deleteall=function(){ 
+					var mid= new Array();
+					$('input[name="id[]"]').each(function(i){ 
+						if($(this).attr('checked')=='checked')
+							mid[i]=$(this).val();
+					});
+					mid=mid.join(','); 
+					$.post('{:U("delete")}',{'id':mid},function(data){
+							alert(data.info);
+							self.location=data.url;
+					});	 	 
+		}
+	});
+ </script>   
+<include file="./Shop/Home/View/footer.html" />  

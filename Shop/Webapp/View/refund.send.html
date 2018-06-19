@@ -1,0 +1,68 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Refund Application</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--退款退货开始-->
+    <div class="refund">
+     <form id="refund_send_goods_form" method="post">
+   	  <div class="refundType">
+            <dl>
+            	<dt>Type of Delivery *</dt>
+                <dd>
+                	<input type="text" id="refund_shipping_name" name="refund_shipping_name" value="" class="typeIn" />
+                </dd>
+            </dl>
+        	<dl>
+            	<dt>Tracking Number *</dt>
+                <dd>
+                	<input type="text" id="refund_invoice_no" name="refund_invoice_no" value="" class="typeIn" />
+                </dd>
+          	</dl>
+            <input type="hidden" id="id" name="id" value="{$order.rec_id}" />
+          <a href="javascript:void(0)" class="submitBtn">Submit return of the logistics information</a>
+        </div>
+     </form>
+    </div>
+	<!--退款退货结束--> 
+    <script>
+    	$('.submitBtn').click(function(){
+			$('.submitBtn').parents('form').submit();	
+		});
+	$(function(){	
+		$('#refund_send_goods_form').validate({
+		rules : {
+			refund_shipping_name : {
+				required : true, 
+			},
+			refund_invoice_no : {
+				required : true, 
+			}
+		}, 
+		errorPlacement: function(error, element) {  
+			error.appendTo(element.parent());  
+		}, 
+		focusCleanup:true,
+		focusInvalid: false,
+		onfocusout : false,
+		onkeyup : false,
+		//success: 'InfoTrue',
+		debug:false ,
+		errorElement : 'span',
+		errorClass : 'form_tips',
+		validClass : 'InfoTrue',
+	}
+		);
+	});
+    </script>
+</div>
+<include file="./Shop/Webapp/View/footer.html" /> 

@@ -1,0 +1,675 @@
+<?php
+/**
+ * APP Json V2控制器
+ * @author Abiao
+ * @copyright 2016
+ */
+namespace Home\Controller;
+use Think\Page;
+
+use Think\Controller;
+class Appjsonv2Controller extends FrontendController{ 
+	var $_ad_mod=null; 
+	var $_article_mod=null;
+	var $_acate_mod=null;
+	var $_goods_mod=null;
+	var $_article_goods_mod=null;
+	var $_json=null;
+    function __construct(){
+        parent::__construct();
+        $this->Appjsonv2Controller();
+    }
+    
+    function Appjsonv2Controller(){
+        $this->_ad_mod=D('ad');   
+        $this->_article_mod=D('article'); 
+        $this->_acate_mod=D('acategory');  
+        $this->_goods_mod = D('goods');
+        $this->_article_goods_mod = M('article_goods');
+	    $res = M('config')->query('update rj_config set total_api_v2 = total_api_v2+1 where id=1 '); 
+        //if(!$res){
+       	//	error_log(PHP_EOL.time().PHP_EOL.$res.M()->getLastsql().PHP_EOL, 3, "./API_REQUEST.log");
+        //} 
+    }
+    
+    /** 广告列表  
+     * 	返回所有数据
+     * */
+    function ad(){ 		
+        //打包多个广告位,传入pids用逗号“,”分隔. 如pids=1,62
+        $pids = I('pids','','trim'); 
+        if(empty($pids)){
+        	$this->toJson('广告位pids,不能为空(多个用逗号","隔开).');
+        }
+    	$where=array(
+    		'status'=>1, 
+    		'pid'=> array('in',trim($_REQUEST['pids'],','))
+    	);  
+    	
+    	$pageindex=I('pageindex','','intval');
+    	if(empty($pageindex)) $pageindex=1;  
+    	$pagesize=I('pagesize',10,'intval');
+    	if($pagesize>100) $pagesize=100;
+    	
+    	$TotalRecords = $this->_ad_mod->where($where)->count();   
+    	$PageCount=ceil($TotalRecords/$pagesize); 
+        
+        $ads = $this->_ad_mod->field('ad_id,pid,title,clicks,img,type,referId') 
+        	->where($where)
+        	->order('sort_order asc,ad_id DESC')
+        	->page($pageindex.','.$pagesize)
+        	->select(); 
+     	
+        $data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'data'=>$ads);
+        $this->toJson('请求成功.',1,$data);        	
+    }   
+
+    
+    
+    /** 广告列表  
+     * 	返回所有数据
+     * */
+    function ad2(){ 		
+        //打包多个广告位,传入pids用逗号“,”分隔. 如pids=1,62
+        $toppid = I('toppid','','trim'); 
+        $middlepid = I('middlepid','','trim'); 
+        $scrollpid = I('scrollpid','','trim'); 
+        $bottompid = I('bottompid','','trim'); 
+        if(empty($toppid)&&empty($middlepid)&&empty($scrollpid)&&empty($bottompid)){
+        	$this->toJson('广告位toppid,middlepid,scrollpid,bottompid至少一个不能为空.');
+        } 
+        
+        if($toppid){         	
+	    	$where=array(
+	    		'status'=>1, 
+	    		'pid'=> $toppid
+	    	);   
+	    	$pageindex=I('pageindex','','intval');
+	    	if(empty($pageindex)) $pageindex=1;  
+	    	$pagesize=I('pagesize',10,'intval');
+	    	
+	    	$TotalRecords = $this->_ad_mod->where($where)->count();   
+	    	$PageCount=ceil($TotalRecords/$pagesize); 
+	        
+	        $ads['toppid'] = $this->_ad_mod->field('ad_id,pid,title,clicks,img,type,referId') 
+	        	->where($where)
+	        	->order('sort_order asc,ad_id DESC')
+	        	->page($pageindex.','.$pagesize)
+	        	->select();    
+        } 
+        if($middlepid){         	
+	    	$where=array(
+	    		'status'=>1, 
+	    		'pid'=> $middlepid
+	    	);   
+	    	$pageindex=I('pageindex','','intval');
+	    	if(empty($pageindex)) $pageindex=1;  
+	    	$pagesize=I('pagesize',10,'intval');
+	    	
+	    	$TotalRecords = $this->_ad_mod->where($where)->count();   
+	    	$PageCount=ceil($TotalRecords/$pagesize); 
+	        
+	        $ads['middlepid'] = $this->_ad_mod->field('ad_id,pid,title,clicks,img,type,referId') 
+	        	->where($where)
+	        	->order('sort_order asc,ad_id DESC')
+	        	->page($pageindex.','.$pagesize)
+	        	->select();    
+        }  
+        if($scrollpid){         	
+	    	$where=array(
+	    		'status'=>1, 
+	    		'pid'=> $scrollpid
+	    	);   
+	    	$pageindex=I('pageindex','','intval');
+	    	if(empty($pageindex)) $pageindex=1;  
+	    	$pagesize=I('pagesize',10,'intval');
+	    	
+	    	$TotalRecords = $this->_ad_mod->where($where)->count();   
+	    	$PageCount=ceil($TotalRecords/$pagesize); 
+	        
+	        $ads['scrollpid'] = $this->_ad_mod->field('ad_id,pid,title,clicks,img,type,referId') 
+	        	->where($where)
+	        	->order('sort_order asc,ad_id DESC')
+	        	->page($pageindex.','.$pagesize)
+	        	->select();    
+        } 
+        if($bottompid){         	
+	    	$where=array(
+	    		'status'=>1, 
+	    		'pid'=> $bottompid
+	    	);   
+	    	$pageindex=I('pageindex','','intval');
+	    	if(empty($pageindex)) $pageindex=1;  
+	    	$pagesize=I('pagesize',10,'intval');
+	    	
+	    	$TotalRecords = $this->_ad_mod->where($where)->count();   
+	    	$PageCount=ceil($TotalRecords/$pagesize); 
+	        
+	        $ads['bottompid'] = $this->_ad_mod->field('ad_id,pid,title,clicks,img,type,referId') 
+	        	->where($where)
+	        	->order('sort_order asc,ad_id DESC')
+	        	->page($pageindex.','.$pagesize)
+	        	->select();    
+        } 
+        
+	    $data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'topdata'=>$ads['toppid'],'middledata'=>$ads['middlepid'],'scrolldata'=>$ads['scrollpid'],'bottomdata'=>$ads['bottompid']);      
+        
+        $this->toJson('请求成功.',1,$data);        	
+    }    
+    
+    
+    /** 文章类别  */
+    function acategory(){       
+    	$where=array(
+    		'if_show'=>1,
+    		'parent_id'=>0
+    	);
+    	if($cate_id=I('cate_id',0,'intval')){
+    		$where['parent_id']=$cate_id;
+    	}
+        if($cate_ids=I('cate_ids',0,'trim')){
+    		$where['cate_id']=array('in',trim($cate_ids,','));
+    	}
+    	if($is_recommend=I('is_recommend',0,'intval')){
+    		$where['is_recommend']=$is_recommend;
+    		$where['parent_id']=array('gt','0');
+    	} 
+    	   	
+    	//type:0-文章，1-商品， 2-品牌，3-广告
+    	$type=I('type',0,'trim');
+    	if($type==2){
+    		$where['type']=$type;
+    	}else{
+    		$where['type']=array('in','0,1,3');
+    	}
+    	
+    	
+    	$pageindex=I('pageindex','','intval');
+    	if(empty($pageindex)) $pageindex=1;  
+    	$pagesize=I('pagesize',10,'intval');
+    	
+    	$TotalRecords = $this->_acate_mod->where($where)->count();   
+    	$PageCount=ceil($TotalRecords/$pagesize); 
+    	
+    	$list=$this->_acate_mod->alias('acate')->where($where)
+    		->Field('cate_id,cate_name,photo,b_photo,parent_id,type,cate_desc,(SELECT count(*) from '.C('DB_PREFIX').'article where cate_id = acate.cate_id) as article_num')
+    		->order('sort_order desc')
+    		->page($pageindex.','.$pagesize)
+    		->select(); 
+    		
+    	foreach ($list as $key  => $val){
+    		if($val['article_num']=='1'){
+    			$article_id = $this->_article_mod->where(array('cate_id'=>$val['cate_id'],'if_show'=>1))->getField('article_id'); # echo M()->getLastsql();
+    			$list[$key]['article_id'] = $article_id;
+    		}else{
+    			$list[$key]['article_id'] = ''; 
+    		}
+    	} 
+    	$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'data'=>$list);
+    	$this->toJson('请求成功.',1,$data);
+    } 
+    
+    /** 文章\品牌类别  */
+    function getCate(){      
+    	$cate_ids=I('cate_ids',0,'trim');
+    	if(empty($cate_ids)){
+    		$this->toJson('cate_ids不能为空.');
+    	} 
+    	$where=array(
+    		'if_show'=>1,
+    		'cate_id'=>array('in',trim($cate_ids,','))
+    	);
+    	
+    	$pageindex=I('pageindex','','intval');
+    	if(empty($pageindex)) $pageindex=1;  
+    	$pagesize=I('pagesize',10,'intval');
+    	
+    	$TotalRecords = $this->_acate_mod->where($where)->count();   
+    	$PageCount=ceil($TotalRecords/$pagesize); 
+    	
+    	$list=$this->_acate_mod->where($where)
+    		->Field('cate_id,cate_name,photo,b_photo,parent_id,type,cate_desc')
+    		->order('sort_order desc')
+    		->page($pageindex.','.$pagesize)
+    		->select();   
+    	$count=count($list); 
+    	$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'data'=>$list);
+    	$this->toJson('请求成功.',1,$data);
+    } 
+    
+    
+    /** 根据小类cate_id获取文章列表  */
+    function article(){     
+    	$where =array(
+    		'if_show'=>1, 
+    	);   
+    	if($cate_id = I('cate_id',0,'intval')){
+			$where['cate_id']=$cate_id; 
+			$cate=$this->_acate_mod->field('cate_name,photo,b_photo,cate_desc')->where(array('cate_id'=>$cate_id,'if_show'=>1))->find();
+		}    
+    	if($article_id = I('article_id',0,'intval')){
+		#	$where['article_id']=$article_id; 
+		}  
+		if($article_ids = I('article_ids',0,'trim')){ 
+		#	$where['article_id']=array('in',trim($article_ids,',')); 
+		}  
+    	$pageindex=I('pageindex',1,'intval');
+    	$pagesize=I('pagesize','','intval');
+		//顶部轮播
+		if(I('is_top','')){
+			$where['is_top']=1; 
+		}
+		//首页显示
+		if(I('is_index','')){
+			$where['is_index']=1; 
+		} 
+		//列表展示数量
+    	if(empty($pagesize)){
+    		$pagesize=10;
+    	} 
+    	if($pagesize>100) $pagesize=100;
+    	
+        $count = $this->_article_mod->where($where)->count();  
+        $PageCount=ceil($count/$pagesize); 
+    	$list=$this->_article_mod->where($where)
+    		->Field('article_id,cate_id,title,photo0,photo,cutline,collect_num,view_num,ctime,is_top,is_index')
+			->order('sort_order desc,ctime desc') 
+			->page($pageindex.','.$pagesize)
+    		->select();
+    		    
+    	//传入用户user_id时，检测是否已经收藏
+		$list = $this->check_collect($list, 'article_id', 'article');
+		
+    	$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$count,'cate_id'=>$cate_id,'cate_name'=>$cate['cate_name'],'cate_photo'=>$cate['photo'],'cate_b_photo'=>$cate['b_photo'],'cate_desc'=>$cate['cate_desc'],'data'=>$list);
+    	$this->toJson('请求成功.',1,$data);
+    }   
+    
+    /** 文章集合  */
+    function getArticle(){   
+    	$article_ids = I('article_ids',0,'trim');
+    	if(empty($article_ids)){
+    		$this->toJson('article_ids不能为空.');
+    	} 
+    	$where =array(
+    		'if_show'=>1, 
+    		'article_id'=>array('in',trim($article_ids,','))
+    	);     
+    	$pageindex=I('pageindex',1,'intval');
+    	$pagesize=I('pagesize','','intval'); 
+    	
+		//列表展示数量
+    	if(empty($pagesize)){
+    		$pagesize=10;
+    	} 
+    	if($pagesize>100) $pagesize=100;
+    	
+        $count = $this->_article_mod->where($where)->count();  
+        $PageCount=ceil($count/$pagesize); 
+    	$list=$this->_article_mod->where($where)
+    		->Field('article_id,cate_id,title,photo0,photo,cutline,collect_num,view_num,ctime,is_top,is_index')
+			->order('sort_order desc,ctime desc') 
+			->page($pageindex.','.$pagesize)
+    		->select();
+    	$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$count,'data'=>$list);
+    	$this->toJson('请求成功.',1,$data);
+    } 
+    
+    
+    /** 获取商品列表 (文章详情一起) */
+    function getGoods($debug=FALSE){ 
+    	$where=array(
+    		'is_on_sale'=>1
+    	); 
+    	$pageindex=I('pageindex',0,'intval');
+    	if(empty($pageindex)) $pageindex=1; 
+		 
+  	
+		//文章
+		$article_id=I('article_id',0); 
+    	if(!empty($article_id)){ 
+			$where['ag.article_id']=$article_id; 
+			$article=$this->_article_mod->field('title,cutline,photo,cate_id')->where(array('article_id'=>$article_id,'if_show'=>1))->find(); 
+			if(empty($article)) $this->toJson('aritcle_id not exists.');
+			//传入用户id时，检测是否已经收藏
+	    	$user_id=I('user_id',0,'intval');
+	    	if(!empty($user_id)){
+	    		$collect_mod = M('collect'); 
+    			if($find=$collect_mod->where(array('type'=>'article','user_id'=>$user_id,'key_id'=>$article_id))->find()){
+    				$article['is_collected']=1;
+    				$article['cid'] = $find['cid'];
+    			}else{
+    				$article['is_collected']=0;
+    				$article['cid']=null;
+    			}   
+	    	} 
+		}else{
+			$this->toJson('aritcle_id不能为空.');
+		}   
+		 
+    	$model=$this->_goods_mod; 
+    	
+    	$TotalRecords=$model->join(' as g join __ARTICLE_GOODS__ as ag on g.goods_id=ag.goods_id')
+    		->where($where)
+	    	->Field('g.goods_id')
+	    	->count();
+			
+    	$listrows=I('pagesize',10,'intval');
+    	if($listrows>100) $listrows=100;
+    	$PageCount=ceil($TotalRecords/$listrows);
+    	$list=$model->join(' as g join __ARTICLE_GOODS__ as ag on g.goods_id=ag.goods_id')
+    		->where($where)
+    		->page($pageindex.','.$listrows)
+	    	->Field('g.goods_id,goods_name,goods_code,goods_img,goods_img2,goods_img3,goods_img4,goods_img5,cate_id,market_price,price,click_count,add_time,goods_desc,is_new,is_hot,is_promote,sales,is_on_sale')
+	    	->order('ag.orderNum asc,ag.goods_id desc') 
+	    	->select(); 
+
+	    //传入用户user_id时，检测是否已经收藏
+		$list = $this->check_collect($list, 'goods_id', 'goods');
+		
+	    $listsql=$model->getLastsql();		   	
+    	$article_goods_mod=$this->_article_goods_mod;
+		foreach($list as $key => $val){
+			$list[$key]['goods_desc']=strip_tags(htmlspecialchars_decode($val['goods_desc']));
+			//$list[$key]['article_id']=$article_goods_mod->where('goods_id='.$val['goods_id'])->limit('1')->getField('article_id'); 
+		}
+		$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'article_id'=>$article_id,'article_title'=>$article['title'],'article_photo'=>$article['photo'],
+			'article_cutline'=>$article['cutline'],'cate_id'=>$article['cate_id'],
+			'is_collected'=>$article['is_collected'],
+			'cid'=>$article['cid'],
+			'Goods'=>$list);
+    	if($debug){
+    		if(isset($_REQUEST['show_sql'])) echo $listsql;
+    		return $data;
+    	}else{
+    		$this->toJson('获取商品成功.',1,$data);
+    	}
+    }
+    
+    /** 获取商品列表 */
+    function getGoodsHtml($debug=FALSE){ 
+    	$where=array(
+    		'is_on_sale'=>1
+    	); 
+    	$pageindex=I('pageindex',0,'intval');
+    	if(empty($pageindex)) $pageindex=1; 
+		 
+  	
+		//文章
+		$article_id=I('article_id',0); 
+    	if(!empty($article_id)){ 
+			$where['ag.article_id']=$article_id; 
+			$article=$this->_article_mod->field('title,cutline,photo,cate_id')->where(array('article_id'=>$article_id,'if_show'=>1))->find(); 
+			if(empty($article)) $this->toJson('aritcle_id not exists.');
+		}else{
+			$this->toJson('aritcle_id不能为空.');
+		}   
+		 
+    	$model=$this->_goods_mod; 
+    	
+    	$TotalRecords=$model->join(' as g join __ARTICLE_GOODS__ as ag on g.goods_id=ag.goods_id')
+    		->where($where)
+	    	->Field('g.goods_id')
+	    	->count();
+			
+    	$listrows=I('pagesize',10,'intval');
+    	if($listrows>100) $listrows=100;
+    	$PageCount=ceil($TotalRecords/$listrows);
+    	$list=$model->join(' as g join __ARTICLE_GOODS__ as ag on g.goods_id=ag.goods_id')
+    		->where($where)
+    		->page($pageindex.','.$listrows)
+	    	->Field('g.goods_id,goods_name,goods_code,goods_img,goods_img2,goods_img3,goods_img4,goods_img5,cate_id,market_price,price,click_count,add_time,goods_desc,is_new,is_hot,is_promote,sales,is_on_sale')
+	    	->order('ag.orderNum asc,ag.goods_id desc') 
+	    	->select(); 
+	     $listsql=$model->getLastsql();		   	
+    	$article_goods_mod=$this->_article_goods_mod;
+		foreach($list as $key => $val){
+			$list[$key]['goods_desc']=htmlspecialchars_decode($val['goods_desc']);
+			//$list[$key]['article_id']=$article_goods_mod->where('goods_id='.$val['goods_id'])->limit('1')->getField('article_id'); 
+		}
+		$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'article_id'=>$article_id,'article_title'=>$article['title'],'article_photo'=>$article['photo'],'article_cutline'=>$article['cutline'],'cate_id'=>$article['cate_id'],'Goods'=>$list);
+    	if($debug){
+    		if(isset($_REQUEST['show_sql'])) echo $listsql;
+    		return $data;
+    	}else{
+    		$this->toJson('获取商品成功.',1,$data);
+    	}
+    }
+    
+    
+    /** 获取商品列表 */
+    function getGoodsSet($debug=FALSE){
+    	$where=array(
+    		'is_on_sale'=>1
+    	); 
+    	$pageindex=I('pageindex',0,'intval');
+    	if(empty($pageindex)) $pageindex=1;  
+    	
+    	$goods_ids=I('goods_ids',0,'trim'); 
+    	if(!empty($goods_ids)){     		
+    		$where['g.goods_id']=array('in',trim($goods_ids,',')); 
+    	}else{
+    		$this->toJson('goods_ids不能为空');
+    	} 
+    	
+    	$model=$this->_goods_mod; 
+    	
+    	$TotalRecords=$model->alias('g')->where($where)
+	    	->Field('g.goods_id')
+	    	->count();
+			
+    	$listrows=I('pagesize',10,'intval');
+    	if($listrows>100) $listrows=100;
+    	$PageCount=ceil($TotalRecords/$listrows);
+    	$list=$model->alias('g')
+    		->where($where)
+    		->page($pageindex.','.$listrows)
+	    	->Field('g.goods_id,goods_name,goods_code,goods_img,goods_img2,goods_img3,goods_img4,goods_img5,cate_id,market_price,price,click_count,add_time,goods_desc,is_new,is_hot,is_promote,sales,is_on_sale')
+	    	->order('g.goods_id desc') 
+	    	->select(); 
+	    $listsql=$model->getLastsql();		   	
+    	$article_goods_mod=$this->_article_goods_mod;
+    	
+    	    	 
+	   	//传入用户user_id时，检测是否已经收藏
+		$list = $this->check_collect($list, 'goods_id', 'goods');
+    	
+		foreach($list as $key => $val){
+			$list[$key]['goods_desc']=strip_tags(htmlspecialchars_decode($val['goods_desc']));
+			$list[$key]['article_id']=$article_goods_mod->where('goods_id='.$val['goods_id'])->limit('1')->getField('article_id'); 
+		}
+		$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'Goods'=>$list);
+    	if($debug){
+    		if(isset($_REQUEST['show_sql'])) echo $listsql;
+    		return $data;
+    	}else{
+    		$this->toJson('获取商品成功.',1,$data);
+    	}
+    }
+    
+    
+    
+    /** 获取商品介绍*/
+    function getGoodsDesc(){  
+    	$goods_id=I('goods_id');
+    	if(empty($goods_id)){ $this->toJson('商品ID错误.'); }
+    	$where=array(
+    		'goods_id'=>$goods_id,
+    	);     
+    	$list=$this->_goods_mod->where($where)->Field('goods_id,outer_id,goods_name,goods_img,goods_img2,goods_img3,goods_img4,goods_img5,goods_desc,market_price,price,wapImg,sales,is_on_sale,click_count,add_time')->find();
+    	if(!$list) $this->toJson('该商品不存在或者已经下架.',0,$goods_id);
+		if($list['goods_desc']){
+			$list['goods_desc']=strip_tags(htmlspecialchars_decode($list['goods_desc'])); 
+		}
+		$wapImg = explode(',',$list['wapImg']);
+		$count=count($wapImg);  #var_dump($count); exit;
+		$list['wapImg']=array();
+		for($i=0;$i<$count;$i++){
+			$n= floor($i/5);
+			$list['wapImg'][$n][] = $wapImg[$i];
+		}
+    	$this->toJson('获取商品成功.',1,$list);
+    } 
+    
+    /** 获取商品介绍 html */
+    function getGoodsDescHtml(){  
+    	$goods_id=I('goods_id');
+    	if(empty($goods_id)){ $this->toJson('商品ID错误.'); }
+    	$where=array(
+    		'goods_id'=>$goods_id,
+    	);     
+    	$list=$this->_goods_mod->where($where)->Field('goods_id,outer_id,goods_name,goods_img,goods_img2,goods_img3,goods_img4,goods_img5,goods_desc,market_price,price,wapImg,sales,is_on_sale,click_count,add_time')->find();
+    	if(!$list) $this->toJson('该商品不存在或者已经下架.',0,$goods_id);
+		if($list['goods_desc']){ 
+			$list['goods_desc']= htmlspecialchars_decode($list['goods_desc']);
+		}
+		$wapImg = explode(',',$list['wapImg']);
+		$count=count($wapImg);  #var_dump($count); exit;
+		$list['wapImg']=array();
+		for($i=0;$i<$count;$i++){
+			$n= floor($i/5);
+			$list['wapImg'][$n][] = $wapImg[$i];
+		}
+		//传入用户id时，检测是否已经收藏
+		$list = $this->check_collect($list, $goods_id, 'goods'); 
+		
+    	$this->toJson('获取商品成功.',1,$list);
+    } 
+        
+    /** 获取用户的收藏列表 */
+    function getCollect(){ 
+    	$c_mod=D('collect');
+    	$user_id=I('user_id');
+    	if(empty($user_id)) $this->toJson('用户ID缺少.');
+    	$token=I('token','','trim');
+    	if(!$this->checkUserToken($user_id, $token)){
+    		$this->toJson('UserToken验证失败.');
+    	}  
+    	$where=array(
+    		'user_id'=>$user_id
+    	);
+    	$cid=I('cid',0,'intval');
+    	if(!empty($cid)){
+    		$where['cid']=$cid;
+    	} 
+        	
+    	//收藏类型：article,bbs,blog,goods,brand
+    	$type = I('type','','trim');  
+    	if(!empty($type)){
+    		$allow_type=array('article','bbs','blog','goods','brand');
+    		if(!in_array($type, $allow_type)){
+    			$this->toJson('type类型不对,只允许：'.join(',',$allow_type));
+    		}
+    		$where['type'] = $type;
+    	}
+    	
+    	$pageindex=I('pageindex','','intval');
+    	if(empty($pageindex)) $pageindex=1; 
+    	$TotalRecords=$c_mod->where($where)->count();
+    	$pagesize=I('pagesize',10,'intval');
+    	$PageCount=ceil($TotalRecords/$pagesize);
+    	$list=$c_mod->where($where)->page($pageindex.','.$pagesize)->order('cid desc')->select();
+    	$article_mod=M('article');
+    	$goods_mod=M('goods');
+		$article_goods_mod=M('article_goods');
+    	foreach ($list as $key => $val){
+    		if($val['type']=='article'){
+    			$list[$key]['data'] = $article_mod->where('article_id='.$val['key_id'])->field('article_id,cate_id,title,photo0,photo,cutline,collect_num,view_num,video,ctime,is_top,is_index')->find();
+    		}elseif($val['type']=='goods'){
+    			$list[$key]['data'] = $goods_mod->where('goods_id='.$val['key_id'])->field('goods_id,outer_id,goods_name,goods_img,goods_img2,goods_img3,goods_img4,goods_img5,goods_desc,market_price,price,sales,is_on_sale,click_count,add_time')->find();	
+				$list[$key]['data']['article_id']=$article_goods_mod->where('goods_id='.$val['key_id'])->limit('1')->getField('article_id');
+			}
+    	}
+    	$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'collect'=>$list);
+    	$this->toJson('获取收藏成功.',1,$data);
+    }
+    
+	
+	/** 博客列表 */
+	function bloglist(){
+		$blog_mod = D('Blog');
+		$blogcate_mod = D('Blogcate');
+    	$where =array(
+    		'if_show'=>1, 
+    	);  
+    	$cate_id=I('cate_id','','intval');
+    	if($cate_id){
+    		$where['cate_id'] = $cate_id;
+    	} 
+		$pageindex=I('pageindex',1,'intval'); 
+    	$TotalRecords=$blog_mod->where($where)->count();
+    	$pagesize=I('pagesize',10,'intval');
+    	$PageCount=ceil($TotalRecords/$pagesize);
+		
+        $count = $blog_mod->where($where)->count(); 
+        C('VAR_PAGE','pageindex');  //设置分页参数，默认为p
+        $page = new \Think\Page($count,$pagesize); 
+    	$list=$blog_mod->where($where)
+    		->Field('bid,cate_id,title,clicks,img,cutline,author,ctime')
+    		->limit($page->firstRow.','.$page->listRows) 
+    		->order('ctime desc')
+    		->select();
+    	foreach ($list as $key =>$val){
+    		$list[$key]['cate_name']=$blogcate_mod->getFieldBy($val['cate_id'],'cate_name');
+    	} 
+    	
+	   	//传入用户user_id时，检测是否已经收藏
+		$list = $this->check_collect($list, 'bid', 'blog');  
+    	
+		$data=array('PageIndex'=>$pageindex,'PageCount'=>$PageCount,'TotalRecords'=>$TotalRecords,'data'=>$list);
+    	$this->toJson('请求成功.',1,$data); 
+	}
+	
+	/** 博客类别 */
+	function blogcate(){ 
+		$blogcate_mod = D('Blogcate');
+    	$where =array(
+    		'if_show'=>1, 
+    	);  
+    	$cate_id=I('cate_id','','intval');
+    	if($cate_id){
+    		$where['cate_id'] = $cate_id;
+    	} 
+    	$list=$blogcate_mod->where($where)  
+    		->order('sort_order desc,cate_id desc')
+    		->select(); 
+    	$this->toJson('请求成功.',1,$list); 
+	}
+	
+	/** 博客详情 */
+	function blogcenter(){ 
+		$bid=I('bid',0,'intval');
+		if(empty($bid)) $this->toJson('博客bid参数缺少.');
+		$list = M('Blog')->where(array('bid'=>$bid))->field('bid,cate_id,title,clicks,author,content,ctime')->find();
+		$this->toJson('请求成功.',1,$list);
+	}
+	
+	
+	/** 获取最新api版本*/
+	function appversion(){
+	    $where=array(
+	        'is_check'=>1
+	    );
+	    $type=I('type','');
+	    if($type=='android'){
+	        $where['type']='android';
+	    }elseif($type=='iphone'){
+	        $where['type']='iphone';
+	    }elseif($type=='others'){
+	        $where['type']='others';
+	    }
+	    $app_info=M('appversion')->where($where)->order('version desc')->find();
+	    if($app_info){
+	        $this->toJson('获取api成功.',1,$app_info);
+	    }else{ 
+	        $this->toJson('未发布或者获取失败.');
+	    }
+	}
+	
+	
+}
+
+
+
+
+
+?>

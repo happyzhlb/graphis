@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="um landscape">
+<head>
+<title>GRAPHIS官方网站 - 密码修改</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/Public/home/files/ui-base.css">
+<link rel="stylesheet" href="/Public/home/files/ui-color.css">
+<link rel="stylesheet" href="/Public/home/files/main.css">
+<script src="/Public/home/files/jquery.js"></script>
+<script src="/Public/home/files/main.js"></script>
+<script src="/Public/home/files/tool.js"></script>
+<script src="/Public/home/files/login.js"></script><script src="/Public/home/files/register.js"></script>
+<script src="__PUBLIC__/js/layer/layer.js"></script> 
+<script src="__PUBLIC__/js/jquery.validate.js"></script> 
+<script>  
+$(function() { 
+	 
+	//注册表单验证
+	$('#main_form').validate({
+		rules : {
+			title : {
+				required : true
+			},  
+			content : {
+				required : true
+			}, 
+			name : {
+				required : true
+			},  
+			mobile : {
+				required : true
+			}, 
+		},
+		messages : {
+			title : {
+				required : '请输入标题.', //function(){ layer.alert('请输入用户名.');},
+			},
+			content : {
+				required : '请输入反馈内容.', //function(){ layer.alert('请输入用户名.');},
+			},   
+			name : {
+				required : '请输入姓名'
+			},  
+			mobile : {
+				required : '请输入手机号'
+			}, 
+		},
+		/* Ajax提交注册*/
+		submitHandler: function(form){ //回调函数参数：form 
+			$("#main_form #show_msg").html('<img src="/Public/home/images/loading.gif" style="vertical-align:middle;" /> Creating...').show();
+			$.post('/member/guestbook.html',{
+						title: function(){
+								return $('#main_form input[name="title"]').val();
+							},
+						content: function(){
+								return $('#main_form textarea[name="content"]').val();
+							},
+						name: function(){
+								return $('#main_form input[name="name"]').val();
+							},
+						mobile: function(){
+								return $('#main_form input[name="mobile"]').val();
+							},	 	   
+				},function(data){  
+					if(data.status=='0'){
+						alert(data.info); 
+						$('#user_name').focus();
+						$("#login_form #show_msg").html(data.info);
+						return;
+					}else{
+						$("#login_form #show_msg").html('OK.');
+						layer.alert(data.info,{btn:['返回']},function(){
+							self.location= '/member/index.html';
+						},function(){ 
+							self.location=data.url;		
+						}); 
+					}  
+				},'json');
+			//form.submit(); //提交表单
+		},
+		/*
+		errorPlacement: function(error, element) {  
+			if(element.attr('name') == 'is_agree'){
+				element.next().next().after(error);
+			}else{
+				error.appendTo(element.parent()); 
+			}
+		},*/
+		focusInvalid: true, //当为false时，验证无效时，没有焦点响应  
+		onkeyup: false,   
+		//success: 'InfoTrue',
+		//errorElement : 'span',
+		//errorClass : 'InfoError',
+		//validClass : 'InfoTrue'
+		
+	});	 
+}); 
+</script> 
+<style type="text/css"> 
+	.touxiang .tx_pic{ border-radius:2px;width:50px; height:50px; background:url(/Public/home/images/uppic.png);background-size:100% 100%; float:right;margin-right:10px;}
+	.touxiang .tx_pic input{width:50px; height:50px;}
+ 	input[type='text'],input[type='submit']{border:1px solid #ccc !important; line-height:2; border-radius:5px; padding:3px; min-width:100px;}
+  	input[type='password']{border:1px solid #ccc !important; line-height:2; border-radius:5px; padding:3px;}
+	#main_form input{height:32px !important;}
+	#main_form #Button1{ width:88%; margin-left:8px; font-size:20px; height:48px !important; }
+	#main_form table label{ display:inline-table; line-height:2px; color:#f00; }
+</style> 
+</head>
+
+<!--[if IE 8]>
+<style>
+.hd_l{ position:absolute;left:50%; margin-left:-600px;}
+.hd_l1{margin-left:520px;;left:50%; }
+</style>
+<![endif]-->
+
+<body class="um-vp bc-bg">
+<include file="./Shop/Home/View/index/header.html" />
+<div class="sc-bg2 uwidth fixed" style="display:none;" id="jinbi">
+  <div class="uc-a3   lg_width left top modal jinbie" style="margin-left: -165px;"> <img src="/Public/home/files/jinbi.png">
+    <p class="toop">签到成功</p>
+    <p class="toop-b">每天签到可获得<em>5</em>麻豆</p>
+    <div class="uinn0">
+      <input value="知道咯" class="btn" type="button">
+    </div>
+  </div>
+</div>
+
+<!--登录、注册-->
+
+<div class="sc-bg2 uwidth fixed" id="login" style="display: none;">
+  <div class="uc-a3 sc-bg uinn0 lg_width left top modal" style="margin-left: -165px;">
+    <div class="">
+      <div class="ufl ulev2">GRAPHIS欢迎您</div>
+      <div class="ufr">
+        <div class="sc-bg3 sc-white cl_width uc-br2 tx-c closed">×</div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+    <div class="uinn7">
+      <div class="tx-c">
+        <div class="img_width uc-br2 bc-border-d sc-bg3"><img src="/Public/home/files/pic.png" class="uc-br2" height="98" width="98"></div>
+      </div>
+      <div class="bc-border-f umar-tc">
+        <div class="ufl icon_width bc-border-e"><i class="icon icon_login"></i></div>
+        <input id="name" name="name" placeholder="请输入邮箱或手机号" class="ufl uinn3" style="width: 80%;" type="text">
+        <div style="clear:both;"></div>
+      </div>
+      <div class="bc-border-f umar-tc">
+        <div class="ufl icon_width bc-border-e"><i class="icon icon_pwd1"></i></div>
+        <input id="password" name="password" placeholder="请输入密码" class="ufl uinn3" style="width: 80%;" type="password">
+        <div style="clear:both;"></div>
+      </div>
+      <div class="ulev0 sc-text-d umar5" id="result"></div>
+      <div class="ulev0 umar-t">
+        <label class="ufl">
+          <input class="chk_width ver-mid" id="auto_login" type="checkbox">
+          <span class="ver-mid umar-lb">下次自动登录</span></label>
+        <div class="ufr"><a class="sc-text-e"></a></div>
+        <div style="clear: both;"></div>
+      </div>
+      <div class="umar-ta uinn8">
+        <input class="sc-bg1 sc-white uc-a2 uwidth line5 ulev1 btn_login" id="login_submit" value="登录" name="event_submit_do_login" type="button">
+      </div>
+      <div class="ulev0 umar-ta umar-ba">使用合作账号登录或 <a class="sc-text-e" id="login_to_register">注册账号</a></div>
+      <div class="uwidth ulev0 uinn-ele8 lg-way umar-ba"> <a href="/json/ouathLogin/weixinLogin.json">
+        <dl class="ufl tx-c">
+          <dt class="icon icon-weixin"></dt>
+        </dl>
+        </a> <a href="/json/ouathLogin/sinaLogin.json">
+        <dl class="ufl tx-c">
+          <dt class="icon icon-weibo"></dt>
+        </dl>
+        </a> <a href="/json/ouathLogin/renrenLogin.json">
+        <dl class="ufl tx-c">
+          <dt class="icon icon-ren"></dt>
+        </dl>
+        </a> <a href="/json/ouathLogin/tencentLogin.json">
+        <dl class="ufl tx-c">
+          <dt class="icon icon-QQ"></dt>
+        </dl>
+        </a> </div>
+    </div>
+  </div>
+</div>
+<div class="sc-bg2 uwidth fixed" id="register" style="display: none;">
+  <div class="uc-a3 sc-bg uinn0 lg_width left top modal" style="margin-left: -165px;">
+    <div class="">
+      <div class="ufl ulev2">GRAPHIS欢迎您</div>
+      <div class="ufr">
+        <div class="sc-bg3 sc-white cl_width uc-br2 tx-c closed">×</div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+    <div class="uinn6 ulev0">
+      <div class="umar-tc">
+        <div class="ufl lab_width tx-r"><span class="sc-text-d ulev1">*&nbsp;</span>账号：</div>
+        <div class="umar4">
+          <div class="ufl uwidth">
+            <input id="zh" placeholder="请输入邮箱或手机号" class="uinn3 bc-border-f uwidth" type="text">
+          </div>
+          <div style="clear:both;"></div>
+          <div class="ulev0 sc-text-d umar-tg" id="zh_check"></div>
+        </div>
+      </div>
+      <div class="umar-tc">
+        <div class="ufl lab_width tx-r"><span class="sc-text-d ulev1">*&nbsp;</span>昵称：</div>
+        <div class="umar4">
+          <div class="ufl uwidth">
+            <input id="nc" placeholder="请输入昵称" class="uinn3 bc-border-f uwidth" type="text">
+          </div>
+          <div style="clear:both;"></div>
+          <div class="ulev0 sc-text-d umar-tg" id="nc_check"></div>
+        </div>
+      </div>
+      <div class="umar-tc">
+        <div class="ufl lab_width tx-r"><span class="sc-text-d ulev1">*&nbsp;</span>密码：</div>
+        <div class="umar4">
+          <div class="ufl uwidth">
+            <input id="pwd" placeholder="6-20位字母、数字结合" class="uinn3 bc-border-f uwidth" type="password">
+          </div>
+          <div style="clear:both;"></div>
+          <div class="ulev0 sc-text-d umar-tg" id="pwd_check"></div>
+        </div>
+      </div>
+      <div class="umar-tc">
+        <div class="ufl lab_width tx-r"><span class="sc-text-d ulev1">*&nbsp;</span>确认密码：</div>
+        <div class="umar4">
+          <div class="ufl uwidth">
+            <input id="confirmPwd" placeholder="6-20位字母、数字结合" class="uinn3 bc-border-f uwidth" type="password">
+          </div>
+          <div style="clear:both;"></div>
+          <div class="ulev0 sc-text-d umar-tg" id="confirmPwd_check"></div>
+        </div>
+      </div>
+      <div class="umar-tc">
+        <div class="ufl lab_width tx-r"><span class="sc-text-d ulev1">*&nbsp;</span>验证码：</div>
+        <div class="ufl">
+          <input id="yzm" placeholder="请输入验证码" class="uinn3 bc-border-f" style="width: 108px;" type="text">
+          <div class="ulev0 sc-text-d umar-tg" id="yzm_check"></div>
+        </div>
+        <img id="CreateCheckCode" src="/Public/home/files/verify.jpg" class="ufl umar-lb" onclick="javascript:refresh();" height="34" width="98"> <a href="javascript:refresh();" tabindex="-1">换一张</a>
+        <div style="clear:both;"></div>
+      </div>
+      <div class="ulev0 sc-text-d umar-tg" id="register_reslut"></div>
+      <div class="umar-ta uinn8">
+        <button class="sc-bg1 sc-white uc-a2 uwidth line5 ulev1 btn_login" id="register_submit">同意协议并注册</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="page_0" class="up ub ub-ver bc-bg"> 
+  <!--header开始--> 
+  
+  <!--header结束--> 
+  <!--content开始-->
+  <div id="content" class="ub-f1 umar-bd">
+    <div class="umw1 umar-tc umar-bc">
+      <div class="tab uwidth">
+        <include file="./Shop/Home/View/index/member.left.html" />
+        <div class="sc-bg ufl tab_cont subRight_menu1 umar-lc uinn9 uinn-r uinn-l"> 
+          
+          <!--我的关注-->
+          <div class="ul_list">
+            <div data-am-widget="titlebar" class="am-titlebar  umar-t am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+              <h2 class="am-titlebar-title ulev3"> <strong>留言反馈/ </strong>FEEDBACK<span class="sc-text-b"></span> </h2>
+            </div><br><br>
+            	<div style="background-color:#f6f6f6; font-size:15px;border-radius:5px; line-height:30px; padding:15px;">在使用本站过程中有任何问题，请给我们留言。为了更好的为你服务欢迎你给我们多提些建议和意见，我们将会及时给你回复。</div>
+            <br><br><br>
+
+            <form method="post" action="{:U('Member/guestbook')}" onsubmit="//return checkpwd();" id="main_form"> 
+             <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td height="59" align="right" scope="row">&nbsp;姓名：</td>
+                        <td>&nbsp;<input type="text" name="name" value="" placeholder="姓名必填"  maxlength="16" style="font-size:18px; width:88%; text-align:center;"></td>
+                    </tr>
+                    <tr>
+                        <td height="59" align="right" scope="row">&nbsp;手机：</td>
+                        <td>&nbsp;<input type="text" name="mobile" value="{$user.mobile}" placeholder="手机必填"  maxlength="16" style="font-size:18px; width:88%; text-align:center;"></td>
+                    </tr>
+                      <tr>
+                        <td height="59" align="right" scope="row">&nbsp;E-mail：</td>
+                        <td>&nbsp;<input type="text" name="name" value="" placeholder="E-mail选填"  maxlength="16" style="font-size:18px; width:88%; text-align:center;"></td>
+                    </tr>
+                      <tr>
+                        <td height="45" align="right" scope="row">&nbsp;标题：</td>
+                        <td>&nbsp;<input type="text" name="title" value="" placeholder="标题必填" style="font-size:18px; width:88%; text-align:center;"></td>
+                      </tr> 
+                      <tr>
+                        <td height="45" align="right" scope="row">&nbsp;内容：</td>
+                        <td>&nbsp;
+                        	<textarea id="content" name="content" style="border-radius:5px; border:1px solid #ccc; margin-left:0px; margin-top:10px; width:88%; height:120px;"> </textarea>
+                        </td>
+                      </tr>
+                      <tr><td height="60">&nbsp;</td>
+                        <td><input type="submit" name="Button1" value="保存" style="padding:5px 10px;" id="Button1" class="btn btn-block btn-primary"></td>
+                      </tr>
+                      
+                    </table>
+                    <br>
+				</form>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+  </div>
+  
+  <!--content结束--> 
+</div>  
+
+<include file="./Shop/Home/View/index/footer.html" />
+  
+</body>
+</html> 

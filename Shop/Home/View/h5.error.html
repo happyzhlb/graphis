@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta id="vp" name="viewport" content="width=device-width, user-scalable=no,maximum-scale=1.0,initial-scale=1">
+<meta name="keywords" content="礼物说,会说话的礼物,会说话,条形码,扫描条形码,扫码留声,扫条码存声音,让礼物开口说话,二维码扫描,二维码制作,移动二维码,创意二维码">
+<meta name="description" content="礼物说支持扫描任意商品条形码存声音送祝福。礼物说还支持在线订购主题礼盒，支持给订购的礼盒留声音，随时随地给朋友送会说话的礼物。">
+<link rel="apple-touch-icon" sizes="57x57" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-57x57_10d74da.png">
+<link rel="apple-touch-icon" sizes="76x76" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-76x76_c08081d.png">
+<link rel="apple-touch-icon" sizes="120x120" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-120x120_3317fa3.png">
+<link rel="apple-touch-icon" sizes="152x152" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-152x152_5fde678.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//static.liwushuo.com/static/web/img/favicon/favicon-32x32_23d4a98.png">
+<link rel="icon" type="image/png" sizes="96x96" href="//static.liwushuo.com/static/web/img/favicon/favicon-96x96_acf6191.png">
+<meta name="msapplication-TileImage" content="/web/style/img/favicon/ms-icon-144x144.png">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="Shortcut Icon" href="/Public/home/favicon.ico">
+<link rel="Bookmark" href="//static.liwushuo.com/static/web/img/favicon/favicon_23d4a98.png">
+  <title>纯白色，不能释怀的小情调</title>
+  <link rel="stylesheet" type="text/css" href="/Public/home/h5/static_web_apps_current_css_mobile_post_fa92a21.css">
+  <!-- 什么鬼? -->
+  <script>
+(function(win, doc) {
+  function hasClass(el, className) {
+  if (el.classList)
+      return el.classList.contains(className)
+    else
+      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'))
+  }
+
+  function addClass(el, className) {
+    if (el.classList)
+      el.classList.add(className)
+    else if (!hasClass(el, className)) el.className += " " + className
+  }
+  
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var post_content = doc.getElementById('post-content');
+    doc.getElementById('loader').style.display = 'none';
+    post_content.style.display = 'block';
+    addClass(post_content, 'animate-opacity');
+  });
+
+})(window, document);
+  </script>
+
+</head>
+
+<body data-post-id="1001185">
+  <div id="loader" class="spinner">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  <div id="post-content" style="display: none1;" class="post-content ">
+    <a href="/" class="download-content download-content-sm">
+      <div class="wrapper download-banner">
+        <img class="app-download" src="/Public/images/clickDownloadBt@2x_3d02296.png" />
+        <img class="app-icon" src="/Public/images/topbannerLogo.png" />
+      </div>
+    </a> 
+    <div class="wrapper wrapper-main">
+      <div class="post">
+        <div class="td">
+          <h1 class="title"><?php echo($error); ?></h1>
+          <!-- <div class="post-info">
+            <p><i class="info-icon like-icon"></i><span>50977 喜欢</span></p>
+            <p><i class="info-icon share-icon"></i><span>3176 分享</span></p>
+            <p><i class="info-icon comment-icon"></i><span>56 评论</span></p>
+          </div> -->
+        </div>
+        <!-- <hr class="fancy-line" /> -->
+        <div class="content">
+        
+            <div class="system-message">
+            <present name="message">
+            <h1><img src="/Public/images/biaoqing2.png" /></h1>
+            <p class="success"><?php echo($message); ?></p>
+            <else/>
+            <h1><img src="/Public/images/pay_failed.png" style="width:40px; padding:0px 20px 0px 0px;" align="left"/></h1>
+            <p class="error"><?php echo($error); ?></p>
+            </present>
+            <p class="detail"></p>
+            <p class="jump">
+            页面自动 <a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> 等待时间： <b id="wait"><?php echo($waitSecond); ?></b>
+            </p>
+            </div>
+			<script type="text/javascript">
+            (function(){
+            var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+            var interval = setInterval(function(){
+                var time = --wait.innerHTML;
+                if(time <= 0) {
+                    location.href = href;
+                    clearInterval(interval);
+                };
+            }, 1000);
+            })();
+            </script>
+        </div>
+        
+      </div>
+      <section class="post post-comment">
+        <!-- <h3 class="com-title"><i></i>攻略评论</h3> -->
+        <hr class="com-fancy fancy-line" />
+        <ul class="com-list" id="itemList"></ul>
+        <div class="loading"></div>
+        <div class="get-more-comment"><a href="/">返回孕妈购(ymg280.com)首页</a></div>
+        <!-- <div class="load-tip" id="next"><a>查看更多评论</a></div> -->
+        
+      </section>
+      <hr class="com-fancy fancy-line" />
+      <div class="suggest-wrap" style="display: none;">
+        <h3 class="title">你可能也喜欢</h3>
+        <ul id="suggest-list" class="list"></ul>
+      </div>
+      
+      <div class="tab-download-wrap">
+          <a href="http://www.liwushuo.com/m/download.html">
+              <img class="tab-download-img" src="//static.liwushuo.com/static/web/apps/current/img/tabDownloadBt@2x_a387436.png" alt="">
+          </a>
+      </div>
+    </div>
+  </div> 
+  
+  
+
+ 
+
+  
+</body>
+
+</html>

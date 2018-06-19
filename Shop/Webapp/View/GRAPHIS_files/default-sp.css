@@ -1,0 +1,292 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*===============================================
+●tablet.css 画面の横幅が600pxまで
+===============================================*/
+@media screen and (max-width: 600px){
+	
+
+/*縮小ヘッダーメニュー
+----------------------------------*/
+	
+#head-navi2 .head-navi2-box ul li#btn-menu >div,
+div#head-navi2 ul li.btn-login >a,
+div#head-navi2 ul li.btn-mypage >a {
+	width: 72px;
+	}
+
+div#head-navi2 ul li.btn-mypage >a {
+	font-size: 14px;
+	}
+
+div#head-navi2 ul li.head-logo {
+	width: 120px;
+	}
+
+div#head-navi2 .login-info-box {
+	font-size: 12px;
+	}
+
+.login-head-space {
+	height: 0px;
+	}
+
+
+
+/*年齢認証
+----------------------------------*/
+
+div.modal {
+	width: 90%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto;
+	height: 360px;
+	}
+
+
+/*サイトアバウト
+----------------------------------*/
+
+div#about-box {
+	text-align: left;
+	}
+
+div#about-box ul .jp,
+div#newface ul.exp-txt .jp {
+	font-size: 16px;
+	}
+
+div#about-box ul .en,
+div#newface ul.exp-txt .en {
+	font-size: 10px;
+	}
+
+
+/*コンテンツ
+----------------------------------*/
+
+#login-top-contents ul.contets-list >li {
+	width: 50%;
+	padding: 8px 4px;
+	}
+
+#login-top-contents ul.contets-list >li .en {
+	font-size: 18px;
+	}
+
+#login-top-contents ul.contets-list >li .jp {
+	font-size: 10px;
+	}
+
+#login-top-contents ul.contets-list >li .en:before {
+	width: 32px;
+	height: 32px;
+	margin-right: 8px;
+	}
+
+#login-top-contents div.user-info-box >ul {
+	display: block;
+	}
+
+
+#login-top-contents div.user-info-box .btn-mypage a.mypage-link {
+	background-color: #000;
+	color: #eee;
+	display: block;
+	text-align: center;
+	height: auto;
+	padding: 8px 0;
+	}
+
+#login-top-contents div.user-info-box .btn-mypage a.point-exp-link {
+	display: block;
+	text-align: center;
+	height: auto;
+	padding: 8px 0;
+	}
+
+
+#login-top-contents div.user-info-box .btn-mypage a.mypage-link:hover {
+	background-color: #444;
+	text-decoration: none;
+	}
+
+#login-top-contents div.user-info-box .btn-mypage a.mypage-link ul,
+#login-top-contents div.user-info-box .btn-mypage a.point-exp-link ul {
+	display: block;
+	width: auto;
+	height: auto;
+	vertical-align: baseline;
+	margin: 0;
+	}
+
+#login-top-contents .user-info-box .btn-mypage a.mypage-link .en {
+	font-size: 16px;
+	}
+
+#login-top-contents .user-info-box .btn-mypage a.mypage-link .jp {
+	font-size: 12px;
+	}
+
+div.gp-model-thumb-box {
+	width: 98%;
+	}
+
+div.gp-model-thumb-box div.list-thumb-box {
+	padding: 0 4px;
+	}
+
+
+.gp-model-thumb-box div.gp-model-box {
+	width: 33%;
+	}
+
+.gp-model-thumb-box div.gp-model-box ul {
+	width: 100%;
+	}
+
+.ppv-list-box {
+	margin-left: 8px;
+	margin-right: 8px;
+	}
+
+.ppv-list-box .product-box {
+	width: 50%;
+	}
+
+
+.sort-link {
+	margin: 8px  auto;
+	width: 96%;
+	min-width: 0;
+	}
+
+.sort-link ul {
+	display: flex;
+	font-size: 14px;
+	flex-wrap: wrap;
+	}
+
+.sort-link ul li {
+	flex: 0 120px;
+	margin-bottom: 16px;
+	}
+
+div.pager-link ul li {
+	padding: 4px;
+	}
+
+
+
+/*ログイントップ
+----------------------------------*/
+
+ul.close-list >li {
+	width: 33%;
+	padding: 8px;
+	font-size: 12px;
+	}
+
+
+ul.calender-banner {
+	background-color: #fff;
+	justify-content: center;
+	}
+
+.calender-banner >li.text-box {
+	display: none;
+	}
+
+
+
+/*NEW FACE
+----------------------------------*/
+
+div.newface-model-box {
+	padding: 24px 8px;
+	}
+
+div.newface-model>ul {
+	width: 80%;
+	min-width: auto;
+	line-height: 1.2;
+	}
+
+.newface-model > ul .model-info li.name-jp {
+	font-size: 16px;
+	}
+
+
+
+
+/*ポイントについて
+--------------------------------------------------------------------------*/
+
+div.continuation-img >ul {
+	display: block;
+	}
+	
+div.continuation-img >ul >li {
+	margin-bottom: 40px;
+	}
+
+
+ul.banner-space {
+	display: block;
+	}
+
+ul.banner-space li {
+	margin: auto;
+	}
+
+
+
+/* HTMLスペース
+----------------------------------*/
+
+
+/*フッターメニュー
+----------------------------------*/
+
+
+div.navi-bottom-logo {
+	padding: 24px 16px;
+	box-sizing: border-box;
+	}
+
+div.navi-bottom-section {
+	display: inline-block;
+	margin: 0;
+	padding: 16px;
+	}
+
+div.navi-bottom-section ul {
+	text-align: center;
+	}
+
+div.navi-bottom-section ul li {
+	margin: 0;
+	text-align: left;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

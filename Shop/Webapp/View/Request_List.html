@@ -1,0 +1,27 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Product Request List</span>
+            <a href="{:U('Member/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--用户评价列表开始-->
+    <div class="ProductRequestList">
+    <volist name="list" id="vo">
+    	<div class="each"> 
+            <a href="{:U('delete',array('id'=>$vo['id']))}" class="Delete" title="Delete" onclick="return confirm('Are you sure to delete this record ?');"></a>
+            <a href="{:U('edit',array('id'=>$vo['id']))}" class="Edit">Edit</a>
+            <a href="{:U('detail',array('id'=>$vo['id']))}" class="Name">{$vo.pro_name} </a>
+        </div>
+    </volist>     
+    </div>
+	<!--用户评价列表结束--> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

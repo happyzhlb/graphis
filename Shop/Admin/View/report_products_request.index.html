@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>订单报表管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/listimg.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/datepicker.css" type="text/css" rel="stylesheet">
+
+<style>
+.main_input[type=text] {
+	border:1px solid #dcdcdc;
+	border-top:1px solid #999;
+	font-size:12px;
+	vertical-align:text-bottom;
+	border-left:1px solid #999;
+	height:10px;
+	width:100px;
+	margin:10px 0 0 0;
+}
+.main_font {
+	font-size:12px;
+	line-height:2;
+}
+.main_table {
+	border-left:1px solid #acacac;
+	border-bottom:1px solid #999;
+	font-size:12px;
+	line-height:1.8;
+}
+.main_table td {
+	border:1px solid #acacac;
+	border-left:0px;
+	border-bottom:0px;
+}
+.main_table th {
+	border:1px solid #acacac;
+	border-left:0px; font-size:14px;
+	border-bottom:0px;
+	background-color:#CCC;
+}
+</style>
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+$(function(){
+	$('.datepicker').datepicker(); 
+});
+</script>
+</head>
+
+<body>
+<section> 
+  <!--content start-->
+  <div class="main">
+    <div class="page_tag">
+      <div class="tag"> <i class="home"></i> <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Orderreport')}" class="text" target="workspace">用户需求报表管理</a> </div>
+    </div>
+    <!--订单列表start-->
+<div class="tbox">
+      <div class="bar">
+        <div class="bar_l"></div>
+        <div class="text">用户需求汇总表</div>
+        <div class="bar_r"></div>
+      </div> 
+      <br>
+        <table class="main_table" width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <th align="center">按需求商品CAS统计</tr>
+          <tr>
+            <td align="center"><form id="search_form" action="{:U('goods')}" method="post" class="main_font">
+                起始时间:
+                <input type="text" id="from_time" name="from_time" data-date="" data-date-format="dd-mm-yyyy" value="{$Think.request.from_time|default=date('01-01-Y')}" class="datepicker main_input"  placeholder="起始时间">
+                结束时间:
+                <input type="text" id="to_time" name="to_time" data-date="" data-date-format="dd-mm-yyyy" value="{$Think.request.to_time|default=date('d-m-Y')}" class="datepicker main_input"  placeholder="结束时间"> 
+                <select id="cycle" name="refund_status" class="none"> 
+                  <option value="day" 
+                  <if condition="$Think.post.cycle eq 'day' ">selected</if>
+                   selected>按日需求汇总
+                  </option>
+                  <option value="week" 
+                  <if condition="$Think.post.cycle eq 'week'">selected</if>
+                  >按周需求汇总
+                  </option>
+                  <option value="month" 
+                  <if condition="$Think.post.cycle eq 'month' ">selected</if>
+                  >按月需求汇总
+                  </option>
+                </select>
+                <input type="submit" value="搜索" class="btn btn_ds">
+            </form></td>
+          </tr>
+        </table>
+         <div> <br> <br> <br> <br> <br><br> <br> <br> <br></div>     
+      <div class="cbox none" style="line-height:2;">
+        <div id="main" class="main" ><br> 
+        </div>
+        <table class="main_table" width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <th align="center">按需求用户统计            
+          </tr>
+          <tr>
+            <td align="center"><form id="search_form2" action="{:U('user')}" method="post" class="main_font">
+              起始时间:
+              <input type="text" id="from_time" name="from_time" data-date="" data-date-format="dd-mm-yyyy" value="{$Think.request.from_time|default=date('01-01-Y')}" class="datepicker main_input"  placeholder="起始时间">
+              结束时间:
+              <input type="text" id="to_time" name="to_time" data-date="" data-date-format="dd-mm-yyyy" value="{$Think.request.to_time|default=date('d-m-Y')}" class="datepicker main_input"  placeholder="结束时间">
+               
+             <select id="cycle" name="refund_status"> 
+                  <option value="day" 
+                  <if condition="$Think.post.cycle eq 'day' ">selected</if>
+                   selected>按日需求汇总
+                  </option>
+                  <option value="week" 
+                  <if condition="$Think.post.cycle eq 'week'">selected</if>
+                  >按周需求汇总
+                  </option>
+                  <option value="month" 
+                  <if condition="$Think.post.cycle eq 'month' ">selected</if>
+                  >按月需求汇总
+                  </option>
+               </select>
+              <input type="submit" value="搜索" class="btn btn_ds">
+            </form></td>
+          </tr>
+        </table>
+        <br>
+        <br>
+        <div class="cbox" style="line-height:2;">
+          <p>&nbsp;</p>
+      </div>
+        <br>
+        <br>
+    </div>
+    <!--订单列表end--> 
+  </div>
+  <!--content end-->
+</body>
+</html>

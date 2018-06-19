@@ -1,0 +1,77 @@
+<include file="./Shop/Webapp/View/header.html" />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Blog Category</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file="./Shop/Webapp/View/menu.html" />
+    </div>
+    <!--导航结束-->
+    
+    <!--博客开始-->
+    <div class="blogBox">
+    	<div class="blogNav clearfix">
+        	<a href="{:U('Blog/index')}" class="<empty name='Think.get.cate_id'>current</empty> BoderT">All Articles</a>
+            <volist name="blogcate" id="vo">
+            	<a href="{:U('Blog/index','cate_id='.$vo['cate_id'])}" class="<?php if($vo['cate_id']==(int)$_GET['cate_id']){ echo 'current';}?> <if condition='$key lt 2'>BoderT</if>">{$vo.cate_name}</a>
+            </volist> 
+        </div>
+        <div class="blogList">
+        <volist name="blog_list" id='vo'>
+        	<div class="each">
+            	<span class="time">{$vo.ctime|date='Y-m-d',###}</span>
+                <div class="conBox">
+                	<a href="{:U('Blog/detail','id='.$vo['bid'])}">
+                    	<h3>{$vo.title}</h3>
+                        <span class="blogClass">{$vo.cate_name}</span>
+                    </a>
+                    <span class="icon"></span>
+                </div>
+            </div>
+        </volist>     
+        </div>
+        <if condition="$fpage['num'] gt 1">
+        <div id="page">
+        	<a href="javascript:void(0)" class="prev"><em></em></a>
+            <div class="pageChoose"> 
+            	<select name="select" id="select_page">
+                <for start="1" end="$fpage['num']" comparison='elt'>
+                	<option value="{$i}" <if condition="$i==$_GET['p']">selected</if>>Page {$i}/{$fpage.num}</option>
+                </for> 
+                </select>
+            </div>
+            <a href="javascript:void(0)" class="next"><em></em></a>
+        </div>
+        </if>
+    </div>
+	<!--博客结束--> 
+    <script>
+    	$(function(){
+			fn_change_page=function(){
+				 self.location="{:U('Blog/index','','')}/p/"+$(this).val();				
+			}
+			$('#select_page').bind('change',fn_change_page);
+			
+			max_page='{$fpage.num}';
+			now_page='{$Think.get.p|default=1}';
+			next_page=parseInt(now_page)+1;
+			prev_page=parseInt(now_page)-1;
+			
+			if(next_page<=max_page){
+				$('#page .next').click(function(){ self.location="{:U('Blog/index','','')}/p/"+ next_page; }); 
+			}			
+			if(prev_page>=1){
+				$('#page .prev').click(function(){ self.location="{:U('Blog/index','','')}/p/"+ prev_page; }); 
+			}
+			
+			
+		});
+		
+    </script>
+</div>
+<include file="./Shop/Webapp/View/footer.html" />

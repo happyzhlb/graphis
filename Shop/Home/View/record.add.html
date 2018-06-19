@@ -1,0 +1,97 @@
+<include file="./Shop/Home/View/user.header.html" />
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+        <meta name="keywords" content="怀孕百事通 孕妈圈 " />
+        <meta name="description" content="怀孕百事通 孕妈圈" />
+        <title>怀孕圈_宝妈社区</title>
+		<link rel="stylesheet" href="__PUBLIC__/home/css/loading.css" />
+		<script src="__PUBLIC__/home/js/loading.js"></script>
+		<link rel="stylesheet" href="__PUBLIC__/home/fonts/font.css">
+		<link rel="stylesheet" href="__PUBLIC__/bbs/style.css">
+        <script type="text/javascript" src="__PUBLIC__/bbs/jquery.min.js"></script>
+		<link rel="stylesheet" href="__PUBLIC__/bbs/default.css" />
+        <link rel="stylesheet" href="__PUBLIC__/bbs/face.css" />
+		<script src="__PUBLIC__/bbs/kindeditor-min.js"></script> 
+        <script src="__PUBLIC__/bbs/face2.js" type="text/javascript"></script>
+		<script>
+		    KindEditor.ready(function (K) {
+		        var uploadbutton = K.uploadbutton({
+		            button: K('#uploadButton')[0],
+		            fieldName: 'imgFile',
+		            url: '/myeditor/php/upload_json.php?dir=image',
+		            afterUpload: function (data) {
+		                if (data.error === 0) {
+		                    var url = K.formatUrl(data.url, 'absolute');
+		                    var con = "<div class='item writeimg'><input type='hidden' name='photo' value='" + url + "' /><img src='" + url + "'><div class='delete'><span class='icon-jian'></span></div></div>"
+		                    $("#item_url").append(con);
+		                } else {
+		                    alert(data.message);
+		                }
+		            },
+		            afterError: function (str) {
+		                alert('自定义错误信息: ' + str);
+		            }
+		        });
+		        uploadbutton.fileBox.change(function (e) {
+		            uploadbutton.submit();
+		        });
+		    });
+		</script>
+        <script language="javascript">
+        <!--
+            function check() {
+                if ($("#content").val() == "") {
+                    alert("请输入贴子内容！")
+                    return (false)
+                }
+            }
+        //-->
+        </script>
+	</head>
+	<body>
+    
+		<header>
+			<div class="l"><a href="javascript:history.back()" class="btn back"><span class="icon-back"></span></a></div>
+			<div class="c"><h1>个人纪录</h1><input type="hidden" name="isshow" id="isshow" value="0"></div>
+		</header>
+      	<!--底部导航-->
+		<include file="./Shop/Home/View/bbs.footer.html" /> 
+    
+        <div id="jifen_jia" style="display:none;">发贴成功<br />+0积分</div>
+		<div class="header-margin footer-margin body">
+        <form method="post" action="{:U('add')}" id="form1" onSubmit="return check()">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUIMjg3NjEzNzJkZAxSYJNzRVmySB/DT49Ybos2pJBRHLrqSLzd7q4EYDKz" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="51D931A9" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAAOkpYMgVxXZJGAcAYwkL+twsc+GRt0Ft4dVuEUa5zCsTc34O/GfAV4V4n0wgFZHr3eawvQOLonodTtMKeqK1t4d+sJOW3oQ40G3Jdmw+J0HKg==" />
+</div>
+			<div class="box">
+                <div class="Input_Box2">
+                  <textarea name="content" rows="2" cols="20" id="content" placeholder="请输入内容" class="Input_text">
+</textarea>
+                  <div class="faceDiv"> </div>
+                  <div class="Input_Foot"> <a class="bqBtn" href="javascript:void(0);"></a> <a class="imgBtn" id="uploadButton" href="javascript:void(0);"></a><input type="submit" name="Button1" value="点击发布" id="Button1" class="postBtn" /></div>
+                </div>
+			</div>
+			<div class="clearfix upload">
+			    <div id="item_url">
+                
+			    </div>
+			</div>
+        </form>
+		</div> 
+		<script>
+
+		    $("#item_url").on("click", '.delete', function () {
+		        $(this).parents(".writeimg").remove();
+		    });
+		</script>
+	</body>
+</html>

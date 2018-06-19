@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>交易跟踪明细</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+<style>
+	td{line-height:1.5; font-size:12px;}
+</style>
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('index')}" class="text" target="workspace">交易跟踪管理</a> > <span class="text">查看</span>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar none">
+                   <div class="bar_l1"></div>
+                   <div class="text">交易跟踪详情</div>
+                   <div class="addbox"></div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox"></div>
+              </div> 
+              <div class="cbox">
+                <br>
+                <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="22%" align="right"><strong>类型：</strong></td>
+                    <td width="78%">{$list.topic}</td>
+                  </tr>
+                  <tr>
+                    <td align="right"><strong>卖家：</strong></td>
+                    <td>{$list.seller}/{$list.seller_nick}</td>
+                  </tr>
+                  <tr>
+                    <td align="right"><strong>订单号：</strong></td>
+                    <td>{$list.order_id}</td>
+                  </tr>
+                  <tr>
+                    <td align="right"><strong>订单金额：</strong></td>
+                    <td>{$list.paid_fee}</td>
+                  </tr>
+                  <tr>
+                    <td height="132" align="right">&nbsp;</td>
+                    <td> <br>
+                    	<?php foreach($auction_infos as $key => $val){ ?>
+                        	 子订单号: <?php echo $val['detail_order_id'];?> <br>
+                             ID: <?php echo $val['auction_id'];?>  <br>
+                             金额: <?php echo $val['real_pay'];?>  <br>
+                             图片: <?php echo $val['auction_pict_url'];?>  <br>
+                             标题: <?php echo $val['auction_title'];?>  <br>
+                             数量: <?php echo $val['auction_amount'];?>  <br> 
+                        <?php }?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right">&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+                <table width="100%" border="0" align="center" cellpadding="0" cellspacing="2">
+                  <tr>
+                    <td colspan="2" align="left" style="padding-left:150px; font-weight:bold;">&nbsp;&nbsp;订单号：{$list.order_id} 历史记录：</td>
+                  </tr>
+                  <volist name="orderlist" id="vo">
+                  <tr>
+                    <td width="299" align="right">{$list.pub_time}：</td>
+                    <td width="1051"><?php echo $topic[$vo['topic']];?></td>
+                  </tr>
+                  </volist>
+                  <tr>
+                    <td align="right">订单号：</td>
+                    <td>{$list.order_id}</td>
+                  </tr>
+                  <tr>
+                    <td align="right">订单金额：</td>
+                    <td>{$list.paid_fee}</td>
+                  </tr>
+                  <tr>
+                    <td align="right">&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

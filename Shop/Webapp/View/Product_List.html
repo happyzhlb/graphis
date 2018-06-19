@@ -1,0 +1,61 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Product List</span>
+            <a href="{:U('Gcategory/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--产品分类开始-->
+    <div class="proListBox">
+    	<div class="proSearch">
+        	<input type="text" value="Titanium Dioxide" class="search" />
+            <a href="javascript:void(0)" class="searchBtn">search</a>
+        </div>
+        <div class="list">
+        	<div class="listChooseBox">
+            	<div class="listChoose clearfix">
+                    <a href="javascript:void(0)" class="current">Z-A</a>
+                    <a href="javascript:void(0)">Price</a>
+                    <a href="javascript:void(0)">Sale</a>
+                    <a href="javascript:void(0)" val="Brands">Brands<i></i></a>
+                </div>
+                <div class="Brands clearfix">
+                	<a href="javascript:void(0)" class="current">RUICHEM</a>
+                    <a href="javascript:void(0)">BILLIONS</a>
+                    <a href="javascript:void(0)">DOGUIDE</a>
+                    <a href="javascript:void(0)">BLUESTAR</a>
+                    <a href="javascript:void(0)">TIKON</a>
+                    <a href="javascript:void(0)">XINFU</a>
+                    <a href="javascript:void(0)">PANGANG</a>
+                    <a href="javascript:void(0)">JINMAO</a>
+                </div>
+            </div>
+        	
+            <!--产品列表开始-->
+            <div class="allProduct">
+            <volist name="goods" id="vo">
+            	<dl class="clearfix">
+                	<dt><a href="{:U('Goods/index',array('id'=>$vo['goods_id']))}"><img src="/{$vo.goods_img}" width="100" height="100" /></a></dt>
+                    <dd>
+                    	<h3><a href="{:U('Goods/index',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a></h3>	
+                        <p>{$vo.goods_sub_desc}</p>
+                        <span>{$vo.goods_id|get_range_price=###,'$'}</span>
+                    </dd>
+                </dl>
+            </volist>     
+            </div>
+            <!--产品列表结束-->
+            
+        </div>
+    </div>
+	<!--产品分类结束--> 
+    
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

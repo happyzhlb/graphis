@@ -1,0 +1,369 @@
+<include file="./Shop/Home/View/header.html" />
+<load href="__PUBLIC__/home/js/refund.js"/>
+<script type="text/javascript">
+var max_price = '{$order.refund_totle}';
+var max_num = '{$order.quantity}';
+</script>
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Refund Edit</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<!--refund开始-->
+        <div class="refundBox">
+        	
+            <div id="refundStep">
+            	<div class="stepBj">
+                	<div class="stepShow stepShow1"></div>
+                    <div class="step first <if condition="$order.refund_status eq 0">current<else />past</if>">
+                        <span class="each">1</span>
+                        <span class="content">Refund Requested by Buyer</span>
+                    </div>
+                    <div class="step second <if condition="in_array($order['refund_status'],array(11,20,21,22,30,40,50))">current<elseif condition="$order.refund_status eq 33" />past</if>">
+                        <span class="each">2</span>
+                        <span class="content">Process Refund Request</span>
+                    </div>
+                    <div class="step third <if condition="$order.refund_status eq 33">past</if>">
+                        <span class="each">3</span>
+                        <span class="content">Refund Completed</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="refundInfo clearfix">
+            	<div class="leftDetail">
+                	<h3>Refund Info</h3>
+                    <div class="thisShow">
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Refund No.: </dt>
+                            <dd>{$order.refund_sn}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Refund Type: </dt>
+                            <dd><if condition="$order.refund_type eq 1">Return<else />Refund</if></dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Refund Amount: </dt>
+                            <dd>{$order.refund_price|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Refund Reason: </dt>
+                            <dd>{$order.refund_reason}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Application Date: </dt>
+                            <dd><em>{$order.refund_time|todate}</em></dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Refund Description: </dt>
+                            <dd>{$order.refund_note} </dd>
+                        </dl>
+                    </div>
+                    
+                    <h3>Refund Items</h3>
+                    <div class="thisShow">
+                    	<dl class="clearfix product">
+                        	<dt><a href="javascript:void(0)"><img src="/{$order.default_image}" width="50" height="50" /></a></dt>
+                            <dd>
+                            	<p class="proName"><a href="javascript:void(0)">{$order.goods_name}</a></p>
+                                <p class="proIn">{$order.goods_attr}</p>
+                            </dd>
+                        </dl>
+                        <dl class="clearfix priceAbout">
+                        	<dt>Unit Price: </dt>
+                            <dd>{$order.present_price|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix priceAbout">
+                        	<dt>Quantity: </dt>
+                            <dd>{$order.quantity}</dd>
+                        </dl>
+                        <dl class="clearfix priceAbout">
+                        	<dt>Total: </dt>
+                            <dd>{$order.refund_totle|format_price}</dd>
+                        </dl>
+                    </div>
+                    
+                    <h3>Order Details</h3>
+                    <div class="thisShow">
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Order No.: </dt>
+                            <dd>{$order.order_sn}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Shipping Fee: </dt>
+                            <dd>{$order.shipping_fee|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Discount: </dt>
+                            <dd>{$order.discount_fee|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Redeem Points: </dt>
+                            <dd>- {$order.integral_fee|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Final: </dt>
+                            <dd><em>{$order.totle_fee|format_price}</em></dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Transaction Time: </dt>
+                            <dd>{$order.add_time|todate} </dd>
+                        </dl>
+                    </div>
+                </div>
+                
+                <div class="rightCon">
+                	<div class="refundChoose">
+                    	<a href="javascript:void(0)" <if condition="$order.refund_type eq 1">class="current"</if> title="Return">Return</a>
+                        <a href="javascript:void(0)" <if condition="$order.refund_type eq 0">class="current"</if> title="Refund">Refund</a>
+                    </div>
+                    <div class="applyShow">
+                    	<div class="showEach" <if condition="$order.refund_type eq 0">style="display:none;"</if>>
+                        	<h3 class="clHeach">Service Applied: Return</h3>
+                            <div class="applyDetail">
+                                <form id="refund_form_1" method="post" enctype="multipart/form-data">
+                                <dl class="clearfix">
+                                    <dt>* Reason:</dt>
+                                    <dd>
+                                        <select name="refund_reason" id="refund_reason">
+                                            <volist name="refund_reason" id="reason">
+                                            <option value="{$reason}" <if condition="$order.refund_reason eq $reason">selected="selected"</if>>{$reason}</option>
+                                            </volist>
+                                        </select>
+                                    </dd>
+                                </dl>
+                                <dl class="clearfix">
+                                  <dt>* Refund Amount:</dt>
+                                  <dd>
+                                    <input type="text" id="refund_price" name="refund_price" value="{$order.refund_price}" class="tpyeIn" />
+                                    <span>(Max:{$order.refund_totle|format_price}, including shipping fee: $0 ) </span> 
+                                  </dd>
+                              </dl>
+                              <dl class="clearfix">
+                                  <dt>* Refund Number:</dt>
+                                  <dd>
+                                    <input type="text" id="refund_num" name="refund_num" value="{$order.refund_num}" class="tpyeIn" />
+                                    <span>(Max:{$order.quantity}) </span> 
+                                  </dd>
+                              </dl>
+                                <dl class="clearfix">
+                                  <dt>Description:</dt>
+                                    <dd>
+                                        <textarea name="refund_note" id="refund_note" cols="45" rows="5">{$order.refund_note}</textarea>
+                                    </dd>
+                                </dl>
+                                <dl class="clearfix">
+                                  <dt>Upload Evidence:</dt>
+                                    <dd>
+                                        <input type="file" id="refund_img" name="refund_img" class="upload" />
+                                    </dd>
+                              </dl>
+                                <dl class="clearfix">
+                                  <dt>&nbsp;</dt>
+                                    <dd>
+                                    <input type="hidden" id="id" name="id" value="{$order.rec_id}" />
+                                    <input type="hidden" id="refund_type" name="refund_type" value="1" />
+                                    <input type="submit" value="" class="sureBtn submit" title="Submit" />
+                                    </dd>
+                                </dl>
+                                <div class="note clearfix">
+                                   <h4>Return</h4>
+                                    <p>1.Orders can be returned with original package and remain unused in 60 days from the payment time. Customers need to be responsible for both sending and returning shipping cost, and a restocking fee worth 25% of the order’s total value.</p>
+                                    <p>2.Orders can be returned if OKchem ships the wrong products that mismatch the order. No cost will be on customer.</p>
+                                </div>
+                                </form>
+                        </div>
+                        </div>
+                    	<div class="showEach" <if condition="$order.refund_type eq 1">style="display:none;"</if>>
+                        	<h3 class="clHeach">Service Applied: Refund</h3>
+                            <div class="applyDetail">
+                                <form id="refund_form_2" method="post" enctype="multipart/form-data">
+                                <dl class="clearfix">
+                                    <dt>* Reason:</dt>
+                                    <dd>
+                                        <select name="refund_reason" id="refund_reason">
+                                            <volist name="refund_reason" id="reason">
+                                            <option value="{$reason}" <if condition="$order.refund_reason eq $reason">selected="selected"</if>>{$reason}</option>
+                                            </volist>
+                                        </select>
+                                    </dd>
+                                </dl>
+                                <dl class="clearfix">
+                                  <dt>* Refund Amount:</dt>
+                                  <dd>
+                                    <input type="text" id="refund_price" name="refund_price" value="{$order.refund_price}" class="tpyeIn" />
+                                    <span>(Max:{$order.refund_totle|format_price}, including shipping fee: $0 ) </span> 
+                                  </dd>
+                              </dl>
+                                <dl class="clearfix">
+                                  <dt>Description:</dt>
+                                    <dd>
+                                        <textarea name="refund_note" id="refund_note" cols="45" rows="5">{$order.refund_note}</textarea>
+                                    </dd>
+                                </dl>
+                                <dl class="clearfix">
+                                  <dt>Upload Evidence:</dt>
+                                    <dd>
+                                        <input type="file" id="refund_img" name="refund_img" class="upload" />
+                                    </dd>
+                              </dl>
+                                <dl class="clearfix">
+                                  <dt>&nbsp;</dt>
+                                    <dd>
+                                    <input type="hidden" id="id" name="id" value="{$order.rec_id}" />
+                                    <input type="hidden" id="refund_type" name="refund_type" value="0" />
+                                    <input type="submit" value="" class="sureBtn submit" title="Submit" />
+                                    </dd>
+                                </dl>
+                                <div class="note clearfix">
+                                    <h4>Refund</h4>
+                                    <p>1.If there is quality issue of the products, items that have been used can be full or partial refunded in 60 days from the payment time. Our customer service will contact you to solve the problem.</p>
+                                    <p>2.If the order has been damaged in transportation process, customers can apply for a full or partial refund in 60 days from the payment time. Our customer service will follow up and file a claim against the carrier.</p>
+                                </div>
+                                </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recordBox">
+                <h3 class="clHeach">Operation Records</h3>
+                <div class="record">
+                    <volist name="refunds" id="vo" key="key">
+                    <h4>{$vo.refund_time|todate}</h4>
+                    <switch name="vo.refund_status">
+                    <case value="11">
+                        <dl class="clearfix">
+                            <dt>Me:</dt>
+                            <dd>
+                            	<ul>
+                                	<if condition="$key eq 1">
+                                    	<li>Apply refund at {$vo.refund_time|todate}</li>
+                                    <else />
+                                    	<li>Edit refund application at {$vo.refund_time|todate}</li>
+                                    </if>
+                                    <li>Refund Type:<if condition="$vo['refund_data']['refund_type'] eq 1">Return<else />Refund</if></li>
+                                    <li>Refund Amount:{$vo.refund_data.refund_price|format_price}</li>
+                                    <li>Refund Reason:{$vo.refund_data.refund_reason}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                    <notempty name="vo.refund_data.refund_img">
+                                    <li>Evidence:<a href="/{$vo.refund_data.refund_img}" target="_blank" ><img src="/{$vo.refund_data.refund_img}" width="50"></a></li>
+                                    </notempty>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </case>
+                    <case value="20">
+                    	<dl class="clearfix">
+                        	<dt>OkChem:</dt>
+                            <dd>
+                            	<ul>
+                                	<li>Approve your refund application at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </case>
+                    <case value="21">
+                    	<dl class="clearfix">
+                        	<dt>OkChem:</dt>
+                            <dd>
+                            	<ul>
+                                	<li>Approve your refund application at {$vo.refund_time|todate}</li>
+                                    <li>{$vo.refund_data.refund_address}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </case>
+                    <case value="22">
+                    	<dl class="clearfix">
+                        	<dt>Me:</dt>
+                            <dd>
+                            	<ul>
+                                	<li>Fill in the shipping method and tracking number for my returned items at {$vo.refund_time|todate}</li>
+                                    <li>Shipping Method:{$vo.refund_data.refund_shipping_name}</li>
+                                    <li>Tracking Number:{$vo.refund_data.refund_invoice_no}</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </case>
+                    <case value="30">
+                    	<dl class="clearfix">
+                        	<dt>OkChem:</dt>
+                            <dd>
+                            	<ul>
+                                	<li>Receive returned product at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                            </dd>	
+                        </dl>
+                    </case>
+                    <case value="33">
+                    	<dl class="clearfix">
+                        	<dt></dt>
+                            <dd>
+                            	<ul>
+                                	<li>Refund successfully at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </case>
+                    <case value="40">
+                    	<dl class="clearfix">
+                        	<dt>Me:</dt>
+                            <dd>
+                            	<ul>
+                                	<li>Cancel refund application at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </case>
+                    <case value="50">
+                    	<dl class="clearfix">
+                        	<dt>OkChem:</dt>
+                            <dd>
+                            	<ul>
+                                	<li>Reject your refund application at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                    <notempty name="vo.refund_data.refund_img">
+                                    <li>Evidence:：<a href="/{$vo.refund_data.refund_img}" target="_blank" ><img src="/{$vo.refund_data.refund_img}" width="50"></a></li>
+                                    </notempty>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </case>
+                    </switch>
+                	</volist>
+                </div>
+            </div>
+        
+        </div>
+        <!--refund结束-->
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("div.refundChoose a").click(function(){
+			var thisIndex = $("div.refundChoose a").index(this);
+			$("div.refundChoose a").removeClass("current");
+			$(this).addClass("current");
+			$(this).parent("div.refundChoose").next(".applyShow").find(".showEach").hide();
+			$(this).parent("div.refundChoose").next(".applyShow").find(".showEach").eq(thisIndex).show()	
+		});
+		
+		//高度
+		$(".thisShow dl.OrderAbout").each(function(){
+			var dtHeight = $(this).find("dd").height() + 10;
+			//alert(dtHeight);
+			if(dtHeight > 30){
+				$(this).find("dt").css({height:dtHeight,"line-height":dtHeight + "px"});
+			}	
+		});
+	});
+</script>            
+<include file="./Shop/Home/View/footer.html" />

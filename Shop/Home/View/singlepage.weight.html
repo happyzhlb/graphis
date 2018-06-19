@@ -1,0 +1,52 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+
+<div class="container">
+            <form name="editForm"  id="editForm" method="post" action="{:U('Singlepage/weight')}">
+			    <div class="box">
+				    <div class="display-box col">
+					    <span>孕周：</span>
+					    <span class="box-flex-1">
+                        <select name="zhou" id="zhou" class="inp inp-block inp-noborder" style="color:#999; text-align:left;">
+		                   <option value="0" >您现在是孕几周呢</option>
+                           <option value="26" >26周</option>
+                           <option value="27" >27周</option>
+                           <option value="28" >28周</option>
+                           <option value="29" >29周</option>
+                           <option value="30" >30周</option>
+                           <option value="31" >31周</option>
+                           <option value="32" >32周</option>
+                           <option value="33" >33周</option>
+                           <option value="34" >34周</option>
+                           <option value="35" >35周</option>
+                           <option value="36" >36周</option>
+                           <option value="37" >37周</option>
+                           <option value="38" >38周</option>
+                           <option value="39" >39周</option>
+                           <option value="40" >40周</option>
+                        </select></span>
+				    </div>
+			    </div>
+			    <div class="p1rem sexselect">性别：<input type="radio" name="sex" id="man" checked="checked" value="0"><label for="man"><span class="icon-man"></span> 男</label><input type="radio" name="sex" id="woman" value="1"><label for="woman"><span class="icon-woman"></span> 女</label></div>
+			    <div class="box">
+				    <div class="display-box col">
+					    <span>双顶径BPD：</span>
+					    <span class="box-flex-1"><input type="text" name="bpd" class="inp inp-block inp-noborder" placeholder="单位cm"></span>
+				    </div>
+				    <div class="display-box col">
+					    <span>腹围AC：</span>
+					    <span class="box-flex-1"><input type="text" name="ac" class="inp inp-block inp-noborder" placeholder="单位cm"></span>
+				    </div>
+				    <div class="display-box col">
+					    <span>股骨长FL：</span>
+					    <span class="box-flex-1"><input type="text" name="fl" class="inp inp-block inp-noborder" placeholder="单位cm"></span>
+				    </div>
+			    </div>
+			    <div class="p1rem"><button type="submit" class="btn btn-block btn-ornament">查看结果</button></div>
+            </form>
+			<div class="p1rem color-6">
+				相关说明：<br>从上数据可以查询您的B超单，个人报告结果与以上数据有出入时，请勿紧张。因为胎儿的体位不同，医生操作差异等，均会引起数据误差，可向专业医生咨询;
+			</div>
+		</div>
+           
+<include file="./Shop/Home/View/footer.html" /> 

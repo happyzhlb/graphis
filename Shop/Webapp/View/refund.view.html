@@ -1,0 +1,185 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Refund Application</span>
+            <a href="{:U('Myorders/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--退款退货开始-->
+    <div class="refund">
+   	  <div class="refundDetail">
+      	<div class="detailChoose">
+        	<a href="javascript:void(0)" class="current">Result of Refund Application</a>
+            <a href="javascript:void(0)">Conversation Record</a>
+        </div>
+        <div class="detailShow">
+        	<div class="refundInfo">
+            	<h3>Refund Info</h3>
+                <dl class="clearfix">
+                	<dt>Refund No.:</dt>
+                    <dd>{$order.refund_sn}</dd>
+                </dl>
+                <dl class="clearfix">
+           	    <dt>Refund Type:</dt>
+                    <dd><if condition="$order.refund_type eq 1">Return<else />Refund</if></dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Refund Amount:</dt>
+                    <dd>{$order.refund_price|format_price}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Refund Reason:</dt>
+                    <dd>{$order.refund_reason}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Application Date:</dt>
+                    <dd>{$order.refund_time|todate}</dd>
+                </dl>
+                <dl class="clearfix">
+                	<dt>Refund Description:</dt>
+                    <dd>{$order.refund_note}</dd>
+                </dl>
+            </div>
+            <div class="refundInfo">
+            	<h3>Refund Status</h3>
+               <p> <eq name='refund_status' value='1'>Your refund request has been applied successfully.<else/><strong>{$order.refund_status|refund_status}</strong></eq> <eq name='order.refund_status' value='22'>. Please wait for our confirmation on the receipt of your returned items. </eq></p>
+            </div>
+            <div class="refundBtn">
+            	<div class="clearfix">
+                	<a href="{:U('Refund/edit',array('id'=>$order['rec_id']))}" class="yellowBtn flR">Edit Refund Request</a>
+                    <a href="{:U('Refund/cancel',array('id'=>$order['rec_id']))}" class="yellowBtn flL">Cancel Refund Request</a>
+                </div>
+              <if condition="$order.refund_status eq 21 or $order.refund_status eq 22 ">
+                        <a href="{:U('Refund/send',array('id'=>$order['rec_id']))}" class="grayBtn" title="Return the Product">Fill in the return of the logistics information</a>
+              <else/>
+             		 <a href="javascript:alert('To Be Confirmed.');" class="grayBtn">Fill in the return of the logistics information</a>
+              </if> 
+            </div>
+        </div>
+        <div class="detailShow" style="display:none;">
+         <volist name="refunds" id="vo" key="key"> 
+         
+         
+<switch name="vo.refund_status">
+ 	 <case value="11">
+                    
+        	<div class="each">
+            	<h4>Apply refund at {$vo.refund_time|todate} <em>From</em><strong>Me</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<if condition="$key eq 1">
+                                    	<li>Apply refund at {$vo.refund_time|todate}</li>
+                                    <else />
+                                    	<li>Edit refund application at {$vo.refund_time|todate}</li>
+                                    </if>
+                                    <li>Refund Type: <if condition="$vo['refund_data']['refund_type'] eq 1">Return<else />Refund</if></li>
+                                    <li>Refund Amount: {$vo.refund_data.refund_price|format_price}</li>
+                                    <li>Refund Reason: {$vo.refund_data.refund_reason}</li>
+                                    <li>Description: {$vo.refund_data.refund_note}</li>
+                                    <notempty name="vo.refund_data.refund_img">
+                                    <li>Evidence: <a href="/{$vo.refund_data.refund_img}" target="_blank" ><img src="/{$vo.refund_data.refund_img}" width="50"></a></li>
+                                    </notempty>
+                                </ul>
+                </div>
+            </div> 
+	</case>
+	<case value="20">
+        	<div class="each">
+            	<h4>{$vo.refund_time|todate} <em>From</em><strong>OkChem</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<li>Approve your refund application at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                </div>
+            </div> 
+    </case>
+    <case value="21">
+        	<div class="each">
+            	<h4>{$vo.refund_time|todate} <em>From</em><strong>OkChem</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<li>Approve your refund application at {$vo.refund_time|todate}</li>
+                                    <li>{$vo.refund_data.refund_address}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                </div>
+            </div> 
+    </case>
+    <case value="22">
+        	<div class="each">
+            	<h4>{$vo.refund_time|todate} <em>From</em><strong>Me</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<li>Fill in the shipping method and tracking number for my returned items at {$vo.refund_time|todate}</li>
+                                    <li>Shipping Method:{$vo.refund_data.refund_shipping_name}</li>
+                                    <li>Tracking Number:{$vo.refund_data.refund_invoice_no}</li>
+                                </ul>
+                </div>
+            </div>
+    </case>
+    <case value="30">
+        	<div class="each">
+            	<h4>{$vo.refund_time|todate} <em>From</em><strong>OkChem</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<li>Receive returned product at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                </div>
+            </div>
+    </case>
+    <case value="33">
+        	<div class="each">
+            	<h4>{$vo.refund_time|todate} <em>From</em><strong>OkChem</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<li>Refund successfully at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                </div>
+            </div>
+    </case>
+    <case value="40">
+        	<div class="each">
+            	<h4>{$vo.refund_time|todate} <em>From</em><strong>Me</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<li>Cancel refund application at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                </ul>
+                </div>
+            </div>
+    </case>
+    <case value="50">
+        	<div class="each">
+            	<h4>{$vo.refund_time|todate} <em>From</em><strong>OkChem</strong></h4>
+                <div class="con">
+                            	<ul>
+                                	<li>Reject your refund application at {$vo.refund_time|todate}</li>
+                                    <li>Description:{$vo.refund_data.refund_note}</li>
+                                    <notempty name="vo.refund_data.refund_img">
+                                    <li>Evidence:：<a href="/{$vo.refund_data.refund_img}" target="_blank" ><img src="/{$vo.refund_data.refund_img}" width="50"></a></li>
+                                    </notempty>
+                                </ul>
+                </div>
+            </div>
+    </case>
+</switch> 
+
+         </volist>   
+        </div>
+      </div>
+    </div>
+	<!--退款退货结束--> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

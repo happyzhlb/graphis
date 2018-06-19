@@ -1,0 +1,49 @@
+<include file='./Shop/Home/View/header.html' /> 
+<div id="crumbs">
+	<a href="{:U('./Index')}">Home</a>&gt;
+    <a href="{:U('/Gcategory/index')}">Titanium Dioxide</a>&gt;
+    <span>Index</span>
+</div>
+<div id="brand" class="clearfix">
+    <!--左侧列表开始--> 
+    <include file="./Shop/Home/View/list.left.html" /> 
+    <!--左侧列表结束-->
+    <!--右侧产品开始-->
+    <div class="brandDetail">
+        
+<div id="new404">
+	<dl class="clearfix">
+    	<dt><img src="/Public/home/images/NewError404.jpg" width="232" height="252" /></dt>
+        <dd>
+        	<h2>Page not found!</h2>
+            <h3>The requested page was not found in our servers.</h3>
+            <p>Due to changes on our website, the page you are trying to view has likely moved to another location or no longer exists. To find the item(s) you are looking for, please use the search function below or the navigation menu on the left.</p>
+            <h3>We apologize for the inconvenience.</h3>
+        </dd>
+    </dl>
+    <div class="search404">
+    	<p>Enter the terms to search for, or click on the menu to browse within categories.</p>
+        <div class="searchbox404">
+        	<input type="text" value="" id="searchIN" class="searchIN" />
+            <a href="javascript:_search()" class="searchBtn" title="Search">Search</a>
+        </div>
+    </div>
+    <div style="text-align:right; display:none;"> <a href="<?php echo $_SERVER['HTTP_REFERER'].'?show';?>">Details..</a></div>
+    <script>
+    $(function(){
+		_search=function(){
+			list_url="{:U('List/index','','')}/"+"keyword/"+$('#searchIN').val(); 
+			self.location.href=list_url;			
+		}
+		$('#searchIN').keyup(function(event){
+  			if(event.keyCode ==13){ 
+				_search(); 
+ 			}
+		});	
+	});
+    </script>
+</div>   
+    </div>
+    <!--右侧产品结束-->
+</div>  
+<include file="./Shop/Home/View/footer.html" />

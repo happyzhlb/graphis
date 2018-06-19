@@ -1,0 +1,17 @@
+<include file="./Shop/Home/View/user.header.html" />
+        <div class="floatdiv">
+        <a href="javascript:;" id="totop"><span class="icon icon-up"></span>顶部</a>
+        </div>
+		<div class="header-margin footer-margin body">
+	<empty name="_list" > 
+        <div><span class='fz16rem'> 暂无内容.</div> 
+     <else/>
+      <volist name='_list' id="list" >
+        <a href='{:U('Bbs/show',array('bbs_id'=>$list['bbs_id']))}' class='box mytieitem mt1rem'>
+        <div><span class='fz16rem'>{$list.content|mb_substr=0,100,'utf8'|toFace}</span></div><div class='fz12rem color-grey mt1rem'><span class='left'>{$list.clicks}／{$list.reply_num}</span><span class='right'>{$list.ctime|formatTime}</span></div></a>
+      </volist> 
+     </empty>
+
+		</div>
+	</body>
+</html>

@@ -1,0 +1,16 @@
+<!--轮播开始-->
+<div class="addWrap">
+    <div class="swipe" id="mySwipe">
+        <div class="swipe-wrap">
+            <volist name="adlist" id="ad">
+            <div><a href="{$ad.url}"><img src="/{$ad.img}" width="100%" /></a></div>
+            </volist>
+        </div>
+    </div>
+    <ul id="position">
+    <volist name="adlist" id="ad" key="key">
+      <li <eq name="key" value="1">class="cur"</eq>></li>
+    </volist>
+    </ul>
+</div>
+<!--轮播结束-->

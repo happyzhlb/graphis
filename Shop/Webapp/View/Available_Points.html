@@ -1,0 +1,27 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Available Points</span>
+            <a href="{:U('ScoreLog/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="Points">
+        	<h3>Points Currently Available<strong>{$score}</strong></h3>
+            <p>- Get 1 point for every full $1 in product purchase.</p>
+            <p>- Points can be redeemed at a conversion rate of 100 points per one dollar. Buy more, save more.</p>	
+        </div>	
+    </div>
+	<!--会员中心设置结束--> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />
+

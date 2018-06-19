@@ -1,0 +1,95 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Address Book</span>
+            <if condition="$param['spec_ids']">
+            	<a href="javascript:void(0)" class="back">back</a>
+            <else/>
+            	<a href="{:U('Member/settings')}" class="back">back</a>
+            </if>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="addressBook">
+        	<div class="addressBookChoose">
+            	<a href="javascript:void(0)" id="shipping_btn" class="current">Shipping Address</a>
+                <a href="javascript:void(0)" id="billing_btn" >Billing Address</a>
+            </div>
+            <div id="shipping_address" class="bookList">
+              <volist name='shipping' id='vo'>
+            	<div class="each">
+                	<h3 class="<if condition="$vo['is_default']=='1'">default defult</if>"><span></span>
+                    <notempty name="param.spec_ids">
+                    <a href="{:U('Buy/index',array_merge($param,array('shipping_address_id'=>$vo['address_id'])))}">{$vo.first_name} {$vo.last_name}<em>Phone: {$vo.telephone}</em></a>
+                    <else/>
+                    	{$vo.first_name} {$vo.last_name}<em>Phone: {$vo.telephone}</em>
+                    </notempty>
+                    </h3>
+                    <p class="addressCon">{$vo.address},{$vo.city}, 
+{$vo.state|getNameById='region_name','region','region_id',###} ,{$vo.zipcode}</p>
+                    <p>
+                    	<a href="{:U('UserAddress/edit',array_merge($param,array('billing_address_id'=>$vo['address_id']),array('address_id'=>$vo['address_id'])))}">Edit</a>
+                        <a href="{:U('UserAddress/delete',array_merge($param,array('address_id'=>$vo['address_id'])))}" onclick="return confirm('Are you sure you want to delete this Address?');" class="Delete" title="Delete">Delete</a>
+                    </p>
+                </div>
+              </volist> 
+              <if condition="count($shipping)==0">
+              <div class="each">
+              			<div style="line-height:2; text-align:center; width:100%; border-color:#f2f2f2;">You have not set shipping address.</div>
+              </div>
+              </if>
+            </div>
+            <div id="billing_address" class="bookList none">
+              <volist name='billing' id='vo'>
+            	<div class="each">
+                	<h3><span></span> 
+                    <notempty name="param.spec_ids">
+                    <a href="{:U('Buy/index',array_merge($param,array('billing_address_id'=>$vo['address_id'])))}">{$vo.first_name} {$vo.last_name}<em>Phone: {$vo.telephone}</em></a>
+                    <else/>
+                    	{$vo.first_name} {$vo.last_name}<em>Phone: {$vo.telephone}</em>
+                    </notempty>
+                    </h3>
+                    <p class="addressCon">{$vo.address},{$vo.city}, 
+{$vo.state|getNameById='region_name','region','region_id',###} ,{$vo.zipcode}</p>
+                    <p>
+                    	<a href="{:U('UserAddress/edit',array_merge($param,array('billing_address_id'=>$vo['address_id']),array('address_id'=>$vo['address_id'])))}">Edit</a>
+                        <a href="{:U('UserAddress/delete',array_merge($param,array('address_id'=>$vo['address_id'])))}" onclick="return confirm('Are you sure you want to delete this Address?');" class="Delete" title="Delete">Delete</a>
+                    </p>
+                </div>
+              </volist> 
+            </div>
+            <a href="{:U('add',$param)}" class="AddNewAddress">Add New Address</a>
+        </div>
+    </div>
+	<!--会员中心设置结束--> 
+    <script>
+    $(function(){
+		$('#shipping_btn').click(function(){
+			  	$('#shipping_address').removeClass('none');	
+				$('#billing_address').addClass('none'); 
+		});
+		$('#billing_btn').click(function(){
+			  	$('#billing_address').removeClass('none');	
+				$('#shipping_address').addClass('none');
+		});
+		
+		//var buy_url = "{:U('Buy/index',array('spec_ids'=>I('spec_ids'),'spec_quantity'=>I('spec_quantity')))}"; 
+		//$('.each a').click(function(){
+		//	self.location.href=buy_url; 
+		//});
+		<if condition="I('type')=='billing'">
+			$('#billing_btn').click();
+		</if>
+	});
+    
+    </script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

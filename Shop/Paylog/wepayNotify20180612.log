@@ -1,0 +1,115 @@
+2018-06-12 00:45:33
+-----------------------------
+<xml><appid><![CDATA[wx2b8ec378bf9b09ac]]></appid>
+<attach><![CDATA[1816241190]]></attach>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[10]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[N]]></is_subscribe>
+<mch_id><![CDATA[1494792202]]></mch_id>
+<nonce_str><![CDATA[4465]]></nonce_str>
+<openid><![CDATA[odzWh003LBjYZwbrZvUHEEh4F3Yk]]></openid>
+<out_trade_no><![CDATA[201806120045281886]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[196977F0437C857498FBE0A525D7E575]]></sign>
+<time_end><![CDATA[20180612004533]]></time_end>
+<total_fee>10</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4200000149201806121329992112]]></transaction_id>
+</xml>
+
+2018-06-12 00:45:33 {Paid SUCCESS.}
+
+2018-06-12 01:50:17
+-----------------------------
+<xml><appid><![CDATA[wx2b8ec378bf9b09ac]]></appid>
+<attach><![CDATA[1816238386]]></attach>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[10]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[N]]></is_subscribe>
+<mch_id><![CDATA[1494792202]]></mch_id>
+<nonce_str><![CDATA[9115]]></nonce_str>
+<openid><![CDATA[odzWh03J6qIWDBlX68ZG-lvNQ588]]></openid>
+<out_trade_no><![CDATA[201806120150078945]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[FDAD487D1A5CC24B48D9F182011FE126]]></sign>
+<time_end><![CDATA[20180612015016]]></time_end>
+<total_fee>10</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4200000153201806126972615334]]></transaction_id>
+</xml>
+
+2018-06-12 01:50:17 {Paid SUCCESS.}
+
+2018-06-12 12:17:08
+-----------------------------
+<xml><appid><![CDATA[wx2b8ec378bf9b09ac]]></appid>
+<attach><![CDATA[1816256253]]></attach>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[10]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[N]]></is_subscribe>
+<mch_id><![CDATA[1494792202]]></mch_id>
+<nonce_str><![CDATA[3139]]></nonce_str>
+<openid><![CDATA[odzWh0wCBhifG1iYHp1c54rgh7GI]]></openid>
+<out_trade_no><![CDATA[201806121217028982]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[4AA9C23ABED2B71030CA4972F58A98C8]]></sign>
+<time_end><![CDATA[20180612121707]]></time_end>
+<total_fee>10</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4200000149201806120592807824]]></transaction_id>
+</xml>
+
+2018-06-12 12:17:08 {Paid SUCCESS.}
+
+2018-06-12 15:59:37
+-----------------------------
+<xml><appid><![CDATA[wx2b8ec378bf9b09ac]]></appid>
+<attach><![CDATA[1816217926]]></attach>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[10]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[N]]></is_subscribe>
+<mch_id><![CDATA[1494792202]]></mch_id>
+<nonce_str><![CDATA[3994]]></nonce_str>
+<openid><![CDATA[odzWh0w6V92HjoM7X3gX7WJ9xHFM]]></openid>
+<out_trade_no><![CDATA[201806121559301471]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[F8F46F4C6FFA3CB4CB3556F790531EA9]]></sign>
+<time_end><![CDATA[20180612155936]]></time_end>
+<total_fee>10</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4200000142201806129641874591]]></transaction_id>
+</xml>
+
+2018-06-12 15:59:37 {Paid SUCCESS.}
+
+2018-06-12 16:55:14
+-----------------------------
+<xml><appid><![CDATA[wx2b8ec378bf9b09ac]]></appid>
+<attach><![CDATA[1816262274]]></attach>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[10]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[N]]></is_subscribe>
+<mch_id><![CDATA[1494792202]]></mch_id>
+<nonce_str><![CDATA[3177]]></nonce_str>
+<openid><![CDATA[odzWh0yFwIwVWTboq-ciJxu9nb14]]></openid>
+<out_trade_no><![CDATA[201806121655044]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[ACE9963508A8798C291F3D5402BEB719]]></sign>
+<time_end><![CDATA[20180612165513]]></time_end>
+<total_fee>10</total_fee>
+<trade_type><![CDATA[JSAPI]]></trade_type>
+<transaction_id><![CDATA[4200000157201806123328124897]]></transaction_id>
+</xml>
+
+2018-06-12 16:55:14 {Paid SUCCESS.}
+

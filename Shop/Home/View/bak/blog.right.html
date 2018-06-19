@@ -1,0 +1,36 @@
+<div class="asideCon">
+		<h1>OKchem Blog</h1>
+    	<h2>Article Search</h2>
+        <div class="blogSearch">
+        	<div class="SearchTitle">
+            	<a href="javascript:void(0)" <empty name="Think.get.content">class="current"</empty>>Title</a>
+                <a href="javascript:void(0)" <notempty name="Think.get.content">class="current"</notempty>>Content</a>
+            </div>
+            <div class="searchCon">
+            	<input type="text" id="keywords" name="keywords" value="{$Think.get.title}{$Think.get.content}" placeholder="key words" />
+                <a href="javascript:void(0)" class="searchBtn">GO</a>
+            </div>
+        </div>
+        <h2>Recent Posts</h2>
+        <div class="articleList">
+        	<ul>
+            	<volist name='right_list' id='vo'>
+            	<li><a href="{:U('/blog/detail','id='.$vo['bid'])}">{$vo.title}</a></li>
+                </volist> 
+            </ul>
+        </div>
+        <h2>Archives</h2>
+        <div class="articleList">
+        	<ul>
+            	{$archives}
+            </ul>
+        </div>
+        <div class="shareBox">
+            <span class='st_facebook_large' displayText='Facebook'></span>
+            <span class='st_twitter_large' displayText='Tweet'></span>
+            <span class='st_linkedin_large' displayText='LinkedIn'></span>
+            <span class='st_pinterest_large' displayText='Pinterest'></span>
+            <span class='st_googleplus_large' displayText='Google +'></span>
+            <span class='st_tumblr_large' displayText='Tumblr'></span>
+        </div>
+    </div>

@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="refresh" content="30; url='/admin/main.html'" />
+<title>管理后台</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/index.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	$('.IPtips .delete').click(function(){
+		$(this).parent().fadeOut('fast',function(){$(this).remove();});	
+	});
+});
+</script>
+<style>
+	.tr .name{ width:150px !important;}
+</style>
+</head>
+
+<body>
+<div class="main">
+         <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a>
+         </div>
+         </div>
+         <!--元素块start-->
+         <div class="Infobox">
+              <div class="Info_t">
+                   <ul>
+                       <li>
+                         <label for="">用户数</label><span>{$total_users}</span></li>
+                       <li><label for="">浏览量/打赏次</label><span>{$view_num|number_format} / {$total_orders}</span></li>
+                       <li><label for="">打赏金额</label><span>{$total_sales|format_price}</span></li>
+                   </ul>
+           </div>
+              <div class="Info_u bgf99f2b">
+                   <ul>
+                       <li class="name">今日PV/UV</li>
+                       <li class="num">{$today_view_num}/{$today_uv}</li>
+                   </ul>
+           </div>
+              <div class="Info_u bgf23604">
+                   <ul>
+                       <li class="name">今日打赏次数</li>
+                       <li class="num">{$new_orders}</li>
+                   </ul>
+           	  </div> 
+              <div class="Info_u bgf23604">
+                   <ul>
+                       <li class="name">今日打赏金额</li>
+                       <li class="num">{$new_sales|format_price}</li>
+                   </ul>
+              </div> 
+              <div class="Info_u bg686868">
+                   <ul>
+                       <li class="name">昨日打赏次数</li>
+                       <li class="num">{$yesterday_orders}</li>
+                   </ul>
+           	  </div> 
+              <div class="Info_u bg686868">
+                   <ul>
+                       <li class="name">昨日打赏金额</li>
+                       <li class="num">{$yesterday_sales|format_price}</li>
+                   </ul>
+              </div> 
+         </div>  
+         <div class="clear" style="margin-bottom:1px;"></div>
+         <!--元素块end-->
+         
+         <!--元素块start-->
+         <div class="Infobox">
+              <div class="Info_t bgf99f2b">
+                   <ul>
+                       <li><label for="">本月打赏/模特</label><span>{$month_models_num|number_format}/{$models_num}</span></li>
+                       <li><label for="">本月打赏/专辑</label><span>{$month_album_num|number_format}/{$album_num}</span></li> 
+                       <li><label for="">本月打赏金额</label><span>{$month_sales|format_price}</span></li> 
+                   </ul>
+              </div>
+              <div class="Info_t bg686868">
+                   <ul> 
+                       <li class="name"><label for="">本月日均打赏次</label><span>{$month_orders_avg|number_format}</span></li> 
+                       <li class="name"><label for="">本月日均打赏额</label><span>{$month_sales_avg|format_price}</span></li> 
+                       <li class="name"><label for="">本月打赏次数</label><span>{$month_orders|number_format}</span></li> 
+                   </ul>
+           	  </div> 
+              
+              <div class="Info_t  ">
+                   <ul>
+                       <li class="name"><label for="">累计浏览次数</label><span>{$view_num|number_format}</span></li> 
+                       <li class="name"><label for="">累计打赏次数</label><span>{$reward_times|number_format}</span></li>  
+                       <li class="name"><label for="">打赏浏览比率</label><span>{$reward_rate*100}%</span></li> 
+                   </ul>
+              </div>
+              <div class="Info_t bg686868">
+                   <ul>
+                       <li class="name" title="安卓用户({$android_orders/$total_orders*100|number_format=2}%)"><label for="">Android</label><span>{$android_orders|number_format} </span></li> 
+                       <li class="name" title="苹果用户({$iphone_orders/$total_orders*100|number_format=2}%)"><label for="">Iphone</label><span>{$iphone_orders|number_format}</span></li> 
+                       <li class="name" title="PC用户({$iphone_orders/$total_orders*100|number_format=2}%)"><label for="">PC</label><span>{$pc_orders|number_format}</span></li> 
+                   </ul>
+              </div> 
+              <div class="Info_t bgf23604">
+                   <ul> 
+                   	   <li class="name" title="苹果电脑用户({$macintosh_orders/$total_orders*100|number_format=2}%)"><label for="">Macintosh</label><span>{$macintosh_orders|number_format} </span></li>
+                       <li class="name" title="Ipad用户({$ipad_orders/$total_orders*100|number_format=2}%)"><label for="">Ipad</label><span>{$ipad_orders|number_format}</span></li> 
+                       <li class="name" title="其它用户({$others_orders/$total_orders*100|number_format=2}%)"><label for="">Others</label><span>{$others_orders|number_format}</span></li>
+                   </ul>
+           	  </div>  
+         </div> 
+         <div class="clear" style="margin-bottom:1px;"></div>
+         <!--元素块end-->
+         
+         <!--元素块start-->
+         <div class="Infobox">
+              <div class="Info_t bg686868">
+                   <ul>
+                       <li><label for="">支付宝 / 次数</label><span>{$alipay_amount|format_price} / {$alipay_num}</span></li>
+                       <li><label for="">微信 / 次数</label><span>{$wepay_amount|format_price} / {$wepay_num}</span></li>  
+                       <li><label for="">VIP充值 / 次数</label><span>{$vip_amount|format_price} / {$vip_num}</span></li>  
+                   </ul>
+              </div>
+              <!--
+              <div class="Info_t bg686868">
+                   <ul> 
+                       <li class="name"><label for="">本月日均打赏次</label><span>{$month_orders_avg|number_format}</span></li> 
+                       <li class="name"><label for="">本月日均打赏额</label><span>{$month_sales_avg|format_price}</span></li> 
+                       <li class="name"><label for="">本月打赏次数</label><span>{$month_orders|number_format}</span></li> 
+                   </ul>
+           	  </div> 
+              
+              <div class="Info_t  ">
+                   <ul>
+                       <li class="name"><label for="">累计浏览次数</label><span>{$view_num|number_format}</span></li> 
+                       <li class="name"><label for="">累计打赏次数</label><span>{$reward_times|number_format}</span></li>  
+                       <li class="name"><label for="">打赏浏览比率</label><span>{$reward_rate*100}%</span></li> 
+                   </ul>
+              </div>
+              <div class="Info_t bg686868">
+                   <ul>
+                       <li class="name" title="安卓用户({$android_orders/$total_orders*100|number_format=2}%)"><label for="">Android</label><span>{$android_orders|number_format} </span></li> 
+                       <li class="name" title="苹果用户({$iphone_orders/$total_orders*100|number_format=2}%)"><label for="">Iphone</label><span>{$iphone_orders|number_format}</span></li> 
+                       <li class="name" title="PC用户({$iphone_orders/$total_orders*100|number_format=2}%)"><label for="">PC</label><span>{$pc_orders|number_format}</span></li> 
+                   </ul>
+              </div> 
+              <div class="Info_t bgf23604">
+                   <ul> 
+                   	   <li class="name" title="苹果电脑用户({$macintosh_orders/$total_orders*100|number_format=2}%)"><label for="">Macintosh</label><span>{$macintosh_orders|number_format} </span></li>
+                       <li class="name" title="Ipad用户({$ipad_orders/$total_orders*100|number_format=2}%)"><label for="">Ipad</label><span>{$ipad_orders|number_format}</span></li> 
+                       <li class="name" title="其它用户({$others_orders/$total_orders*100|number_format=2}%)"><label for="">Others</label><span>{$others_orders|number_format}</span></li>
+                   </ul>
+           	  </div>  -->
+         </div> 
+         <div class="clear"></div>
+         <!--元素块end-->
+         <br />
+         <div>
+         	<div style="width:55%; float:left; margin-left:10px;"><table width="100%" style="max-width:550px;" border="0" cellpadding="0" cellspacing="0">
+           
+  <tr>
+    <td>　　今日人气排行TOP5 <div style="float:right;width:80px;font-size:12px;margin-top:6px;margin-right:60px;"><a href="/Admin/Album.html">更多..</a></div></td>
+  </tr>
+  <tr>
+    <td style="font-size:12px; padding:20px 10px;"> 
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <volist id="vo" name="topViewNumAlbum"> 
+            <?php $album = M('album')->find($vo['album_id']); ?> 
+          <tr style="height:65px;">
+            <td width="30%" align="center"><a href="http://<?php echo 'a'.rand(111,999).'b'.rand(111,999); ?>.graphis.club{:U('/album/reward',array('id'=>$vo['album_id']))}" target="_blank"><img src="{$vo.album_id|getNameById="photo","album","id",###|getThumb='90x90'}" title="{$album.title} 查看专辑" height="60" /></a></td>
+            <td width="40%"><a href="/admin/album/reward_detail/id/{$vo.album_id}.htm" title="{$album.title} 打赏明细">{$album.title}</a></td>
+            <td title="今日pv/uv：{$vo.pv}/{$vo.uv} &#13;今日收入：{$vo.total_amount|format_price}">{$vo.pv} / {$vo.uv}  </td>
+          </tr>
+        </volist>
+		</table>	 
+    </td>
+  </tr>
+  </table>
+</div>
+            <div style="width:43%; float:right; margin-right:10px;">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width:550px;">
+           
+  <tr>
+    <td>　　今日财富排行TOP5  <div style="float:right;width:80px;font-size:12px;margin-top:6px;margin-right:60px;"><a href="/Admin/Album.html">更多..</a></div></td>
+  </tr>
+  <tr>
+    <td style="font-size:12px; padding:20px 10px;"> 
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <volist id="vo" name="topRewardFeeAlbum"> 
+            <?php $album = M('album')->find($vo['album_id']); ?> 
+          <tr style="height:65px;">
+            <td width="30%" align="center"><a href="http://<?php echo 'a'.rand(111,999).'b'.rand(111,999); ?>.graphis.club{:U('/album/reward',array('id'=>$vo['album_id']))}" target="_blank" align="center"><img src="{$vo.album_id|getNameById="photo","album","id",###|getThumb='90x90'}" title="{$album.title} 查看专辑" height="60" /></a></td>
+            <td width="40%"><a href="/admin/album/reward_detail/id/{$vo.album_id}.htm" title="{$album.title} 打赏明细">{$album.title}</a></td>
+            <td><a title="今日打赏金额/打赏次数" href="{:U('album/reward_detail',array('id'=>$vo['album_id']))}">{$vo.total_reward_fee|format_price} / {$vo.total_reward_times}</a> </td>
+          </tr>
+        </volist>
+		</table>	 
+    </td>
+  </tr>
+  </table>
+            </div>
+         </div> 
+         <div class="clear"></div>
+         
+         <div class="IPtips">
+         	<a href="javascript:void(0)" class="delete">关闭</a>
+         	您好<span>{$Think.session.user_name}</span>，您的上次登录时间：<span>{$Think.session.last_login|todate}</span>，IP地址：<span class="ip">{$Think.session.last_ip}</span>。如非本人操作，请及时修改密码并采取相应措施！
+         </div>
+         
+         <!--数据分析start-->
+         <div class="datebox none">
+              <div class="bar">
+                   <div class="bar_l"></div>
+                   <div class="text">站点数据分析表</div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="lined">
+              		<table width="900" border="0" align="center" cellpadding="0" cellspacing="0" style="min-width:800px;">
+  <tr>
+    <td height="26" align="center" scope="row">API统计</td>
+    <td align="center">今日</td>
+    <td align="center">昨日</td>
+    <td align="center">今日比昨日</td>
+    <td align="center">累计</td>
+  </tr>
+  <tr>
+    <td width="17%" align="center" scope="row">              
+            API请求总数： 
+   	</td>
+    <td width="19%" align="center"> <?php echo ($config['today_api_v1']+ $config['today_api_v2']);?> </td>
+    <td width="21%" align="center"> <?php echo ($config['yesterday_api_v1']+ $config['yesterday_api_v2']);?> </td>
+    <td width="21%" align="center"><?php echo ($config['today_api_v1']+$config['today_api_v2'] - $config['yesterday_api_v1'] - $config['yesterday_api_v2']);?></td>
+    <td width="22%" align="center"><strong><?php echo ($config['total_api_v1']+ $config['total_api_v2']);?></strong></td>
+  </tr>
+  <tr>
+    <td align="center" scope="row"> APIv1请求数： </td>
+    <td align="center"><?php echo ($config['today_api_v1']);?> </td>
+    <td align="center"><?php echo ($config['yesterday_api_v1']);?> </td>
+    <td align="center"><?php echo ($config['today_api_v1'] - $config['yesterday_api_v1'] );?> </td>
+    <td align="center"><strong><?php echo ($config['total_api_v1']);?></strong></td>
+  </tr>
+  <tr>
+    <td align="center" scope="row"> APIv2请求数： </td>
+    <td align="center"><?php echo ($config['today_api_v2']);?> </td>
+    <td align="center"><?php echo ($config['yesterday_api_v2']);?> </td>
+    <td align="center"><?php echo ($config['today_api_v2'] - $config['yesterday_api_v2'] );?> </td>
+    <td align="center"><strong><?php echo ($config['total_api_v2']);?></strong></td>
+  </tr>
+
+                </table> 
+                
+<br />
+
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0" style="min-width:800px;">
+  <tr>
+    <td width="17%" align="center" scope="row">              
+      APP分享下载统计： 
+      </td>
+    <td width="19%" align="center"> <?php echo ($download['today_count']);?> </td>
+    <td width="21%" align="center"> <?php echo ($download['yesterday_count']);?> </td>
+    <td width="21%" align="center"><?php echo ($download['today_count'] - $download['yesterday_count']);?></td>
+    <td width="22%" align="center"><strong><?php echo ($download['total_count']);?></strong></td>
+  </tr>
+
+                </table>
+                
+                
+                   <div class="chart none"><img src='/Admin/Main/main_chart.html' /></div>
+              </div>
+         </div>
+         <!--数据分析end-->
+         <!--项目说明start-->
+         <div class="table">
+              <div class="caption">项目说明表</div>
+              <div class="tr">
+                   <div class="td name">项目负责人</div>
+                   <div class="td text">River Ma</div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">程序开发</div>
+                   <div class="td text">Abiao </div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">页面美工</div>
+                   <div class="td text">Y.Z.</div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">前端开发</div>
+                   <div class="td text">L.Y.</div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">SEO</div>
+                   <div class="td text">Z.X.C.</div>
+              </div> 
+         </div>
+         <!--项目说明end-->
+
+         <!--服务器环境start-->
+         <div class="table">
+              <div class="caption">服务器环境</div>
+              <div class="tr">
+                   <div class="td name">网站根目录</div>
+                   <div class="td text">{$_SERVER.DOCUMENT_ROOT}</div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">WEB服务软件</div>
+                   <div class="td text">{$_SERVER.SERVER_SOFTWARE} ({$_SERVER.USER})</div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">网站域名</div>
+                   <div class="td text">{$_SERVER.SERVER_NAME}</div>
+              </div>
+              <div class="tr">
+                   <div class="td name">服务器IP</div>
+                   <div class="td text">{$_SERVER.REMOTE_ADDR}:{$_SERVER.SERVER_PORT}</div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">浏览器</div>
+                   <div class="td text">{$_SERVER.HTTP_USER_AGENT}</div>
+              </div> 
+              <div class="tr">
+                   <div class="td name">请求方式</div>
+                   <div class="td text">{$_SERVER.REQUEST_METHOD}</div>
+              </div>
+              <div class="tr">
+                   <div class="td name">HTTP连接</div>
+                   <div class="td text">{$_SERVER.HTTP_CONNECTION} </div>
+              </div>    
+              <div class="tr">
+                   <div class="td name">HTTP协议</div>
+                   <div class="td text">{$_SERVER.SERVER_PROTOCOL}</div>
+              </div>   
+         </div>
+         <!--服务器环境end-->         
+    </div>
+</body>
+</html>

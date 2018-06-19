@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="um landscape">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>{$models.title} | GRAPHIS官方网站 | 日本女优资料介绍</title> 
+<meta name="description" content="{$models.title} {:C('site_description')},日本女优目录和日本女优专辑介绍">
+<meta name="keywords" content="{:C('site_keywords')} {$album.title}">
+<meta property="og:type" content="image"/>
+<meta property="og:image" content="{:C('static_url')}{$models.photo|getThumb='180x240'}"/>
+<link rel="stylesheet" href="/Public/home/files/ui-base.css">
+<link rel="stylesheet" href="/Public/home/files/ui-color.css">
+<link rel="stylesheet" href="/Public/home/files/ui-icon.css">
+<link rel="stylesheet" href="/Public/home/files/ui-control.css">
+<link rel="stylesheet" href="/Public/home/files/main.css">
+<!--[if IE 8]>
+<style>
+.hd_l{ position:absolute;left:50%; margin-left:-600px;}
+.hd_l1{margin-left:520px;;left:50%; }
+</style>
+<![endif]--> 
+<style>
+	.album_pics{ margin:0px 20px 20px 0px; border:5px solid #f2f2f2; border-radius:15px; -webkit-box-shadow:0px 0px 10px #000;-moz-box-shadow:0px 0px 10px #000;box-shadow:0px 0px 10px #000;}
+</style>
+<script src="/Public/home/files/jquery.js"></script>
+<script src="/Public/home/files/main.js"></script>
+<script src="/Public/home/files/tool.js"></script>
+<script src="/Public/home/files/login.js"></script>
+<script src="/Public/home/files/register.js"></script>
+<script type="text/javascript">
+$(function(){
+	if ("ab" == ""){
+		$("#not_login").show();
+	}
+	else{
+		$("#have_login").show();
+	}
+	if ("false" == "true"){
+		$("#jinbi").show();
+	}
+	else{
+		$("#jinbi").hide();
+	}
+	
+})
+</script> 
+  
+</head>
+<body class="um-vp bc-bg">
+<include file="./Shop/Home/View/index/header.html" /> 
+
+<div id="page_0" class="up ub ub-ver bc-bg"> 
+  
+  <!--content开始-->
+  <div id="content" class="ub-f1 umar-bd">
+    <div class="umw1 umar-ba clearfix" style="padding-top:20px;">
+      <div class="ufl">
+        <div class="cont_left">
+          
+          <div data-am-widget="titlebar" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+            <h2 class="am-titlebar-title ulev3"> <strong>模特信息 /</strong> <span class="sc-view-b">INFORMATION</span> </h2> 
+          </div>
+          <div style="min-height:240px; "><img src="{$models.photo|getThumb='180x240'}" class="album_pics" style="float:left;" height="240" width="180">{$models.content|htmlspecialchars_decode}</div>
+          
+          <div data-am-widget="titlebar" style="clear:both;" class="am-titlebar umar-c am-titlebar-one WIDGET-55897986fa8af984057640e2 titlebar-home-magazine am-no-layout">
+            <h2 class="am-titlebar-title ulev3"> <strong>{$models.title}的所有专辑 /</strong> <span class="sc-view-b">ALL</span> </h2>
+          </div>
+          
+          <ul class="umar-e list1">
+            <volist name="album_list" id="vo">
+              <?php if($key % 4 ==0){ echo '          </ul><ul class="umar-e list1">';} ?>
+              <li class="bx-shadow sc-bg" onclick="javascript:window.open('/album/reward/id/{$vo.id}.html')">
+                <div class="ufl list_left view view-first " style="text-align:left;"><img class="" src="{$vo.photo|getThumb='180x240'}" height="240" width="180">
+                  <div class="mask">
+                    <div class="uinn15">
+                      <div class="view-top">
+                        <div class="sc-view">{$vo.title}</div>
+                        <p class="ulev0 umar-tc"><span>模特：</span><span class="sc-view-b">{$vo.models_title}</span></p>
+                        <p class="ulev0"><span>时间：</span><span class="sc-view-b">{$vo.pubdate}</span></p>
+                        <p class="ulev0  umar-bc"><span>阅读量：</span><span class="sc-view-b">{$vo.view_num}人阅读</span></p>
+                        <div class="sc-text-b ulev0"><span class="line detail">{$vo.labels}...</span>&nbsp;&nbsp;<a class="sc-view-b">[{$models.title}-专辑详情]</a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </volist>
+          </ul>
+        </div>
+        
+        <!--page-->
+        <div class="page">{$page}</div>
+      </div> 
+       <!--每周之星开始
+      < include file="./Shop/Home/View/index/right.html" /> -->
+      <script>
+		function formatVal(val) {
+			if (!val || val == undefined) {
+				return "";
+			}
+			return val;
+		}
+	
+		function getMzzxList() {
+			 $.
+			 ajax({
+        	  url: "json/data/get_mzzx_list.json",
+        	  data:{
+        	  	
+        	  },
+        	  cache: false,
+        	  success: function(data){
+			  		var mzzxTop = data["mzzxTop"];
+        			if (mzzxTop) {
+					
+        				$("#topStarImg").attr("src", data["baseImgUrl"] + 
+mzzxTop["mtb"]["zp"]);
+					$("#mzlink").attr("href", "personZj?mtid=" + mzzxTop["mtb"]["id"])
+					            .attr("target","_blank");
+        				$("#topStarModel").html(mzzxTop["mtb"]["mtm"] + 
+        										"<span class='umar-l ulev0 '>" + 
+formatVal(mzzxTop["qs"]) + "</span>");
+        				$("#topStarRegion").html(mzzxTop["mtb"]["dq"]);
+        				$("#topStarMembers").html("粉丝" + mzzxTop["mtb"]["gzrs"] + 
+"&nbsp;|&nbsp;专辑" + 
+        										mzzxTop["mtb"]["zjbCount"]);
+        			} else {
+        				$("#topStar").html("");
+        			}
+        				
+        			var mzzxList = data["mzzxList"];
+        			if (mzzxList) {
+        				var htmlStr = "";
+        				for (var i=0; i<mzzxList.length; i++) {
+        					htmlStr += "<li>";
+        					htmlStr += "<a href='personZj?mtid=" + mzzxList[i]["mtb"]["id"] + "' target='_blank'><div class='ufl'><img src='" + data["baseImgUrl"] + mzzxList[i]["mtb"]["zp"] + '' +"' width='90' height='120'></div>";
+        					htmlStr += "<div class='ufl umar-l' style='width:90px;'>";
+        					
+        					htmlStr += "<div class='sc-text ulim'>" + mzzxList[i]["mtb"]["mtm"] + "<span class='umar-l ulev0'>" + formatVal(mzzxList[i]["qs"]) + "</span></div>";
+        					htmlStr += "<div class='ulev0 sc-text'>" + mzzxList[i]["mtb"]["dq"] +"</div>";
+        					htmlStr += "<div class='ulev0 umar-th sc-text-b'>粉丝" + mzzxList[i]["mtb"]["gzrs"] +  "&nbsp;|&nbsp;专辑" +mzzxList[i]["mtb"]["zjbCount"] + 
+"</div>";
+        					
+        					htmlStr += "</div><div style='clear: both;'></div></a></li>";
+        				}
+        				$("#topStarList").append(htmlStr);
+        			}
+        	  }
+        	});
+		}
+		
+		$(document).ready(function() {
+			getMzzxList();
+		});
+    </script>
+      <div style="clear: both"></div>
+    </div>
+    
+    <!--content结束--> 
+  </div>
+</div>
+<include file="./Shop/Home/View/index/footer.html" />
+</body>
+</html>
+<!--每周之星结束-->
+<!--弹出广告end-->

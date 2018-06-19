@@ -1,0 +1,191 @@
+<include file="./Shop/Home/View/header.html" />
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <span>Successful Payment</span>
+</div>
+
+<div class="webC1000">
+	
+    <!--支付结果开始-->
+    <div class="payResult">
+    	
+        <div class="payCon">
+        	<h3 class="paySuccess">Paid Successfully!</h3>
+            <p>Payment No.:<strong>{$order.order_sn}</strong></p>
+            <div class="resultBtn clearfix">
+            	<a href="{:U('/Myorders/view',array('id'=>$order['order_id']))}">Check Order</a>
+                <a href="/">Back to Homepage</a>
+                <a href="javascript:void(0)">INVOICE</a>
+            </div>	
+        </div>
+        
+    </div>
+    <!--支付结果结束-->
+    
+</div>
+
+<div id="grayBg"></div>
+<div id="newAds">
+	<h2><a href="javascript:void(0)" class="closed" title="Closed">closed</a>Add a New Adderss</h2>
+    <dl class="clearfix">
+        <dt>*First Name:</dt>
+        <dd>
+            <input type="text" value="" class="mTextin" />
+            * Last Name:
+            <input type="text" value="" class="mTextin" />
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Address:</dt>
+        <dd>
+            <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* City:</dt>
+        <dd>
+            <input type="text" value="" class="mTextin" />
+            * State:
+            <select name="select">
+                <option>State one</option>
+                <option>State one</option>
+                <option>State one</option>
+            </select>
+            Country: 
+            <select name="select">
+                <option>State one</option>
+                <option>State one</option>
+                <option>State one</option>
+            </select>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Phone:</dt>
+        <dd>
+            <input type="text" value="" class="mTextin" />
+            Fax:
+            <input type="text" value="" class="mTextin" />
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Zip:</dt>
+        <dd>
+            <input type="text" value="" class="mTextin" />
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>* Preferred:</dt>
+        <dd>
+            <select name="select">
+                <option>State one</option>
+                <option>State one</option>
+                <option>State one</option>
+            </select>
+        </dd>
+    </dl>
+    <dl class="clearfix">
+        <dt>&nbsp;</dt>
+        <dd>
+            <p>Your billing address must match the address on your credit card statement to avoid any delays in the 
+authorization process.</p>
+            <input type="checkbox" value="" name="checkbox" id="SetAsADefault" />
+            <label for="SetAsADefault">Set As a Default</label>
+        </dd>
+    </dl>
+    <div class="addressBtnBox">
+      <a href="javascript:void(0)" class="addressSubmit" title="Submit">Submit</a>
+    </div>
+</div>
+
+<!--页尾开始-->
+<div class="footerBg">
+	<div class="footer clearfix">
+    	<div class="Company">
+        	<h3>Company Info</h3>
+            <ul>
+            	<li><a href="javascript:void(0)">About Us</a></li>
+                <li><a href="javascript:void(0)">Contact Us</a></li>
+                <li><a href="javascript:void(0)">F.A.Q</a></li>
+                <li><a href="javascript:void(0)">Blog</a></li>
+                <li><a href="javascript:void(0)">Product Request</a></li>
+                <li><a href="javascript:void(0)">Sitemap</a></li>
+            </ul>
+        </div>
+        <div class="Company">
+        	<h3>Store Policies</h3>
+            <ul>
+            	<li><a href="javascript:void(0)">Return Policy</a></li>
+                <li><a href="javascript:void(0)">Privacy Policy</a></li>
+                <li><a href="javascript:void(0)">Shipping Info</a></li>
+                <li><a href="javascript:void(0)">Payment Info</a></li>
+            </ul>
+        </div>	
+        <div class="emails">
+        	<p class="font13">Subscribe our emails to save cash.</p>
+            <p>PLUS a chance to win our Daily Cash Giveaway!</p>
+            <div class="emailBox">
+            	<input type="text" value="Email Address" class="eAddress" />
+                <a href="javascript:void(0)" class="go">GO</a>
+            </div>
+        </div>
+        <div class="share">
+        	<a href="javascript:void(0)" title="facebook" class="facebook">facebook</a>
+            <a href="javascript:void(0)" title="twitter" class="twitter">twitter</a>
+            <a href="javascript:void(0)" title="foogle+" class="foogle">foogle+</a>
+            <a href="javascript:void(0)" title="linkedin" class="linkedin">linkedin</a>
+            <a href="javascript:void(0)" title="pinterest" class="pinterest">pinterest</a>
+            <a href="javascript:void(0)" title="blooger" class="blooger">blooger</a>
+        </div>
+    </div>
+    <div class="bank">
+    	<a href="javascript:void(0)" title="visa" class="visa">visa</a>
+        <a href="javascript:void(0)" title="mastercard" class="mastercard">mastercard</a>
+        <a href="javascript:void(0)" title="paypal" class="paypal">paypal</a>
+        <a href="javascript:void(0)" title="authorize.net" class="authorize">authorize.net</a>
+    </div>
+</div>
+<div class="copyright">
+    <p>&copy;2014-2026, Okchem.com.All Rights Reserved.See our <a href="javascript:void(0)">privacy policy</a>, <a href="javascript:void(0)">terms of use</a> and <a href="javascript:void(0)">takedown policy</a>.</p>
+</div>
+<!--页尾结束-->
+<script type="text/javascript" src="js/jquery-1.6.js"></script>
+<script type="text/javascript" src="js/jquery.webeffect.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("div.adsList").each(function(){
+			var ListAll = $(this).find("div.each").length;
+			if(ListAll > 3){
+				$(this).find("p").show();
+				$(this).find("div.each:gt(2)").hide();
+				$("div.adsList p a").toggle(function(){
+					$(this).parents("div.adsList").find("div.each").fadeIn(400);
+					$(this).text("Hide address");		
+				},function(){
+					$(this).parents("div.adsList").find("div.each:gt(2)").fadeOut(400);
+					$(this).text("Show all addresses");
+				})
+			}else{
+				$(this).find("p").hide();	
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("div.adsList a.addNew").click(function(){
+			var winHeight = $(window).height();
+			var winWidth = $(window).width();
+			var boxTop = (winHeight - 510)/2;
+			var boxLeft = (winWidth - 990)/2;
+			$("#grayBg").show().css("height",winHeight);
+			$("#newAds").show().css({left:boxLeft,top:boxTop});
+		});
+		$("#newAds a.closed").click(function(){
+			$("#grayBg").hide();
+			$("#newAds").hide();
+		});
+	});
+</script>
+</body>
+</html>
+

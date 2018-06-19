@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑SEO节点</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script type="text/javascript">
+$(function(){
+	//var ue = UE.getEditor('content');
+	$('.submit').click(function(){
+		//ue.sync();
+		$('#admin_form').submit();	
+	});
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			content : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>SEO节点标题不能为空'
+			},
+			content : {
+				required : '<i></i>SEO节点内容不能为空'
+			}
+		},
+		errorPlacement: function(error, element) {
+			if ( element.attr('id') == 'ueditor_textarea_content' )
+				error.appendTo($('#forcontent'));
+			else
+				error.appendTo(element.parent());
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span',
+		ignore : ""
+	});
+});
+</script>
+</head>
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Blog')}" class="text">SEO节点管理</a> > <a href="{:U('/Admin/Blog/edit',array('id'=>$blog['bid']))}" class="text">编辑SEO节点</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">新增SEO节点</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post">
+                              <div class="control-group">
+                                   <label class="control-label">Title：</label>
+                                   <div class="controls">
+                                        <input type="text" id="title" name="title" value="{$seo.title}" class="span300" placeholder="SEO节点标题">
+                                *</div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">Keywords：</label>
+                                   <div class="controls">
+                                        <input type="text" id="keywords" name="keywords" value="{$seo.keywords}" class="span300" placeholder="关键词">
+                                *</div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                   <label class="control-label">Description：</label>
+                                   <div class="controls" id="forcontent">
+                                        <textarea id="description" name="description">{$seo.description}</textarea>
+                                *</div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label">Controller：</label>
+                                   <div class="controls">
+                                        <input type="text" id="controller" name="controller" value="{$seo.controller}" class="span300" placeholder="控制器">
+                                *</div>
+                                   <div class="clear"></div>
+                              </div> 
+                              <div class="control-group">
+                                   <label class="control-label">Action：</label>
+                                   <div class="controls">
+                                        <input name="action" type="text" class="span300" id="action" value="{$seo.action}" placeholder="方法"> <span style="color:#ccc"></span>
+                                *</div>
+                                   <div class="clear"></div>
+                         	 </div>         
+                              <div class="control-group">
+                                   <label class="control-label">URI：</label>
+                                   <div class="controls">
+                                        <input name="request_uri" type="text" class="span300" id="action" value="{$seo.request_uri}" placeholder="URI"> <span style="color:#ccc"></span>
+                                *</div>
+                                   <div class="clear"></div>
+                         	 </div>                                                                                 
+                              <div class="control-group">
+                                   <label class="control-label">是否启用：</label>
+                                   <div class="controls">
+                                       <label><input type="radio" id="status" name="status" value="1" <if condition="$seo['status']=='1'">checked</if>>是</label>
+                                       <label><input type="radio" id="status" name="status" value="0" <if condition="$seo['status']=='0'">checked</if>>否</label>
+                                 </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" id="id" name="id" value="{$seo.id}">
+                                   <button type="button" class="btn btn_dm submit">确认提交</button>
+                              </div>
+                        </form> 
+                   </div>
+                   <div style="font-size:12px; line-height:200%;">
+                   URL举例说明：
+                    http://192.168.15.210/List/index/cate_id/10.html <br>
+                   当前Controller: List  <br>
+                   当前Action: index  <br>
+                   当前URI: /List/index/cate_id/10.html
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

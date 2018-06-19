@@ -1,0 +1,94 @@
+<include file="./Shop/Home/View/header.html" />
+<div id="crumbs">
+	<a href="/">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<!--refund开始-->
+        <div class="refundBox">
+        	
+            <div id="refundStep">
+            	<div class="stepBj">
+                	<div class="stepShow stepShow1"></div>
+                    <div class="step first <if condition="$order.refund_status eq 0">current<else />past</if>">
+                        <span class="each">1</span>
+                        <span class="content">Refund Requested by Buyer</span>
+                    </div>
+                    <div class="step second <if condition="in_array($order['refund_status'],array(11,20,21,22,30,40,50))">current<elseif condition="$order.refund_status eq 33" />past</if>">
+                        <span class="each">2</span>
+                        <span class="content">Process Refund Request</span>
+                    </div>
+                    <div class="step third <if condition="$order.refund_status eq 33">past</if>">
+                        <span class="each">3</span>
+                        <span class="content">Refund Completed</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="refundInfo clearfix">
+            	<div class="leftDetail">
+                    <h3>Refund Items</h3>
+                    <div class="thisShow">
+                    	<dl class="clearfix product">
+                        	<dt><a href="{:U('/Goods/index',array('id'=>$order['goods_id']))}" target="_blank"><img src="/{$order.default_image}" width="50" height="50" /></a></dt>
+                            <dd>
+                            	<p class="proName"><a href="{:U('/Goods/index',array('id'=>$order['goods_id']))}" target="_blank">{$order.goods_name}</a></p>
+                                <p class="proIn">{$order.goods_attr}</p>
+                            </dd>
+                        </dl>
+                        <dl class="clearfix priceAbout">
+                        	<dt>Unit Price: </dt>
+                            <dd>{$order.present_price|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix priceAbout">
+                        	<dt>Quantity: </dt>
+                            <dd>{$order.quantity}</dd>
+                        </dl>
+                        <dl class="clearfix priceAbout">
+                        	<dt>Total: </dt>
+                            <dd>{$order.refund_totle|format_price}</dd>
+                        </dl>
+                    </div>
+                    
+                    <h3>Order Details</h3>
+                    <div class="thisShow">
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Order No.: </dt>
+                            <dd>{$order.order_sn}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Shipping Fee: </dt>
+                            <dd>{$order.shipping_fee|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Discount: </dt>
+                            <dd>{$order.discount_fee|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Redeem Points: </dt>
+                            <dd>- {$order.integral_fee|format_price}</dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Final: </dt>
+                            <dd><em>{$order.totle_fee|format_price}</em></dd>
+                        </dl>
+                        <dl class="clearfix OrderAbout">
+                        	<dt>Transaction Time: </dt>
+                            <dd>{$order.add_time|todate} </dd>
+                        </dl>
+                    </div>
+                </div>
+                
+                <div class="rightLink clearfix">
+                    <a href="{:U('/Refund/apply',array('id'=>$order['rec_id'],'type'=>'refund'))}" title="Request a Refund" class="Refund_1">Request a Refund</a>
+                    <a href="{:U('/Refund/apply',array('id'=>$order['rec_id'],'type'=>'return'))}" title="Request a Product Return" class="Refund_2">Request a Product Return</a>
+                </div>
+                
+            </div>
+        </div>
+        <!--refund结束-->
+    </div>
+</div>
+<include file="./Shop/Home/View/footer.html" />

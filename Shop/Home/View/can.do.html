@@ -1,0 +1,18 @@
+<include file="./Shop/Home/View/header.html" /> 
+
+		
+		<div class="container">
+			<nav class="gird-3 chitype">
+				<ul class="clearListStyle">
+               <volist name="_cate.children" id="cate"> 
+                    <li><a href="{:U('dolist',array('cate_id'=>$cate['cate_id']))}"><span class='img'><img src='/Uploads/{$cate.photo}'></span><span class='name'>{$cate.cate_name}</span></a></li>
+               </volist> 
+					
+                    <!--
+                    <li><a href='canlist.aspx?id=3'><span class='img'><img src='../uploadfile/20160106/20160106111210449.jpg'></span><span class='name'>出行安全</span></a></li><li><a href='canlist.aspx?id=6'><span class='img'><img src='../uploadfile/20160107/20160107214811747.gif'></span><span class='name'>休闲娱乐</span></a></li><li><a href='canlist.aspx?id=5'><span class='img'><img src='../uploadfile/20160106/20160106111319557.jpg'></span><span class='name'>身体护理</span></a></li><li><a href='canlist.aspx?id=7'><span class='img'><img src='../uploadfile/20160107/20160107102941925.jpg'></span><span class='name'>穿戴讲究</span></a></li><li><a href='canlist.aspx?id=8'><span class='img'><img src='../uploadfile/20160107/20160107215100462.gif'></span><span class='name'>居家生活</span></a></li>
+					-->
+				</ul>
+			</nav>
+		</div>
+        
+<include file="./Shop/Home/View/footer.html" /> 

@@ -1,0 +1,15 @@
+    	<!--左侧列表开始-->
+        <div class="helpList">
+        	<h2>Help Center</h2>
+            <volist name='article_cate' id='vo'>
+            <h3>{$vo.name}</h3>
+            <ul>
+            	<volist name='vo.list' id='list'>
+            	<li><a href="<if condition="$list['link_url']!=''">
+                    	{$list.link_url} <else/> {:U('Article/detail',array('id'=>$list['article_id']))} 
+                    </if>" <if condition="$list['article_id']==I('id')">class="current"</if>>{$list.title}</a></li>
+                </volist> 
+            </ul>
+            </volist> 
+        </div>
+        <!--左侧列表结束-->

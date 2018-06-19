@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+
+#htmlpage h4 {
+	font-size: 24px;
+	margin-bottom: 24px;
+	text-align: center;
+	}
+
+#htmlpage {
+	background-color: #000;
+	padding: 0 8px;
+	box-sizing: border-box;
+	}
+
+.htmlpage-logo {
+	max-width: 240px;
+	margin: 32px auto 0;
+	}
+
+#content-htmlpage {
+	background-color: #fff;
+	width: auto;
+	max-width: 1200px;
+	height: 100%;
+	margin: 32px auto;
+	padding: 32px 16px;
+	box-sizing: border-box;
+	}
+
+#content-htmlpage #switch-box {
+	display: block;
+	}
+
+.htmlpage-close {
+	font-size: 16px;
+	color: #eee;
+	text-align: center;
+	margin-bottom: 120px;
+	}
+
+.htmlpage-close .close-button:hover {
+	color: #999;
+	cursor: pointer;
+	}
+
+
+
+
+
+/*特定商取引法に基づく表示
+---------------------------------------------------------------*/
+
+table.legal-table {
+	margin: 0 auto 24px;
+	width: 86%;
+	}
+
+table.legal-table td {
+	border-collapse: collapse;
+	border: solid 1px #ccc;
+	padding: 8px;
+	} 
+
+
+.cell01 {
+	background-color: #000;
+	color: #eee;
+	width: 20%;
+	}
+
+
+.kaihi div {
+	display: flex;
+	}
+
+.kaihi div ul {
+	margin-right: 24px;
+	}
+ 
+ .kaihi p {
+	 font-size: 12px;
+	 margin: 4px 0;
+	 }
+	 
+	 
+
+
+/*改正風営法に基づく表記
+---------------------------------------------------------------*/
+
+
+.legal02 p {
+	text-align: center;
+	}
+
+.legal02 ul {
+	text-align: center;
+	margin-bottom: 32px;
+	}
+
+
+
+/*会員規約
+---------------------------------------------------------------*/
+
+
+.kiyaku p {
+	text-align: center;
+	}
+
+.kiyaku .kiyaku-list {
+	border: solid 1px #ccc;
+	width: 90%;
+	margin: 0 auto 40px;
+	padding: 40px 5%;
+	box-sizing: border-box;
+	}
+
+.kiyaku .kiyaku-list ul {
+	}
+
+.kiyaku .kiyaku-list ul li {
+	margin-bottom:24px;
+	list-style: decimal;
+	margin-left: 2em;
+	}
+
+
+
+/*銀行振込申込フォーム
+---------------------------------------------------------------*/
+
+.regist-bank {
+	}
+ 
+
+
+
+
+
+

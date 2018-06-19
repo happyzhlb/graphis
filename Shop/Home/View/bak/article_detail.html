@@ -1,0 +1,21 @@
+<include file='./Shop/Home/View/header.html' /> 
+<div id="crumbs">
+	<a href="{:U('./Index')}">Home</a>&gt;
+    <a href="{:U('/Article/index')}">Help Center</a>&gt;
+    <span>{$article.title}</span>
+</div>
+<div class="webC1000">
+	<div id="help" class="clearfix">
+<include file='./Shop/Home/View/help.left.html' />
+        <!--右侧信息开始-->
+        <div class="helpInfo">
+        	<h1>{$article.title}</h1>
+            <div class="faq">
+            	{$article.content|htmlspecialchars_decode}
+            </div>
+        </div>
+        <!--右侧信息结束-->
+    </div>
+</div>
+
+<include file='./Shop/Home/View/footer.html' />

@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>专题管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+
+$(function(){
+	var arr = new Array;
+	$('.table input[name="items"]').click(function(){ 
+		/*splice 移除数组 */
+		 arr[0]=parent.$('#scene_ids').val(); 
+		 arr[1]=$(this).val();
+		 if(arr[0]==''){
+		 	ids=arr[1];
+		 }else{
+		    ids=arr.join();	 
+		 }  
+		 var status=$(this).attr('checked'); 
+		 if('checked'!=status){ 
+			 idsStr=','+ids+','; 
+			 for(i=1;i<10;i++){
+			 	idsStr=idsStr.replace(','+arr[1]+',',','); 
+			 }
+			 if(','==idsStr.substr(0,1)){
+				idsStr = idsStr.substr(1) ;
+			 }   
+			 ids=idsStr.substr(0,idsStr.length-1);
+		 }
+		 //var sceneTitle=$(this).parent().next().html();
+		 parent.$('#scene_ids').val(ids);
+		 $.post("{:U('ajax_get_scene')}",'scene_ids='+ids,function(data){ 
+			 parent.$('#sceneTitle').html(data);
+		 });
+		 
+		 
+	});
+	
+	$('#okSel').click(function(){
+		parent.$('#closeSceneW').click();
+	});	
+	
+	//搜索框动态提示
+	$('#search_auto').css({'width':$('#search_form input[name="keywords"]').width()+80});	
+	$('#search_form input[name="keywords"]').keyup(function(){
+		$.post('{:U("searchAutoSel")}',{'keywords':$(this).val()},function(data){　 
+			if(data=='0') $('#search_auto').html('').css('display','none');　 
+			else $('#search_auto').html(data).css('display','block');　 //返回的数据不等于０，则将返回的内容放到提示框内并显示提示框
+		});
+	});
+	
+	//一级分类
+	$('#cate_id_1').live('change',function(){
+		 var cate_id=$(this).val(); 
+		 $.post("{:U('Acategory/ajaxGetCategory')}",'cate_id='+cate_id,function(data){
+			 $('#cate_id').val(cate_id);
+			 if(data=='false'){
+				$('#cate_id_2').fadeOut(300); 
+			 }else{
+				$('#cate_id_2').fadeIn(300);
+				$('#cate_id_2').html( data); 	 
+			 }
+		  });			
+	});
+	//二级分类
+	$('#cate_id_2').live('change',function(){
+		$('#cate_id').val($(this).val());
+	});
+	
+});
+</script>
+</head>
+
+<body>
+<section>
+<!--sceneW start-->
+    <div id="selFrame" style="display:none; margin-left:5%; margin-top:80px; position:absolute; z-index:99999; border:5px solid #a8a8a8;width:80%;height:50%;min-width:760px; min-height:360px; background:rgba(255,255,255,0.91);  border-radius:6px;box-shadow:0 0 15px #999;">
+        <div id="closeW"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+        <div style="height:99%; clear:both; padding:10px;">
+            <iframe id="iframe" src="/Admin/Acategory/sel_cate.html?ids={$scene_ids}" width="100%" height="90%"></iframe> 
+        </div>
+    </div>
+<!--sceneW end--> 
+    <!--content start-->
+    <div class="main" style="min-height:400px;">
+         <!--user_nav start-->
+     
+<div class="tbox"> 
+              <div class="searchbar">
+              	  <div class="searchbox">
+                   	   <form id="search_form" action="?p=1" method="post">
+                           <input type="search" name="keywords" style="width:180px;" id="keywords" value="{$Think.request.keywords}" placeholder="输入信息">
+                           <div id="search_auto" style="border:1px solid #ccbbcc; position:absolute; background-color:#FcFcFc;display:none;"></div>
+                           <!--
+                           <select id="cate_id" name="cate_id">
+                                <option value="">==选择专题分类==</option>
+                                <volist name="acategory" id="cate">
+                                	<option value="{$cate.cate_id}" style="color:#090; font-weight:bold;" <if condition="$Think.request.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                    <if condition="$cate.children neq false">
+                                    	<volist name="cate.children" id="c_cate">
+                                        	<option value="{$c_cate.cate_id}" <if condition="$Think.request.cate_id eq $c_cate['cate_id']">selected</if>>&nbsp;&nbsp;{$c_cate.cate_name}</option>
+                                        </volist>
+                                    </if>
+                                </volist>
+                           </select>
+                           -->
+                        	<input id='cate_id' name="cate_id" value="{$scene.cate_id}" type="hidden" /><span id="cate_name">{$scene.cate_name}</span> 
+                           <select id="cate_id_1" name="cate_id_1">
+                                <option value="">==选择专题一级分类==</option>
+                                <volist name="acategory1" id="cate">
+                                	<option value="{$cate.cate_id}" style="color:#990; font-weight:bold;" <if condition="$Think.request.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                    <if condition="$cate.children neq false">
+                                    	<volist name="cate.children" id="c_cate">
+                                        	<option value="{$c_cate.cate_id}" <if condition="$Think.request.cate_id eq $c_cate['cate_id']">selected</if>>&nbsp;&nbsp;{$c_cate.cate_name}</option>
+                                        </volist>
+                                    </if>
+                                </volist>
+                           </select>
+                           
+                           <select id="cate_id_2" name="cate_id_2" style="width:150px; color:#090; display:none;">
+                                <option value="">==选择专题二级分类==</option>
+                                <volist name="acategory2" id="cate">
+                                	<option value="{$cate.cate_id}" <if condition="$Think.request.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                    <if condition="$cate.children neq false">
+                                    	<volist name="cate.children" id="c_cate">
+                                        	<option value="{$c_cate.cate_id}" <if condition="$Think.request.cate_id eq $c_cate['cate_id']">selected</if>>&nbsp;&nbsp;{$c_cate.cate_name}</option>
+                                        </volist>
+                                    </if>
+                                </volist>
+                           </select>
+                           <input type="hidden" value="{$Think.get.single}" name="single" />
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th width="10%"></th>
+                                 <th width="34%">标题</th>
+                                 <th width="23%">专题分类</th>
+                                 <th width="13%">是否显示</th>
+                                 <th width="26%">发布时间</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="_list" id="list">
+                             <tr class="gradeX">
+                                 <td><label><input type="checkbox" name="items" <?php if(strstr($ids,','.$list['scene_id'].',')){ echo 'checked';}?> value="{$list.scene_id}"> {$list.scene_id}</label></td>
+                                 <td>{$list.title}</td>
+                                 <td align="center">{$list.cate_name}</td>
+                                 <td align="center"><if condition="$list.if_show eq 1"><span enpty="edit_status_ajax" url="{:U('ajax_edit_status', array('id'=>$list['scene_id']))}" title="显示" class="icon_right"></span><else /><span enpty="edit_status_ajax" url="{:U('ajax_edit_status', array('id'=>$list['scene_id']))}" title="不显示" class="icon_error"></span></if></td>
+                                 <td align="center">{$list.ctime|todate}</td>
+                               </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="7">
+                                   <!-- <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">-->
+                                    <input type="button" value="确定选择" id="okSel" />
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+</div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

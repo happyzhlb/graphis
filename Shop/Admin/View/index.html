@@ -1,0 +1,576 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理后台</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/index.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+if (window.top != window)
+{
+  window.top.location.href = document.location.href;
+}
+
+$(document).ready(function(){
+	$(".toggle_menu a.cliAbtn").click(function(){
+		$(".toggle_menu a.cliAbtn").removeClass("current");
+		$(this).addClass("current");
+		//iFrameHeight();
+		$("#workspace").removeAttr("style");
+	});	
+});
+
+</script>
+<style>
+	.sidetoggle span.text{font-weight:bold;}
+</style>
+</head>
+
+<body>
+
+<section>
+    <div class="lbox">
+    <div class="logo##" style="height:50px; text-align:center; margin-top:10px;"><a style="font-size:18px; font-weight:bold; color:#eCeCeC;" href="/Admin/index"><!--<img src="/Public/admin/images/logo.jpg" border="0" />孕妈吧--> 管理后台</a></div>
+    <!--side_menu start-->
+    <div class="side_menu">
+         <ul class="menu">         
+             
+             <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text" >网站 <span class="font13">web site</span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu"> 
+                   <!--
+                   <li>
+                         <a href="{:U('/Admin/Acategory')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">分类管理 <span class="font11">acategory</span></span>
+                         </a>
+                   </li>
+                     <li>
+                         <a href="{:U('/Admin/Article')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">专题管理 <span class="font11">Article</span></span>
+                         </a>
+                     </li>
+                  
+                     <li>
+                         <a href="{:U('/Admin/Comments')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">评论管理 <span class="font11">comments</span></span>
+                         </a>
+                     </li>   
+                    
+                     <li>
+                         <a href="{:U('/Admin/Article/index/cate_id/712')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">专题管理(广告) <span class="font11">Article</span></span>
+                         </a>
+                     </li>
+                      -->
+                     <li>
+                         <a href="{:U('/Admin/Ad')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">广告管理 <span class="font11">ad</span></span>
+                         </a>
+                     </li> 
+                     <li>
+                         <a href="{:U('/Admin/Singlepage/edit/id/1.html')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">关于我们 <span class="font11">About us</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Singlepage/edit/id/2.html')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">联系我们 <span class="font11">Contact us</span></span>
+                         </a>
+                     </li>
+        	        <li>
+                         <a href="{:U('/Admin/Singlepage/edit/id/3.html')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">VIP说明 <span class="font11">VIP说明</span></span>
+                         </a>
+                     </li>                                             
+                     <li>
+                         <a href="{:U('/Admin/tipoff')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">用户举报 <span class="font11">User Tip-off</span></span>
+                         </a>
+                     </li> 
+                     <!--  
+                      <li>
+                         <a href="{:U('/Admin/Adplace')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">广告位管理 <span class="font11">adplace</span></span>
+                         </a>
+                     </li>  
+    				
+                     <li>
+                         <a href="{:U('/Admin/Appversion')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">App版本管理 <span class="font11">App Version</span></span>
+                         </a>
+                     </li> 
+                     
+                     <li>
+                         <a href="{:U('/Admin/Articlecomments')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">专题评论 <span class="font11">Comments</span></span>
+                         </a>
+                   </li> 
+                     <li>
+                         <a href="{:U('/Admin/Apperror')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">app报错 <span class="font11">App Error</span></span>
+                         </a>
+                     </li>  
+                     <li>
+                         <a href="{:U('/Admin/Share')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">app分享统计 <span class="font11">Share</span></span>
+                         </a>
+                    </li>  
+                       
+                      <li>
+                         <a href="{:U('/Admin/Cancategory')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">能不能分类 <span class="font11">Can Category</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Can')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">能不能管理 <span class="font11">Can</span></span>
+                         </a>
+                     </li>                    
+                                      
+                     <li>
+                         <a href="{:U('/Admin/UserPmessage')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">用户私信管理 <span class="font11">Private Messages</span></span>
+                         </a>
+                     </li> 
+                  
+                     <li>
+                         <a href="{:U('/Admin/Emailsendlist')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">邮件发送队列 <span class="font11">Email Sendlist</span></span>
+                         </a>
+                     </li>
+
+                     <li>
+                         <a href="{:U('/Admin/Testimonials')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">网站评价管理 <span class="font11">Testimonials</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Template')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">邮件模板 <span class="font11">Template</span></span>
+                         </a>
+                     </li> 
+                     <li>
+                         <a href="{:U('/Admin/Seo')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">SEO优化 <span class="font11"></span></span>
+                         </a>
+                     </li>
+                     -->
+                 </ul>
+             </li>
+             
+              <!--
+             <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">场景 <span class="font13">Scene</span></span>
+                 	<b class="down down_big"></b>
+                 </a>
+               <ul class="toggle_menu"> 
+                     <li>
+                         <a href="{:U('/Admin/Scenecategory')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">场景分类 <span class="font11">Scene Category</span></span>
+                         </a>
+                     </li>       
+                                 
+                     <li>
+                         <a href="{:U('/Admin/Scene')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">场景列表 <span class="font11">Scene</span></span>
+                         </a>
+                     </li>
+                     
+                 
+                 </ul>
+             </li>
+             <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">商品 <span class="font13">Goods</span></span>
+                 	<b class="down down_big"></b>
+                 </a>
+               <ul class="toggle_menu">
+                    <li>
+                         <a href="{:U('/Admin/Gcategory')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">产品分类 <span class="font11">gcategory</span></span>
+                         </a>
+                     </li>
+                     
+                     <li>
+                         <a href="{:U('/Admin/Brand')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">品牌管理 <span class="font11">brand</span></span>
+                         </a>
+                     </li>
+                     
+                     <li>
+                         <a href="{:U('/Admin/Goods')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">商品管理 <span class="font11">Goods</span></span>
+                         </a>
+                     </li>                     
+                 </ul>
+             </li>
+             -->
+             <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">会员 <span class="font13">User</span></span>
+                 	<b class="down down_big"></b>
+                 </a>
+               	 <ul class="toggle_menu">                             
+                     <li>
+                         <a href="{:U('/Admin/User')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">会员管理 <span class="font11">user</span></span>
+                         </a>
+                     </li>
+                      <li>
+                         <a href="{:U('/Admin/Usergrade')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">会员等级 <span class="font11">user grade</span></span>
+                         </a>
+                     </li>            
+                     <li>
+                         <a href="{:U('/Admin/Scorelog')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">积分日志管理 <span class="font11">Score log</span></span>
+                         </a>
+                     </li>            
+                 </ul>
+             </li>  
+             <!--
+             <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">跟踪 <span class="font13">Tail</span></span>
+                 	<b class="down down_big"></b>
+                 </a>
+               	 <ul class="toggle_menu"> 
+                     <li>
+                         <a href="{:U('/Admin/tradetail')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">交易跟踪 <span class="font11">Trade Tail</span></span>
+                         </a>
+                     </li>                 
+                 </ul>
+             </li>      
+                    
+             <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">自营 <span class="font13">Myshop </span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu">  
+                     <li>
+                         <a href="{:U('/Admin/Mygoods')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">自营商品管理 <span class="font11">Mygoods</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Myarticle')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">自营专题管理<span class="font11">Myarticle</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Order')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">订单管理 <span class="font11">order</span></span>
+                         </a>
+                     </li>
+                 
+                      <li>
+                         <a href="{:U('/Admin/Mygoodsoption')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">商品规格属性 <span class="font11">Attribute</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Mygoodsoptionvalue')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">商品规格属性值 <span class="font11">Attribute Value</span></span>
+                         </a>
+                     </li>
+                      <li>
+                         <a href="{:U('/Admin/Mygoodsoptiontype')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">商品属性类型 <span class="font11">Attribute Type</span></span>
+                         </a>
+                     </li>  
+                     
+                     <li>
+                         <a href="{:U('/Admin/Order/recycle')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">订单回收站 <span class="font11">Recycle</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Order/add')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">新增订单 <span class="font11">New Order</span></span>
+                         </a>
+                     </li>
+                     
+                     <li>
+                         <a href="{:U('/Admin/Request')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">产品需求 <span class="font11">products request</span></span>
+                         </a>
+                     </li>  
+                 </ul>
+             </li>
+             
+             <li class="sideup none">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">报表 <span class="font13">system </span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu"> 
+                      <li>
+                         <a href="{:U('/Admin/Orderreport')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">订单报表 <span class="font11">order report</span></span>
+                         </a>
+                   	  </li>
+                      <li>
+                         <a href="{:U('/Admin/ProductsRequestReport')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">产品需求报表 <span class="font11">products request</span></span>
+                         </a>
+                   	  </li>
+                     <li style="display:none">
+                         <a href="{:U('/Admin/Memberreport')}" target="workspace"> 
+                            <span class="text">会员报表 <span class="font11">Member report</span></span>
+                         </a>
+                     </li> 
+                 </ul>
+             </li> 
+			 <li class="sideup none">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">营销 <span class="font13">marketing </span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu"> 
+                      <li>
+                         <a href="{:U('/Admin/Promotion')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">促销活动 <span class="font11">promotion</span></span>
+                         </a>
+                     </li> 
+                 </ul>
+             </li>
+            -->
+            <!--
+			 <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">博客 <span class="font13">blog </span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu"> 
+                      <li>
+                         <a href="{:U('/Admin/Blogcate')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">博客类别 blog category</span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Blog')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">博文列表 <span class="font11">blog list</span></span>
+                         </a>
+                      </li> 
+                 </ul>
+             </li> 
+			 <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">孕妈百科 <span class="font13">Wiki</span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu"> 
+                      <li>
+                         <a href="{:U('/Admin/Wikicate')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">百科类别 Wiki Category</span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Wiki')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">百科列表 <span class="font11">Wiki list</span></span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Wikiuser')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">孕助理用户 <span class="font11">Wiki user</span></span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Config/edit',array('id'=>1))}" target="workspace" class="cliAbtn"> 
+                            <span class="text">App弹窗设置 <span class="font11">App Tips Settings</span></span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Gestcate')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">孕期群体分类 Gestate Person</span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Gestate')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">孕期进展 Gestate Progress</span>
+                         </a>
+                      </li> 
+                      
+                      <li>
+                         <a href="{:U('/Admin/Recipecate')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">食谱菜谱类别 Recipe Category</span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Recipe')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">食谱菜谱列表 <span class="font11">Recipe list</span></span>
+                         </a>
+                      </li> 
+                 </ul>
+             </li> 
+             -->
+			 <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">模特<span class="font13">Models </span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu"> 
+                      <li>
+                         <a href="{:U('/Admin/Modelscate')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">模特类别 Models Category</span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Models')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">模特列表 <span class="font11">Models list</span></span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Albumcate')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">专辑类别 Album Category</span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Album')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">专辑列表 <span class="font11">Album list</span></span>
+                         </a>
+                      </li> 
+                      <li>
+                         <a href="{:U('/Admin/Picture')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">图片列表 <span class="font11">Picture list</span></span>
+                         </a>
+                      </li> 
+                 </ul>
+             </li>      
+ 			 <li class="sideup">
+                 <a href="javascript:;" class="sidetoggle">
+                    <i class="icon icon_correct"></i>
+                    <span class="text">系统 <span class="font13">system </span></span>
+                    <b class="down down_big"></b>
+                 </a>
+                 <ul class="toggle_menu">
+                     <li>
+                         <a href="{:U('/Admin/System')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">系统设置 <span class="font11">settings</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Loginlog')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">登录日志 <span class="font11">login log</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Admin')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">管理员管理 <span class="font11">administrator</span></span>
+                         </a>
+                     </li>
+                     <li>
+                         <a href="{:U('/Admin/Payment')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">支付方式 <span class="font11">payment</span></span>
+                         </a>
+                     </li>   
+                     <!--
+                     <li>
+                         <a href="{:U('/Admin/Region')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">地区管理 <span class="font11">region</span></span>
+                         </a>
+                     </li> 
+                     <li>
+                         <a href="{:U('/Admin/AuthGroup')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">角色管理 <span class="font11">Roles</span></span>
+                         </a>
+                     </li>  
+                     <li>
+                         <a href="{:U('/Admin/AuthRule')}" target="workspace" class="cliAbtn"> 
+                            <span class="text">权限节点 <span class="font11">Auth Node</span></span>
+                         </a>
+                     </li>-->                                           
+                 </ul>
+             </li>                   
+         </ul>
+    </div>
+    </div>
+    <!--side_menu end-->
+    <!--content start-->
+    <div class="main">
+    <div class="user_nav">
+         <ul class="nav">
+             <!--<li class="dropdown">
+                 <a href="{:U('index')}" title="" class="dropdowntoggle" id="droponclik">
+                    <i class="icon icon_person"></i>
+                    <span class="text">Welcome User</span>
+                    <b class="down down_small"></b>
+                 </a>
+                 <ul class="dropdown_menu">
+                 <li><a href="{:U('/Admin/Index/changepwd')}" title="修改密码" target="workspace">Profile</a></li>
+                    <li><a href="#" title="">My Tasks</a></li>
+                     <li><a href="{:U('/Admin/Index/loginout')}" title="退出" target="workspace">Log Out</a></li>
+                     <b class="shape"></b>
+                 </ul>
+             </li>-->
+             <li class="dropdown">
+                 <a href="{:U('/Admin/System')}" title="系统设置" class="dropdowntoggle" target="workspace">
+                    <i class="icon icon_setting"></i>
+                    <span class="text">Settings</span>
+                 </a>
+             </li>
+             <li class="dropdown">
+                 <a href="{:U('/Admin/Index/clear_cache')}" title="清除缓存" class="dropdowntoggle" id="droponclik"	target="workspace">
+                    <i class="icon icon_deleteLy"></i>
+                    <span class="text">Clear Cache</span>
+                 </a>
+             	 <ul class="dropdown_menu">
+                    <li><a href="{:U('/Admin/Index/clear_cache')}" target="workspace">删除前台页面缓存(Runtime/Cache/Home)</a></li>
+                    <li><a href="{:U('/Admin/Index/clear_cache')}" target="workspace">删除后台页面缓存(Runtime/Cache/Admin)</a></li>
+                 	<li><a href="{:U('/Admin/Index/clear_cache')}" target="workspace">删除配置缓存(common~runtime.php)</a></li>
+                    <li><a href="{:U('/Admin/Index/clear_cache')}" target="workspace">删除字段缓存(Runtime/Data/_fields)</a></li>
+                    <li><a href="{:U('/Admin/Index/clear_cache')}" target="workspace">删除文件缓存(Runtime/Temp)</a></li>
+                    <li><a href="{:U('/Admin/Index/clear_cache')}" target="workspace">删除日志文件(Runtime/Logs)</a></li>
+                    <li><a href="{:U('/Admin/Index/clear_cache')}" target="workspace">清除全部缓存(Whole Runtime)</a></li>
+                    <b class="shape"></b>
+                 </ul>
+             </li>
+             <li class="dropdown">
+                 <a href="{:U('/Admin/Index/loginout')}" title="退出登录" class="dropdowntoggle" target="workspace">
+                    <i class="icon icon_logout"></i>
+                    <span class="text">Logout</span>
+                 </a>
+             </li>
+             <div class="clear"></div>
+         </ul>
+         
+    </div>
+    <!--user_nav end-->
+    <div class="clear"></div>
+    <iframe frameborder="0" width="100%" onLoad="iFrameHeight()" id="workspace" name="workspace" src="{:U('/Admin/Main/index')}"></iframe>
+    </div>
+    <!--content end-->
+</section>
+
+<script type="text/javascript">
+	function iFrameHeight(){
+		var ifm= document.getElementById("workspace");
+		var subWeb = document.frames ? document.frames["workspace"].document : ifm.contentDocument;
+		if(ifm != null && subWeb != null){
+			ifm.height = subWeb.body.scrollHeight;
+		}
+	}
+</script> 
+</body>
+</html>
+ 

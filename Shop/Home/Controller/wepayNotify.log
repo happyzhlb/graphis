@@ -1,0 +1,21 @@
+2016-08-03 22:06:56
+-----------------------------
+<xml><appid><![CDATA[wx43f4bd20cce3d5dc]]></appid>
+<attach><![CDATA[APP微信支付]]></attach>
+<bank_type><![CDATA[CFT]]></bank_type>
+<cash_fee><![CDATA[168]]></cash_fee>
+<fee_type><![CDATA[CNY]]></fee_type>
+<is_subscribe><![CDATA[N]]></is_subscribe>
+<mch_id><![CDATA[1326744401]]></mch_id>
+<nonce_str><![CDATA[8168]]></nonce_str>
+<openid><![CDATA[oEGKIuBQhUYq_TEmbCENr2iC1ydc]]></openid>
+<out_trade_no><![CDATA[1621500047]]></out_trade_no>
+<result_code><![CDATA[SUCCESS]]></result_code>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<sign><![CDATA[CCFDD7BA5F2F19E3C9C5CD6C393AED19]]></sign>
+<time_end><![CDATA[20160803220656]]></time_end>
+<total_fee>168</total_fee>
+<trade_type><![CDATA[APP]]></trade_type>
+<transaction_id><![CDATA[4006332001201608030501024952]]></transaction_id>
+</xml>
+

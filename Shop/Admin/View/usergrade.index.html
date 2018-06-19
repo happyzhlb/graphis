@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>等级管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/usergrade')}" class="text" target="workspace">等级管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">等级列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增等级" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox">
+                   	   <form id="search_form" method="get">
+                           <input type="search" name="grade_name" id="grade_name" value="{$Think.get.grade_name}" placeholder="输入搜索关键字">
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox">
+                   <table width="99%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th width="30"></th>
+                                 <th width="397">等级名称</th>
+                                 <th width="285">积分</th>
+                                 <th width="407">等级</th>
+                                 <th colspan="2">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="usergrades" id="usergrade">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$usergrade.grade_id}"></td>
+                                 <td>{$usergrade.grade_name}</td>
+                                 <td align="center">{$usergrade.score}</td>
+                                 <td align="center" class="center">{$usergrade.level_id}</td>
+                                 <td width="109" align="center" class="center"><a href="{:U('edit',array('id'=>$usergrade['grade_id']))}" title="">编辑</a></td>
+                                 <td width="112" align="center" class="center"><a href="{:U('drop',array('id'=>$usergrade['grade_id']))}" title="" class="delete">删除</a></td>
+                             </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="9">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

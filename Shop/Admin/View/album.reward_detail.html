@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>打赏记录</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/returned.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#refund_form_2').validate({
+		rules : {
+			refund_img : {
+				accept : 'gif,jpg,jpeg,png,bmp'
+			}
+		},
+		messages : {
+			refund_img : {
+				accept : '<i></i>图片只能上传gif、jpg、jpeg、png、bmp格式文件'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+</script>
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Models')}" class="text" target="workspace">模特管理</a> > <a href="{:U('/Admin/Album/index',array('id'=>$album['order_id']))}" class="text" target="workspace">专辑列表</a> > <a href="#" class="text" target="workspace">打赏明细</a> 
+         </div>
+    </div>
+         
+         <!--模特信息start-->
+         <div class="obox">
+              <div class="title">
+                   模特专辑：{$album.title}
+              </div>
+              <div class="show">
+                   <ul> 
+                       <li>共收到打赏：{$album.total_reward_fee|format_price}</li>
+                       <li>被打赏次数：{$album.total_reward_times}</li> 
+                       <li>总浏览次数：{$album.view_num}</li> 
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+         </div>
+         <!--模特信息end-->
+         
+         <!--商品信息start-->
+         <div class="obox">
+              <div class="title">
+                   专辑信息
+              </div>
+              <div class="show">
+                   <div class="table"> 
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th>专辑图片</th>
+                            <th>专辑名称</th>   
+                            <th>第几张开始打赏</th>
+                            <th>打赏金额</th>
+                            <th>发布时间</th>
+                          </tr>
+                          <tr>
+                            <td class="center"><a target="_blank" href="/album/reward/id/{$album.id}" title=""><img src="{$album.photo|getThumb='90x90'}" title="" width="50" height="50" class="pimg"></a></td>
+                            <td class="center"><div class="proifo"><a target="_blank" href="/album/reward/id/{$album.id}" title="">{$album.title}</a></div></td>
+                            <td class="center">{$album.pay_index}</td>
+                            <td class="center">{$album.reward_fee}</td>
+                            <td class="center">{$album.ctime|todate}</td>
+                          </tr>
+                    </table>  
+                   </div>  
+              </div>
+         </div>
+         <!--商品信息end-->
+         
+         <!--退款信息start- ->
+         <div class="obox">
+              <div class="title">
+                   退款信息
+              </div>
+              <div class="show">
+                   <ul>
+                       <li>退款编号：{$album.refund_sn}</li>
+                       <li>退款金额：{$album.refund_price|format_price}</li>
+                       <li>退款状态：{$album.refund_status|refund_status}</li>
+                       <li>退款类型：<if condition="$album.refund_type eq 1">退货<else />退款</if></li>
+                       <li>退款原因：{$album.refund_reason}</li>
+                       <li>退款时间：{$album.refund_time|todate}</li>
+                       <li>退款说明：{$album.refund_note}</li>
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+         </div>
+         <!--退款信息end-->
+         
+         <!--打赏记录start-->
+         <div class="obox">
+              <div class="title">
+                   打赏记录
+              </div>
+              <div class="report">
+                   <ul>
+                       <volist name="record" id="vo" key="key">
+                       <li> 
+                           <div class="pname" style="font-size:14px;">{$vo.ctime|todate} |  
+                                     <span>IP: {$vo.ip}</span>  | 
+                                     <span>打赏金额：{$vo.total_amount|format_price}</span>  | 
+                                     <span style="color:#ccc;font-size:11px;"><br>
+										客户端浏览器：{$vo.user_agent}</span> 
+                           </div>             
+                       </li>
+                       </volist>
+                       <!--<li>
+                           <div class="pname">买家：</div>
+                           <p>【标题】卖家已达成退款协议</p>
+                           <p>【内容】完成退款</p>
+                           <p>物流公司：EMS</p>
+                           <p>退货单号：1231253465</p>
+                           <p>退货地址：社恩呢</p>
+                       </li>-->
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+         </div>
+         <!--协商记录end-->
+         <if condition="$album.refund_status eq 11">
+          <!--退货信息start-->
+         <div class="remove">
+              <div class="tagbar">
+                   <ul>
+                       <li class="current">同意退款</li>
+                       <li>拒绝退款</li>
+                       <div class="clear"></div>
+                   </ul>
+                   
+              </div>
+              <div class="selectbox">
+                   <div class="selectcontent" id="selectcontent_0">
+                        <form id="refund_form_1" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <if condition="($album.refund_type eq 1) && ($album.order_status eq 30)">
+                            <li>
+                                <label><span class="cf00"></span>退款地址：</label>
+                                <textarea id="refund_address" name="refund_address">退货地址
+：{$address.country} {$address.state} {$address.city} {$address.adddress} 邮编：{$address.zipcode} 联系人：{$address.linkman} 电话：{$address.telephone}</textarea>
+                            </li>
+                            </if>
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        	<input type="hidden" id="id" name="id" value="{$album.rec_id}">
+                            <input type="hidden" id="refund_status" name="refund_status" value="<if condition='($album.refund_type eq 1) && ($album.order_status eq 30)'>21<else />20</if>">
+                            <input type="button" name="" value="处理退款" class="btn btn_bb submit" onClick="">
+                             <div class="clear"></div>
+                        </div>
+                        </form>
+                   </div>
+                   <div class="selectcontent" id="selectcontent_1" style="display:none;">
+                        <form id="refund_form_2" method="post" enctype="multipart/form-data">
+                        <ul>
+                            
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                            <li>
+                                <label><span class="cf00"></span>上传凭证：</label>
+                                <input type="file" id="refund_img" name="refund_img">
+                                <span class="tip">图片大小不得超过5M，支持GIF、JPG、PNG、BMP格式</span>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        <input type="hidden" id="id" name="id" value="{$album.rec_id}">
+                        <input type="hidden" id="refund_status" name="refund_status" value="50">
+                        <input type="button" name="" value="处理退款" class="btn btn_bb submit">
+                        </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--退货信息end-->
+         <elseif condition="$album.refund_status eq 22" />
+         <!--退货信息start-->
+         <div class="obox">
+              <div class="title">
+                   确认收到退货
+              </div>
+              <div class="selectbox">
+                   <div class="selectcontent">
+                        <form id="refund_form_1" action="{:U('/Admin/Refund/confirm')}" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        	<input type="hidden" id="id" name="id" value="{$album.rec_id}">
+                            <input type="button" name="" value="确认收货" class="btn btn_bb submit" onClick="">
+                             <div class="clear"></div>
+                        </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--退货信息end-->
+         </if>
+         
+         
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

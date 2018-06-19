@@ -1,0 +1,47 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>OKCHEM</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+	
+<!--提示页面开始-->
+<div class="refund">   
+	<div class="RefundSuccess"> 
+    <div class="skipTly skipTlybg_1"> 
+        <present name="message">
+            <h3><?php echo($message); ?><p class="success"></p></h3>
+        <else/>
+            <h3><?php echo($error); ?><p class="error"></p></h3>
+        </present> 
+        <p>page will be redirected in<span  id="wait">{$waitSecond}</span>seconds.</p>
+        <a id="href" href="<?php echo($jumpUrl); ?>">Go back</a>  
+        <a href="{:U('Index/index')}">Back to homepage</a>
+    </div> 
+    </div> 
+</div>
+<!--提示页面结束--> 
+
+ 
+<script type="text/javascript">
+(function(){
+var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+var interval = setInterval(function(){
+	var time = --wait.innerHTML;
+	if(time <= 0) {
+		location.href = href;
+		clearInterval(interval);
+	};
+}, 1000);
+})();
+</script>  
+    
+<include file="./Shop/Webapp/View/footer.html" /> 
+

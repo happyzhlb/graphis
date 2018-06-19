@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<meta content="always" name="referrer">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>{$title}~</title>
+<meta name="description" content="性感模特图片，美女图，日本女优私密写真相册~">
+<meta name="keywords" content="{$title}">
+<link rel="shortcut icon" href="http://image.meituzz.com/image/meituzz.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/Public/files/swiper.min.css"  />
+<link rel="stylesheet" type="text/css" href="/Public/files/animate.min.css"  />
+<link rel="stylesheet" type="text/css" href="/Public/files/main.css"  />
+<link rel="stylesheet" type="text/css" href="/Public/files/recommend.css"  />
+<link rel="stylesheet" type="text/css" href="/Public/files/templet_2.css"  />
+<style>.recommend_img td{ text-align:center;}</style>
+</head>
+<body>
+<div class="album_content">
+  <div id="loading_mask">
+    <div class="loading_content"><img src="/Public/files/loading-gif.gif">
+      <p>正在加载相册...</p>
+    </div>
+  </div>
+  <div id="audioControl" class="audioPause"></div>
+  <div id="photoNum"><span id="photoNumIndex">1</span>/<span id="photoNumTotal">{$count}</span></div>
+  <div class="swiper-container" id="swiper-container">
+    <div class="swiper-wrapper"></div>
+    <div id="report"><img src="/Public/files/report.png"><span>举报</span></div>
+    <input type="hidden" id="kannimabi" value="{$reward_fee}" >
+  </div>
+  <div id="reportWindow" class="">
+    <div class="title">请选择举报类型：<span id="reportCancel">取消</span></div>
+    <ul>
+      <li><i></i><span>欺诈</span></li>
+      <li><i></i><span>色情</span></li>
+      <li><i></i><span>政治谣言</span></li>
+      <li><i></i><span>常识性谣言</span></li>
+      <li><i></i><span>诱导分享</span></li>
+      <li><i></i><span>恶意营销</span></li>
+      <li><i></i><span>其他侵权类（冒名、诽谤、抄袭）</span></li>
+    </ul>
+  </div>
+  <div class="mask" id="mask"></div>
+  <p id="tip">请竖屏观看</p>
+  <div class="loading_all" id="loadingAll">
+    <div class="loading_mask"></div>
+    <img src="/Public/files/loading-gif.gif"></div>
+  <div class="clean_tip" id="cleanTip"><img src="/Public/files/slide_all.png"></div>
+  <div class="pay_tip">
+    <div class="mask"></div>
+    <p>自己不能给自己打赏！</p>
+  </div>
+</div>
+<audio id="audio" autoplay="autoplay" preload src="http://test.ymg280.com/Uploads/mp3/SeeYouAgain.mp3"></audio>
+<div class="touchMask" id="touchMask"></div>
+<input type="hidden" id="ie" value="0" >
+<input type="hidden" id="wo" value="" >
+<input type="hidden" id="ai" value="{$album_id}" >
+<input type="hidden" id="ip" value="{$isPay|default=0}" >
+<input type="hidden" id="aoi" value="" >
+<input type="hidden" id="audioSrc" value=http://test.ymg280.com/Uploads/mp3/SeeYouAgain.mp3 >
+<input type="hidden" id="voiceSrc" value= >
+<input type="hidden" id="s" value="O1aMeUuB3_4pWtVpZ_yeBJGlEDNVLeSG">
+<input type="hidden" id="d" value="graphis.club">
+<input type="hidden" id="p" value="1">
+<input type="hidden" id="payIndex" value="{$pay_index}" >
+<input type="hidden" id="givenRecommend" value="1" >
+<input type="hidden" id="totalPageNum" value="{$count}" >
+<input type="hidden" id="isRecommendAlbum" value=0 >
+<input type="hidden" id="templetID" value="3" >
+<input type="hidden" id="openid" value="{$Think.request.openid}" >
+</body>
+<script>
+ var img_td = '{$img_td}';   
+</script>
+<script type="text/javascript" src="/Public/files/v2_album1.js?version=1.1"></script><script>audioAutoPlay("audio");</script>
+<!--<script src="https://s4.cnzz.com/z_stat.php?id=1257918760&web_id=1257918760" language="JavaScript"></script>-->
+</html>

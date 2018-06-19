@@ -1,0 +1,143 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Product List</span>
+            <a href="{:U('Gcategory/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--产品分类开始-->
+    <div class="proListBox">
+    	<div class="proSearch">
+        	<input type="text" value="{:I('keyword')}" placeholder="Titanium Dioxide" name="keyword" id="searchInput" class="search" />
+            <a href="javascript:do_search()" class="searchBtn">search</a>
+        </div>
+        <div class="list">
+        	<div class="listChooseBox">
+            	<div class="listChoose clearfix"> 
+                <if condition="$sort eq 'g.goods_name'">
+                	<if condition="$_GET['order'] eq 'DESC'">
+                		<a href="{:U('List/index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'Asc')))}" class="current">A-Z</a>
+                    <else />
+                     	<a href="{:U('List/index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'DESC')))}" class="current">A-Z</a>
+                    </if>
+                <else />
+                	<a href="{:U('List/index',array_merge($parameter,array('sort'=>'g.goods_name','order'=>'DESC')))}">A-Z</a>
+                </if>
+                
+                <if condition="$sort eq 'gs.price'">
+                	<if condition="$order eq 'DESC'">
+                		<a href="{:U('List/index',array_merge($parameter,array('sort'=>'gs.price','order'=>'ASC')))}" class="current">Price</a>
+                	<else />
+                    	<a href="{:U('List/index',array_merge($parameter,array('sort'=>'gs.price','order'=>'DESC')))}" class="current">Price</a>
+                	</if>
+                <else />
+                	<a href="{:U('List/index',array_merge($parameter,array('sort'=>'gs.price','order'=>'DESC')))}">Price</a>
+                </if>
+                
+                <if condition="$sort eq 'g.sales'">
+                	<if condition="$order eq 'DESC'">
+                		<a href="{:U('List/index',array_merge($parameter,array('sort'=>'g.sales','order'=>'ASC')))}" class="current">Sale</a>
+                    <else />
+                    	<a href="{:U('List/index',array_merge($parameter,array('sort'=>'g.sales','order'=>'DESC')))}" class="current">Sale</a>
+                    </if>
+                <else />
+                	<a href="{:U('List/index',array_merge($parameter,array('sort'=>'g.sales','order'=>'DESC')))}">Sale</a>
+                </if>
+ 
+                    <a href="javascript:void(0)" val="Brands">Brands<i></i></a>
+                    
+                </div>
+                <div class="Brands clearfix">
+                <volist name='brands' id='brand'> 
+                    <a href="{:U('List/index',array_merge($parameter,array('sort'=>'','bid'=>$brand['bid'])))}" <if condition="$parameter.bid eq $brand['bid']">class="current"</if>>{$brand.bname}<i>({$brand.count})</i></a>
+                </volist>     
+                </div>
+            </div>
+        	
+            <!--产品列表开始-->
+        <notempty name="goods">
+            <div class="allProduct">
+            <volist name="goods" id="vo">
+            	<dl class="clearfix">
+                	<dt><a href="{:U('Goods/index',array('id'=>$vo['goods_id']))}"><img src="/{$vo.goods_img}" width="100" height="100" /></a></dt>
+                    <dd>
+                    	<h3><a href="{:U('Goods/index',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a></h3>	
+                        <p>{$vo.goods_sub_desc}</p>
+                        <span>{$vo.goods_id|get_range_price=###,'$'}</span>
+                    </dd>
+                </dl>
+            </volist>     
+            </div>
+        <else/>    
+            <div class="noResult">
+            	<span></span>
+                <p>Sorry!<br />There is no search result for the term.</p>
+                <a href="{:U('Index/index')}">Go Shopping</a>
+            </div>
+       </notempty>
+            <!--产品列表结束-->
+       <gt name='totalpages' value='1'>     
+          <div id="page">
+                <a href="javascript:void(0)" class="prev"><em></em></a>
+              <div class="pageChoose"> 
+                    <select name="select" id="select_page">
+                    <for start="1" end="$totalpages" comparison='elt'>
+                        <option value="{$i}" <if condition="$i==$_GET['p']">selected</if>>Page {$i}/{$totalpages}</option>
+                    </for> 
+                    </select>
+                </div>
+                <a href="javascript:void(0)" class="next"><em></em></a>
+				<script>
+                    $(function(){
+                        fn_change_page=function(){
+                             self.location="{:U('List/index',array_merge($parameter,array('p'=>'')),'')}/p/"+$(this).val();				
+                        }
+                        $('#select_page').bind('change',fn_change_page);
+                        
+                        max_page='{$totalpages}';
+                        now_page='{$Think.get.p|default=1}';
+                        next_page=parseInt(now_page)+1;
+                        prev_page=parseInt(now_page)-1;
+                        
+                        if(next_page<=max_page){  
+                            $('#page .next').click(function(){ self.location="{:U('List/index',array_merge($parameter,array('p'=>'')),'')}/p/"+ next_page; }); 
+                        }			
+                        if(prev_page>=1){
+                            $('#page .prev').click(function(){ self.location="{:U('List/index',array_merge($parameter,array('p'=>'')),'')}/p/"+ prev_page; }); 
+                        } 
+                    }); 
+                </script>
+            </div>   
+         </gt>    
+        </div>
+    </div>
+	<!--产品分类结束--> 
+    
+    <script>
+    $(function(){
+		//搜索 
+		do_search=function(){
+			list_url="{:U('List/index','','')}/"+"keyword/"+$('#searchInput').val(); 
+			self.location.href=list_url;			
+		}
+		$('#searchInput').keyup(function(event){
+  			if(event.keyCode ==13){ 
+				do_search(); 
+ 			}
+		}); 
+		//品牌当前页判断
+		fn_brand=function(){
+			$('a[val="Brands"]').click();	
+		}
+		<if condition="$Think.get.bid gt 0 && $Think.get.sort eq ''">fn_brand();</if>
+	});
+    </script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

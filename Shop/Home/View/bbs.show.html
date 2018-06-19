@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="keywords" content="怀孕百事通 孕妈圈 " />
+<meta name="description" content="怀孕百事通 孕妈圈" />
+<title>{$list.title}_宝妈社区</title>
+<link rel="stylesheet" href="__PUBLIC__/home/fonts/font.css" />
+<link rel="stylesheet" href="__PUBLIC__/bbs/style.css" />
+<link rel="stylesheet" href="__PUBLIC__/bbs/face2.css" />
+<script type="text/javascript" src="__PUBLIC__/bbs/jquery-1.4.4.min.js"></script>
+<script src="__PUBLIC__/bbs/face2.js" type="text/javascript"></script>
+<script type="text/javascript">
+		    $(document).ready(function () {
+		        if ($("#isshow").val() == "1") {
+		            jQuery("#jifen_jia").show(); //显示showId
+		            setTimeout("document.getElementById('jifen_jia').style.display = 'none';", 2000);
+		            setTimeout('delayer()', 3000);
+		        }
+		    });
+		    function delayer() { window.location = "tiezi_chd.aspx?id=1121"; } 
+		</script>
+<script language="javascript" type="text/javascript">
+            function check() {
+                if ($("#content").val() == "") {
+                    alert("回复内容不能为空！")
+                    return (false)
+                }
+            }
+            function tiezi_huifu(id, hf_id, re_id,re_con) {
+                $("#huifu_id").val(id);
+                $("#huifu_hf_id").val(hf_id);
+                $("#huifu_re_id").val(re_id);
+                if ($("#hf_on").val() == "0") {
+                    $("#hf_on").val("1");
+                    jQuery("#tiezi_huifi").show(); //显示showId
+                    $("#content").attr("placeholder", "回复"+re_con);
+                    jQuery("#tiezi_bot").hide();
+                }
+                else {
+                    $("#hf_on").val("0");
+                    jQuery("#tiezi_huifi").hide(); //显示showId
+                    jQuery("#tiezi_bot").show();
+                 }
+            }
+            function zan(span_id, tz_id) {
+                $.ajax({
+                    type: "GET",
+                    url: "{:U('Bbs/approve','','')}/bbs_id/" + tz_id,
+                    cache: false,
+                    success: function (mesg) { 
+						if(mesg.status==0){alert(mesg.info); self.location="/Index/user_login"}
+                        $("#" + span_id + "").text(mesg);
+                    }
+                });
+            }
+        </script>
+</head>
+<body>
+<header>
+  <div class="l"><a href="{:U('Bbs/index')}" class="btn back"><span class="icon-back"></span></a></div>
+  <div class="c">
+    <h1>{$list.cate.cate_name}</h1>
+    <input type="hidden" name="isshow" id="isshow" value="0">
+  </div>
+  <div class="r2"><a href="{:U('Bbs/search')}" class="btn"><span class="icon-search"></span></a></div>
+  <div class="r"><a href="{:U('add',array('cate_id'=>$list['cate_id']))}" class="btn"><span class="icon-bj"></span></a></div>
+</header>
+<script>(function () { document.write('<div id="clear300mm" style="position:fixed; left:0; right:0; top:0; bottom:0; z-index:9999;"></div>'); var div = document.getElementById("clear300mm"); if (div) { setTimeout(function () { div.style.display = "none"; }, 300); } })();</script>
+<footer  id="tiezi_bot">
+  <div class="display-box plba">
+    <div class="box-flex-1"><a href="{:U('Bbs/index')}" class="btn btn-block btn-primary"><span class="icon-back"></span> 返回宝妈社区</a></div>
+    <div class="box-flex-1"><a href="javascript:void(0)" onClick="tiezi_huifu(1121,0,0,'内容')" class="btn btn-block btn-huifu" style="font-size:16px;"><span class="icon-bj"></span> 回复楼主</a></div>
+  </div>
+</footer>
+<div class="footer" style="display:none;" id="tiezi_huifi">
+  <form id="editForm" method="post" onSubmit="return check()" action="{:U('Bbs/reply')}">
+    <div class="inputbox">
+      <div class="Input_Box">
+        <textarea name="content" id="content" class="Input_text" placeholder="回复内容"></textarea>
+        <input type="hidden" name="bbs_id" id="bbs_id" value="{$list.bbs_id}"/>
+        <input type="hidden" name="huifu_hf_id" id="huifu_hf_id" value="0"/>
+        <input type="hidden" name="huifu_re_id" id="huifu_re_id" value="0"/>
+      </div>
+    </div>
+    <div class="display-box plctrl">
+      <div class="faceDiv"> </div>
+      <div>
+        <button type="button" class="bqBtn btn btn-block btn-default"><span class="icon-face"></span> 表情</button>
+      </div>
+      <div class="box-flex-1">
+        <button type="button" class="btn btn-block btn-highlight" onClick="tiezi_huifu(1121,0,0)">取消</button>
+      </div>
+      <div class="box-flex-1">
+        <button type="submit" class="btn btn-block btn-primary">发送</button>
+        <input type="hidden" name="hf_on" id="hf_on" value="0">
+      </div>
+    </div>
+  </form>
+</div>
+<div id="jifen_jia" style="display:none;">回复成功<br />
+  +2积分</div>
+<div class="header-margin footer-margin body">
+  <div class="box tiezititle">
+    <div class="fz18rem">{$list.title}</div>
+    <div>
+      <div class="left quanname"><a href="{:U('quanlist',array('cate_id'=>$list['cate_id']))}">{$list.cate.cate_name}&gt;</a></div>
+      <div class="right color-grey"><span class="icon-qp"></span> {$list.cate.total_subject}&nbsp;&nbsp;<span class="icon-eye"></span> {$list.cate.total_clicks}</div>
+    </div>
+  </div>
+  <div class="postlist">
+  
+    <div class='fa' style='margin-top:0.4rem'>
+      <div class='fainfo'>
+        <div class='head'><a href='#user.aspx?u=1024'><img src='{$list.user.u_pic}'></a></div>
+        <div class='box-flex-1'><span class='fz16rem' style='vertical-align:middle;'>{$list.user.nick_name}</span>&nbsp;&nbsp;<span class='dengji1'>{$list.user.level_id|getGrade}</span><br>
+          <span class='fz12rem'>浏览：{$list.clicks}&nbsp;&nbsp;&nbsp;{$list.user.city}</span></div>
+        <div class='color-grey fz12rem text-right'><br>
+          {$list.ctime|formatTime}</div>
+      </div>
+      <div class='facont_chd'> 
+      {$list.content|htmlspecialchars_decode}</div>
+      <div class='zhf'><span class='left'><span class='icon-zan'></span> <a href='javascript:void(0)'  onclick="zan('z{$list.bbs_id}',{$list.bbs_id})">点赞 <span id='z{$list.bbs_id}'>{$list.approve}</span></a></span><span class='right'><span class='icon-huifu'></span> <a href='javascript:void(0)' onclick="tiezi_huifu(1121,0,0,'内容')">回复</a></span></div>
+    </div> 
+ <volist name='list.reply' id='reply'> 
+    <div class='fa' style='margin-top:0px; border-top:0px;'>
+      <div class='fainfo'>
+        <div class='head'><img src='{$reply.user.u_pic}'></div>
+        <div class='box-flex-1'><span class='fz16rem'><font>{$reply.user.nick_name|default=$reply['user']['user_name']}</font></span><br>
+        </div>
+        <div class='color-grey fz12rem text-right'>{$key+1}楼<br>
+          {$reply.ctime|formatTime}</div>
+      </div>
+      <div class='facont_chd_re'>{$reply.content|toFace|htmlspecialchars_decode}</div>
+      <div class='zhf'><span class='right'><span class='icon-huifu'></span> <a href='javascript:void(0)' onclick="tiezi_huifu(1121,1662,957,'朵朵')">回复</a></span></div>
+    </div>
+ </volist>   
+     
+  
+</div>
+<script>
+    //下面这个函数用来转换数组到json格式
+    function arrayToJson(o) {
+        var r = [];
+        if (typeof o == "string") return "\"" + o.replace(/([\'\"\\])/g, "\\$1").replace(/(\n)/g, "\\n").replace(/(\r)/g, "\\r").replace(/(\t)/g, "\\t") + "\"";
+        if (typeof o == "object") {
+            if (!o.sort) {
+                for (var i in o)
+                    r.push(i + ":" + arrayToJson(o[i]));
+                if (!!document.all && !/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/.test(o.toString)) {
+                    r.push("toString:" + o.toString.toString());
+                }
+                r = "{" + r.join() + "}";
+            } else {
+                for (var i = 0; i < o.length; i++) {
+                    r.push(arrayToJson(o[i]));
+                }
+                r = "[" + r.join() + "]";
+            }
+            return r;
+        }
+        return o.toString();
+    }
+    //这个是调用微信图片浏览器的函数 
+    function imagePreview(curSrc, srcList) {
+        //这个检测是否参数为空
+        if (!curSrc || !srcList || srcList.length == 0) {
+            return;
+        }
+        //这个使用了微信浏览器提供的JsAPI 调用微信图片浏览器
+        WeixinJSBridge.invoke('imagePreview', {
+            'current': curSrc,
+            'urls': srcList
+        });
+    };
+
+    (function ($) {
+        //下面是获取当前页面所有的img的src 转成数组 并且 转换成json格式
+        var aa = [];
+        var i = 0;
+        var src = [];
+        var json = null;
+        aa = $(".userPhoto");
+        for (i = 0; i < aa.length; i++) {
+            src[i] = aa[i].src;    //把所有的src存到数组里
+        }
+        var srcList = arrayToJson(src); //转换成json并赋值给srcList
+        //下面是点击图片的时候获取当前第几个图片并且启用咱们做的调用微信图片浏览器的函数
+        $(".userPhoto").click(function () {
+            var index = $(".userPhoto").index(this);
+            imagePreview(srcList[index], src);
+        });
+
+    })(jQuery);
+</script>
+</body>
+</html>

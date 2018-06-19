@@ -1,0 +1,65 @@
+<?php header('location:/Gcategory/error404.html?url='.$_SERVER['REQUEST_URI'].'&msg='.$e['message'] ); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$seo.keywords}" />
+<meta name="description" content="{$seo.description}" />
+<notempty name="Think.get.cate_id">
+<assign name="think_get_cate_id" value="$Think.get.cate_id" />
+<link rel="canonical" href="{:U('/List/index',array('cate_id'=>$think_get_cate_id))}" />
+</notempty>
+<link href="favicon.ico" type="image/ico" rel="shortcut icon" />
+<link rel="stylesheet" type="text/css" href="/Public/home/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/Public/home/css/account.css" />
+<load href="/Public/home/css/main.css" />
+<title>{$seo.name}</title>
+<script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Public/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/Public/home/js/jquery.webeffect.js"></script>
+<script>
+	$(function(){
+		do_search=function(){
+			list_url="{:U('List/index','','')}/"+"keyword/"+$('#searchInput').val(); 
+			self.location.href=list_url;			
+		}
+		$('#searchInput').keyup(function(event){
+  			if(event.keyCode ==13){ 
+				do_search(); 
+ 			}
+		});
+	});
+</script>
+</head>
+<body>
+ 
+
+<div id="new404">
+	<dl class="clearfix">
+    	<dt><img src="/Public/home/images/NewError404.jpg" width="232" height="252" /></dt>
+        <dd>
+        	<h2>Page not found!</h2>
+            <h3>The requested page was not found in our servers.</h3>
+            <p>Due to changes on our website, the page you are trying to view has likely moved to another location or no longer exists. To find the item(s) you are looking for, please use the search function below or the navigation menu on the left.</p>
+            <h3>We apologize for the inconvenience.</h3>
+        </dd>
+    </dl>
+    <div class="search404">
+    	<p>Enter the terms to search for, or click on the menu to browse within categories.</p>
+        <div class="searchbox404">
+        	<input type="text" value="" class="searchIN" />
+            <a href="javascript:void(0)" class="searchBtn" title="Search">Search</a>
+        </div>
+    </div>
+    <?php 
+    	if(isset($_REQUEST['show'])){
+    	  echo $e['file'].'<br/>';
+          echo $e['line'].'<br/>';
+          echo $e['message'].'<br/>';
+          echo $e['trace'].'<br/>';
+       }
+    ?>
+</div>
+
+</body>
+</html>

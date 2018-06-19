@@ -1,0 +1,91 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.mon-28 .space-be:nth-child(-n + 6) { display: none;} /* 一週目 */
+.mon-28 .space-af:nth-last-child(-n + 1) { display: none;} /* 最後の週 */
+	
+.tue-28 .space-be:nth-child(-n + 5) { display: none;} /* 一週目 */
+.tue-28 .space-af:nth-last-child(-n + 2) { display: none;} /* 最後の週 */
+
+.wed-28 .space-be:nth-child(-n + 4) { display: none;} /* 一週目 */
+.wed-28 .space-af:nth-last-child(-n + 3) { display: none;} /* 最後の週 */
+
+.thu-28 .space-be:nth-child(-n + 3) { display: none;} /* 一週目 */
+.thu-28 .space-af:nth-last-child(-n + 4) { display: none;} /* 最後の週 */
+
+.fri-28 .space-be:nth-child(-n + 2) { display: none;} /* 一週目 */
+.fri-28 .space-af:nth-last-child(-n + 5) { display: none;} /* 最後の週 */
+
+.sat-28 .space-be:nth-child(-n + 1) { display: none;} /* 一週目 */
+.sat-28 .space-af:nth-last-child(-n + 6) { display: none;} /* 最後の週 */
+
+.sun-28 .space-be:nth-child(-n + 7) { display: none;} /* 一週目 */
+.sun-28 .space-af:nth-last-child(-n + 7) { display: none;} /* 最後の週 */
+
+
+.mon-29 .space-be:nth-child(-n + 6) { display: none;} /* 一週目 */
+.mon-29 .space-af:nth-last-child(-n + 2) { display: none;} /* 最後の週 */
+	
+.tue-29 .space-be:nth-child(-n + 5) { display: none;} /* 一週目 */
+.tue-29 .space-af:nth-last-child(-n + 3) { display: none;} /* 最後の週 */
+
+.wed-29 .space-be:nth-child(-n + 4) { display: none;} /* 一週目 */
+.wed-29 .space-af:nth-last-child(-n + 4) { display: none;} /* 最後の週 */
+
+.thu-29 .space-be:nth-child(-n + 3) { display: none;} /* 一週目 */
+.thu-29 .space-af:nth-last-child(-n + 5) { display: none;} /* 最後の週 */
+
+.fri-29 .space-be:nth-child(-n + 2) { display: none;} /* 一週目 */
+.fri-29 .space-af:nth-last-child(-n + 6) { display: none;} /* 最後の週 */
+
+.sat-29 .space-be:nth-child(-n + 1) { display: none;} /* 一週目 */
+.sat-29 .space-af:nth-last-child(-n + 7) { display: none;} /* 最後の週 */
+
+.sun-29 .space-be:nth-child(-n + 7) { display: none;} /* 一週目 */
+.sun-29 .space-af:nth-last-child(-n + 1) { display: none;} /* 最後の週 */
+
+
+.mon-30 .space-be:nth-child(-n + 6) { display: none;} /* 一週目 */
+.mon-30 .space-af:nth-last-child(-n + 3) { display: none;} /* 最後の週 */
+	
+.tue-30 .space-be:nth-child(-n + 5) { display: none;} /* 一週目 */
+.tue-30 .space-af:nth-last-child(-n + 4) { display: none;} /* 最後の週 */
+
+.wed-30 .space-be:nth-child(-n + 4) { display: none;} /* 一週目 */
+.wed-30 .space-af:nth-last-child(-n + 5) { display: none;} /* 最後の週 */
+
+.thu-30 .space-be:nth-child(-n + 3) { display: none;} /* 一週目 */
+.thu-30 .space-af:nth-last-child(-n + 6) { display: none;} /* 最後の週 */
+
+.fri-30 .space-be:nth-child(-n + 2) { display: none;} /* 一週目 */
+.fri-30 .space-af:nth-last-child(-n + 7) { display: none;} /* 最後の週 */
+
+.sat-30 .space-be:nth-child(-n + 1) { display: none;} /* 一週目 */
+.sat-30 .space-af:nth-last-child(-n + 1) { display: none;} /* 最後の週 */
+
+.sun-30 .space-be:nth-child(-n + 7) { display: none;} /* 一週目 */
+.sun-30 .space-af:nth-last-child(-n + 2) { display: none;} /* 最後の週 */
+
+
+
+.mon-31 .space-be:nth-child(-n + 6) { display: none;} /* 一週目 */
+.mon-31 .space-af:nth-last-child(-n + 4) { display: none;} /* 最後の週 */
+	
+.tue-31 .space-be:nth-child(-n + 5) { display: none;} /* 一週目 */
+.tue-31 .space-af:nth-last-child(-n + 5) { display: none;} /* 最後の週 */
+
+.wed-31 .space-be:nth-child(-n + 4) { display: none;} /* 一週目 */
+.wed-31 .space-af:nth-last-child(-n + 6) { display: none;} /* 最後の週 */
+
+.thu-31 .space-be:nth-child(-n + 3) { display: none;} /* 一週目 */
+.thu-31 .space-af:nth-last-child(-n + 7) { display: none;} /* 最後の週 */
+
+.fri-31 .space-be:nth-child(-n + 2) { display: none;} /* 一週目 */
+.fri-31 .space-af:nth-last-child(-n + 1) { display: none;} /* 最後の週 */
+
+.sat-31 .space-be:nth-child(-n + 1) { display: none;} /* 一週目 */
+.sat-31 .space-af:nth-last-child(-n + 2) { display: none;} /* 最後の週 */
+
+.sun-31 .space-be:nth-child(-n + 7) { display: none;} /* 一週目 */
+.sun-31 .space-af:nth-last-child(-n + 3) { display: none;} /* 最後の週 */

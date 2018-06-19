@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>产品管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/listimg.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+
+$(function(){	
+	$('#search_auto').css({'width':$('#search_form input[name="keywords"]').width()+4});	
+	$('#search_form input[name="keywords"]').keyup(function(){
+		$.post('{:U("searchAuto")}',{'keywords':$(this).val()},function(data){　 
+			if(data=='0') $('#search_auto').html('').css('display','none');　 
+			else $('#search_auto').html(data).css('display','block');　 //返回的数据不等于０，则将返回的内容放到提示框内并显示提示框
+		});
+	});
+	
+	
+	//批量更新品牌
+	$('#batUpdateBrand').click(function(){ var brandTitle = $('#brandTitle').html();
+		if($('#bat_brand_id').val()=='' || brandTitle.trim().length == 0){ 
+			alert('请选择品牌..');
+			$('#bat_brand_id').focus();
+			return;
+		}
+		 
+		var id = '';
+		$('[name=items]:checkbox').each(function(){
+			if($(this).attr('checked') == 'checked'){
+				id += $(this).val() + ','
+			} 
+		});
+		if(!id){
+			alert('请选择要修改的产品.');
+			return;
+		}
+		if( confirm('确定要批量修改所选产品的品牌为:“'+$('#brandTitle').html()+'”吗？')){
+			id = id.substring(0,id.length - 1);
+			location.href = "{:U('batUpdateBrand')}?goods_ids="+ id + '&brand_id='+ $('#bat_brand_id').val(); 
+		}   
+	}); 
+
+		
+	$(".movezone").click(function(){ 
+		$(this) 
+		  .animate({ left: -3 })
+		  .animate({ left: 3 })
+		  .animate({ left: 0 });
+	});
+	
+	//选择框按钮(品牌)
+	$('#selButton').click(function(){
+		$('#brandW').toggle();	
+		$('#brandW').animate({ "margin-top": -450 }); 
+		if($(this).position().top<500){
+			$('#brandW').animate({ "top": 500 });
+		}
+	});
+	
+	$('#closeBrandW').click(function(){ 
+		$('#brandW').hide();	
+	});
+	
+	
+	
+	
+	//批量更新专题
+	$('#batUpdateArticle').click(function(){ var articleTitle = $('#articleTitle').html();
+		if($('#bat_article_id').val()=='' || articleTitle.trim().length == 0){ 
+			alert('请选择专题..');
+			$('#bat_article_id').focus();
+			return;
+		}
+		 
+		var id = '';
+		$('[name=items]:checkbox').each(function(){
+			if($(this).attr('checked') == 'checked'){
+				id += $(this).val() + ','
+			} 
+		});
+		if(!id){
+			alert('请选择要修改的产品.');
+			return;
+		}
+		if( confirm('确定要批量修改所选产品的专题为:"'+$('#articleTitle').html()+'"吗？')){
+			id = id.substring(0,id.length - 1);
+			location.href = "{:U('batUpdateArticle')}?goods_ids="+ id + '&article_id='+ $('#bat_article_id').val(); 
+		}   
+	}); 
+	
+	
+	//选择框按钮(专题)
+	$('#selButtonArticle').click(function(){
+		$('#articleW').toggle();	
+		$('#articleW').animate({ "margin-top": -450 });
+		if($(this).position().top<500){
+			$('#articleW').animate({ "top": 500 });
+		}
+	});
+	
+	$('#closeArticleW').click(function(){ 
+		$('#articleW').hide();	
+	});
+	
+	
+	
+	
+});
+
+</script>
+<style>
+	.expressZone{ float:right; width:60%; border:0px solid #999; list-style:none; padding:8px;}
+	.expressZone li{
+		border:1px solid #CCC; 
+		float:left; list-style:none; 
+		margin-left:10px; 
+		padding:2px 10px 2px 10px;
+		border-radius:5px; 
+		background:rgba(199,235,199,0.5);
+		display: inline-block;
+		cursor: pointer;
+		box-shadow:0px 0px 3px #ccc;
+	}
+	.f12{font-size:12px;}
+</style>
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main" style="min-height:500px;">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Goods')}" title="" class="text">产品管理</a>
+         	 <?php 
+             	if(I('pending_modify')=='1'){ 
+             		echo '> <font class="f12">价格待修改区</font>';
+                }elseif( I('is_on_sale')=='0'){
+					echo '> <font class="f12">待上架区</font>';
+                }elseif(I('isSel')=='no'){
+                    echo '> <font class="f12">未被关联产品</font>';
+                }
+              ?>
+         </div>
+      <div class="expressZone"><li><a href="{:U('Goods/index',array('is_on_sale'=>0))}">待上架区</a></li>
+      <li><a href="{:U('Goods/index',array('pending_modify'=>1))}">价格待修改区</a></li>
+      <!--<li><a href="{:U('Goods/index',array('isSel'=>'no'))}">未被关联产品</a></li> 消耗资源-->
+      </div>
+    </div>
+         <!--产品列表start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l"></div>
+                   <div class="text">产品列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 发布产品" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="cbox">
+                   <!--搜索区域start-->
+                   <div class="searchzone">
+                        <div class="searchbox">
+                        <form id="search_form" action="{:U('index')}" method="get">
+                             产品关键字：<input type="text" id="keywords" style="width:250px; height:30px;" placeholder="请输入产品名称、卖家店铺名称" name="keywords" value="{$keywords}"/>
+                             <div id="search_auto" style="border:1px solid #817FB2; position:absolute; background-color:#FcFcFc;display:none;"></div>
+                             淘宝ID：
+                           <input type="text" id="outer_id" style="width:100px; height:30px;" name="outer_id" value="{$Think.get.outer_id}"/>
+                           品牌：
+                           <input type="text" id="brand_name" style="width:100px; height:30px;" name="brand_name" placeholder="品牌名称" value="{$Think.get.brand_name}"/>
+                           
+                            关联：<select name="isSel" >
+                             	<option value="all">全部</option>
+                                <!--<option value="yes" <if condition="$Think.get.isSel eq 'yes'">selected</if>>是</option>-->
+                                <option value="noRelatedArticle" <if condition="$Think.get.isSel eq 'noRelatedArticle'">selected</if>>未关联专题</option>
+                                <option value="hasRelatedArticle" <if condition="$Think.get.isSel eq 'hasRelatedArticle'">selected</if>>已关联专题</option>
+                                <option value="noRelatedBrand" <if condition="$Think.get.isSel eq 'noRelatedBrand'">selected</if>>未关联品牌</option>                               
+                                <option value="hasRelatedBrand" <if condition="$Think.get.isSel eq 'hasRelatedBrand'">selected</if>>已关联品牌</option>
+                             </select>
+                             <!--
+                             分类：
+                             <select id="cate_id" name="cate_id">
+                             	 <option value="">==选择分类==</option>
+                                 <volist name="gcategory" id="cate">
+                                 	<option value="{$cate.cate_id}" <if condition="$Think.get.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                    <volist name="cate.children" id="c_cate">
+                                    	<option value="{$c_cate.cate_id}" <if condition="$Think.get.cate_id eq $c_cate['cate_id']">selected</if>>&nbsp;&nbsp;{$c_cate.cate_name}</option>
+                                        <volist name="c_cate.children" id="c_c_cate">
+                                        	<option value="{$c_c_cate.cate_id}" <if condition="$Think.get.cate_id eq $c_c_cate['cate_id']">selected</if>>&nbsp;&nbsp;&nbsp;&nbsp;{$c_c_cate.cate_name}</option>
+                                        </volist>
+                                    </volist>
+                                 </volist>
+                             </select>
+                             -->
+                             <input type="submit" value="搜索" class="btn btn_ys">
+                        </form> 
+                        </div>
+                   </div>
+                   <!--搜索区域end-->
+                   <if condition="$Think.get.outer_id neq ''">
+                   <table class="table" cellpadding="0" cellspacing="0">
+                          <thead>
+                             <tr>
+                                 <th>ID</th>
+                                 <th>淘宝ID</th>
+                                 <th>产品名称</th>
+                                 <th>关联文章ID</th>
+                                 <th>关联文章标题</th>
+                                 <th>主图</th>  
+                                 <th>价格</th>
+                                 <th>收藏量</th>
+                                 <th>上下架</th>
+                                 <th colspan="3">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="goods" id="value">
+                             <tr>
+                                 <td><input type="checkbox" name="items" value="{$value.goods_id}"> {$value.goods_id}</td>
+                                 <td class="center"><a href="https://item.taobao.com/item.htm?id={$value.outer_id}" target="_blank">{$value.outer_id}</a></td>
+                                 <td class="center">{$value.goods_name}</td>
+                                 <td class="center">{$value.article_id}</td>
+                                 <td class="center">{$value.title}</td>
+                                 <td align="center"> 
+                                     <img src="{$value.goods_img}" alt="" title="" width="50" height="50"> 
+                                 </td>
+                                 <td class="center">{$value.price}</td>
+                                 <td class="center">{$value['click_count']}</td>
+                                 <td class="center">{$value.is_on_sale|return_ico=###,"is_on_sale",$value['goods_id']}</td>
+                                 <td class="center"><a href="{:U('edit', array('id'=>$value['goods_id'],'flag'=>1))}" title="">关联</a></td>
+                                 <td class="center"><a href="{:U('edit', array('id'=>$value['goods_id']))}">修改</a></td>
+                                 <td class="center"><a href="{:U('drop', array('id'=>$value['goods_id']))}">删除</a></td>
+                             </tr>
+							 </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="12">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" name="" value="删除" class="btn btn_bs dropall" onClick="">
+                                   <!-- <input type="button" name="" value="导出excel" class="btn btn_bs export" onClick="">-->
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+                   
+               <else/>    
+					<table width="100%" cellpadding="0" cellspacing="0" class="table">
+                          <thead>
+                             <tr>
+                                 <th width="62">ID</th>
+                                 <th width="135">淘宝ID</th>
+                                 <th width="205">卖家</th>
+                                 <th width="135">产品名称</th>
+                                 <th width="134">品牌</th>
+                                 <th width="119">主图</th>  
+                                 <th width="88">价格</th>
+                                 <th width="69">收藏量</th>
+                                 <th width="70">淘客佣金</th> 
+                                 <th width="105">上下架</th>
+                                 <th colspan="3">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="goods" id="value">
+                             <tr>
+                                 <td><input type="checkbox" name="items" value="{$value.goods_id}"> {$value.goods_id}</td>
+                                 <td class="center"><a href="https://item.taobao.com/item.htm?id={$value.outer_id}" target="_blank">{$value.outer_id}</a></td>
+                                 <td align="center">  <img src="/Public/images/{$value.seller_type}.png" align="absmiddle" width="16" style="display:inline;" height="16" title="{$value.seller_type}"  /> {$value.shop_name} </td>
+                                 <td class="center">{$value.goods_name}</td>
+                                 <td class="center">{$value.brand_json|getJsonBrand}</td>
+                                 <td align="center"> 
+                                     <img src="{$value.goods_img|dealImg}" alt="" title="{$value.goods_img}" width="50" height="50"> 
+                                 </td>
+                               <td class="center">{$value.price}</td>
+                                 <td class="center">{$value['click_count']}</td>
+                                 <td class="center"><?php echo '￥'.round(($value['tk_rate']*$value['price'])/10000,2);?>({$value.tk_rate|toRate}) </td>
+                                 <td class="center">{$value.is_on_sale|return_ico=###,"is_on_sale",$value['goods_id']}</td>
+                                 <td width="40" class="center"><a href="{:U('edit', array('id'=>$value['goods_id'],'flag'=>1))}" title="">关联</a></td>
+                                 <td width="40" class="center"><a href="{:U('edit', array('id'=>$value['goods_id']))}">修改</a></td>
+                                 <td width="42" class="center"><a class="drop" href="{:U('drop', array('id'=>$value['goods_id']))}">删除</a></td>
+                             </tr>
+							 </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="13">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" name="" value="删除" class="btn btn_bs dropall" onClick="">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    
+                        <!-- 批量更新品牌start-->             
+                       	<span class="batzone">
+                            <span> 品牌:</span> 
+                            <span style="color:red;font-weight:bold; font-size:16px;" id="brandTitle"> </span>
+                            <span> <input type="hidden" value="" name="bat_brand_id" id="bat_brand_id" /> <input type="button" id="selButton" name="selButton" value="选择品牌" class="span80 ml5 selButton"></span>
+                            <span id="brandTitle" style="font-weight:normal;font-size:14px;"></span>                              
+                            <!--brandW start-->
+                            <div id="brandW" style="display:none; margin-left:22%; margin-top:0px; position:absolute; z-index:99; border:5px solid #a8a8a8; width:760px; height:410px; background:rgba(255,255,255,0.9); border-radius:6px;box-shadow:0 0 15px #999;">
+                                <div id="closeBrandW"><a style="padding-top:5px;padding-right:8px;font-size:14px;float:right; text-align:right; clear:both;" href="#">X</a></div>
+                                <div style="height:550px; clear:both; padding:10px;">
+                                    <iframe src="/Admin/Brand/sel.html?type=singleId"  width="730px;" height="360px;"></iframe> 
+                                </div>
+                            </div>
+                            <!--brandW end-->  
+                            <input type="button" name="batUpdateBrand" value="批量更新品牌" class="btn btn_bs" id="batUpdateBrand" />
+                        </span>
+                        <!-- 批量更新品牌end--> 
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        <!-- 批量更新专题start--> 
+                        <span class="batzone">                        
+                            <span> 专题:</span> 
+                            <span style="color:red;font-weight:bold; font-size:16px;" id="articleTitle"> </span>
+                            <span> <input type="hidden" value="" name="bat_article_id" id="bat_article_id" /> <input type="button" id="selButtonArticle" name="selButton" value="选择专题" class="span80 ml5 selButton"></span>
+                            <span id="articleTitle" style="font-weight:normal;font-size:14px;"></span>                              
+                            <!--brandW start-->
+                            <div id="articleW" style="display:none; margin-left:22%; margin-top:0px; position:absolute; z-index:99; border:5px solid #a8a8a8; width:760px; height:410px; background:rgba(255,255,255,0.9); border-radius:6px;box-shadow:0 0 15px #999;">
+                                <div id="closeArticleW"><a style="padding-top:5px;padding-right:8px;font-size:14px;float:right; text-align:right; clear:both;" href="#">X</a></div>
+                                <div style="height:550px; clear:both; padding:10px;">
+                                    <iframe src="/Admin/Article/sel.html?type=singleId" width="730px;" height="360px;"></iframe> 
+                                </div>
+                            </div>
+                            <!--brandW end--> 
+                            <input type="button" name="batUpdateArticle" value="批量更新专题" class="btn btn_bs" id="batUpdateArticle" />
+                       </span>
+                       <!-- 批量更新专题end-->    
+                       
+                                 &nbsp;&nbsp;&nbsp;&nbsp;Total:{$totalRecord}
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+                </if>    
+           </div>
+         </div>
+         <!--产品列表end-->
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

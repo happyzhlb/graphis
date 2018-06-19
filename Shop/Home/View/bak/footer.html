@@ -1,0 +1,81 @@
+<!--页尾开始-->
+<div class="livechat_button livechatWebBtn" data-id="5112ff6b22"><a href="javascript:void(0)" title="Live Chat">Live chat</a></div>
+<div class="footerBg" style="<if condition="strtolower(CONTROLLER_NAME)=='index'">margin:0 auto<else/>margin:40px auto 0</if>">
+	<div class="footer clearfix"> 
+        <volist name="article_cate" id="vo">
+    	<div class="Company">  
+        	<h5>{$vo.name}</h5>
+            <ul>
+            	<volist name='vo.list' id='list'> 
+            	<li><a target="_blank" href="<if condition="$list['link_url']!=''">
+                    	{$list.link_url} <else/> {:U('Article/detail',array('id'=>$list['article_id']))} 
+                    </if>">{$list.title}</a></li>
+                </volist> 
+            </ul>
+        </div>
+        </volist> 
+        <div class="emails">
+        	<p class="font13">SIGN UP FOR OUR NEWSLETTER</p>
+            <p>Get free updates on news, products & promotions</p>
+            <div class="emailBox">
+            	<form action="{:U('./Subscription/add')}" target="_blank">
+            	<input type="text" name="email" value="Email Address" class="eAddress" />
+                <input class="go" value="GO" type="submit" />
+                </form>
+            </div>
+        </div>
+        <div class="share">
+        	<a href="javascript:void(0)" title="facebook" class="facebook">facebook</a>
+            <a href="javascript:void(0)" title="twitter" class="twitter">twitter</a>
+            <a href="javascript:void(0)" title="foogle+" class="foogle">foogle+</a>
+            <a href="javascript:void(0)" title="linkedin" class="linkedin">linkedin</a>
+            <a href="javascript:void(0)" title="pinterest" class="pinterest">pinterest</a>
+            <a href="javascript:void(0)" title="blooger" class="blooger">blooger</a>
+        </div>
+    </div>
+    <div class="bank">
+    	<a href="javascript:void(0)" title="visa" class="visa">visa</a>
+        <a href="javascript:void(0)" title="mastercard" class="mastercard">mastercard</a>
+        <a href="javascript:void(0)" title="FedEx" class="paypal">FedEx</a>
+        <div class="AuthorizeNetSeal" style="display:inline-block; vertical-align:middle; margin-right:10px;"><script type="text/javascript">var ANS_customer_id="2f6d3259-d892-4321-bf88-5dbb4c3d7de0";</script> <script type="text/javascript" src="//verify.authorize.net/anetseal/seal.js" ></script>
+</div> 
+        <span id="siteseal" style="display:inline-block; vertical-align:middle;"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=V1sw3uZBnz2FjBHQxNpt6mFuzFZe2Uk0CnRrO2rjKr9aG1azLyYFZGJnb"></script></span>
+    </div>
+</div>
+<div class="copyright">
+    <p>Copyright &copy; 2013-2014, OKchem Inc. All rights reserved. </p>
+</div>
+<!--页尾结束-->
+
+<!--Live chat-->
+<script type="text/javascript">
+var __lc = {};
+__lc.license = 4633921;
+<if condition="session('?user_id')">
+
+__lc.params = [
+	{ name: 'Account ID', value: '{$Think.session.user_name}' },
+	{ name: 'Shop Login', value: '{$Think.session.email}' }
+];
+
+__lc.visitor = {
+	name: '{$Think.session.first_name}',
+	email: '{$Think.session.email}'
+};
+<else />
+__lc.visitor = {
+	name: '',
+	email: ''
+};
+</if>
+
+(function() {
+	var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+	lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+})();
+</script>
+
+</body>
+</html>
+

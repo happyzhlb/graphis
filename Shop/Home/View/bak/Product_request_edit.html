@@ -1,0 +1,71 @@
+<include file="./Shop/Home/View/header.html" />  
+
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon ">
+        	<h2>Product Request Information</h2>
+       	  <div class="proRequestInf_2">
+            <form id="request_form" method="post" action="{:U('edit')}"> 
+            	<div style="color:#CCC; padding-bottom:20px;">Please fill in the product request form below</div><span class="addAddress">
+            	  <input type="hidden" name="id" value="{:I('id')}" />
+            	</span> 
+            <dl class="clearfix">
+           	  <dt>* Product Name: </dt>
+                <dd><input name="pro_name" type="text" class="nameText textIn" id="pro_name" value="{$list.pro_name}" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Cas Number: </dt>
+                <dd><input name="cas_number" type="text" class="nameText textIn" id="cas_number" value="{$list.cas_number}" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Standard: </dt>
+                <dd><input name="standard" type="text" class="nameText textIn" id="standard" value="{$list.standard}" /></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Package: </dt>
+                <dd><input name="package" type="text" class="nameText nameText2 textIn textIn2" id="package" value="{$list.package}" /> <em>Enter multiple values separated by comma.</em></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>* Quantity: </dt>
+                <dd>
+                	<input name="quantity" type="text" class="nameText nameText3 textIn textIn3" id="quantity" value="{$list.quantity}" maxlength="10" />
+                <select name="quantity_unit" id="quantity_unit" style="width:70px;">
+                   	  <option value="t" <?php if(trim($list['quantity_unit'])=='t'){ echo 'selected';}?>>t</option>
+                        <option value="kg" <?php if(trim($list['quantity_unit'])=='kg'){ echo 'selected';}?>>kg</option>
+                        <option value="g" <?php if(trim($list['quantity_unit'])=='g'){ echo 'selected';}?>>g</option>
+                  </select>
+                    --
+                    <input name="cycle" type="text" class="nameText nameText3 textIn textIn3" id="cycle" value="{$list.cycle}" size="10" />
+                    <select name="cycle_unit" id="cycle_unit">
+                   	  <option value="week" <?php if(trim($list['cycle_unit'])=='week'){ echo 'selected';}?>>week</option>
+                        <option value="month" <?php if(trim($list['cycle_unit'])=='month'){ echo 'selected';}?>>month</option>
+                        <option value="day" <?php if(trim($list['cycle_unit'])=='day'){ echo 'selected';}?>>day</option>
+                  </select>
+              </dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>Expected Price: </dt>
+                <dd><input name="expected_price" type="text" class="nameText nameText2 textIn textIn2" id="expected_price" value="{$list.expected_price}" /> <em>Enter multiple values separated by comma.</em></dd>
+            </dl>
+            <dl class="clearfix">
+            	<dt>Other Details: </dt>
+                <dd>
+                	<textarea name="description" id="OtherDetails" cols="45" rows="5">{$list.description} </textarea>
+              </dd>
+            </dl>  
+                <div class="btnBox">
+                   <input type="submit" value="Preserve" title="Preserve" class="accountToconBtn addressSubmit" />
+                </div>
+               </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="./Shop/Home/View/footer.html" />  

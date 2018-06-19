@@ -1,0 +1,88 @@
+<include file="./Shop/Home/View/header.html" />  
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>My Reviews</h2>
+            <p class="eachTip">View and manage your reviews here.</p>
+            
+            <!--My Reviews 开始-->
+          	<div class="myReviews">
+            	
+                <!--星级选择开始-->
+                <div class="reviewStar">
+    <script>
+    	$(function(){
+			$(".reviewStar input[type='radio']").click(function(){
+				location=($(this).val());			
+			});				
+		});            
+    </script>                	
+                    <input type="radio" <if condition="$_GET['comment_stars']==''">checked="checked"</if> name="radio" value="{:U('index')}" id="AllStat" /> 
+                    <label for="AllStat">All</label>
+                    <input type="radio" name="radio" value="{:U('index','comment_stars=1')}" <if condition="$_GET[comment_stars]=='1'">checked="checked"</if> id="oneStat" />
+                    <label for="oneStat">One Star</label>
+                    <input type="radio" name="radio" value="{:U('index','comment_stars=2')}" <if condition="$_GET[comment_stars]=='2'">checked="checked"</if> id="twoStat" />
+                    <label for="twoStat">Two Star</label>
+                    <input type="radio" name="radio" value="{:U('index','comment_stars=3')}" <if condition="$_GET[comment_stars]=='3'">checked="checked"</if> id="threeStat" />
+                    <label for="threeStat">Three Star</label>
+                    <input type="radio" name="radio" value="{:U('index','comment_stars=4')}" <if condition="$_GET[comment_stars]=='4'">checked="checked"</if> id="fourStat" />
+                    <label for="fourStat">Four Star</label>
+                    <input type="radio" name="radio" value="{:U('index','comment_stars=5')}" <if condition="$_GET[comment_stars]=='5'">checked="checked"</if> id="fiveStat" />
+                    <label for="fiveStat">Five Star</label>
+                    <em>Select</em>
+                </div>
+                <!--星级选择结束-->
+
+            	<div class="reviewChoose">
+                	<!--<select name="comment_stars" class="ratings" onchange="self.location.href=this.value">
+                    	<option value="{:U('index')}">All</option>
+                    	<option <if condition="$_REQUEST['comment_stars']=='1'">selected</if> value="{:U('index','comment_stars=1')}">One star</option>
+                        <option <if condition="$_REQUEST['comment_stars']=='2'">selected</if> value="{:U('index','comment_stars=2')}">Two star</option>
+                        <option <if condition="$_REQUEST['comment_stars']=='3'">selected</if> value="{:U('index','comment_stars=3')}">Three star</option>
+                        <option <if condition="$_REQUEST['comment_stars']=='4'">selected</if> value="{:U('index','comment_stars=4')}">Four star</option>
+                        <option <if condition="$_REQUEST['comment_stars']=='5'">selected</if> value="{:U('index','comment_stars=5')}">Five star</option>
+                    </select> 
+                    <select name="select" class="reviews none">
+                    	<option>Have a comment</option>
+                        <option>No comment</option>
+                    </select> -->
+                    <span>Review</span>
+                    <span style="margin-left:380px;">Product Information</span>
+                </div>
+                <volist name='list' id='vo'>
+                <div class="eachReview clearfix">
+                	<div class="star Star{$vo.comment_stars|intval}">One star</div>
+                    <div class="reviews">
+                    	<p>{$vo.content}</p>
+                        <p class="time">{$vo.comment_time|toDate='Y-m-d H:i'}</p>
+                    </div>
+                    <dl class="clearfix">
+                    	<dt><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" target="_blank"><img src="/{$vo.goods_thumb}" width="50" height="50" alt="{$vo.goods_name}" /></a></dt>
+                        <dd>
+                        	<p class="name"><a href="{:U('/Goods/index',array('id'=>$vo['goods_id']))}" target="_blank">{$vo.goods_name}</a></p>
+                            <p class="Package none">Package: 25kg/bag </p>
+                            <p class="price">{$vo.goods_id|get_range_price='$'}</p>
+                        </dd>
+                    </dl>
+                </div>
+                </volist>
+                
+                <div class="reviewPage">
+                	<div id="orderPage">
+                        {$page}
+                    </div>
+                </div>
+            </div>
+            <!--My Reviews 结束-->
+            
+        </div>
+    </div>
+</div>
+
+<include file="./Shop/Home/View/footer.html" /> 

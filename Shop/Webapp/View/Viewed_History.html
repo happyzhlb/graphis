@@ -1,0 +1,48 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Viewed History</span>
+            <a href="{:U('Member/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="ViewedHistory">
+      <empty name="history"> 
+        	<!--浏览记录为空开始-->
+        	<div class="empty">
+            	<p>Sorry! <br />There is no Viewed History.</p>
+                <a href="{:U('Index/index')}">Go Back To Home</a>
+            </div>
+            <!--浏览记录为空结束-->
+      <else/>      
+            <!--浏览记录列表开始--> 
+            <div class="historyList">
+            	<volist name="history" id="hlist">
+                <div class="each clearfix">
+                	<a href="{:U('Member/viewed_history',array('id'=>$key))}" class="delete"><em></em></a>
+                    <dl class="clearfix">
+                    	<dt><a href="{:U('Goods/index',array('id'=>$hlist['goods_id']))}"><img src="/{$hlist.goods_thumb}" width="50" height="50" /></a></dt>
+                        <dd>
+                        	<h4><a href="{:U('Goods/index',array('id'=>$hlist['goods_id']))}">{$hlist.goods_name}</a></h4>
+                            <p>{:get_range_price($hlist['goods_id'],'$')}</p>
+                        </dd>
+                    </dl>	
+                </div>
+                </volist> 
+            </div>
+            <!--浏览记录列表结束-->
+       </empty>     
+        </div>	
+    </div>
+	<!--会员中心设置结束--> 
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

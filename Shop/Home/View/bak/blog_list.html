@@ -1,0 +1,60 @@
+<include file='./Shop/Home/View/blog.header.html' /> 
+<!--博客开始-->
+<div class="blog clearfix">
+	<div class="BlogList">
+    <volist name="blog_list" id='vo'>
+    	<div class="article">
+        	<h3><a href="{:U('/Blog/detail','id='.$vo['bid'])}" target="_blank">{$vo.title}</a></h3>
+            <p class="tips"><em>{$vo.cate_name}</em>{$vo.ctime|date='F d,Y',###} by {$vo.author}</p>
+            <div class="articleDetail">
+            	<div class="articleInfo" style="text-align:left;">
+                	 {$vo.content|htmlspecialchars_decode}
+                </div>
+                <div class="moreBox">
+                    <a href="javascript:void(0)">View Article</a>
+                </div>
+            </div>
+            <div class="shareBox">
+                <span class='st_facebook_large' displayText='Facebook'></span>
+                <span class='st_twitter_large' displayText='Tweet'></span>
+                <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                <span class='st_pinterest_large' displayText='Pinterest'></span>
+                <span class='st_googleplus_large' displayText='Google +'></span>
+                <span class='st_tumblr_large' displayText='Tumblr'></span>
+            </div>
+        </div>
+   </volist>     
+     <div class="blogPage">   
+     	{$page}
+     </div>
+    </div>
+    <include file='./Shop/Home/View/blog.right.html' />
+</div>
+<!--博客结束-->
+  
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "bd66dea7-9894-4301-8986-ed6e077283c8", doNotHash: true, doNotCopy: true, hashAddressBar: true});</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".articleDetail .articleInfo").each(function(){
+			var thisHeight = $(this).height();
+			if(thisHeight > 70){
+				$(this).parents("div.articleDetail").find(".moreBox").show();
+			}else{
+				$(this).parents("div.articleDetail").find(".moreBox").hide();
+			}
+		});
+		$(".moreBox a").click(function(){
+			var conHeight = $(this).parents("div.articleDetail").find("div.articleInfo").height();
+			var thisClass = $(this).attr("class");
+			if(thisClass == "current"){
+				$(this).parents("div.articleDetail").animate({height:"65px"},400);
+				$(this).removeClass("current");
+			}else{
+				$(this).parents("div.articleDetail").animate({height:conHeight},400);
+				$(this).addClass("current");
+			}
+		});
+	});
+</script> 
+<include file='./Shop/Home/View/footer.html' /> 

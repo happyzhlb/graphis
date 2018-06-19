@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>退款/退货</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/returned.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#refund_form_1').validate({
+		rules : {
+			refund_reason : {
+				required : true
+			},
+			refund_price : {
+				required : true,
+				min : 0,
+				max : '{$order.can_refund_price}'
+			},
+			refund_num : {
+				required : true,
+				min : 0,
+				max : '{$order.quantity}'
+			},
+			refund_img : {
+				accept : 'gif,jpg,jpeg,png,bmp'
+			}
+		},
+		messages : {
+			refund_reason : {
+				required : '<i></i>请选择退款原因'
+			},
+			refund_price : {
+				required : '<i></i>退款金额不能为空',
+				min : '<i></i>退款金额至少大于0小于等于{$order.can_refund_price}',
+				max : '<i></i>退款金额至少大于0小于等于{$order.can_refund_price}'
+			},
+			refund_num : {
+				required : '<i></i>退货数量不能为空',
+				min : '<i></i>退货数量至少大于0小于等于{$order.quantity}',
+				max : '<i></i>退货数量至少大于0小于等于{$order.quantity}'
+			},
+			refund_img : {
+				accept : '<i></i>图片只能上传gif、jpg、jpeg、png、bmp格式文件'
+			}
+		},
+		errorPlacement: function(error, element){
+			error.appendTo(element.parent());	
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+	
+	$('#refund_form_2').validate({
+		rules : {
+			refund_reason : {
+				required : true
+			},
+			refund_price : {
+				required : true,
+				min : 0,
+				max : '{$order.can_refund_price}'
+			},
+			refund_img : {
+				accept : 'gif,jpg,jpeg,png,bmp'
+			}
+		},
+		messages : {
+			refund_reason : {
+				required : '<i></i>请选择退款原因'
+			},
+			refund_price : {
+				required : '<i></i>退款金额不能为空',
+				min : '<i></i>退款金额至少大于0小于等于{$order.can_refund_price}',
+				max : '<i></i>退款金额至少大于0小于等于{$order.can_refund_price}'
+			},
+			refund_img : {
+				accept : '<i></i>图片只能上传gif、jpg、jpeg、png、bmp格式文件'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+});
+</script>
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Order')}" class="text" target="workspace">订单管理</a> > <a href="{:U('/Admin/Order/view',array('id'=>$order['order_id']))}" class="text" target="workspace">订单明细</a> > <a href="{:U('/Admin/Refund/apply',array('id'=>$order['rec_id']))}" class="text" target="workspace">退款/退货</a> 
+         </div>
+    </div>
+         <!--订单信息start-->
+         <div class="obox">
+              <div class="title">
+                   订单信息
+              </div>
+              <div class="show">
+                   <ul>
+                       <li>订单编号：{$order.order_sn}</li>
+                       <li>运费：{$order.shipping_fee|format_price}</li>
+                       <li>积分抵扣：{$order.integral_fee|format_price}</li>
+                       <li>退款金额：{$order.refund_fee|format_price}</li>
+                       <li>总优惠：{$order.discount_fee|format_price}</li>
+                       <li>总计：{$order.totle_fee|format_price}</li>
+                       <li>成交时间：{$order.add_time|todate}</li>
+                   </ul>
+                   <div class="clear"></div>
+              </div>
+         </div>
+         <!--订单信息end-->
+         
+         <!--商品信息start-->
+         <div class="obox">
+              <div class="title">
+                   商品信息
+              </div>
+              <div class="show">
+                   <div class="table"> 
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th>产品图片</th>
+                            <th>产品名称</th>   
+                            <th>规格</th>
+                            <th>数量</th>
+                          </tr>
+                          <tr>
+                            <td class="center"><img src="{$order.default_image}" title="" width="50" height="50" class="pimg"></td>
+                            <td class="center"><div class="proifo"><a href="#" title="">{$order.goods_name}</a></div></td>
+                            <td class="center">{$order.goods_attr}</td>
+                            <td class="center">{$order.quantity}</td>
+                          </tr>
+                    </table>  
+                   </div>  
+              </div>
+         </div>
+         <!--商品信息end-->
+         
+         <!--退货信息start-->
+         <div class="remove">
+              <div class="tagbar">
+                   <ul>
+                       <li class="current">退货</li>
+                       <li>退款(无需退货)</li>
+                       <div class="clear"></div>
+                   </ul>
+                   
+              </div>
+              <div class="selectbox">
+                   <div class="selectcontent" id="selectcontent_0">
+                        <form id="refund_form_1" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <li>
+                                <label><span class="cf00">*</span>退款原因：</label>
+                                <select id="refund_reason" name="refund_reason">
+                                      <option value="">请选择退款原因</option>
+                                      <volist name="refund_reason" id="vo">
+                                      <option value="{$vo}">{$vo}</option>
+                                      </volist>
+                                </select>
+                            </li>
+                            <li>
+                                <label><span class="cf00">*</span>退款金额：</label>
+                                <input type="text" value="{$order.can_refund_price}" id="refund_price" name="refund_price" >
+                                <span class="tip">最多可退{$order.can_refund_price|format_price}</span>
+                            </li>
+                            <li>
+                                <label><span class="cf00">*</span>退款数量：</label>
+                                <input type="text" value="{$order.quantity}" id="refund_num" name="refund_num" >
+                                <span class="tip">最多可退{$order.quantity}</span>
+                            </li>
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                            <li>
+                                <label><span class="cf00"></span>上传凭证：</label>
+                                <input type="file" id="refund_img" name="refund_img">
+                                <span class="tip">图片大小不得超过5M，最多3张，支持GIF、JPG、PNG、BMP格式</span>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        	<input type="hidden" id="id" name="id" value="{$order.rec_id}">
+                            <input type="hidden" id="refund_type" name="refund_type" value="1">
+                            <input type="button" name="" value="提交申请退款" class="btn btn_bb submit" onClick="">
+                             <div class="clear"></div>
+                        </div>
+                        </form>
+                   </div>
+                   <div class="selectcontent" id="selectcontent_1" style="display:none;">
+                        <form id="refund_form_2" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <li>
+                                <label><span class="cf00">*</span>退货原因：</label>
+                                <select id="refund_reason" name="refund_reason">
+                                      <option value="">请选择退款原因</option>
+                                      <volist name="refund_reason" id="vo">
+                                      <option value="{$vo}">{$vo}</option>
+                                      </volist>
+                                </select>
+                            </li>
+                            <li>
+                                <label><span class="cf00">*</span>退款金额：</label>
+                                <input type="text" value="{$order.can_refund_price}" id="refund_price" name="refund_price">
+                                <span class="tip">最多可退{$order.can_refund_price|format_price}</span>
+                            </li>
+                            <li>
+                                <label><span class="cf00"></span>退款说明：</label>
+                                <textarea id="refund_note" name="refund_note"></textarea>
+                            </li>
+                            <li>
+                                <label><span class="cf00"></span>上传凭证：</label>
+                                <input type="file" id="refund_img" name="refund_img">
+                                <span class="tip">图片大小不得超过5M，最多3张，支持GIF、JPG、PNG、BMP格式</span>
+                            </li>
+                        </ul>
+                        <div class="bposition">
+                        <input type="hidden" id="id" name="id" value="{$order.rec_id}">
+                        <input type="hidden" id="refund_type" name="refund_type" value="0">
+                        <input type="button" name="" value="提交申请退款" class="btn btn_bb submit">
+                        </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--退货信息end-->
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta id="vp" name="viewport" content="width=device-width, user-scalable=no,maximum-scale=1.0,initial-scale=1">
+<meta name="keywords" content="孕妈购,会说话的妈妈礼物,会说话,条形码,扫描条形码,扫码留声,扫条码存声音,让礼物开口说话,二维码扫描,二维码制作,移动二维码,创意二维码">
+<meta name="description" content="孕妈购APP支持孕期任何阶段，方便准妈妈们来购买到合适的孕妇产品。ymg280孕妈购支持给订购的礼盒留购物月子中心，你的孕期购物达人。">
+<link rel="apple-touch-icon" sizes="57x57" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-57x57_10d74da.png">
+<link rel="apple-touch-icon" sizes="76x76" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-76x76_c08081d.png">
+<link rel="apple-touch-icon" sizes="120x120" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-120x120_3317fa3.png">
+<link rel="apple-touch-icon" sizes="152x152" href="//static.liwushuo.com/static/web/img/favicon/apple-icon-152x152_5fde678.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//static.liwushuo.com/static/web/img/favicon/favicon-32x32_23d4a98.png">
+<link rel="icon" type="image/png" sizes="96x96" href="//static.liwushuo.com/static/web/img/favicon/favicon-96x96_acf6191.png">
+<meta name="msapplication-TileImage" content="/web/style/img/favicon/ms-icon-144x144.png">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="Shortcut Icon" href="/Public/home/favicon.ico">
+<link rel="Bookmark" href="//static.liwushuo.com/static/web/img/favicon/favicon_23d4a98.png">
+  <title>{$article.title} | 孕妈购</title>
+  <link rel="stylesheet" type="text/css" href="/Public/home/h5/static_web_apps_current_css_mobile_post_fa92a21.css">
+  <!-- 什么鬼? -->
+  <script>
+(function(win, doc) {
+  function hasClass(el, className) {
+  if (el.classList)
+      return el.classList.contains(className)
+    else
+      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'))
+  }
+
+  function addClass(el, className) {
+    if (el.classList)
+      el.classList.add(className)
+    else if (!hasClass(el, className)) el.className += " " + className
+  }
+  
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var post_content = doc.getElementById('post-content');
+    doc.getElementById('loader').style.display = 'none';
+    post_content.style.display = 'block';
+    addClass(post_content, 'animate-opacity');
+  });
+
+})(window, document);
+  </script>
+
+</head>
+
+<body data-post-id="1001185">
+  <div id="loader" class="spinner">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  <div id="post-content" style="display: none;" class="post-content ">
+    <a href="{:U('download')}" class="download-content download-content-sm">
+      <div class="wrapper download-banner"><img class="app-download" src="/Public/images/clickDownloadBt@2x_3d02296.png" />
+        <img class="app-icon" src="/Public/images/topbannerLogo.png" />
+      </div>
+    </a>
+    <div class="wrapper wrapper-cover">
+      <div class="cover" style="background-image: url({$article.photo});">
+        <img style="visibility: hidden; display: none;" src="{$article.photo}" alt="" class="hoverZoomLink">
+      </div>
+    </div>
+    <div class="wrapper wrapper-main">
+      <div class="post">
+        <div class="td">
+          <h1 class="title">{$article.title}</h1>
+          <!-- <div class="post-info">
+            <p><i class="info-icon like-icon"></i><span>50977 喜欢</span></p>
+            <p><i class="info-icon share-icon"></i><span>3176 分享</span></p>
+            <p><i class="info-icon comment-icon"></i><span>56 评论</span></p>
+          </div> -->
+        </div>
+        <!-- <hr class="fancy-line" /> -->
+        <div class="content">
+        
+        <p>
+        	{$article['content']?$article['content']:$article['cutline']}
+        
+        </p>
+        
+        
+<volist name="article.goods" id="vo" >     
+<h3>{$key+1}.{$vo.goods_name}</h3>
+<p>{$vo.goods_desc|htmlspecialchars_decode}<img src="{$vo.goods_img}" alt="" /></p>
+<p><div class="item-info" data-id="1016996" data-self-id=""><p class="item-info-price"><span style="font-family: arial;">￥{$vo.price}</span></p><p class="item-like-info">{$vo.click_count}人喜欢</p><a class="item-info-link" href="{:U('download')}" target="_blank"><span>查看详情</span></a><a class="item-info-safeguard off"></a></div></p>
+</volist>
+ 
+        
+        </div>
+      </div>
+      <section class="post post-comment">
+        <!-- <h3 class="com-title"><i></i>攻略评论</h3> -->
+        <hr class="com-fancy fancy-line" />
+        <ul class="com-list" id="itemList"></ul>
+        <div class="loading"></div>
+        <div class="get-more-comment"><a href="{:U('download')}">查看更多评论(共{$comment_num}条)</a></div>
+        <!-- <div class="load-tip" id="next"><a>查看更多评论</a></div> -->
+        
+      </section>
+      <hr class="com-fancy fancy-line" />
+      <div class="suggest-wrap" style="display: none;">
+        <h3 class="title">你可能也喜欢</h3>
+        <ul id="suggest-list" class="list"></ul>
+      </div>
+      
+      <div class="tab-download-wrap">
+          <a href="{:U('download')}">
+              <img class="tab-download-img" src="/Public/home/images/tabDownloadBt@2x_a387436.png" alt="">
+          </a>
+      </div>
+    </div>
+  </div> 
+</body>
+
+</html>

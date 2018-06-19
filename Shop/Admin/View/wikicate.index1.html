@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>百科分类列表</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/formClass.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/js/gcategory.js"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+$(function(){
+	$('.icon_add').click();
+});
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main" >
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/wikicate')}" class="text" target="workspace">百科分类</a>
+         </div>
+    </div>
+         <!--产品分类表start-->
+         <div class="tbox">
+              <div class="zone">
+                   <input type="button" class="btn btn_ys buttonadd" value="+ 新增">
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table">
+                          <thead>
+                             <tr>
+                                 <th width="40"></th>
+                             <th>分类名称</th>
+                                 <th>排序</th>
+                                 <th>是否显示</th>
+                                 <th colspan="2">操作</th>
+                             </tr>
+                          </thead>
+                          
+                          <tbody>
+                          
+                             <!--产品一级分类start-->
+                             <volist name="wikicate" id="cate">
+                             <tr>
+                                 <td><input type="checkbox" name="items" value="{$cate.cate_id}"></td>
+                                 <td row="{$cate.cate_id}">
+                                     <div class="classNameF">
+                                          <if condition="$cate.children eq false">
+                                          <i class="icon_class"></i>
+                                          <else />
+                                          <i class="icon_add"></i>
+                                          </if>
+                                          <span class="text">{$cate.cate_name}</span>
+                                     </div>                                     
+                                 </td>
+                                 <td class="center">{$cate.sort_order}</td>
+                                 <td class="center"><if condition="$cate.if_show eq 1"><i class="icon_right"></i><else /><i class="icon_error"></i></if></td>
+                                 <td class="center"><a href="{:U('/Admin/wikicate/edit',array('id' => $cate['cate_id']))}" target="_self">编辑</a></td>
+                                 <td class="center"><a href="{:U('/Admin/wikicate/drop', array('id' => $cate['cate_id']))}" class="delete" target="_self">删除</a></td>
+                             </tr>
+                             <!--产品一级分类end--> 
+                             
+                             <!--产品二级分类start-->
+                             <if condition="$cate.children neq false">
+                             <volist name="cate.children" id="ccate">
+                             <tr class="parent_id_{$cate.cate_id}" style="display:none;">
+                                 <td><input type="checkbox" name="items" value="{$ccate.cate_id}"></td>
+                                 <td row="{$ccate.cate_id}">
+                                     <div class="classNameS">
+                                          <if condition="$ccate.children eq false">
+                                          <i class="icon_class"></i>
+                                          <else />
+                                          <i class="icon_add"></i>
+                                          </if>
+                                          <span class="text">{$ccate.cate_name}</span>
+                                     </div>
+                                 </td>
+                                 <td class="center">{$ccate.sort_order}</td>
+                                 <td class="center"><if condition="$ccate.if_show eq 1"><i class="icon_right"></i><else /><i class="icon_error"></i></if></td>
+                                 <td class="center"><a href="{:U('/Admin/wikicate/edit', array('id' => $ccate['cate_id']))}" target="_self">编辑</a></td>
+                                 <td class="center"><a href="{:U('/Admin/wikicate/drop', array('id' => $ccate['cate_id']))}" target="_self" onClick="return confirm('确认要删除吗？');" class="delete">删除</a></td>
+                             </tr>
+                             <!--产品二级分类end-->
+                            
+                             </volist>
+                             </if>
+                             </volist>
+                                                              
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="10">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" name="" value="删除" class="btn btn_bs dropall">
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--产品分类表end-->
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>帖子管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main" style="min-height:400px;">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Admin')}" class="text" target="workspace">帖子管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">帖子列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增帖子" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox">
+                   	   <form id="search_form" method="post">
+                           <input type="search" name="keywords" id="keywords" value="{$Think.get.keywords}" placeholder="输入信息">
+                           <select id="cate_id" name="cate_id">
+                                <option value="">==选择帖子分类==</option>
+                                <volist name="bbscategory" id="cate">
+                                	<option value="{$cate.cate_id}" style="font-weight:bold; font-size:14px;" <if condition="$Think.get.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                    <if condition="$cate.children neq false">
+                                    	<volist name="cate.children" id="c_cate">
+                                        	<option value="{$c_cate.cate_id}" <if condition="$Think.get.cate_id eq $c_cate['cate_id']">selected</if>>&nbsp;&nbsp;{$c_cate.cate_name}</option>
+                                        </volist>
+                                    </if>
+                                </volist>
+                           </select>
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th width="4%"></th>
+                                 <th width="14%">帖子标题</th>
+                                 <th width="16%">帖子分类</th>
+                                 <th width="5%">浏览</th>
+                                 <th width="5%">回复</th>
+                                 <th width="8%">发帖人</th>
+                                 <th width="10%">是否显示</th>
+                                 <th width="20%">发布时间</th>
+                                 <th colspan="3">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="bbs" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$list.bbs_id}"></td>
+                                 <td>{$list.title}</td>
+                                 <td align="center">{$list.cate_name}</td>
+                                 <td align="center">{$list.clicks}</td>
+                                 <td align="center">{$list.reply_num}</td>
+                                 <td align="center">{$list.user_id|getNameById='first_name','user','user_id',###}</td>
+                                 <td align="center"><if condition="$list.if_show eq 1"><span enpty="edit_status_ajax" url="{:U('ajax_edit_status', array('id'=>$list['bbs_id']))}" title="显示" class="icon_right"></span><else /><span enpty="edit_status_ajax" url="{:U('ajax_edit_status', array('id'=>$list['bbs_id']))}" title="不显示" class="icon_error"></span></if></td>
+                                 <td align="center">{$list.ctime|todate}</td>
+                                 <td width="6%" class="center"><a href="#" title="">查看</a></td>
+                                 <td width="5%" class="center"><a href="{:U('/Admin/Bbs/edit',array('id'=>$list['bbs_id']))}" title="">编辑</a></td>
+                                 <td width="7%" class="center"><a href="{:U('/Admin/Bbs/drop',array('id'=>$list['bbs_id']))}" title="" class="delete">删除</a></td>
+                             </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="13">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

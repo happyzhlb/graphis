@@ -1,0 +1,70 @@
+<include file="./Shop/Home/View/header.html" /> 
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Reward Points</h2>
+          	<p class="eachTip">Buy more, save more.</p>
+            
+            <!--开始-->
+            <div class="RewardPoints">
+            	<div class="Available">
+                	<h3>Points Currently Available:<strong>{$score}</strong></h3>
+                    <ul>
+                    	<li>- Get 1 point for every full $1 in product purchase.</li>
+                        <li>- Points can be redeemed at a conversion rate of 100 points per one dollar. Buy more, save more.</li>
+                    </ul>
+                </div>
+                <div class="detail">
+                	<div class="choose clearfix">
+                        <a href="{:U('index')}" <?php if(!I('type','','trim')){echo 'class="current"';}?> title="Points History">Points History</a>
+                        <a href="{:U('index',array('type'=>'+'))}" <?php if('+'==I('type','','trim')){echo 'class="current"';}?> title="Points Income">Points Income</a>
+                        <a href="{:U('index',array('type'=>'-'))}" <?php if('-'==I('type','','trim')){echo 'class="current"';}?> title="Points Expense">Points Expense</a>
+                        <a href="{:U('index',array('type'=>'++'))}" <?php if('++'==I('type','','trim')){echo 'class="current"';}?> title="Frozen Points">Frozen Points</a>
+                    </div>
+                    
+                  <div class="detailShow">
+                   	<p class="notice">Notice: the history only shows the records within two years.</p>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <thead>
+                          <tr>
+                                <td width="639" align="center">Source</td>
+                                <td width="250" align="center">Change</td>
+                                <td width="284" align="center">Time</td> 
+                          </tr>
+                      </thead>
+                      <tbody id="addBg">
+                          <volist name="list" id="vo">
+                          <tr>
+                                <td align="left"><span class="name">{$vo.desc}</span></td>
+                                <td width="250" align="center"><span class="add">{$vo.score}</span></td>
+                                <td width="284" align="center">{$vo.ctime|toDate}</td> 
+                          </tr>
+                          </volist>
+                      </tbody> 
+                    </table>
+                    <div class="page clearfix">
+                    	<div id="orderPage">{$page} 
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <!--结束-->
+            
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#addBg tr:odd").css("background","#f5ebea");
+		$("#addBg tr:even").css("background","#ebebeb");
+	});
+</script>
+<include file="./Shop/Home/View/footer.html" /> 

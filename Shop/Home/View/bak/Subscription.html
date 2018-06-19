@@ -1,0 +1,39 @@
+<include file="./Shop/Home/View/header.html" />  
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account" class="clearfix">
+    	<include file='./Shop/Home/View/left.html'/>
+        <div class="accountTocon">
+        	<h2>Subscription</h2>
+          	<p class="eachTip">Be the first to hear about great deals, sales events, and even exclusive offers -- sign up for our timely emails today.</p>
+            
+            <!--开始-->
+            <div class="Subscription">
+             <if condition="$user['is_subscription'] eq '1'">
+                <dl>
+                	<dt>Subscription Status :<strong>Subscribed</strong></dt>
+                    <dd><a href="{:U('subscription?action=do&subscription=0')}" onclick="return confirm('Are you sure you want to unsubscribe ?')" title="Unsubscribed" class="Unsubscribed">Unsubscribe</a></dd>
+                </dl>
+             <else/>
+                <dl>
+                	<dt>Subscription Status :<strong>Unsubscribed</strong></dt>
+                    <dd>
+                    	<div class="emailBox">
+                            <input type="text" value="{$user.email}" readonly="readonly" class="eAddress" />
+                            <a href="{:U('subscription?action=do&subscription=1')}" class="go">Add Me!</a>
+                        </div>
+                    </dd>
+                </dl>
+             </if> 
+            </div>	
+            <!--结束-->
+            
+        </div>
+    </div>
+</div>
+
+<include file="./Shop/Home/View/footer.html" />  

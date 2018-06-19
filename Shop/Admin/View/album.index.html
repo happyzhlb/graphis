@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>专辑管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Models')}" class="text" target="workspace">模特管理</a> >  <a href="{:U('index')}" class="text" target="workspace">专辑管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">专辑列表</div>
+                   <div class="addbox">
+                        <input type="button" value="+ 新增专辑" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar">
+              	  <div class="searchbox">
+                   	   <form id="search_form" method="get">
+                           <input type="search" name="keywords" id="keywords" style="width:250px; height:30px;" value="{$Think.get.keywords}" placeholder="输入标题">
+                           
+                           <select id="models_id" name="models_id">
+                                <option value="">==选择模特==</option>
+                                <volist name="models" id="vo">
+                                	<option value="{$vo.id}" <if condition="$Think.get.models_id eq $vo['id']">selected</if>>{$vo.title}</option> 
+                                </volist>
+                           </select>
+                           
+                           <select id="cate_id" name="cate_id">
+                                <option value="">==选择专辑分类==</option>
+                                <volist name="albumcate" id="cate">
+                                	<option value="{$cate.cate_id}" <if condition="$Think.get.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                    <if condition="$cate.children neq false">
+                                    	<volist name="cate.children" id="c_cate">
+                                        	<option value="{$c_cate.cate_id}" <if condition="$Think.get.cate_id eq $c_cate['cate_id']">selected</if>>&nbsp;&nbsp;{$c_cate.cate_name}</option>
+                                        </volist>
+                                    </if>
+                                </volist>
+                           </select>
+                           <input type="hidden" value="1" name="p" />
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th width="4%"></th>
+                                 <th width="13%">专辑标题</th>
+                                 <th width="11%">图片</th>
+                                 <th width="10%">专辑分类</th>
+                               <th width="9%">所属模特</th>
+                               <th width="10%">发行日期</th>
+                               <th width="4%">推荐</th>
+                                 <th width="10%">浏览量/打赏次</th>
+                               <th width="10%">打赏金额/总额</th>
+                               <th width="6%">显示</th>                                 
+                                 <th width="16%">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="album" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$list.id}"></td>
+                                 <td>{$list.title}</td>
+                                 <td align="center"><img src="{$list.photo|getThumb='90x90'}" height="50" /> </td>
+                                 <td align="center" title="{$list.cate_name}">{$list.relateCateName}</td>
+                                 <td align="center">{$list.models_title}</td>
+                                 <td align="center">{$list.pubdate}</td>
+                                 <td align="center"><if condition="$list.is_recommend eq 1"><span enpty="edit_status_ajax" url="{:U('/Admin/Album/ajax_edit_recommend', array('id'=>$list['id']))}" title="是" class="icon_right"></span><else /><span enpty="edit_status_ajax" url="{:U('/Admin/Album/ajax_edit_recommend', array('id'=>$list['id']))}" title="否" class="icon_error"></span></if></td>
+                                 <td align="center"><span title="累计浏览量/打赏次">{$list.view_num} / {$list.total_reward_times}</span> <br>
+                                 	<span title="今日浏览量/打赏次" style="font-family:Verdana;color:#ccc;font-weight:normal;">{$list.today_view_num} / {$list.today_reward_num}</span>
+                                 </td>
+                                 <td align="center" title="累计打赏次数：{$list.total_reward_times}">{$list.reward_fee} / {$list.total_reward_fee}</td>
+                                 <td align="center"><if condition="$list.if_show eq 1"><span enpty="edit_status_ajax" url="{:U('/Admin/Album/ajax_edit_status', array('id'=>$list['id']))}" title="显示" class="icon_right"></span><else /><span enpty="edit_status_ajax" url="{:U('/Admin/Album/ajax_edit_status', array('id'=>$list['id']))}" title="不显示" class="icon_error"></span></if></td>
+                                 <td align="center" class="center" style="line-height:2"><a href="http://<?php echo 'a'.rand(111,999).'b'.rand(111,999); ?>.graphis.club{:U('/album/reward',array('id'=>$list['id']))}" target="_blank" title="">H5预览</a> | <a href="{:U('album/reward_detail',array('id'=>$list['id']))}" target="_self" title="">打赏记录</a> |<br><a href="{:U('edit',array('id'=>$list['id']))}" title="">编辑</a> | <a href="{:U('drop',array('id'=>$list['id']))}" title="" class="delete">删除</a></td>
+                               </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="12">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">&nbsp;&nbsp;&nbsp;<span style="font-family:Verdana;color:#aaa;font-weight:normal;"> 累计打赏金额：{$total_reward_fee|format_price}&nbsp;&nbsp; 累计打赏次数：{$total_reward_times}
+                                    &nbsp;&nbsp;&nbsp; 今日打赏金额：{$today_reward_fee|format_price}&nbsp;&nbsp; 今日打赏次数：{$today_reward_times}&nbsp;&nbsp; 今日浏览次数：{$today_view_num}</span>
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

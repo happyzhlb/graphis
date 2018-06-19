@@ -1,0 +1,386 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑专辑</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui.js"></script>
+<link href="__PUBLIC__/js/jquery-ui.css" type="text/css" rel="stylesheet">
+<load href="__PUBLIC__/ueditor/ueditor.config.js" />
+<load href="__PUBLIC__/ueditor/ueditor.all.min.js" />
+<load href="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js" />
+<script src="/Public/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	var ue = UE.getEditor('content');
+	$('.submit').click(function(){
+		ue.sync();
+		$('#admin_form').submit();	
+	});
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			models_id : {
+				required : true
+			},
+			content : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>专辑标题不能为空'
+			},
+			models_id : {
+				required : '<i></i>专辑所属模特必选'
+			},
+			content : {
+				required : '<i></i>专辑内容不能为空'
+			}
+		},
+		errorPlacement: function(error, element) {
+			if ( element.attr('id') == 'ueditor_textarea_content' )
+				error.appendTo($('#forcontent'));
+			else
+				error.appendTo(element.parent());
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span',
+		ignore : ""
+	});
+	
+	//显示显示图片
+	showImg=function(objId,lnk){ 
+		var url= $('#'+objId).attr('value'); 
+		$(lnk).attr('href',url);	 
+	}	
+	//上传图片
+	$('.upload_goods_img').click(function(){  
+		$('#uploadW').show();
+		var ref=$(this).attr('ref');	
+		$('#uploadFrame').attr('src','/Admin/album/upload.html?fieldId='+ref);
+	});
+	//关闭上传窗口
+	$('#closeW1').click(function(){  
+		$('#uploadW').hide();	
+	});
+	
+	//动态显示标签
+	$("#cate_id").on('change',function(){
+		var data = ($("#cate_id option:selected").attr('data'));
+		data = data.split(',');
+		var _option = '';
+		for(i in data){
+			_option += '<option>'+(data[i])+'</option>';
+		}
+		$('#cate_label').html(_option);
+	});
+	
+	
+	
+	
+	//打开选择框
+	$('#sel_category').click(function(){ 
+		$('#selFrame').show();
+	});
+	//关闭选择框
+	$('#closeW').click(function(){ 
+		$('#selFrame').hide();	
+	});
+	
+	//弹窗可移动
+	$('#selFrame').draggable();
+	
+	//Ajax请求关联分类
+	$.post("{:U('Albumcate/ajax_get_cate')}",'cate_ids='+"{$cate_ids}",function(data){  
+		$('#cate_name').html(data);
+	});	
+	
+	//孕期群体标签点击事件
+	$('.label').click(function(){ 
+		var _ids = $(this).parents('.controls').find('input[type="hidden"]').val();
+		var arrIds = _ids.split(',');
+		var nowid = $(this).attr('data');
+		
+		if($(this).hasClass('label_normal')){
+			$(this).addClass('label_current').removeClass('label_normal');  
+			for(i=0;i<arrIds.length;i++){ 
+				if(arrIds[i]=='' || arrIds[i]==nowid ) arrIds.splice(i,1)
+			}; 
+			arrIds.push(nowid);
+		}else{
+			$(this).addClass('label_normal').removeClass('label_current');	
+			for(i=0;i<arrIds.length;i++){ 
+				if(arrIds[i]==nowid) arrIds.splice(i,1)
+			};
+		}
+		$(this).parents('.controls').find('input[type="hidden"]').val(arrIds);
+	}); 	
+});
+</script>
+<style>
+#cate_name li {
+	color:#777;
+	font-weight:bold;
+}
+.label {
+	padding:0px 2px 0px 2px;
+	border:1px solid #ccc;
+}
+.label_normal {
+	color:#7979bb;
+	border:1px solid #7979bb;
+}
+.label_current {
+	border:1px solid #f00;
+	color:#f00;
+}
+.controls {
+	padding-top:5px;
+}
+</style>
+</head>
+<body>
+<section> 
+  <!--selFrame start-->
+  <div id="selFrame" style="display:none;cursor:move; left:17%;margin-top:80px; position:absolute; z-index:99999; border:5px solid #a8a8a8;width:860;height:50%;min-width:860px; min-height:350px; background:rgba(255,255,255,0.95);border-radius:6px;box-shadow:0 0 15px #999;">
+    <div id="closeW"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+    <div style="height:99%; clear:both; padding:10px;">
+      <iframe id="iframe" src="/Admin/Albumcate/selcate.html?ids={$cate_ids}&multi=true" width="100%" height="90%"></iframe>
+    </div>
+  </div>
+  <!--selFrame end--> 
+  <!--content start-->
+  <div class="main">
+    <div class="page_tag">
+      <div class="tag"> <i class="home"></i> <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Album')}" class="text">专辑管理</a> > <a href="{:U('/Admin/Album/edit',array('id'=>$album['id']))}" class="text">编辑专辑</a> </div>
+    </div>
+    <div class="clear"></div>
+    <!--表格start-->
+    <div class="tbox">
+      <div class="widsbox">
+        <div class="bar">
+          <div class="bar_l"></div>
+          <div class="text">编辑专辑</div>
+          <div class="bar_r"></div>
+        </div>
+        <div class="cbox">
+          <form id="admin_form" method="post">
+            <div class="control-group">
+              <label class="control-label">专辑标题：</label>
+              <div class="controls">
+                <input type="text" id="title" name="title" value="{$album.title}" class="span300" placeholder="专辑标题">
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">模特：</label>
+              <div class="controls">
+                <select id="models_id" name="models_id">
+                  <option value="" style="color:#ccc;">选择模特</option>
+                  <volist name="modelslist" id="vo"> <option value="{$vo.id}" 
+                    <if condition="$album.models_id eq $vo['id']">selected</if>
+                    >{$vo.title}
+                    </option>
+                    </if>
+                  </volist>
+                </select>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">选择分类：</label>
+              <div class="controls"> 
+                <!--
+                                    	<select id="cate_id" name="cate_id">
+                                        	<option value="" style="color:#ccc;">选择分类</option> 
+                                            <volist name="albumcate" id="cate">
+                                               <option value="{$cate.cate_id}" data="{$cate.cate_label}" <if condition="$album.cate_id eq $cate['cate_id']">selected</if>>{$cate.cate_name}</option>
+                                               <if condition="$cate.children neq false">
+                                               <volist name="cate.children" id="c_cate">
+                                               <option value="{$c_cate.cate_id}" data="{$c_cate.cate_label}" <if condition="$album.cate_id eq $c_cate['cate_id']">selected</if> style="color:#a33">&nbsp;&nbsp;|_ {$c_cate.cate_name}</option>
+                                                   <if condition="$c_cate.children neq false">
+                                                   <volist name="c_cate.children" id="cc_cate">
+                                                   <option value="{$cc_cate.cate_id}" data="{$cc_cate.cate_label}" <if condition="$album.cate_id eq $cc_cate['cate_id']">selected</if>  style="color:#999">&nbsp;&nbsp;&nbsp;&nbsp; |_ {$cc_cate.cate_name}</option>
+                                                   </volist>
+                                                   </if>
+                                               </volist>
+                                               </if>
+                                            </volist>
+                                        </select>   
+                                        -->
+                
+                <input id='cate_id' name="cate_id" value="{$cate_ids}" type="hidden" />
+                <div id="cate_name" style="padding:5px;"></div>
+                <input type="button" id="sel_category" value="选择分类" />
+              </div>
+              <div class="clear"></div>
+            </div>
+            <!--
+                            <div class="control-group">
+                                   <label class="control-label">标签：</label>　
+                              	   <div class="controls">
+                                        <select id="cate_label" name="cate_label"> 
+                                        	<optgroup>
+                                        	<option value="" style="color:#ccc;">选择标签</option> 
+                                            </optgroup>
+                                        	<volist name="album.cate_labels" id="cl">
+                                       		<option value="{$cl}" <if condition="$album.cate_label eq $cl">selected</if>>{$cl}</option> 
+                                            </volist> 
+                                        </select>   
+                                   </div>    
+                                   &nbsp;&nbsp;<span style="color:#ccc">分类自定义的标签(可选)..</span>
+                                   <div class="clear"></div>
+                          	 </div>
+                             -->
+            <div class="control-group">
+              <label class="control-label">图片：</label>
+              <div class="controls">
+                <input type="text" id="photo" name="photo" value="{$album.photo}" class="span300" placeholder="http://">
+              </div>
+              &nbsp; <a href="#" onMouseOver="showImg('photo',this)" target="_blank">预览</a>&nbsp;&nbsp;
+              <input type="button" ref="photo" class="upload_goods_img" value="上传图片" />
+              <div class="clear"></div>
+              <!--uploadW start-->
+              <div id="uploadW" style="display:none; margin-left:50px; margin-top:40px; position:absolute; z-index:90000; border:5px solid #a8a8a8; width:760px; height:450px; background:rgba(255,255,255,8.2); border-radius:6px; box-shadow:0 0 15px #999; left: 94px; top: 5px;">
+                <div id="closeW1"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+                <div style="height:490px; clear:both; padding:10px;">
+                  <iframe id="uploadFrame" src="/Admin/album/upload.html?fieldId=goods_img"  width="730px;" height="400px;"></iframe>
+                </div>
+              </div>
+              <!--uploadW end--> 
+            </div>
+            <div class="control-group">
+              <label class="control-label">发行日期：</label>
+              <div class="controls">
+                <input type="text" id="pubdate" name="pubdate" value="{$album.pubdate|default='2017-05-01'}" class="span300" placeholder="">
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">下载金币：</label>
+              <div class="controls">
+                <input type="text" id="coin" name="coin" value="{$album.coin}" class="span300" placeholder="">
+              </div>
+              <div class="clear"></div>
+            </div>
+          	<div class="control-group">
+              <label class="control-label">打赏金额：</label>
+              <div class="controls">
+                <input type="text" id="reward_fee" name="reward_fee" value="{$album.reward_fee}" class="span300" placeholder="">
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">第几张图片开始打赏：</label>
+              <div class="controls">
+                <input type="text" id="pay_index" name="pay_index" value="{$album.pay_index}" class="span300" placeholder="">
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">标签：</label>
+              <div class="controls">
+                <input type="text" id="labels" name="labels" value="{$album.labels}" class="span300" placeholder="">
+              </div>
+              <div class="clear"></div>
+            </div>
+            <!--
+                              <div class="control-group">
+                                   <label class="control-label">推荐人群：</label>
+                                   <div class="controls">  
+                                        <input type="hidden" id="suitable_person_ids" name="suitable_person_ids" value="{$album.suitable_person_ids}"> 
+                                   		&nbsp;&nbsp;
+                                        <volist name="gestcate" id='vo'><a class="label <?php if(strstr(','.$album['suitable_person_ids'].',' , ','.$vo['cate_id'].',' )){ echo 'label_current';}else{ echo 'label_normal'; } ?>" data='{$vo.cate_id}' href="#">{$vo.cate_name}</a>&nbsp;</volist>
+                                         &nbsp; </div>
+                                   <div class="clear"></div>
+                              </div>   
+                              <div class="control-group">
+                                   <label class="control-label">内容导读：</label>
+                                   <div class="controls">
+                                        <textarea id="cutline" name="cutline">{$album.cutline}</textarea>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                              -->
+            <div class="control-group" style="min-height:390px;">
+              <label class="control-label">专辑介绍：</label>
+              <div class="controls" id="forcontent"> 
+                <script id="content" name="content" type="text/plain" style="width:800px;height:300px;"><?php echo htmlspecialchars_decode($album['content']);?></script> 
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">人气值：</label>
+              <div class="controls">
+                <input type="text" id="view_num" name="view_num" value="{$album.view_num|default=0}" class="span300" placeholder="">
+                </span> </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">收藏量：</label>
+              <div class="controls">
+                <input type="text" id="collect_num" name="collect_num" value="{$album.collect_num|default=0}" class="span300" placeholder="">
+                </span> </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group none">
+              <label class="control-label">作者：</label>
+              <div class="controls">
+                <input type="text" id="author" name="author" value="{$album.author}" class="span300" placeholder="作者">
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group none">
+              <label class="control-label">排序：</label>
+              <div class="controls">
+                <input type="text" id="sort_order" name="sort_order" value="0" class="span300" placeholder="排序">
+                <span style="color:#ccc">(越小排序越靠前)</span> </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">是否推荐：</label>
+              <div class="controls">
+                <label> <input type="radio" id="is_recommend" name="is_recommend" value="1" 
+                  <if condition="$album.is_recommend eq 1">checked</if>
+                  >是 </label>
+                <label> <input type="radio" id="is_recommend" name="is_recommend" value="0" 
+                  <if condition="$album.is_recommend eq 0">checked</if>
+                  >否 </label>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">是否显示：</label>
+              <div class="controls">
+                <label><input type="radio" id="if_show" name="if_show" value="1" 
+                  <if condition="$album.if_show eq 1">checked</if>
+                  >是</label>
+                <label><input type="radio" id="if_show" name="if_show" value="0" 
+                  <if condition="$album.if_show eq 0">checked</if>
+                  >否</label>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-actions">
+              <input type="hidden" id="id" name="id" value="{$album.id}">
+              <button type="button" class="btn btn_dm submit">确认提交</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--表格end--> 
+  </div>
+  <!--content end--> 
+</section>
+</body>
+</html>

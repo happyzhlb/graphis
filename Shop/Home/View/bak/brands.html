@@ -1,0 +1,43 @@
+<include file='./Shop/Home/View/header.html' /> 
+<div id="crumbs">
+	<a href="{:U('./Index')}">Home</a>&gt;
+    <a href="{:U('/Brands/index')}">Brands</a>&gt;
+    <span>Index</span>
+</div>
+<div id="brand" class="clearfix">
+    <!--左侧列表开始--> 
+    <include file="./Shop/Home/View/list.left.html" /> 
+    <!--左侧列表结束-->
+    <!--右侧产品开始-->
+    <div class="brandDetail">
+        <h1>All Titanium Dioxide Brands</h1>
+     
+      <volist name="brands" id='vo'> 
+        <div class="brandPro">
+            <dl class="brandMain clearfix">
+                <dt><a href="javascript:void(0)"><img src="/{$vo.blogo}" width="225" height="80" alt="{$vo.bname}" /></a></dt>
+                <dd>
+                    <p>{$vo.introduction}</p>
+                    <a href="#{$vo.bid}" class="brandHide">View All Products（<em>{$vo.goods|count}</em>）>> </a>
+                </dd>
+            </dl>
+            <div class="proList clearfix" val="hide">
+                <volist name='vo.goods' id='g'>   
+                <div class="productEach">
+                    <a href="{:U('./Goods/index',array('id'=>$g['goods_id']))}" class="proImg"><img src="/{$g.goods_img}" width="140" height="140" alt="{$g.goods_name}" /></a>
+                    <a href="{:U('./Goods/index',array('id'=>$g['goods_id']))}" class="proName">{$g.goods_name|deal_title}</a>
+                    <dl class="clearfix">
+                        <dt class="star star{$g.estars}"></dt>
+                        <dd>({$g.ecount})</dd>
+                    </dl>
+                    <p class="price">{$g.range_price}</p>
+                </div>
+                </volist> 
+            </div>
+        </div>
+      </volist>         
+    </div>
+    <!--右侧产品结束-->
+</div> 
+<include file="./Shop/Home/View/viewed.items.html" />
+<include file="./Shop/Home/View/footer.html" />

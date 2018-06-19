@@ -1,0 +1,118 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Login</span>
+            <a href="{:U('Index/index')}" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />        
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="loginBox">
+    	<form id="login_form" action="{:U('/Index/login')}" method="post">
+    	<dl>
+        	<dd>
+            	<input type="text" name="email" value="" class="textIn" placeholder="E-mail Address" />
+        	</dd>
+            <dd>
+            	<input type="password" name="password" value="" class="textIn" placeholder="Password" />
+            </dd>
+            <dd id="show_msg" class="none"></dd>
+            <dd>
+            	<a href="javascript:do_submit()" class="loginBtn">Login</a>
+            </dd>
+            <dd class="otherInfo">
+            	<a href="{:U('./Forgotpassword')}" class="Forgot">Forgot your password?</a>
+                <a href="{:U('Login/register')}">Free Registration</a>
+            </dd>
+        </dl>
+        </form>
+    </div>
+	<!--会员中心设置结束-->  
+</div>
+
+<script>
+$(function(){
+	var URL = '__CONTROLLER__'; 
+	//登陆表单验证
+	$('#login_form').validate({
+		rules : {
+			email : {
+				required : true,
+				email : true,
+				remote :
+					{
+					url : '/Index/ajax_check_email.html',
+					type : 'post',
+					dataType : 'json',
+					data : {
+						email: function(){
+								return $('#login_form input[name="email"]').val();
+							}
+						}
+					} 
+			},
+			password : {
+				required : true,
+				minlength : 6, 
+			}
+		},
+		messages : {
+			email : {
+				required : 'Be quired.',
+				email : 'Please enter the correct E-mail address.',
+				remote: 'The E-mail address is not exist.',
+			}, 		
+			password : {
+				required : 'Be quired.', 
+				remote: 'The password is incorrect.',
+			}
+		},
+		errorPlacement: function(error, element) {  
+			error.appendTo(element.parent());  
+		},
+		
+		submitHandler: function(form){ //回调函数参数：form
+			$("#login_form #show_msg").html(' Logging...').show(); 
+			$.post(URL+'/ajax_login.html',{
+						email: function(){
+								return $('#login_form input[name="email"]').val();
+							},
+						password: function(){
+								return $('#login_form input[name="password"]').val();
+							},
+						referer: "{:I('referer')}",
+				},function(data){  
+					if(data.status=='0'){
+						$("#login_form #show_msg").html(data.info);
+						return;
+					}else{ 
+						self.location=data.info;	
+					}  
+				},'json');
+			//form.submit(); //提交表单
+		},
+		focusCleanup:true,
+		focusInvalid: false,
+		onfocusout : false,
+		onkeyup : false,
+		//success: 'InfoTrue',
+		debug:false ,
+		errorElement : 'span',
+		errorClass : 'tips',
+		validClass : 'InfoTrue',
+	});	
+	
+	do_submit=function(){
+		$('#login_form').submit();	 
+	}
+	
+});	
+</script>
+<include file='./Shop/Webapp/View/footer.html' />

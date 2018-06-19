@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编辑APP版本</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#admin_form').validate({
+		rules : {
+			title : {
+				required : true
+			},
+			img : {
+				accept : ["gif","jpg","jpeg","png"]
+			},
+			url : {
+			//	required : true,
+			//	url : true
+			},
+			pid : {
+				required : true
+			}
+		},
+		messages : {
+			title : {
+				required : '<i></i>APP版本标题不能为空'
+			},
+			img : {
+				accept : '<i></i>只能上传gif、jpg、jpeg、png格式文件'
+			},
+			url : {
+				required : '<i></i>APP版本链接不能为空',
+				url : '<i></i>APP版本链接格式不正确，如：http://www.okchem.com'
+			},
+			pid : {
+				required : '<i></i>请选择APP版本位置'
+			}
+		},
+		onkeyup : false,
+		onfocusout : false,
+		errorElement : 'span'
+	});
+	
+	$("#type").on('change',function(){
+		if($(this).val()=='0'){
+			$('#tips').html("<input type='button' id='b0' class='selButton' value='选择品牌类别ID' />").fadeIn(800);
+			$('#type_title').html('品牌类别ID:');
+		}else if($(this).val()=='1'){
+			$('#tips').html("<input type='button' id='b1' class='selButton' value='选择大类别ID' />").fadeIn(800);
+			$('#type_title').html('类别ID:');
+		}else if($(this).val()=='2'){
+			$('#tips').html("<input type='button' id='b2' class='selButton' value='选择商品小类ID' />").fadeIn(800);	
+			$('#type_title').html('商品小类ID:');
+		}else if($(this).val()=='3'){
+			$('#tips').html("<input type='button' id='b3' class='selButton' value='选择文章小类ID' />").fadeIn(800);	
+			$('#type_title').html('文章小类ID:');
+		}else if($(this).val()=='4'){
+			$('#tips').html("<input type='button' id='b4' class='selButton' value='选择文章ID' />").fadeIn(800);
+			$('#type_title').html('文章ID:');	
+		}else if($(this).val()=='5'){
+			$('#tips').html("<input type='button' id='b5' class='selButton1' value='请输入活动页链接' />").fadeIn(800);	
+			$('#type_title').html('活动页链接:');	
+		}else if($(this).val()=='6'){
+			$('#tips').html("<input type='button' id='b6' class='selButton' value='选择商品ID(多个ID用逗号分隔)' />").fadeIn(800);	
+			$('#type_title').html('商品集合:');	
+		}else if($(this).val()=='7'){
+			$('#tips').html("<input type='button' id='b7' class='selButton' value='选择文章ID(多个ID用逗号分隔)' />").fadeIn(800);	
+			$('#type_title').html('文章集合:');	
+		}else if($(this).val()=='8'){
+			$('#tips').html("<input type='button' id='b8' class='selButton' value='选择类别ID(多个ID用逗号分隔)' />").fadeIn(800);	
+			$('#type_title').html('类别集合:');	
+		}else if($(this).val()=='9'){
+			$('#tips').html("<input type='button' id='b9' class='selButton' value='选择品牌类别ID(多个ID用逗号分隔)' />").fadeIn(800);	
+			$('#type_title').html('品牌集合:');	
+		}else if($(this).val()=='10'){
+			$('#tips').html("<input type='button' id='b10' class='selButton' value='选择商品ID' />").fadeIn(800);	
+			$('#type_title').html('商品详情页:');	
+		}else if($(this).val()=='11'){
+			$('#tips').html("<input type='button' id='b11' class='selButton' value='选择品牌ID' />").fadeIn(300);	
+			$('#type_title').html('品牌详情页:');	
+		}else if($(this).val()=='12'){
+			$('#tips').html("<input type='button' id='b10' class='selButton' value='选择小类ID' />").fadeIn(800);	
+			$('#type_title').html('自营文章列表页:');	
+		}else if($(this).val()=='13'){
+			$('#tips').html("<input type='button' id='b11' class='selButton' value='选择文章ID' />").fadeIn(300);	
+			$('#type_title').html('自营商品列表页:');	
+		}else if($(this).val()=='14'){
+			$('#tips').html("<input type='button' id='b11' class='selButton' value='选择商品ID' />").fadeIn(300);	
+			$('#type_title').html('自营商品详情页:');	
+		} 
+	});
+	$("#type").change(); 
+	
+	$('.selButton').live('click',function(){ 
+		if($('#type').val()==0 || $('#type').val()==1  || $('#type').val()==2  || $('#type').val()==3 ){
+			$('#iframe').attr('src',"{:U('Acategory/sel_ad')}?single=1&cate_id="+$('#referId').val());
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==4){
+			$('#iframe').attr('src',"{:U('Article/sel_ad')}?single=1&article_id={$Think.request.article_id}");
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==6){
+			$('#iframe').attr('src',"{:U('Goods/sel_goods_ad')}?ids="+$('#referId').val());
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==7){
+			$('#iframe').attr('src',"{:U('Article/sel_ad')}?article_ids={$Think.request.article_ids}");
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==8 || $('#type').val()==9 ){
+			$('#iframe').attr('src',"{:U('Acategory/sel_ad')}?cate_id="+$('#referId').val());
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==10){
+			$('#iframe').attr('src',"{:U('Goods/sel_goods_ad')}?single=1&ids="+$('#referId').val());
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==11 ){
+			$('#iframe').attr('src',"{:U('Acategory/sel_ad')}?single=1&cate_id="+$('#referId').val());
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==12 ){
+			$('#iframe').attr('src',"{:U('Acategory/sel_ad')}?cate_id="+$('#referId').val());
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==13){
+			$('#iframe').attr('src',"{:U('Myarticle/sel_ad')}?article_ids={$Think.request.article_ids}");
+			$('#selFrame').fadeIn(300);
+		}
+		if($('#type').val()==14 ){			
+			$('#iframe').attr('src',"{:U('Mygoods/sel_goods_ad')}?single=1&ids="+$('#referId').val());
+			$('#selFrame').fadeIn(300);
+		}
+	});
+	
+	$('#closeW').click(function(){ 
+		$('#selFrame').hide();	
+	});
+	
+});
+</script>
+</head>
+<body>
+<section>
+<!--articleW start-->
+    <div id="selFrame" style="display:none; margin-left:25%; margin-top:80px; position:absolute; z-index:99; border:5px solid #a8a8a8; width:760px; height:350px; background:rgba(255,255,255,0.95);  border-radius:6px;box-shadow:0 0 15px #999;">
+        <div id="closeW"><a style="padding:5px; float:right; text-align:right; clear:both;" href="#">X</a></div>
+        <div style="height:490px; clear:both; padding:10px;">
+            <iframe id="iframe" src="/Admin/Article/sel_ad.html?ids={$article_ids}"  width="730px;" height="300px;"></iframe> 
+        </div>
+    </div>
+<!--articleW end-->
+    <!--content start-->
+    <div class="main" style="min-height:500px;">
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('Admin/Main')}" class="text">Home</a> > <a href="{:U('/Admin/Ad')}" class="text">APP版本管理</a> > <a href="{:U('/Admin/Ad/edit',array('id'=>$list['id']))}" class="text">编辑APP版本</a>
+         </div>
+    </div>
+    <div class="clear"></div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="widsbox">
+                   <div class="bar">
+                        <div class="bar_l"></div>
+                        <div class="text">编辑APP版本</div>
+                        <div class="bar_r"></div>
+                   </div>
+                   <div class="cbox">
+                        <form id="admin_form" method="post" enctype="multipart/form-data">
+                              <div class="control-group">
+                                   <label class="control-label">APP版本号：</label>
+                                   <div class="controls">
+                                        <input type="text" id="version" name="version" value="{$list.version}" class="span300" placeholder="APP版本名称">
+                             </div>
+                                   <div class="clear"></div>
+                              </div>
+                              
+                              <div class="control-group">
+                                   <label class="control-label">APP版本图片：</label>
+                                   <div class="controls">
+                                        <input type="file" id="img" name="img">
+                                        <p class="text">文件大小不超过500k；图片仅支持jpg(jpeg)，png的格式。</p>
+                                       <?php if(!empty($list['img'])){?> 
+                                        <p><img src="/<?php echo $list['img'];?>" width="200"></p>
+                                       <?php } ?> 
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              
+                              <div class="control-group">
+                                   <label class="control-label">APP类型：</label>
+                                   <div class="controls" style="padding-top:5px;"> 
+                                   	 <select name="type" id="type"> 
+                                        <option id="type" value="android" <?php if($list['type']=='android'){ echo 'selected';}?> >android</option> 
+                                        <option id="type" value="iphone" <?php if($list['type']=='iphone'){ echo 'selected';}?> >iphone</option> 
+                                        <option id="type" value="others" <?php if($list['type']=='others'){ echo 'selected';}?> >others</option> 
+                                     </select>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="control-group">
+                                   <label class="control-label" id="type_title">APP版本描述：</label>
+                                   <div class="controls" style="padding-top:5px;">
+                                        <input type="text" id="desc" name="desc" class="span300" value="{$list.desc}">  
+                                        <span id="tips"></span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>    
+                              <!--
+                              <div class="control-group">
+                                   <label class="control-label" id="type_title">排序：</label>
+                                   <div class="controls" style="padding-top:5px;">
+                                        <input type="text" id="sort_order" name="sort_order" class="span300" value="{$list.sort_order}">  
+                                        <span id="tips">越小越靠前</span>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              -->     
+                              <div class="control-group">
+                                   <label class="control-label">APP版本链接：</label>
+                                   <div class="controls">
+                                        <input type="text" id="url" name="url" value="{$list.url}" class="span300" placeholder="http://">
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>  
+                              <div class="control-group">
+                                   <label class="control-label">是否发布：</label>
+                                   <div class="controls">
+                                        <label><input type="radio" id="is_check" name="is_check" value="1" <if condition="$list.is_check eq 1">checked</if>> 是</label>
+                                        <label><input type="radio" id="is_check" name="is_check" value="0" <if condition="$list.is_check eq 0">checked</if>> 否</label>
+                                   </div>
+                                   <div class="clear"></div>
+                              </div>
+                              <div class="form-actions">
+                              	   <input type="hidden" id="id" name="id" value="{$list.id}">
+                                   <button type="submit" class="btn btn_dm">确认提交</button>
+                              </div>
+                        </form>
+                   </div>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

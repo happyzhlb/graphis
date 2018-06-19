@@ -1,0 +1,29 @@
+<include file='./Shop/Webapp/View/header.html' />
+<div class="appContent">
+	
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>{$list.title}</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' />
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="myAccountIndex">
+    	<div class="MessagesDetail">
+        	<dl class="clearfix">
+            	<dt>{$list.send_time|toDate}</dt>
+                <dd>
+                	<p>{$list.content|htmlspecialchars_decode}</p>
+                </dd>
+            </dl>	
+        </div>	
+    </div>
+	<!--会员中心设置结束-->
+    
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

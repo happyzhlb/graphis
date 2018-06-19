@@ -1,0 +1,500 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>新增订单</title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.min.js"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.validate.js"></script>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/form.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/order_detail.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/js/boxy/jquery.boxy.js"></script>
+<link type="text/css" href="__PUBLIC__/js/boxy/boxy.css" rel="stylesheet" /> 
+</head>
+
+<body>
+<section>
+    <!--content start-->
+    <div class="main mainLy">
+         <div class="page_tag">
+               <div class="tag">
+                    <i class="home"></i>
+                    <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Order')}" class="text" target="workspace">订单管理</a> > <a href="{:U('/Admin/Order/add')}" class="text" target="_self">新增订单</a>
+               </div>
+         </div>
+         
+         <!--订单明细start-->
+         <div class="obox">
+              <form id="offline_order_form" method="post">
+              <div class="onum">
+                   <div class="tbar">商品信息</div>
+              </div>
+              <div class="table1"> 
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th>产品名称</th>
+                            <th class="center">单价</th>
+                            <th class="center">购买数量</th>
+                            <th class="center">库存</th>
+                            <th class="center">操作</th>
+                          </tr>
+                          <tbody id="goods_detail">
+                              <tr>
+                                <td colspan="5" class="center">请选择要购买的商品</td>
+                              </tr>
+                          </tbody>
+                          <tr>
+                          	<td colspan="5" style="border-bottom:none; text-align:left">
+                            <!--<span style="float:right;">
+                            合计：{$order.goods_amount|format_price}
+                            </span>-->
+                   			<input type="button" class="submit btn btn_ds p_deline" value="添加商品" id="selectPro" />
+                            </td>
+                          </tr>
+                    </table>  
+              </div>
+              
+              <div class="onum">
+                   <div class="tbar">收货/账单地址</div>
+                   <div class="cbox" style="border:none; display:inline-block; padding:20px;">
+                        <p><label>联系人：</label><input type="text" class="span300" id="consignee" name="consignee"/></p>
+                        <p><label>公司名称：</label><input type="text" class="span300" id="company" name="company"/></p>
+                        <p><label>州：</label>
+                        <select name="state" id="state">
+                        <option value="">===请选择州===</option>
+                        <volist name="regions" id="region">
+                        	<option value="{$region.region_id}">{$region.region_name}</option>
+                        </volist>
+                        </select>
+                        </p>
+                        <p><label>城市：</label><input type="text" class="span300" id="city" name="city"/></p>
+                        <p><label>详细地址：</label><input type="text" class="span300" id="address" name="address"/></p>
+                        <p><label>邮编：</label><input type="text" class="span300" id="zipcode" name="zipcode"/></p>
+                        <p><label>手机：</label><input type="text" class="span300" id="telephone" name="telephone"/></p>
+                        <p><label>办公电话：</label><input type="text" class="span300" id="mobile" name="mobile"/></p>
+                   </div>
+                   <div class="cbox" style="border:none; display:inline-block; padding:20px;">
+                   		<p><label></label><input type="radio" name="billing_type" value="1" checked/>收货地址 <input type="radio" name="billing_type" value="0"/>新地址</p>
+                        <p><label>联系人：</label><input type="text" class="span300" id="bconsignee" name="bconsignee"/></p>
+                        <p><label>公司名称：</label><input type="text" class="span300" id="bcompany" name="bcompany"/></p>
+                        <p><label>州：</label>
+                        <select name="bstate" id="bstate">
+                        <option value="">===请选择州===</option>
+                        <volist name="regions" id="region">
+                        	<option value="{$region.region_id}">{$region.region_name}</option>
+                        </volist>
+                        </select>
+                        </p>
+                        <p><label>城市：</label><input type="text" class="span300" id="bcity" name="bcity"/></p>
+                        <p><label>详细地址：</label><input type="text" class="span300" id="baddress" name="baddress"/></p>
+                        <p><label>邮编：</label><input type="text" class="span300" id="bzipcode" name="bzipcode"/></p>
+                        <p><label>手机：</label><input type="text" class="span300" id="btelephone" name="btelephone"/></p>
+                        <p><label>办公电话：</label><input type="text" class="span300" id="bmobile" name="bmobile"/></p>
+                   </div>
+                   <div style="padding:0 0 20px 20px;"><input type="button" class="btn btn_ds" id="calculate_shipping_fee" value="计算运费"></div>      
+              </div>
+              
+              <div class="onum">
+                   <div class="tbar">费用信息</div>
+                   <div class="cbox" style="border:none;">
+                   <p><label>运送方式：</label><em id="shipping_name">未知</em></p>
+                   <p><label>运送费用：</label><em id="shipping_fee">未知</em></p>
+                   <p><label>商品总价：</label><input type="text" class="span300" name="goods_amount"/></p>
+                   </div>
+              </div>
+              
+              <div class="onum" style="padding:20px; border:none;">
+              <input type="submit" class="btn btn_ds" value="提交订单" />
+              </div>
+              </form>
+         </div>
+         <!--订单明细end-->
+    </div>
+    <!--content end-->
+</section>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var thisBody = $("body").height();
+		var winHeight = $(window).height();
+		if(thisBody > winHeight){
+			$("div.mainLy").css("height",thisBody);	
+		}else{
+			$("div.mainLy").css("height",winHeight);	
+		}
+		
+		//选择商品事件
+		fn_sel_goods=function(){
+			box = new Boxy('<div><iframe width="100%" height="90%" src="/Admin/Goods/order_goods_sel.html" id="sel_goods_dialog"></iframe><div style="height:10%;"><input id="ok_sel" value="确认选择" class="btn btn_dm" type="button" onclick="fn_ok_sel();"/></div></div>', {title:'选择商品',modal:false,
+			afterHide:function(){box.unload();return false;}});
+			box.resize(document.documentElement.clientWidth-80,document.documentElement.clientHeight-150);
+			box.moveTo(10,10);
+			$(".overflow-x").width(document.documentElement.clientWidth-80);
+		}
+		$("#selectPro").click(function(){
+			fn_sel_goods();
+		});
+		fn_ok_sel =function(){
+			//alert($(window.frames["sel_goods_dialog"].document).html());
+			//alert(.html());
+			var select_specs = '';
+			$('#sel_goods_dialog').contents().find("input[type='checkbox']").each(function(){
+				if($(this).attr('checked') == 'checked'){
+					select_specs += $(this).val() + ',';
+				}
+			});
+			select_specs = select_specs.substring(0,select_specs.length -1);
+			if(select_specs == ''){
+				alert('请选择购买的产品');
+				return;
+			}
+			$.ajax({
+				url : '/Admin/Goods/ajax_get_goods.html',
+				type : 'post',
+				dataType : 'json',
+				data : {'id':select_specs},
+				success : function(data){
+					if(data.status){
+						var html = '';
+						$.each(data.info,function(n,index){
+							html += '<tr><td><div class="pbox">';
+							html += '<img src="/'+ index.goods_thumb +'" alt="" title="" width="50" height="50" class="pimg">';
+                            html += '<div class="proifo"><a href="/Goods/index/id/'+ index.goods_id +'.html" title="">'+ index.goods_name +'</a><p>Batch:'+ index.spec_batch +' Package:'+ index.spec_page +'</p></div>';
+                            html += '<div class="clear"></div></div></td>';
+							html += '<td class="center">'+ index.price +'</td>';
+							html += '<td class="center"><input type="text" id="quantity" name="quantity[]" class="span80" placeholder="购买数量" enpty="onlynumber" data-max="'+ index.sku+'"/><input type="hidden" name="spec_ids[]" value="'+ index.spec_id +'" /></td>';
+							html += '<td class="center">'+ index.sku +'</td>';
+							html += '<td class="center"><a href="javascript:;" id="del_goods">删除</a></td></tr>';
+						});
+						$('#goods_detail').html(html);
+						ResetFrameHeight();	
+					}else{
+						alert(data.info);
+					}
+				}
+			});
+			box.unload();
+		}
+		
+		//文本框只能输入数字，并屏蔽输入法和粘贴
+		$.fn.numeral = function(){     
+			$(this).css("ime-mode", "disabled");     
+			this.live("keypress",function(e){  
+				var code = (e.keyCode ? e.keyCode : e.which);  //兼容火狐 IE      
+					if(!$.browser.msie&&(e.keyCode==0x8))  //火狐下不能使用退格键     
+					{     
+						return ;     
+					}     
+					return code >= 48 && code<= 57;     
+				});     
+				this.live("blur", function() {     
+					if (this.value.lastIndexOf(".") == (this.value.length - 1)) {     
+						this.value = this.value.substr(0, this.value.length - 1);     
+					} else if (isNaN(this.value)) {     
+						this.value = "";     
+					}     
+				});     
+				this.live("paste", function() {     
+					var s = clipboardData.getData('text');     
+					if (!/\D/.test(s));     
+					value = s.replace(/^0*/, '');     
+					return false;     
+				});     
+				this.live("dragenter", function() {     
+					return false;     
+				});     
+				this.live("keyup", function() {     
+				if (/(^0+)/.test(this.value)) {     
+					this.value = this.value.replace(/^0*/, '');     
+					}     
+				});     
+		};
+		$('input[enpty="onlynumber"]').numeral();
+		
+		//手动输入
+		$('#quantity').live('input',function(){
+			var newnum = '';
+			var dmax = parseInt($(this).attr('data-max'));
+			if($(this).val() == ''){
+				newnum = 1;
+			}else{
+				newnum = parseInt($(this).val());
+			}
+			
+			if(newnum > dmax){
+				newnum = dmax;
+			}else if(dmax == 0){
+				newnum = '';
+			}
+			$(this).attr('value',newnum);
+		});
+		
+		//删除产品
+		$('#del_goods').live('click',function(){
+			$(this).parents('tr').remove();	
+			ResetFrameHeight();
+		});
+		
+		//表单验证
+		$('#offline_order_form').validate({
+			rules : {
+				'quantity[]' : {
+					required : true
+				},
+				'consignee' : {
+					required : true
+				},
+				'company' : {
+					required : true
+				},
+				'state' : {
+					required : true
+				},
+				'city' : {
+					required : true
+				},
+				'address' : {
+					required : true
+				},
+				'zipcode' : {
+					required : true,
+					number : true
+				},
+				'email' : {
+					required : true,
+					email : true
+				},
+				'telephone' : {
+					required : true,
+					number : true
+				},
+				'mobile' : {
+					number : true
+				},
+				'bconsignee' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					}
+				},
+				'bcompany' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					}
+				},
+				'bstate' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					}
+				},
+				'bcity' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					}
+				},
+				'baddress' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					}
+				},
+				'bzipcode' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					},
+					number : true
+				},
+				'bemail' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					},
+					email : true
+				},
+				'btelephone' : {
+					required : function(){
+						if($('input[name="billing_type"]:eq(0)').attr('checked') == 'checked'){
+							return false;
+						}else{
+							return true;
+						}
+					},
+					number : true
+				},
+				'bmobile' : {
+					number : true
+				},
+				'goods_amount' : {
+					required : true,
+					number : true
+				}
+			},
+			messages : {
+				'quantity[]' : {
+					required : '购买数量不能为空'
+				},
+				'consignee' : {
+					required : '联系人不能为空'
+				},
+				'company' : {
+					required : '公司名称不能为空'
+				},
+				'state' : {
+					required : '请选择在州'
+				},
+				'city' : {
+					required : '城市不能为空'
+				},
+				'address' : {
+					required : '地址不能为空'
+				},
+				'zipcode' : {
+					required : '邮编不能为空',
+					number : '邮编只能又数字组成'
+				},
+				'email' : {
+					required : 'Email地址不能为空',
+					email : 'Email格式不正确'
+				},
+				'telephone' : {
+					required : '手机号不能为空',
+					number : '手机号只能由数字组成'
+				},
+				'mobile' : {
+					number : '办公电话只能由数字组成'
+				},
+				'bconsignee' : {
+					required : '联系人不能为空'
+				},
+				'bcompany' : {
+					required : '公司名称不能为空'
+				},
+				'bstate' : {
+					required : '请选择州'
+				},
+				'bcity' : {
+					required : '城市不能为空'
+				},
+				'baddress' : {
+					required : '地址不能为空'
+				},
+				'bzipcode' : {
+					required : '邮编不能为空',
+					number : '邮编只能由数字组成'
+				},
+				'bemail' : {
+					required : 'Email地址不能为空',
+					email : 'Email地址格式不正确'
+				},
+				'btelephone' : {
+					required : '手机号码不能为空',
+					number : '手机号码只能由数字组成'
+				},
+				'bmobile' : {
+					number : '办公电话只能由数字组成'
+				},
+				'goods_amount' : {
+					required : '商品总价不能为空',
+					number : '商品总价只能输入数字'
+				}
+			},
+			errorElement : 'span',
+			ignore : ".ignore"
+		});
+		
+		//计算运费
+		$('#calculate_shipping_fee').click(function(){
+			$('#shipping_name').html('计算中...');
+			$('#shipping_fee').html('计算中...');
+			var spec_ids = '';
+			var quantity = '';
+			$('input[name="spec_ids\[\]"]').each(function(){
+				spec_ids += $(this).val() + ',';	
+			});
+			$('input[name="quantity\[\]"]').each(function(){
+				if($(this).val() == ''){
+					alert('商品的购买数量不能为空');
+					$(this).focus();
+					return false;
+				}
+				quantity += $(this).val() + ',';	
+			});
+			if(spec_ids == ''){
+				alert('请先选择购买的商品');
+				return false;
+			}
+			if(quantity == '') return false;
+			var post_data = new Array();
+			spec_ids = spec_ids.substring(0,spec_ids.length - 1);
+			quantity = quantity.substring(0,quantity.length -1);
+			if($('input[name="consignee"]').val() == '' || $('input[name="company"]').val() == '' || $('select[name="state"]').val() == '' || $('input[name="city"]').val() == '' || $('input[name="address"]').val() == '' || $('input[name="zipcode"]').val() == '' || $('input[name="telephone"]').val() == ''){
+				alert('请填写完整的收货地址');
+				return;
+			}
+			//异步请求，计算运费
+			$.ajax({
+				url : '/Admin/Order/ajax_shipping_fee.html',
+				type : 'post',
+				dataType : 'json',
+				data : {
+					'spec_ids' : spec_ids,
+					'quantity' : quantity,
+					'consignee' : $('input[name="consignee"]').val(),
+					'company' : $('input[name="company"]').val(),
+					'state' : $('select[name="state"]').val(),
+					'city' : $('input[name="city"]').val(),
+					'address' : $('input[name="address"]').val(),
+					'zipcode' : $('input[name="zipcode"]').val(),
+					'telephone' : $('input[name="telephone"]').val(),
+				},
+				success : function(data){
+					if(data.status){
+						$('#shipping_name').html(data.info.delivery.shipping_name);
+						$('#shipping_fee').html('$'+data.info.shipping_fee)
+					}else{
+						$('#shipping_name').html('计算失败');
+						$('#shipping_fee').html('计算失败');
+						alert(data.info);
+					}
+				}
+			});
+		});
+	});
+	function ResetFrameHeight(){
+		$("div.mainLy").removeAttr("style")
+		var iframeHeight = $("body").height();
+		$(window.parent.document).find(("iframe[id='workspace']")).css("height",iframeHeight);	
+	}
+	
+
+</script>
+</body>
+</html>

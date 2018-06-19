@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>支付方式管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+var URL = '__CONTROLLER__';
+</script>
+</head>
+
+<body>
+<section>
+    
+    <!--content start-->
+    <div class="main">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Payment')}" class="text" target="workspace">支付方式管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">支付方式列表</div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="cbox">
+                   <table class="table table-bordered data-table" cellpadding="0" cellspacing="0">
+                          <thead>
+                             <tr>
+                                 <th>支付方式名称</th>
+                                 <th>支付方式描述</th>
+                                 <th>插件版本</th>
+                                 <th>作者</th>
+                                 <th>排序</th>
+                                 <th colspan="2">操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="payments" id="list">
+                             <tr class="gradeX">
+                                 <td>{$list.pay_name}</td>
+                                 <td>{$list.pay_desc|default='--'}</td>
+                                 <td>{$list.version}</td>
+                                 <td>{$list.author}</td>
+                                 <td>{$list.sort_order}</td>
+                                 <if condition="$list.install eq 0">
+                                 <td colspan="2" class="center"><a href="{:U('./Admin/Payment/install',array('code'=>$list['pay_code']))}" target="_self">安装</a></td>
+                                 <else />
+                                 <td class="center"><a href="{:U('/Admin/Payment/uninstall',array('code'=>$list['pay_code']))}" title="">卸载</a></td>
+                                 <td class="center"><a href="{:U('/Admin/Payment/edit',array('code'=>$list['pay_code']))}" title="">配置</a></td>
+                                 </if>
+                             </tr>
+                             </volist>
+                          </tbody>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

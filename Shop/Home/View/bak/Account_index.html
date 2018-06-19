@@ -1,0 +1,71 @@
+<include file="./Shop/Home/View/header.html" />
+<div id="crumbs">
+	<a href="{:U('/')}">home</a>&gt;
+    <a href="{:U('Member/index')}">My Account</a>&gt;
+    <span>Account Settings</span>
+</div>
+<div class="webC1000">
+	<div id="account">
+    	<div class="accountIndex clearfix">
+        	<h2>My Account</h2>
+            <div class="left">
+            	<h3>Account Settings</h3>
+                <p class="pTip">Basic Information, Passwords & Addresses</p>
+                <if condition="$user_type=='1'">
+                <dl>
+                    <dt><a href="{:U('Member/basic_information')}">Basic Information</a></dt>
+                    <dd><p class="each">Basic information about individuals or companies for further cooperation.</p></dd>
+                </dl>
+                </if>
+                <dl>
+                    <dt><a href="{:U('Member/account_settings')}">Account Settings</a></dt>
+                    <dd><p class="each">Change your password, e-mail address or name.</p></dd>
+                </dl>
+                <dl>
+                    <dt><a href="{:U('UserAddress/index')}">Address Book</a></dt>
+                    <dd><p class="each">Manage your address book or add new addresses.</p></dd>
+                </dl>
+                <h3>Others</h3>
+                <p class="pTip">Private Messages, Product Requests & Subscriptions</p>
+                <dl>
+                    <dt><a href="{:U('UserPmessage/index')}">Private Messages [<strong>{$msg_num}</strong>]</a></dt>
+                    <dd><p class="each">Check out your private messages here</p></dd>
+                </dl>
+                <dl>
+                    <dt><a href="{:U('ProductsRequest/index')}">Product Request [<strong>{$request_num}</strong>]</a></dt>
+                    <dd><p class="each">Submit a new product request to our support team.</p></dd>
+                </dl>
+                <dl>
+                    <dt><a href="{:U('Member/subscription')}">Subscription</a></dt>
+                    <dd><p class="each">Subscribe to our newsletter to get sales and news update!</p></dd>
+                </dl>
+            </div>
+            <div class="right">
+                <h3>Orders</h3>
+                <p class="pTip">Points, Orders, Cart, Wish List & Reviews</p>
+                <dl>
+                    <dt><a href="{:U('ScoreLog/index')}">Reward Points [<strong>{$score}</strong>]</a></dt>
+                    <dd><p class="each">Buy more, save more.</p></dd>
+                </dl>
+                <dl>
+                    <dt><a href="{:U('/Myorders')}">My Orders [<strong>{$order_count}</strong>]</a></dt>
+                    <dd><p class="each">View the status of the orders or write reviews for purchased products.</p></dd>
+                </dl>
+                <dl>
+                    <dt><a href="{:U('/Cart')}">My Cart [<strong>{$carts_count}</strong>]</a></dt>
+                    <dd><p class="each">View the items in your shopping cart.</p></dd>
+                </dl>
+                <dl>
+                    <dt><a href="{:U('Collect/index')}">My Wish List [<strong>{$wishs_count}</strong>]</a></dt>
+                    <dd><p class="each">Keep track of items you purchase often and easily add them to your cart.</p></dd>
+                </dl>
+                <dl>
+                    <dt><a href="{:U('Comments/index')}">My Reviews</a></dt>
+                    <dd><p class="each">View and manage your reviews here.</p></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="./Shop/Home/View/footer.html" />
+

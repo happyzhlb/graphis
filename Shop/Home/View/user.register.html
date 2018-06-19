@@ -1,0 +1,134 @@
+<include file="./Shop/Home/View/user.header.html" />
+		<script language="javascript">
+        <!-- 			
+		 $(function(){
+		//注册表单验证
+			$('#register_form').validate({
+				rules : {
+					user_name : {
+						required : true
+					}, 
+					email : {
+						required : true,
+						email : true,
+						remote : {
+							url : '/Index/check_email.html',
+							type: "post",               //数据发送方式
+							dataType: "json",           //接受数据格式   
+							data : {
+								email : function(){
+									return $('#register_form input[name=email]').val();
+								}
+							}
+						}
+					},
+					newpassword : {
+						required : true,
+						minlength : 6
+					},
+					repassword : {
+						required : true,
+						equalTo : "#newpassword"
+					},
+					is_agree : {
+						required : true
+					}
+				},
+				messages : {
+					user_name : {
+						required : function(){ alert('请输入用户名.');},
+					},
+					email : {
+						required : 'Be quired.',
+						email : 'Please enter the correct E-mail address.',
+						remote : 'This email address is already in use. '  //If you already have an account, please log in first.
+					},
+					newpassword : {
+						required :  function(){ alert('请输入密码.');},
+						minlength : function(){ alert('密码至少6位数字和字母组合.');},
+					},
+					repassword : {
+						required : function(){ alert('请再次输入密码.');},
+						equalTo : function(){ alert("两次密码输入不一致.");},
+					}
+				},
+				/* Ajax提交注册*/
+				submitHandler: function(form){ //回调函数参数：form 
+					$("#register_form #show_msg").html('<img src="/Public/home/images/loading.gif" style="vertical-align:middle;" /> Creating...').show();
+					$.post('/Member/do_register.html',{
+								user_name: function(){
+										return $('#register_form input[name="user_name"]').val();
+									}, 	
+//								email: function(){
+//										return $('#register_form input[name="email"]').val();
+//									},
+								newpassword: function(){
+										return $('#register_form input[name="newpassword"]').val();
+									},
+								repassword: function(){
+										return $('#register_form input[name="repassword"]').val();
+									}, 
+						},function(data){  
+							if(data.status=='0'){
+								alert(data.info); 
+								$('#user_name').focus();
+								$("#register_form #show_msg").html(data.info);
+								return;
+							}else{
+								$("#register_form #show_msg").html('OK.');
+								alert('恭喜，注册成功.');
+								self.location=data.info;	
+							}  
+						},'json');
+					//form.submit(); //提交表单
+				},
+				/*
+				errorPlacement: function(error, element) {  
+					if(element.attr('name') == 'is_agree'){
+						element.next().next().after(error);
+					}else{
+						error.appendTo(element.parent()); 
+					}
+				},*/
+				onkeyup: false, 
+				focusInvalid: false, //当为false时，验证无效时，没有焦点响应 
+				//onfocusout:false,  //当为false时，失去焦点事件，没有焦点响应 
+				//success: 'InfoTrue',
+				//errorElement : 'span',
+				//errorClass : 'InfoError',
+				//validClass : 'InfoTrue'
+				
+			});	
+		 });	
+        //-->
+        </script>
+		<div class="header-margin footer-margin body">
+			<form method="post" action="user_mod.aspx" id="register_form">  
+			<div class="box">
+				<div class="display-box col">
+					<div>用户名：</div>
+					<div class="box-flex-1">
+                        <input name="user_name" type="text" value=""  id="user_name" class="inp inp-block noborder text-right" />
+					</div>
+				</div> 
+		  <div class="display-box col">
+					<div>设置密码：</div>
+					<div class="box-flex-1">
+                        <input name="newpassword" id="newpassword" type="password" class="inp inp-block noborder text-right" placeholder="6-20位数字／字母组合" />
+					</div>
+				</div>
+				<div class="display-box col">
+					<div>密码确认：</div>
+					<div class="box-flex-1">
+                        <input name="repassword" id="repassword" type="password" class="inp inp-block noborder text-right" placeholder="6-20位数字／字母组合" />
+					</div>
+				</div>
+	
+			</div>
+			<div class="submitdiv"><input type="submit" name="Button1" value="注册" id="Button1" class="btn btn-block btn-primary" /></div>			
+			</form>
+		</div>
+		
+		
+	</body>
+</html>

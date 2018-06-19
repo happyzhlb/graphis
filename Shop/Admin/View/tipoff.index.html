@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>举报管理</title>
+<link href="__PUBLIC__/admin/css/common.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/main.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/table.css" type="text/css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/buttons.css" type="text/css" rel="stylesheet">
+<style>
+	.overColor{background-color:#f8f9f9;}
+	.sort{width:50px;text-align:center;}
+	.red{color:#f00;}
+	#showmsg{ position:absolute;  z-index:50; ;
+			  background:rgba(0,0,0,0.4); 
+			  width:50%; height:50px; 
+			  left:25%;  top:20%;
+			  border:5px solid #666; 
+			  border-radius: 4px;
+			  display:none;
+			  box-shadow: 0 0 10px #999;
+			  text-align:center;
+			  padding-top:50px;
+			  color:#fff;
+			  font-weight:bold;
+			  
+			 }
+</style>
+<script src="__PUBLIC__/js/jquery.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/admin/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	var URL = '__CONTROLLER__';
+	$('table tr').hover(function(){
+		$(this).addClass('overColor').siblings('tr').removeClass('overColor');	
+	});	
+	
+	//ajax保存排序
+	$('.sort').live('change',function(){ 
+			var cateIdObj=$(this).parent().parent().find("input[name='items']");
+			$(this).addClass('red');
+			var postStr='id='+$(cateIdObj).val()+'&sort_order='+$(this).val();
+			$.post("{:U('ajaxSortOrder')}",postStr,function(data){  
+				//$('#showmsg').css('top',$(document).scrollTop());
+				$('#showmsg').html(data.info).fadeIn(800).fadeOut(400);
+				//$("input[value='"+$(cateIdObj).val()+"']").parent().parent().find('.sort_order').removeClass('red');	
+				$('.sort').removeClass('red');
+			}); 
+	});
+
+	$('.ipAddress').each(function(i){
+		var o = $('.ipAddress').eq(i);
+		$.post('tipoff/ipToArea',{'ip':$(this).siblings().html()},function(dd){
+			o.html(dd);		
+		});
+		
+	});
+});
+</script>
+</head>
+
+<body>
+<section>
+    <div id="showmsg"></div>
+    <!--content start-->
+    <div class="main" style="min-height:500px;">
+         <!--user_nav start-->
+    
+    <!--user_nav end-->
+    <div class="page_tag">
+         <div class="tag">
+              <i class="home"></i>
+              <a href="{:U('/Admin/Main')}" class="text" target="workspace">Home</a> > <a href="{:U('/Admin/Ad')}" class="text" target="workspace">举报管理</a>
+         </div>
+    </div>
+         <!--表格start-->
+         <div class="tbox">
+              <div class="bar">
+                   <div class="bar_l1"></div>
+                   <div class="text">举报列表</div>
+                   <div style="float:left; margin-left:150px; padding-top:5px;"><volist id="vo" name="block"><a href="{:U('index',array('block'=>$key))}"><div style="float:left; background-color:rgba(255,160,200,0.9); border-radius:5px; box-shadow:0px 0px 1px #ccc; border:1px solid #CCC; padding:3px 2px 3px 2px; margin-left:8px;"> {$vo} </div></a></volist></div>
+                   <div class="addbox none">
+                        <input type="button" value="+ 新增举报" class="btn btn_bs buttonadd">
+                   </div>
+                   <div class="bar_r"></div>
+              </div>
+              <div class="searchbar none"> 
+              	  <div class="searchbox">
+                   	   <form id="search_form" method="get">
+                           <input type="search" name="keyword" id="keyword" value="{$Think.get.keyword}" placeholder="输入信息">
+                           <select id="pid" name="pid">
+                           		<option value="">===请选择===</option>
+                           		<volist name="adplace" id="vo">
+                                	<option value="{$list.pid}">{$list.pname}</option>
+                                </volist>
+                           </select>
+                           <input type="submit" value="搜索" class="btn btn_ds">
+                       </form>
+                   </div>
+              </div>
+              <div class="cbox">
+                   <table width="100%" cellpadding="0" cellspacing="0" class="table table-bordered data-table">
+                          <thead>
+                             <tr>
+                                 <th width="73">ID</th>
+                                 <th width="311">举报专辑</th>   
+                                 <th width="291">举报内容</th>
+                                 <th width="162">IP</th> 
+                                 <th>时间</th>
+                                 <th>操作</th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <volist name="list" id="list">
+                             <tr class="gradeX">
+                                 <td><input type="checkbox" name="items" value="{$list.id}">{$list.id}</td> 
+                                 <td align="center"><a href="{:U('/album/reward',array('id'=>$list['key_id']))}" target="_blank">{$list.key_id|getNameById='title','album','id',###}</a></td>
+                                 <td align="center"> 
+                           	   {$list.content} /{$list.type} /{$list.key_id}</td>
+                                 <td align="center"><span>{$list.ip}</span> <span class="ipAddress"></span></td>                                
+                                 <td width="121" class="center">{$list.ctime|toDate}</td>
+                                 <td width="58" class="center">
+                                 <!--
+                                 <a href="{:U('edit',array('id'=>$list['id']))}" title="">编辑</a> |
+                                 -->
+                                  <a href="{:U('drop',array('id'=>$list['id']))}" title="" class="delete">删除</a></td>
+                             </tr>
+                             </volist>
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                                <td colspan="9">
+                                    <input type="checkbox" name="" value="" id="selectAll">
+                                    <label for="selectAll" class="selectALL">全选</label>
+                                    <input type="button" value="删除" class="btn btn_bs dropall">
+                                    <div class="quotes">{$page}</div>
+                                </td>
+                             </tr>
+                          </tfoot>
+                   </table>
+              </div>
+         </div>
+         <!--表格end--> 
+    </div>
+    <!--content end-->
+</section>
+</body>
+</html>

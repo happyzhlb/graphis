@@ -1,0 +1,206 @@
+<include file='./Shop/Webapp/View/header.html' />
+
+<div class="appContent"> 
+    <!--导航开始-->
+    <div class="appNav">
+    	<div id="navContent">
+        	<a href="javascript:void(0)" class="subNav" val="0">subNav</a>
+            <span>Register</span>
+            <a href="javascript:void(0)" class="back">back</a>
+        </div>	
+<include file='./Shop/Webapp/View/menu.html' /> 
+    </div>
+    <!--导航结束-->
+    
+    <!--会员中心设置开始-->
+    <div class="RegisterChoose">
+        <a href="javascript:void(0)" class="current">Company Member</a>
+        <a href="javascript:void(0)">Individual Member</a>
+    </div>
+    <div class="loginBox">
+      <form id="register_form_1" action="{:U('Login/login')}" method="post">
+    	<dl>
+        	<dd>
+            	<input type="text" value="" name="first_name" class="textIn" placeholder="First Name" /> 
+            </dd>
+            <dd>
+            	<input type="text" value="" name="last_name"  class="textIn" placeholder="Last Name" />
+            </dd>
+            <dd>
+            	<input type="text" value="" name="company_name" class="textIn" placeholder="Company Name" />
+            </dd>
+            <dd>
+            	<input type="text" value="" name="email"  class="textIn" placeholder="E-mail Address" />
+            </dd>
+            <dd>
+            	<input type="password" id='newpassword_1' value="" name="newpassword" class="textIn" placeholder="New Password" />
+            </dd>
+            <dd>
+            	<input type="password" value="" name="repassword" class="textIn" placeholder="Comfirm Password" />
+            </dd>
+            <dd id="show_msg" class="none"></dd>
+            <dd><input type="hidden" name="user_type" value="1" id="CompanyMember" />
+                <a href="javascript:do_submit(1);" class="loginBtn">Register</a>
+            </dd>
+        </dl>
+         </form>
+         <form id="register_form_0" action="{:U('Login/login')}" method="post">
+        <dl style="display:none">
+        	<dd>
+            	<input type="text" value="" name="first_name" class="textIn" placeholder="First Name" /> 
+            </dd>
+            <dd>
+            	<input type="text" value="" name="last_name"  class="textIn" placeholder="Last Name" />
+            </dd> 
+            <dd class="none">
+            	<input type="text" value="" name="company_name" class="textIn" placeholder="Company Name" />
+            </dd>
+            <dd>
+            	<input type="text" value="" name="email"  class="textIn" placeholder="E-mail Address" />
+            </dd>
+            <dd>
+            	<input type="password" id='newpassword_0' value="" name="newpassword" class="textIn" placeholder="New Password" />
+            </dd>
+            <dd>
+            	<input type="password" value="" name="repassword" class="textIn" placeholder="Comfirm Password" />
+            </dd>
+            <dd id="show_msg" class="none"></dd>
+            <dd><input type="hidden" name="user_type" value="0" id="IndividualMember" />
+                <a href="javascript:do_submit(0);" class="loginBtn">Register</a>
+            </dd>
+        </dl>
+        </form>
+    </div>
+	<!--会员中心设置结束-->     
+    <script language="javascript" type="text/javascript">
+    $(function(){
+	 //用户注册表单验证
+	validate_form=function(n){	 
+		$('#register_form_'+n).validate({
+			rules : {
+				first_name : {
+					required : true
+				},
+				last_name : {
+					required : true
+				},
+				user_type : {
+					required : true
+				},
+				company_name : {
+					required : function(){ 
+							return ($('#register_form_'+n+' input[name=user_type]').val()=='1')?true:false;
+						}
+				},
+				email : {
+					required : true,
+					email : true,
+					remote : {
+						url : '/Index/check_email.html',
+						type: "post",               //数据发送方式
+						dataType: "json",           //接受数据格式   
+						data : {
+							email : function(){
+								return $('#register_form_'+n+' input[name=email]').val();
+							}
+						}
+					}
+				},
+				newpassword : {
+					required : true,
+					minlength : 6
+				},
+				repassword : {
+					required : true,
+					equalTo : "#newpassword_"+n
+				}
+			},
+			messages : {
+				first_name : {
+					required : 'Be quired.'
+				},
+				last_name : {
+					required : 'Be quired.'
+				},
+				user_type : {
+					required : 'Be quired.'
+				},
+				company_name : {
+					required : 'Be quired.'
+				},
+				email : {
+					required : 'Be quired.',
+					email : 'Please enter the correct E-mail address.',
+					remote : 'This email address is already in use. '  //If you already have an account, please log in first.
+				},
+				newpassword : {
+					required : 'Be quired.',
+					minlength : 'Your password must be at least 6 characters long.'
+				},
+				repassword : {
+					required : 'Be quired.',
+					equalTo : "Your passwords don't match."
+				}
+			},
+			/* Ajax提交注册*/
+			submitHandler: function(form){ //回调函数参数：form 
+				$("#register_form_"+n+" #show_msg").html('<img src="/Public/home/images/loading.gif" style="vertical-align:middle;" /> Creating...').show();
+				$.post('{:U("Login/do_register")}',{
+							first_name: function(){
+									return $('#register_form_'+n+' input[name="first_name"]').val();
+								},
+							last_name: function(){
+									return $('#register_form_'+n+' input[name="last_name"]').val();
+								},
+							user_type: function(){
+									return $('#register_form_'+n+' input[name="user_type"]').val();
+								},	
+							company_name: function(){
+									return $('#register_form_'+n+' input[name="company_name"]').val();
+								},			
+							email: function(){
+									return $('#register_form_'+n+' input[name="email"]').val();
+								},
+							newpassword: function(){
+									return $('#register_form_'+n+' input[name="newpassword"]').val();
+								},
+							repassword: function(){
+									return $('#register_form_'+n+' input[name="repassword"]').val();
+								},
+							is_subscription: function(){
+									return $('#register_form_'+n+' input[name="is_subscription"]').val();
+								},	
+					},function(data){  
+						if(data.status=='0'){
+							$("#register_form_"+n+" #show_msg").html(data.info);
+							return;
+						}else{
+							$("#register_form_"+n+" #show_msg").html('OK.');
+							alert('Congratulations, you have successfully registered.');
+							self.location=data.info;	
+						}  
+					},'json'); 
+			},
+			
+			errorPlacement: function(error, element) {  
+				error.appendTo(element.parent());  
+			},
+			//success: 'InfoTrue',
+			errorElement : 'span',
+			errorClass : 'tips',
+			validClass : 'InfoTrue'
+		});	
+	}
+	do_submit=function(n){ 
+		$('#register_form_'+n).submit();	
+		validate_form(n);
+	}
+	_init=function(){
+		validate_form(0);
+		validate_form(1);
+	}
+	_init();
+ });
+  </script>
+</div>
+<include file='./Shop/Webapp/View/footer.html' />

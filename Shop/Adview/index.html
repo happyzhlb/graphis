@@ -1,0 +1,14 @@
+<load href="__PUBLIC__/home/js/jquery.imgBanner.js" />
+ <!-- 
+        <div id="imgSlider">
+            <div class="eachImg" style="display:block;"><a href="javascript:void(0)" title=""><img src="__PUBLIC__/home/images/show/banner_1.jpg" width="680"  title="banner1" alt="banner1" /></a></div>
+            <div class="eachImg"><a href="javascript:void(0)" title=""><img src="__PUBLIC__/home/images/show/banner_2.jpg" width="680" title="banner2" alt="banner2" /></a></div>
+            <div class="eachImg"><a href="javascript:void(0)" title=""><img src="__PUBLIC__/home/images/show/banner_3.jpg" width="680" title="banner3" alt="banner3" /></a></div>
+        </div>
+       -->
+<!----> 
+<div id="imgSlider">
+	<volist name="adlist" id="ad" key="adk">
+	<div class="eachImg" <if condition="$adk eq 1">style="display:block;"</if>><a href="{$ad.url}" target="_blank"><img src="{$ad.img}" width="680" title="{$ad.title}" alt="{$ad.title}" /></a></div>
+	</volist>
+</div>
